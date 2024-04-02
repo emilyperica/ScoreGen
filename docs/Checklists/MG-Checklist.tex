@@ -62,7 +62,11 @@
   \item Each Software Decision Hiding module is used by at least one
     Behaviour-Hiding Module (if this isn't the case, an explanation should be
     provided)
-  \item Uses relation is not confused with a data flow chart
+  \item Uses relation is not confused with a data flow chart. If you can imagine
+  an ``import B'' statement in the code for module A, then module A uses module
+  B.
+  \item The arrow in the uses relation points from module A to module B when
+  module A uses module B
   \item Anticipated changes are a superset of the likely changes in the SRS
   \end{todolist}
 
