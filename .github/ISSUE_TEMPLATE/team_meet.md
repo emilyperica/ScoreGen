@@ -11,11 +11,10 @@ assignees: ''
 
 **Attendance**
 
-- [ ] team member1
-- [ ] team member2
-- [ ] team member3
-- [ ] team member4
-- [ ] team member5
+- [ ] Emily Perica
+- [ ] Ian Algenio
+- [ ] Jackson Lippert
+- [ ] Mark Kogan
 
 **Agenda**
 
