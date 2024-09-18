@@ -11,12 +11,19 @@ assignees: ''
 
 **Attendance**
 
-- [ ] team member1
-- [ ] team member2
-- [ ] team member3
-- [ ] team member4
-- [ ] team member5
+- [ ] Emily Perica
+- [ ] Ian Algenio
+- [ ] Jackson Lippert
+- [ ] Mark Kogan
 
 **Agenda**
+1. Discuss/review team member updates:
+   - Recent changes made.
+   - Problems encountered.
+   - Status of previous meeting action items.
 
-- 
+1. Go over new business.
+   - Discuss future deliverables/tasks to be done.
+   - Discuss individual and/or group next steps.
+  
+1. Assign action items.
