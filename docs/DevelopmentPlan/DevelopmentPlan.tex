@@ -84,23 +84,99 @@ likely change throughout the year.}
 
 \section{Workflow Plan}
 
+\textbf{Issue Management Workflows}\\
+When creating an issue in the Capstone Kanban Board, there are two possible workflows:
+\begin{enumerate}
+  \item Meeting issue is created (using the relevant template) prior to a scheduled meeting.  
+  \begin{enumerate}
+    \item Issue is given the 'meeting' label and assigned the 'Meeting Minutes' status.
+    \item The notetaker (see section 6) will add a comment to the issue, outlining the meeting minutes and action items of each attendee.
+    \item Issue is closed once all action items have been addressed.
+  \end{enumerate}
+  \item Project work issue is created using a blank issue.
+  \begin{enumerate}
+    \item Issue begins in 'To Do'
+    \item One or more appropriate labels are assigned - ‘documentation’, ‘deliverable’, ‘enhancement’, ‘bug’, and potentially others as the need arises.
+    \item If the issue does not have the ‘deliverable’ label AND is not time sensitive, it will be moved to ‘Backlog’.
+    \begin{enumerate}
+      \item The issue will move out of 'Backlog' and into 'To Do' if the issue becomes time sensitive or the team has the time/resources to take it on.
+    \end{enumerate}
+    \item The issue moves to ‘In Progress’ once it is assigned and being worked on. It may be assigned to more than one person, depending on the scope of the issue.
+    \begin{enumerate}
+      \item At this point, an issue pertaining to the codebase will branch to the Git Workflow (below).
+    \end{enumerate}
+    \item The issue moves to ‘In Review’ once a PR has been made and approval is requested from the team.
+    \item The issue moves to ‘Done’ and can be closed once all associated tasks have been completed, including all related PRs being merged/closed.
+  \end{enumerate}
+\end{enumerate}
+
+In addition to the above usage of the Kanban board, all course deliverables are documented as milestones in the repository and will have issues assigned as necessary. Each milestone has a due date and a description of the tasks to be completed.
+
+The Project Manager (see section 6 for team member roles) is responsible for making issues and keeping the project on track. As well, they will run monthly backlog grooming sessions with the team to ensure any stale issues are taken care of. \\
+
+\noindent
+\textbf{Git/GitHub Workflow}\\
+A new developer on the project will begin at step 1; otherwise step 1 can be skipped:
+\begin{enumerate}
+  \item Developer may choose to fork or clone the repo. A fork is recommended so that contributors can display the project directly in their GitHub profile.
+  \item Main is a protected branch - any commits must be made in a separate branch before being pushed to a PR. There is no specific naming scheme for branches.
+  \item Commit and PR names will both start with ‘Issue \#: ’. This will be enforced through a GitHub Action.
+  \begin{enumerate}
+    \item Each PR will only address a single issue, but an issue may be spread out across multiple PRs.
+    \item Squash commits are enforced to ensure there is a single commit per PR.
+  \end{enumerate}
+  \item At least one reviewer must approve the PR before it can be merged into main.\\
+\end{enumerate}
+
+
+\noindent
+\textbf{CI/CD Workflow}\\
+Actions on Push/Pull Request:
 \begin{itemize}
-	\item How will you be using git, including branches, pull request, etc.?
-	\item How will you be managing issues, including template issues, issue
-	classification, etc.?
-  \item Use of CI/CD
+  \item LaTeX to PDF converter
+  \item Code packaged as an executable
+  \item Linting
+  \item Unit tests
+  \item PR naming convention enforcer
 \end{itemize}
+
+Note that a PR may not be merged if any failures are present in the pipeline.
 
 \section{Project Decomposition and Scheduling}
 
-\begin{itemize}
-  \item How will you be using GitHub projects?
-  \item Include a link to your GitHub project
-\end{itemize}
+\begin{center}
+  \begin{tabular}{ |c|c| } 
+    \hline
+      \textbf{Due Date} & \textbf{Deliverable} \\
+    \hline
+      Sept 23/24 & Problem Statement, POC Plan, Development Plan \\
+    \hline
+      Oct 9/24 & Requirements Document Revision 0 \\
+    \hline
+      Oct 23/24 & Hazard Analysis \\
+    \hline
+      Nov 1/24 & V\&V Plan Revision 0 \\
+    \hline
+      Nov 11/24* & Proof of Concept Demonstration \\
+    \hline
+      Jan 15/25 & Design Document Revision 0 \\
+    \hline
+      Feb 3/25* & Revision 0 Demonstration \\
+    \hline
+      Mar 7/25 & V\&V Report Revision 0 \\
+    \hline
+      Mar 24/25* & Final Demonstration (Revision 1) \\
+    \hline
+      Apr \#\#/25 - TBD & Expo Demonstration \\
+    \hline
+      Apr 2/25 & Final Documentation (Revision 1) \\
+    \hline
+  \end{tabular}
+\end{center}
+*The demonstration should be prepared by this date, but this will not necessarily be the date of the demo itself.
 
-\wss{How will the project be scheduled?  This is the big picture schedule, not
-details. You will need to reproduce information that is in the course outline
-for deadlines.}
+Ideally, progress on a deliverable will begin at least 3 days before the previous deliverable is due (i.e., D2 work should begin on or before Sept 20). The above schedule will be enforced through the use of Milestones in the project repository, such that each deliverable (including its due date and all relevant information) is its own Milestone.
+The only exception to this is the Expo Demonstration, which is not expected to require any specific issues.
 
 \section{Proof of Concept Demonstration Plan}
 
