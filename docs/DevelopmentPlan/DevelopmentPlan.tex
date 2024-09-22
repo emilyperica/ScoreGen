@@ -205,10 +205,10 @@ you will be able to overcome this risk?
   Sound File Conversion & libsndfile  & A specific library that was researched and will likely be used
   for sampled sound file format conversion.\\
   \hline
-  Code Formatting & Linter(s) &  Specific tools are ndetermined at this stage as it is language dependant. 
+  Code Formatting & Linter(s) &  Specific tools are undetermined at this stage as it is language dependent. 
   To be used with CI workflows to format code.\\
   \hline
-  Testing & MATLAB unittest/automation, CMake, Unity, etc.  & Undetermined, likely a unit testing framework
+  Testing & MATLAB unittest/automation, CMake, Unity Test, etc.  & Specific tools are undetermined, likely a unit testing framework
   that does not transcend languages (i.e. language-specific).
   \\
   \hline
@@ -230,8 +230,8 @@ you will be able to overcome this risk?
 \subsection{Continuous Integration Plans}
 GitHub Actions (GHA) will be used for continuous integration. They will employ automated workflows for various unit and integration tests
 as well as code formatting/linting. One specific workflow that will be created is .tex to .pdf format conversion to ease documentation editing.
-GHA will also ideally be used to test code coverage metrics. One of the major components of the project is the signal processing algorithm, 
-depending on the implementation details, different metrics in addition to the basic ones such as statement coverage. For example, the designed algorithm 
+GHA will also ideally be used to test code coverage metrics. One of the major components of the project is the signal processing algorithm.  
+Depending on the implementation details, different metrics in addition to the basic ones such as statement coverage might be used. For example, the designed algorithm 
 might benefit from condition or path coverage for pitch detection.
 
 \section{Coding Standard}
