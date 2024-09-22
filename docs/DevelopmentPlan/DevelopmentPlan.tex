@@ -2,6 +2,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 
 \title{Development Plan\\\progname}
 
@@ -58,29 +59,165 @@ required to sign the ``Intellectual Property Guide Acknowledgement.''}
 repo.}
 
 \section{Team Meeting Plan}
+\subsection{General Team Meetings}
+  \textbf{Meeting Chair}: Jackson Lippert.\\
+  \textbf{Frequency}: Weekly.\\
+  \textbf{Format}: In-person.\\
+  \textbf{Location}: McMaster’s main campus.
+    \begin{itemize}
+        \item Particular location may vary, will be discussed prior to the meeting time.
+    \end{itemize}
+  \textbf{Time (primary)}: Monday, 2:30pm-4:20pm (the designated tutorial time slot for SFWRENG 4G06A/B).\\
+  \textbf{Time (secondary)}: Monday, 12:30pm-1:30pm.
+  \begin{itemize}
+      \item The secondary time slot will be used if the primary slot is occupied by synchronous tutorials or at the discretion of team members.
+  \end{itemize}
+  \textbf{Structure}:
+  \clearpage
+  \begingroup
+    \renewcommand{\arraystretch}{1.25}
+    \begin{longtable}{|p{\textwidth}|}
+      \hline
+      \textbf{\textbf{AGENDA ITEMS (GENERAL MEETING)}} \\
+      \hline
+      \begin{enumerate}
+        \itemsep0em
+        \item Discuss/review team member updates.
+        \begin{enumerate}
+          \itemsep0em
+          \item Recent changes made.
+          \item Problems encountered.
+          \item Status of previous meeting action items.
+        \end{enumerate}
+        \item Go over new business.
+        \begin{enumerate}
+          \itemsep0em
+          \item Discuss future deliverables/tasks to be done.
+          \item Define individual and/or group next steps.
+        \end{enumerate}
+        \item Assign action items.
+      \end{enumerate} \\
+      \hline
+    \end{longtable}
+  \endgroup
 
-\wss{How often will you meet? where?}
-
-\wss{If the meeting is a physical location (not virtual), out of an abundance of
-caution for safety reasons you shouldn't put the location online}
-
-\wss{How often will you meet with your industry advisor?  when?  where?}
-
-\wss{Will meetings be virtual?  At least some meetings should likely be
-in-person.}
-
-\wss{How will the meetings be structured?  There should be a chair for all meetings.  There should be an agenda for all meetings.}
+\subsection{Supervisor/Industry Advisor Meetings}
+  \textbf{Frequency}: Biweekly.\\
+  \textbf{Format}: In-person, virtual if necessary.\\
+  \textbf{Location}: Dr. Martin v. Mohrenschildt’s campus office.\\
+  \textbf{Time}: By appointment.\\
+  \textbf{Structure}:
+  \clearpage
+  \begingroup
+    \renewcommand{\arraystretch}{1.25}
+    \begin{longtable}{|p{\textwidth}|}
+      \hline
+      \textbf{\textbf{AGENDA ITEMS (SUPERVISOR MEETING)}} \\
+      \hline
+      \begin{enumerate}
+        \itemsep0em
+        \item Discuss/review team updates.
+        \begin{enumerate}
+          \itemsep0em
+          \item Project milestones reached.
+          \item Status of previous meeting action items.
+        \end{enumerate}
+        \item Troubleshoot recent issues that require supervisor-specific knowledge.
+        \item Determine high-level plan for project progression.
+        \begin{enumerate}
+          \itemsep0em
+          \item Discuss problems the team expects to encounter in the near future.
+          \item Identify goals the team wishes to achieve by the next meeting with the supervisor.
+        \end{enumerate}
+        \item Assign action items (if applicable).
+        \item Discuss details of next supervisor meeting.
+        \begin{enumerate}
+          \itemsep0em
+          \item Date \& time.
+          \item Location.
+        \end{enumerate}
+      \end{enumerate} \\
+      \hline
+    \end{longtable}
+  \endgroup
+\textbf{Note}: All fields are subject to change depending on the supervisor’s availability or the team’s need to consult the supervisor.
 
 \section{Team Communication Plan}
+\subsection{General Purpose Communication}
+The primary mode of communication for general purposes will be through Apple iMessage SMS/MMS in the team group chat.
+In the event that a team member does not respond via iMessage, the secondary mode of communication will be used. This will 
+be through an Instagram direct messages group chat. The primary and secondary communication channels were chosen due to their 
+practicality, team members will almost certainly have their smartphone on hand, which they can use for both iMessage and Instagram 
+direct messages.
+A tertiary form of communication through Microsoft Teams direct messaging and/or video calls. This will be used in the event a team 
+member does not respond within a reasonable time frame to primary and secondary communication methods. It will also be the main 
+application through which virtual meetings will take place (both general and supervisor meetings) as it has screen sharing capabilities 
+and is familiar to all team members.
+\subsection{Implementation and Task Assignment}
+GitHub Projects will be the primary tool used for project management related communication. A kanban board will be collectively
+maintained by the team for task assignment, progress status, meeting bookkeeping, and item reviews. 
+GitHub Issues will be used in tandem with the kanban board. As such, every opened issue will be required to also 
+appear on the kanban board. In addition to project tasks and to-dos, issues will also be opened for every team meeting and 
+every SFWRENG 4G06A/B lecture to track attendance and team contribution. There are five categories of issues that can be 
+opened by the team, each having their own template: 
+\begin{itemize}
+  \item Lecture
+  \item Meeting
+  \begin{itemize}
+    \item General team meetings
+    \item Supervisor meetings
+    \item TA meetings
+  \end{itemize}
+  \item Peer Review
+\end{itemize}
+The use of these templates standardize issue creation and streamlines project progression.
 
-\wss{Issues on GitHub should be part of your communication plan.}
 
 \section{Team Member Roles}
+All listed team member roles are tenative and subject to change at the discretion of the team. Should role changes occur
+team members should follow the process outlined below: 
+\begin{enumerate}
+  \item Contact all team members that are relevant to the role change.
+  \item Discuss proposed changes and ensure each team member understands their new responsibilies.
+  \item Notify uncontacted team members of the change and/or the overtaking of responsibilities. 
+\end{enumerate}
+\subsection{Project Manager}
+\textbf{Assignee:} Emily Perica\\
+The project manager directs the team towards successful completion of the project. 
+They will be responsible for coordinating the progression by creating meeting agendas for the meeting chairperson 
+to follow. They will also maintain the Kanban board and create and assign GitHub issues that concern the entire team.
+\subsection{Meeting Chair}
+\textbf{Assignee(s):} Jackson Lippert\\
+The meeting chair is responsible for driving team meetings towards productivity and efficiency. 
+This will be done by guiding and directing meetings to minimize off-topic conversation. They are required to ensure all 
+meeting agenda items are addressed in a timely manner. Finally, they will facilitate constructive, collaborative
+discussions during meetings.
+\subsection{Meeting Minutes Recorder*}
+\textbf{Assignee(s):} Ian Algenio\\
+The primary responsibility of this role is to document and record team meetings. They will also track team member attendance
+and address associated issues. They will record meeting discussions, issues, topics, action items, etc.
+\subsection{Subject Matter Expert*}
+\textbf{Assignee(s):} Mark Kogan\\
+The subject matter expert is given the responsibility of maintaining a neat and organized record of source materials used 
+during the lifetime of the project. This may include academic articles, open-source repositories, external libraries used, etc. 
+They will also create any necessary citations for project documentation elements.
+\subsection{Software Developer*}
+\textbf{Assignee(s):} ALL MEMBERS\\
+All team members will take on the responsibilites of this role. As developers they are responsible for designing,
+testing, coding, and maintaining the software components of the project.
+\subsection{Quality Assurance and Testing Specialist*}
+\textbf{Assignee(s):} ALL MEMBERS\\
+This role ensures the software meets stakeholder needs and quality standards. They will develop and
+execute test plans and test cases, measure code coverage, and report defects in the software. Additionally,
+they will verify the software meets functional and non-functional requirements such as performance, security, usability, etc.
 
-\wss{You should identify the types of roles you anticipate, like notetaker,
-leader, meeting chair, reviewer.  Assigning specific people to those roles is
-not necessary at this stage.  In a student team the role of the individuals will
-likely change throughout the year.}
+\subsection{Music Domain Expert}
+\textbf{Assignee(s):} Emily Perica\\
+As the expert in the music theory domain, this person will address any confusion regarding general music theory such as terminology. They will
+share their prior knowledge and experience with music whether that's playing an instrument or clarifying details about the domain.\\
+
+\textbf{Note:} Any team member roles marked with an asterisk (*) are able to be assigned to multiple people, 
+have overlapping responsibilities with other roles, and/or have responsibilities are likely to be shared amongst the enrire team.
 
 \section{Workflow Plan}
 
