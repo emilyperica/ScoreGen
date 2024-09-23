@@ -1,0 +1,25 @@
+name: Commit Message Check
+
+on: [pull_request]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3.0.0
+
+      - name: Fetch all branches
+        run: |
+          git fetch --prune --unshallow
+
+      - name: Check Commit Messages
+        run: |
+          echo "Checking commit messages..."
+          # Get the latest commit messages only from the PR merge commit
+          commit_messages=$(git log origin/main..HEAD --pretty=format:%s)
+          echo "$commit_messages" | grep -E '^Issue #[0-9]+:' || {
+            echo "One or more commit messages do not follow the convention. Please use 'Issue #n:' format."
+            exit 1
+          }
