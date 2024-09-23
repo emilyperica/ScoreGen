@@ -139,7 +139,16 @@ Topics to discuss include the following:
 
 \section{Coding Standard}
 
-\wss{What coding standard will you adopt?}
+Our source code will adhere to the following widely adopted coding style guides:
+
+\begin{itemize}
+    \item For \textbf{C++}, which will likely be our main coding language for the signal processing, we will follow \href{https://google.github.io/styleguide/cppguide.html}{Google's C++ Style Guide} due to its widespread adoption.
+    \item For \textbf{Python}, we will adhere to the \href{https://peps.python.org/pep-0008/}{PEP8 Style Guide}.
+    \item For \textbf{HTML} and \textbf{CSS}, we will implement the \href{https://getbem.com/}{BEM Methodology}.
+\end{itemize}
+
+All functions, classes, and modules must be well-documented using inline comments and docstrings where appropriate. Comments should provide context when necessary, rather than stating the obvious. This ensures clear communication and explanation of code between team members, making our pull requests easy to follow and the codebase more maintainable.
+Additionally, all pull requests must be reviewed by at least one other team member before being merged into the main branch. Reviews will focus on code quality, adherence to coding standards, and potential performance improvements.
 
 \newpage{}
 
