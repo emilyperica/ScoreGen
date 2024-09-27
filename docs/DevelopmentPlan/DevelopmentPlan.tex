@@ -23,8 +23,7 @@
 \toprule
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
-Date1 & Name(s) & Description of changes\\
-Date2 & Name(s) & Description of changes\\
+2024/09/24 & Mark, Ian, Emily, Jackson & Initial Revision\\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
@@ -32,31 +31,25 @@ Date2 & Name(s) & Description of changes\\
 
 \newpage{}
 
-\wss{Put your introductory blurb here.  Often the blurb is a brief roadmap of
-what is contained in the report.}
-
-\wss{Additional information on the development plan can be found in the
-\href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/Lectures/L02b_POCAndDevPlan/POCAndDevPlan.pdf?ref_type=heads}
-{lecture slides}.}
+The development plan contains our full overview of our goals and the subsequent methods we’ve chosen to accomplish them. 
+It serves as a guide which will be referenced by each developer throughout the product cycle to create a standard of expected protocol, behavior, goals, and development practices. 
+In this document, we have outlined how we will conduct team meetings, as well as the meeting frequency. Further outlined is communication guidelines, team member roles, development protocols, expected tech, deliverable timelines and our individual and group reflections. 
+Overall this document shows how the group plans to develop the product through an initial proof of concept, followed by a minimal viable product and continuous development to improve the result until it satisfies our intended goals.
 
 \section{Confidential Information?}
 
-\wss{State whether your project has confidential information from industry, or
-not.  If there is confidential information, point to the agreement you have in
-place.}
+There is no confidential information needing protection for our project.
 
-\wss{For most teams this section will just state that there is no confidential
-information to protect.}
 \section{IP to Protect}
 
-\wss{State whether there is IP to protect.  If there is, point to the agreement.
-All students who are working on a project that requires an IP agreement are also
-required to sign the ``Intellectual Property Guide Acknowledgement.''}
+There is no IP to protect for our project.
 
 \section{Copyright License}
 
-\wss{What copyright license is your team adopting.  Point to the license in your
-repo.}
+Our team will be adopting the \href{https://github.com/emilyperica/ScoreGen/blob/main/LICENSE}{MIT License}, which is standard for allowing usage without limitation
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software. This is due to the nature of our project, which is focused on learning and not for commercial use.
+
 
 \section{Team Meeting Plan}
 \subsection{General Team Meetings}
@@ -381,7 +374,16 @@ might benefit from condition or path coverage for pitch detection.
 
 \section{Coding Standard}
 
-\wss{What coding standard will you adopt?}
+Our source code will adhere to the following widely adopted coding style guides:
+
+\begin{itemize}
+    \item For \textbf{C++}, which will likely be our main coding language for the signal processing, we will follow \href{https://google.github.io/styleguide/cppguide.html}{Google's C++ Style Guide} due to its widespread adoption.
+    \item For \textbf{Python}, we will adhere to the \href{https://peps.python.org/pep-0008/}{PEP8 Style Guide}.
+    \item For \textbf{HTML} and \textbf{CSS}, we will implement the \href{https://getbem.com/}{BEM Methodology}.
+\end{itemize}
+
+All functions, classes, and modules must be well-documented using inline comments and docstrings where appropriate. Comments should provide context when necessary, rather than stating the obvious. This ensures clear communication and explanation of code between team members, making our pull requests easy to follow and the codebase more maintainable.
+Additionally, all pull requests must be reviewed by at least one other team member before being merged into the main branch. Reviews will focus on code quality, adherence to coding standards, and potential performance improvements.
 
 \newpage{}
 
@@ -398,97 +400,108 @@ might benefit from condition or path coverage for pitch detection.
                     plan we’ve been able to set realistic goals and discuss within the group each of our individual visions. One of the benefits of working in 
                     teams is combining different people’s thought processes and background knowledge, and yet this may also provide a disadvantage when communication 
                     is lacking. By creating a solid plan ahead of writing any code, it allows us to ensure that our levels of communication are up to the standards 
-                    expected from a final year capstone project. \\
-    \textbf{Ian:} \\
-    \textbf{Jackson:} \\
-    \textbf{Mark:} \\
+                    expected from a final year capstone project. \\ \\
+    \textbf{Ian:} It ensures the team understands and thinks about the project, even if the thoughts are very abstract and lacking in detail. Without a development plan laid
+                    out the parts of the project are left to interpretation for each team member, which can very significantly. One of the best examples of this was the expected technology section. 
+                    Most of the specific tools and libraries we will use aren't specified, but that’s exactly the point. Even though we didn't set anything in stone like a "plan" typically would, we 
+                    got to discuss possibilities, share expectations, and narrow down our choices. Without this, we would be left to deal with the consequences of not discussing expectations later down 
+                    the road, when deadlines are approaching quickly and stress is high. Decisions made then would not have the opportunity to be refined like they do now, which, I think, would almost 
+                    certainly impact the results of the project negatively.\\ \\
+    \textbf{Jackson:} Development plans are vital to projects even outside of the realm of software projects. In my personal experience, I have been a part of group projects 
+                      in school where we didn’t lay out what we were going to do and how we were going to divide the work, leading to many inefficiencies and missed requirements, resulting 
+                      in loss of marks. All of that could have been prevented if we just laid out a solid development plan. Additionally, when projects come down to the deadline, wasting 
+                      valuable development time on discussing what we should do leads to unnecessary stress which I have experienced. A case could be made for a situation where a development 
+                      plan maybe shouldn’t be fully documented and discussed, such as a proof-of-concept that could be done within the scope of a day.\\ \\
+    \textbf{Mark:} The development plan will be a crucial point of reference for the entire lifespan of our project. The construction of complex systems relies on extremely tight cohesion between collaborating partners, and failures in communication can easily result in messy and difficult situations.
+                   The development plan is an objective overview of the intermediate and end goals of the product, which keeps each worker on the right track. This helps prevent potentially catastrophic miscommunications, such as different goals, different timelines, or different expectations of task delegation. 
+                   In a collaborative product where communication is the difference between success and abject failure, the development plan is the starting point on which all future communication can be based.\\ \\
 
     \item In your opinion, what are the advantages and disadvantages of using
     CI/CD?\\
     \textbf{Emily:} CI/CD acts as the last barrier before deployment, and ensures that only well-tested code makes it to production. In our case, it will help 
                     us to maintain a uniformity across our codebase and prevent us from collecting tech debt as the project matures. That being said, it also will 
                     require a significant amount of effort to get running smoothly, both from the development side and the planning/project management side. It 
-                    can also be resource intensive, which may be hard for a group of students to handle and maintain.  \\
-    \textbf{Ian:} \\
-    \textbf{Jackson:} \\
-    \textbf{Mark:} \\
+                    can also be resource intensive, which may be hard for a group of students to handle and maintain.  \\ \\
+    \textbf{Ian:}  It's similar to an overall development plan in the sense that it can act as a general guideline for the project. Whether that's automation of low-level tasks
+                    or testing. It's a great way to save time especially for projects with a time constraint like ours. An example would be enforcing PR conventions. Standardized and proper 
+                    references to issues really helps cut down the time it takes to understand what a PR is for and why. CI/CD also has the advantage of reducing the number of errors introduced 
+                    into the code base, again saving time that would be lost trying to fix these errors and conflicts. One of the disadvantages I'm worried about is how easy it is to focus too much 
+                    on it. It's very new to me and I'm worried I will spend too much time trying to understand the fine details and perfecting actions rather than working on progressing the project 
+                    goals themselves. I tend to do this with many things, maybe as a way of distracting myself from bigger issues. But reflecting on CI/CD helps me make sure I avoid this mistake.\\ \\
+    \textbf{Jackson:} In my opinion, CI/CD can be extremely valuable in certain situations. For example, in the case of this project, it is valuable to see our merged pull requests 
+                      being integrated immediately without the need for our hands-on management of deployments. This is great for saving time on a project that will last a long time because the value 
+                      of CI/CD goes up the longer a project will be in its development phase. Some disadvantages could be the time it takes to set up and resolve issues that may arise because of it. 
+                      This could take the form of a failed deployment, for a project which has a short development lifecycle, meaning that the time taken to set up CI/CD would be greater than the time-saving it provides.\\ \\
+    \textbf{Mark:} The continuous integration pipeline is a valuable but resource-intensive element of a project. While its initial construction and continuous development require a significant time investment which is not directly related to product development, The CI pipeline helps prevent the introduction of bugs, poor design choices, or non-compliant code, resulting in a cleaner product and fewer setbacks during development. 
+                   However, a downside is that more complex pipelines can take significant time to run, meaning developers might not be notified of failures until several minutes or even hours after a commit. This delay can lead to a choppy and extremely frustrating development experience. To work efficiently with a CI/CD pipeline, it’s best to simplify individual commits while working, and to have alternative tasks to complete while the pipeline runs. 
+                   One of the key advantages of CI is its automatic enforcement—it triggers on every commit or pull request and ensures that merges don’t happen unless all tests pass. This ensures an ironclad adherence to rules and practices, which becomes even more critical as development teams grow. \\ \\
     
     \item What disagreements did your group have in this deliverable, if any,
     and how did you resolve them?
+
+    We had conflicting thoughts on whether or not to mark the addition of initial content as revisions in the revision tables. This was discussed quickly through the use of requesting changes on PRs, which perfectly highlights how important a development plan is since we decided how to structure additions to our repository with PRs. 
+    We also disagreed initially on how to name the project, which didn’t prove to be much of an issue as we followed standard voting protocols to find a name we were all satisfied with. There was another disagreement on whether or not to have real-time signal processing and sheet music generation as a stretch goal. 
+    This problem arose when we were discussing the feasibility of the feature, and if it would even be worth adding it as a stretch goal. We resolved this with a group discussion that led to us choosing to pursue it as a stretch goal, even if it isn’t feasible, as a way to challenge ourselves.
 \end{enumerate}
 
 \newpage{}
 
 \section*{Appendix --- Team Charter}
 
-\wss{borrows from
-\href{https://engineering.up.edu/industry_partnerships/files/team-charter.pdf}
-{University of Portland Team Charter}}
-
 \subsection*{External Goals}
 
-\wss{What are your team's external goals for this project? These are not the
-goals related to the functionality or quality for the project.  These are the
-goals on what the team wishes to achieve with the project.  Potential goals are
-to win a prize at the Capstone EXPO, or to have something to talk about in
-interviews, or to get an A+, etc.}
+Our team’s primary external goal for this project is to maximize learning and skill development in software engineering. We are focused on creating a technically impressive and innovative project 
+to earn the highest possible grade. Additionally, we want to ensure our project can be showcased in interviews and added to our professional portfolios and résumés. These goals will help us stand 
+out when pursuing future opportunities in the tech industry.
 
 \subsection*{Attendance}
 
 \subsubsection*{Expectations}
 
-\wss{What are your team's expectations regarding meeting attendance (being on
-time, leaving early, missing meetings, etc.)?}
+Team members are expected to attend all scheduled meetings on time within reason. Leaving early is acceptable if communicated in advance and if that member has completed their contributions for 
+the meeting. Additionally, all team members may leave if they feel the meeting’s agenda has been completed. Missing meetings should be a rare occurrence, and any absences must be communicated at 
+least 24 hours in advance when possible.
+
 
 \subsubsection*{Acceptable Excuse}
 
-\wss{What constitutes an acceptable excuse for missing a meeting or a deadline?
-What types of excuses will not be considered acceptable?}
+Acceptable excuses for missing a meeting or deadline include illness, family emergencies, or unavoidable academic conflicts (exams or critical project deadlines). Unacceptable excuses include 
+forgetfulness, oversleeping, or personal plans that were not communicated ahead of time. All excuses must be communicated as soon as possible to the rest of the group.
 
 \subsubsection*{In Case of Emergency}
 
-\wss{What process will team members follow if they have an emergency and cannot
-attend a team meeting or complete their individual work promised for a team
-deliverable?}
+If a team member has an emergency and cannot attend a meeting or complete their work, they should notify the team as soon as possible via the agreed-upon communication method. If possible, 
+the team member should provide updates on their progress and share any work that has been completed so far, so others can step in if necessary. In case of an emergency during critical project milestones, 
+the team will redistribute tasks to ensure deadlines are met.
 
 \subsection*{Accountability and Teamwork}
 
 \subsubsection*{Quality} 
 
-\wss{What are your team's expectations regarding the quality
-of team members' preparation for team meetings and the quality of the
-deliverables that members bring to the team?}
+All deliverables should be thoroughly tested, documented, and meet the project’s technical and design standards before being submitted to the team. If a team member encounters difficulties, 
+they should raise a GitHub issue for discussion before the meeting to avoid delays and ensure early feedback. Pull requests raised to change code will be reviewed by at least one other team member, 
+ensuring only quality code is being deployed via CI. Finally, all team members will look over and edit each others’ work for documentation, ensuring everything is clear to the reader.
 
 \subsubsection*{Attitude}
 
-\wss{What are your team's expectations regarding team members' ideas,
-interactions with the team, cooperation, attitudes, and anything else regarding
-team member contributions?  Do you want to introduce a code of conduct?  Do you
-want a conflict resolution plan?  Can adopt existing codes of conduct.}
+We will foster a positive, supportive, and professional team environment where everyone’s ideas are heard and respected. During discussions, we will prioritize constructive feedback and aim to 
+solve problems together. In every interaction, we will emphasize respect, inclusion, and clear communication. Any conflicts will be addressed through open discussions. If unresolved, a neutral 
+team member may mediate, or the issue will be escalated to the TA.
 
 \subsubsection*{Stay on Track}
 
-\wss{What methods will be used to keep the team on track? How will your team
-ensure that members contribute as expected to the team and that the team
-performs as expected? How will your team reward members who do well and manage
-members whose performance is below expectations?  What are the consequences for
-someone not contributing their fair share?}
-
-\wss{You may wish to use the project management metrics collected for the TA and
-instructor for this.}
-
-\wss{You can set target metrics for attendance, commits, etc.  What are the
-consequences if someone doesn't hit their targets?  Do they need to bring the
-coffee to the next team meeting?  Does the team need to make an appointment with
-their TA, or the instructor?  Are there incentives for reaching targets early?}
+For progress tracking we will use GitHub’s issue tracking and Kanban board features to manage tasks, ensuring that all assignments are transparent and visible to the team. Each team member 
+will update the status of their tasks by moving issues across the Kanban board into their respective swim lanes. GitHub commits should reference corresponding issues, ensuring that work is traceable. 
+A meeting chair is appointed to keep meetings on schedule and ensure the meeting agenda is followed.
 
 \subsubsection*{Team Building}
 
-\wss{How will you build team cohesion (fun time, group rituals, etc.)? }
+To strengthen our teamwork, members are encouraged to engage with each other informally outside the scope of this project. As a team ritual, we will celebrate milestones by acknowledging 
+successes and accepting every failure gracefully and as a team.
 
 \subsubsection*{Decision Making} 
 
-\wss{How will you make decisions in your group? Consensus?  Vote? How will you
-handle disagreements? }
+We will aim for consensus in decision-making. If a consensus cannot be reached within a set timeframe, we will hold a majority vote. For major disagreements, we will discuss the pros and 
+cons of each option and if needed, consult a TA, our supervisor, or the professors of the course.
 
 \end{document}
