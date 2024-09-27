@@ -5,7 +5,7 @@
 all:	SRS MG MIS PS VnVP VnVR DevP HazA Refl UGde
 
 SRS:
-	cd SRS && make && cd ..
+	cd SRS-Volere && make && cd ..
 
 MG:
 	cd Design/SoftArchitecture && make && cd ../..
@@ -43,7 +43,7 @@ cleanPS:
 	cd ProblemStatementAndGoals && make clean && cd ..
 
 cleanSRS:
-	cd SRS && make clean && cd ..
+	cd SRS-Volere && make clean && cd ..
 
 cleanMG:
 	cd Design/SoftArchitecture && make clean && cd ..
