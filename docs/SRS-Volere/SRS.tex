@@ -253,11 +253,54 @@ involved in the Project}
 
 \section{Off-the-Shelf Solutions}
 \subsection{Ready-Made Products}
-\lips
+\textbf{Content}: In exploring potential off-the-shelf (OTS) solutions that could fulfill part or all of our project requirements, we have reviewed several existing software products related to music transcription and signal processing. While our primary focus is on learning and building the product from scratch as a capstone project, these products were considered for their applicability and potential use in enhancing our understanding of the field.\\
+\textbf{Motivation}: The goal of this investigation was to consider whether any existing solutions could meet our project’s goals or provide insight into how to address specific technical challenges. Given that our focus is on educational value rather than commercial competition, we explored these solutions to learn from their features and limitations.\\
+
+\textbf{Products Investigated}:
+\begin{itemize}
+    \item \textbf{Sibelius}\\
+    \textbf{Description}: Sibelius is a professional music notation software that supports transcription, editing, and playback of sheet music.\\
+    \textbf{Applicability}: While Sibelius provides a robust notation environment, it does not directly fulfill the core requirement of real-time audio-to-sheet-music transcription. However, its export capabilities (MusicXML and MIDI) align with our needs for cross-compatibility.\\
+    \textbf{Conclusion}: Sibelius is not suitable as a full solution for our project but offers useful insights into notation and export formats.
+    
+    \item \textbf{AnthemScore}\\
+    \textbf{Description}: AnthemScore is an automated music transcription software that converts audio recordings into sheet music.\\
+    \textbf{Applicability}: AnthemScore is the most closely aligned with our project’s goal of audio-to-sheet-music transcription. It uses machine learning to process audio, which could provide valuable lessons on handling real-time audio input and accuracy.\\
+    \textbf{Conclusion}: Although AnthemScore is a ready-made solution for audio transcription, integrating it into our project would limit our learning opportunities. However, understanding its machine learning approach offers valuable technical insights.
+    
+    \item \textbf{MuseScore}\\
+    \textbf{Description}: MuseScore is an open-source music notation software that supports MusicXML and MIDI input/output.\\
+    \textbf{Applicability}: MuseScore offers advanced notation tools and is widely used for music transcription. While it does not handle real-time audio transcription, it could serve as a valuable resource for understanding notation standards and file format handling (MusicXML, MIDI).\\
+    \textbf{Conclusion}: MuseScore provides a strong learning resource for notation and file management, but it is not directly applicable for our audio signal processing goals.
+    
+    \item \textbf{Transcribe!}\\
+    \textbf{Description}: Transcribe! is a software focused on assisting musicians in transcribing audio files into written music manually.\\
+    \textbf{Applicability}: Although Transcribe! focuses more on aiding manual transcription, its use of time-stretching and pitch-shifting techniques for audio processing could offer valuable learning insights for real-time transcription in our project.\\
+    \textbf{Conclusion}: Transcribe! is not a direct solution but may offer useful ideas for how to manage and process audio signals for manual transcription.
+    
+    \item \textbf{Melody Scanner by Klangio}\\
+    \textbf{Description}: Melody Scanner is an online tool that converts audio files, such as recordings of melodies, into sheet music automatically which is the general idea of this project. It focuses on providing a quick and user-friendly way to transcribe melodies for musicians.\\
+    \textbf{Applicability}: Melody Scanner aligns closely with our goal of audio-to-sheet-music transcription. However, its focus is primarily on melodic transcription rather than handling complex polyphonic music or real-time input. Despite this, it offers a straightforward user interface and backend processes that could provide useful insights for our project, particularly in terms of simplicity and user experience.\\
+    \textbf{Conclusion}: While Melody Scanner is not a comprehensive solution for our capstone project’s real-time transcription needs, it offers valuable lessons in streamlining the user interface and simplifying the transcription process for ease of use.
+\end{itemize}
 \subsection{Reusable Components}
-\lips
+The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components which could be extremely useful listed below.\\
+
+\subsubsection{PortAudio (for Audio Input/Output)}
+\textbf{Description}: PortAudio is a widely used open-source library for handling audio input and output across multiple platforms.\\
+\textbf{Rationale for Limited Use}: While audio capture and output are critical components, reinventing this from scratch would require extensive low-level work that would detract from our focus on learning signal processing and transcription. Therefore, we plan to use PortAudio for audio input/output while building the higher-level processing systems ourselves.\\
+
+\subsubsection{MusicXML Format}
+\textbf{Description}: MusicXML is an open standard for music notation interchange, commonly used in music software.\\
+\textbf{Rationale for Limited Use}: Rebuilding a file format from scratch would not significantly contribute to our learning, so we will use MusicXML to ensure compatibility with existing music notation software. However, we will focus our learning efforts on generating and manipulating the MusicXML data from the transcription process.\\
+
 \subsection{Products That Can Be Copied}
-\lips
+Although copying or modifying parts of existing products could save time and effort, our primary goal for this capstone project is to deepen our technical knowledge by solving the challenges ourselves. This section acknowledges the potential solutions but explains why we prefer not to use them, except where strictly necessary. There is one example of an open-source product available to copy from:\\
+
+\subsubsection{LilyPond (Music Notation Rendering)}
+\textbf{Description}: LilyPond is an open-source music engraving program that renders high-quality sheet music. Its notation rendering capabilities could be adapted for our needs.\\
+\textbf{Rationale for Avoiding Copying}: While using LilyPond for notation rendering would simplify output formatting, we aim to build our own system for translating audio to notation and rendering it. This will give us valuable insights into how music notation software operates, which we would miss by relying on LilyPond.\\
+\textbf{Approximate Time Savings}: Copying LilyPond’s functionality could reduce our output formatting time by 30–40\%, but we would miss out on understanding the process of rendering notation from scratch.
 
 \section{New Problems}
 \subsection{Effects on the Current Environment}
