@@ -323,9 +323,23 @@ Inhibit the New Product}
 
 \section{Migration to the New Product}
 \subsection{Requirements for Migration to the New Product}
-\lips
+Since our sheet music generator app is being developed from scratch and does not replace any existing system, there are no traditional migration requirements from an old system to a new one. However, as users may want to transition from using existing software solutions to our product, the following minimal migration efforts are anticipated:
+\begin{itemize}
+    \item \textbf{File Compatibility}: Users should be able to import existing sheet music files (MusicXML) from other music notation or production software such as Sibelius, Finale, and MuseScore. The app must support these file types and ensure accurate translation into the app’s native system.
+    
+    \item \textbf{User Familiarization}: Since the app is new, existing users of other music transcription or notation software may need time to familiarize themselves with the workflow and interface. Providing clear tutorials and guidance within the app will be important to ensure a smooth transition for users.
+    
+    \item \textbf{System Requirements}: The app should clearly communicate its system requirements (e.g., minimum RAM, processor speed) to users transitioning from older or less efficient music notation tools, ensuring their hardware is compatible with the new system.
+\end{itemize}
 \subsection{Data That Has to be Modified or Translated for the New System}
-\lips
+Given that this project is being developed from the ground up, no legacy data exists that needs to be migrated. However, users may bring data from other platforms. The following types of data may need to be translated or modified to work within the new system:
+\begin{itemize}
+    \item \textbf{MusicXML and MIDI Files}: The app must allow seamless import of MusicXML files created on other platforms. Any discrepancies or unsupported elements should be flagged, and users should have the ability to adjust elements that do not translate perfectly.
+    
+    \item \textbf{Audio Files}: Users may import existing audio recordings (WAV, MP3, FLAC) for transcription. The app should accommodate different audio formats and sample rates, translating these into the internal format used for transcription without losing accuracy or quality.
+    
+    \item \textbf{Notation Adjustments}: Imported sheet music may not always align perfectly with the app’s internal notation system. In such cases, the app should automatically translate formatting elements and provide users with editing tools to make manual adjustments where necessary.
+\end{itemize}
 
 \section{Costs}
 \lips
