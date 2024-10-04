@@ -44,8 +44,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+08/10/2024 & 1.0 & Initial Revision\\
 \bottomrule
 \end{tabularx}
 
@@ -77,22 +76,61 @@ Date 2 & 1.1 & Notes\\
 
 \section{Mandated Constraints}
 \subsection{Solution Constraints}
-\lips
-\subsection{Implementation Environment of the Current System}
-\lips
-\subsection{Partner or Collaborative Applications}
-\lips
-\subsection{Off-the-Shelf Software}
-\lips
-\subsection{Anticipated Workplace Environment}
-\lips
-\subsection{Schedule Constraints}
-\lips
-\subsection{Budget Constraints}
-\lips
-\subsection{Enterprise Constraints}
-\lips
+\subsubsection{Technology Stack}
+\textbf{Description}: The app shall be developed using C++ for the core signal processing, Python for backend logic, and HTML/CSS and JavaScript for the user interface.\\
+\textbf{Rationale}: C++ provides efficient signal processing, Python is suitable for rapid development and integration, and HTML/CSS/JavaScript allows for a customizable user interface.\\
+\textbf{Fit Criterion}: The final product shall utilize C++ (minimum version C++17), Python (version 3.8 or higher), and HTML/CSS for the UI, ensuring compatibility with these technologies across all target platforms. The product will also use modern JavaScript frameworks depending on the needs of the UI.
+\subsubsection{Open-Source Libraries}
+\textbf{Description}: The app shall use open-source libraries and frameworks where applicable to save both time and money.\\
+\textbf{Rationale}: The use of open-source libraries ensures cost-effectiveness and allows for community-driven improvements and support.\\
+\textbf{Fit Criterion}: All third-party libraries used in the project must be licensed under open-source agreements such as MIT, GPL, or Apache licenses which allow for free use.
 
+\subsection{Implementation Environment of the Current System}
+\subsubsection{Hardware Specifications}
+\textbf{Description}: The app shall run on personal computers with a minimum of 8GB RAM, a dual-core processor, and 256GB of available storage space.\\
+\textbf{Rationale}: These hardware specifications are typical of the devices used by musicians and producers, ensuring the app performs efficiently.\\
+\textbf{Fit Criterion}: The app must pass performance tests on machines meeting the minimum hardware requirements, with no more than a 5\% reduction in performance under heavy load.
+\subsubsection{Audio Input Devices}
+\textbf{Description}: The app shall support standard audio input devices, including USB microphones, and built-in microphones, with audio input via USB, or 3.5mm audio jacks.\\
+\textbf{Rationale}: These input devices are commonly used by musicians to capture sound, ensuring the app is compatible with existing hardware setups.\\
+\textbf{Fit Criterion}: The app must successfully capture and process audio from these devices, maintaining accurate signal-to-sheet transcription in at least 95\% of test cases.
+
+\subsection{Partner or Collaborative Applications}
+\subsubsection{Music Notation Software}
+\textbf{Description}: The app shall collaborate with music notation software such as Sibelius, Finale, and MuseScore to export sheet music in formats compatible with these applications. These can be seen as ‘partner’ applications since they fit very well with a use case for the application.\\
+\textbf{Rationale}: Many composers rely on professional notation software to finalize and edit their sheet music, so it’s essential that the app exports accurate, compatible sheet music files.\\
+\textbf{Fit Criterion}: The app must export MusicXML and MIDI files that are fully compatible with the latest versions of Sibelius, Finale, and MuseScore, without requiring manual adjustments during import.
+
+\subsection{Off-the-Shelf Software}
+\subsubsection{MusicXML Format for Sheet Music}
+\textbf{Description}: The app shall use MusicXML as the primary format for storing and exporting sheet music data.\\
+\textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability.\\
+\textbf{Fit Criterion}: The app must successfully export sheet music in MusicXML format, ensuring compatibility with the latest versions of major music notation software, without requiring manual adjustments by the user.
+\subsubsection{Backward Compatibility}
+\textbf{Description}: The app shall support both current and older versions of the MusicXML format to ensure maximum compatibility with various notation tools.\\
+\textbf{Rationale}: As different users may be using different versions of music notation software, supporting older MusicXML formats ensures accessibility and broader usability.\\
+\textbf{Fit Criterion}: The app must successfully import and export MusicXML files using both the latest version of MusicXML and at least one earlier version (e.g., MusicXML 2.0).
+
+\subsection{Anticipated Workplace Environment}
+\subsubsection{Indoor and Studio-Based Environments}
+\textbf{Description}: The app shall be designed primarily for indoor environments, such as home studios, professional recording studios, classrooms, and offices where musicians and composers typically work.\\
+\textbf{Rationale}: Most users will be working in controlled indoor environments where factors like lighting and noise levels will vary. The app must function optimally in these settings without relying on environmental conditions.\\
+\textbf{Fit Criterion}: The app must be tested in various indoor settings (studios, offices, classrooms) with different lighting and noise levels to ensure usability and performance are not impacted by normal environmental variations.
+\subsubsection{Noise Considerations}
+\textbf{Description}: The app shall operate effectively in environments with moderate background noise, such as music rehearsal rooms or live performance spaces, without relying on audible notifications.\\
+\textbf{Rationale}: Musicians often work in noisy environments. The app should rely on visual feedback rather than any sound-based notifications and should retain its signal-processing ability (see requirement EP-OE).\\
+\textbf{Fit Criterion}: The app must be tested in environments with background noise levels of up to 70 dB to ensure that users can rely solely on visual cues.
+\subsubsection{Portable Workspaces}
+\textbf{Description}: The app shall be designed to accommodate musicians working in mobile or temporary workspaces, such as cafes or on-the-go setups using laptops.\\
+\textbf{Rationale}: Musicians often work on the move or in shared spaces where setting up large equipment is impractical. The app must be optimized for laptops with limited screen space and varying internet connectivity.\\
+\textbf{Fit Criterion}: The app must be tested for usability on laptops with screen sizes as small as 13 inches.
+
+\subsection{Schedule Constraints}
+Schedule constraints are provided by the capstone course itself, for a detailed schedule refer to the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{development plan document, section 8.}
+\subsection{Budget Constraints}
+A maximum budget for this project of \$750 has been identified by the capstone course professors. This amount will likely be fine for our project but additional spending will be approved on a case-by-case basis.
+\subsection{Enterprise Constraints}
+Since this project is being completed for the McMaster University Capstone course, we must adhere to all constraints provided by the \href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/CourseOutline/Capstone_Outline.pdf}{Course Outline Document.}
 \section{Naming Conventions and Terminology}
 \subsection{Glossary of All Terms, Including Acronyms, Used by Stakeholders
 involved in the Project}
