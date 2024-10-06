@@ -154,93 +154,140 @@ involved in the Project}
 
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
-\subsection*{SL-PR1 User Interface Response Time}
-\textbf{Requirement:} The interface between the user and the sheet music generator app shall have a maximum response time of 2 seconds when processing input or selecting menu options.\\
-\textbf{Fit Criterion:} The product shall respond in less than 1 second for 90 percent of user interactions. No response shall take longer than 2.5 seconds.
-\subsection*{SL-PR2 File Import and Export Speed}
+\subsubsection{PR-SL1 User Interface Response Time}
+\textbf{Requirement:} The interface between the user and the sheet music generator app shall within a reasonable time when processing input or selecting menu options.\\
+\textbf{Fit Criterion:} The product shall respond in a reasonable time when users interact with its interface.
+\subsubsection{PR-SL2 File Import and Export Speed}
 \textbf{Requirement:} The app shall import and export music files within a reasonable time for files up to 100MB in size.\\
 \textbf{Fit Criterion:} For files up to 100MB, the app shall import and export them within a reasonable time frame for their system for more than 95 percent of operations.
 
 \subsection{Safety-Critical Requirements}
-\subsection*{SC-PR1 Epilepsy Safety}
+\subsubsection{PR-SC1 Epilepsy Safety}
 \textbf{Requirement:} The app shall not display rapid flashing lights, animations, or any visual effects that could trigger epileptic seizures in users.\\
 \textbf{Fit Criterion:} The app’s graphical interface must comply with WCAG 2.1 (Web Content Accessibility Guidelines) for flashing content, limiting visual effects to fewer than 3 flashes per second. The interface will be tested with accessibility tools to ensure compliance with these standards.
-\subsection*{SC-PR2 Instrument Input Setup}
+\subsubsection{PR-SC2 Instrument Input Setup}
 \textbf{Requirement:} The app shall guide users through the correct setup of instrument input to prevent audio misconfiguration, damage to the user/instrument, and damage to the application’s device.\\
 \textbf{Fit Criterion:} The app will include an interactive, step-by-step tutorial for configuring instrument inputs (via external devices or microphones). The setup process should be completed with a 95\% success rate based on user testing, ensuring correct audio input detection on the first attempt.
 
 \subsection{Precision or Accuracy Requirements}
-\subsection*{PA-PR1 Pitch Detection Accuracy}
-\textbf{Requirement:} A critical requirement of this app is the precision at which it identifies notes. As a result, this app shall detect musical pitch from instrument input with an accuracy of ±5 cents (1/20th of a semitone) to ensure that all notes are transcribed correctly.\\
-\textbf{Fit Criterion:} The app must maintain this pitch accuracy over 100 test cases involving diverse instruments and note ranges, with no more than 1\% error.
-\subsection*{PA-PR2 Timing Accuracy}
-\textbf{Requirement:} The app shall accurately capture note durations and rhythms within a tolerance of ±20 milliseconds to ensure correct rhythmic transcription.\\
-\textbf{Fit Criterion:} The app must maintain timing accuracy within the specified tolerance for both slow and fast tempos (ranging from 40 to 240 BPM) across 100 test cases.
+\subsubsection{PR-PA1 Pitch Detection Accuracy}
+\textbf{Requirement:} A critical requirement of this app is the precision at which it identifies notes. As a result, this app shall correctly detect musical pitch from instruments' input to ensure that all notes are transcribed correctly.\\
+\textbf{Fit Criterion:} The app must maintain this pitch accuracy over all test cases involving diverse instruments and note ranges, with no more than 1\% error.
+\subsubsection{PR-PA2 Timing Accuracy}
+\textbf{Requirement:} The app shall accurately capture note durations and rhythms within a reasonable tolerance to ensure correct rhythmic transcription.\\
+\textbf{Fit Criterion:} The app must maintain timing accuracy within the specified tolerance across all test cases.
 
 \subsection{Robustness or Fault-Tolerance Requirements}
-\subsection*{RFT-PR1 Reliability (Time Between Failures)}
+\subsubsection{PR-RFT1 Reliability (Time Between Failures)}
 \textbf{Requirement:} The app shall operate continuously for at least 24 hours between failures or system crashes, ensuring that users experience minimal interruptions during usage.\\
 \textbf{Fit Criterion:} The app must pass reliability testing by operating under typical usage conditions for 24 hours without a failure in at least 95\% of test cases.
-\subsection*{RFT-PR2 Availability (Uptime)}
+\subsubsection{PR-RFT2 Availability (Uptime)}
 \textbf{Requirement:} The app shall achieve 99.5\% uptime, ensuring that it is available for use at nearly all times, excluding brief periods for necessary updates or maintenance.\\
 \textbf{Fit Criterion:} The app must demonstrate an average of 99.5\% uptime over a reasonable time.
-\subsection*{RFT-PR3 Crash Recovery}
+\subsubsection{PR-RFT3 Crash Recovery}
 \textbf{Requirement:} In an unexpected crash, the app shall automatically save the user’s current session, including any partially transcribed sheet music, and allow the user to recover their work upon restart.\\
 \textbf{Fit Criterion:} During testing, the app must successfully recover user data in 98\% of cases where a crash occurs, with no data loss.
-\subsection*{RFT-PR4 Performance Under Load}
+\subsubsection{PR-RFT4 Performance Under Load}
 \textbf{Requirement:} The app shall maintain reliable performance under conditions of high user activity (e.g., processing complex polyphonic inputs or large files) without significant slowdowns or crashes.\\
 \textbf{Fit Criterion:} The app must maintain stable performance, with no more than a 30\% decrease in processing speed, when tested under maximum expected load conditions.
-\subsection*{RFT-PR5 Handling Signal Interruptions}
+\subsubsection{PR-RFT5 Handling Signal Interruptions}
 \textbf{Requirement:} The app shall continue to operate and retain the audio signals received up to the point of interruption, even if the instrument input is temporarily lost (e.g., due to cable disconnection or microphone failure).\\
 \textbf{Fit Criterion:} The app must store buffered audio data for up to 2 minutes during signal interruptions and automatically resume transcription once the input is restored, with 0\% data loss in at least 95\% of test cases.
-\subsection*{RFT-PR6 Graceful Degradation}
+\subsubsection{PR-RFT6 Graceful Degradation}
 \textbf{Requirement:} In the event of a performance slowdown (e.g., due to excessive input data or limited system resources), the app shall degrade its services gracefully by notifying the user of delays without crashing.\\
 \textbf{Fit Criterion:} During stress testing under heavy load (e.g., multiple instruments or large file sizes), the app must maintain operational status and notify the user of delays or lowered performance within 5 seconds of detection, with no system crashes in 100 test cases.
-\subsection*{RFT-PR7 Automatic Recovery from Software Glitches}
+\subsubsection{PR-RFT7 Automatic Recovery from Software Glitches}
 \textbf{Requirement:} If the app encounters a minor software error (e.g., unexpected input format or corrupted file), it shall log the error, notify the user, and continue functioning by skipping the problematic section rather than halting it.\\
 \textbf{Fit Criterion:} The app must pass testing by handling minor software errors in at least 90\% of cases without crashing and will log the issue for future debugging.
 
 \subsection{Capacity Requirements}
-\subsection*{C-PR1 Audio Input Capacity}
+\subsubsection{PR-C1 Audio Input Capacity}
 \textbf{Requirement:} The app shall process audio input of up to 90 minutes of continuous recording in a single session without performance degradation.\\
 \textbf{Fit Criterion:} The app must be tested with audio recordings of varying lengths (up to 90 minutes) and successfully process and transcribe the entire duration with no more than a 5\% slowdown in transcription speed or accuracy.
-\subsection*{C-PR2 Storage of Generated Sheet Music}
-\textbf{Requirement:} The app shall store up to 500 sheet music files per user, each up to 10MB in size, while maintaining access to all files without significant delays.\\
+\subsubsection{PR-C2 Storage of Generated Sheet Music}
+\textbf{Requirement:} The app shall store up to 500 sheet music files per user, each up to 100MB in size, while maintaining access to all files without significant delays.\\
 \textbf{Fit Criterion:} The app must be tested with up to 500 saved sheet music files per user, and it must be able to retrieve and open any file within a reasonable time for at least 95\% of test cases.
-\subsection*{C-PR3 Simultaneous User Sessions}
+\subsubsection{PR-C3 Simultaneous User Sessions}
 \textbf{Requirement:} The app shall support at least 100 simultaneous user sessions (local or cloud-based) without degradation in performance or delays in processing.\\
 \textbf{Fit Criterion:} During testing with 100 simultaneous active user sessions, the app must maintain performance levels, including stable response times and transcription accuracy, with no noticeable slowdown in 95\% of test cases.
 
 \subsection{Scalability or Extensibility Requirements}
-\subsection*{SE-PR1 User Base Growth}
+\subsubsection{PR-SE1 User Base Growth}
 \textbf{Requirement:} The app shall be capable of scaling to support an increase in the user base to 1000 users without requiring major architectural changes.\\
 \textbf{Fit Criterion:} The app’s infrastructure must be designed to scale up by a factor of 10 and should undergo stress testing to ensure it can handle 1000 simultaneous user sessions with no significant performance degradation.
-\subsection*{SE-PR2 Data Storage Expansion}
-\textbf{Requirement:} The app shall scale to store up to 1 million sheet music files, each up to 10MB in size, by implementing efficient data storage and retrieval mechanisms.\\
+\subsubsection{PR-SE2 Data Storage Expansion}
+\textbf{Requirement:} The app shall scale to store up to 1 million sheet music files, each up to 100MB in size, by implementing efficient data storage and retrieval mechanisms.\\
 \textbf{Fit Criterion:} The app must be tested for large-scale storage handling, with performance benchmarks showing the ability to manage 1 million files without delays exceeding 5 seconds for any retrieval operation.
-\subsection*{SE-PR3 Feature Extensibility}
+\subsubsection{PR-SE3 Feature Extensibility}
 \textbf{Requirement:} The app shall be designed with a modular architecture that allows for future feature additions, such as multi-instrument detection or cloud-based collaboration tools, without requiring significant refactoring.\\
 \textbf{Fit Criterion:} The app must pass code reviews and architecture validation to ensure it can integrate additional modules or features within 6 months of the product’s initial release, with minimal impact on core functionalities.
-\subsection*{SE-PR4 Processing Power for Complex Music Compositions}
+\subsubsection{PR-SE4 Processing Power for Complex Music Compositions}
 \textbf{Requirement:} The app shall be built to be able to scale its processing capabilities to handle future complex compositions involving multiple simultaneous instrument tracks supporting growth for polyphony.\\
 \textbf{Fit Criterion:} During testing, the app must demonstrate the ability to process increasingly complex musical arrangements.
 
 \subsection{Longevity Requirements}
-\subsection*{L-PR1 Expected Lifetime}
+\subsubsection{PR-L1 Expected Lifetime}
 \textbf{Requirement:} The app shall be designed to operate effectively with regular software updates and minor maintenance for a minimum of five years without requiring a major rewrite or overhaul.\\
 \textbf{Fit Criterion:} The app’s development roadmap must include planned updates and feature expansions to maintain functionality and relevance for at least five years after launch.
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
-\lips
+\subsubsection{OE-EP1 Operating Environment}
+\textbf{Requirement:} The app shall be used on personal computers or laptops in typical indoor environments, such as home studios, classrooms, or offices. It should perform well under varying levels of ambient noise.\\
+\textbf{Fit Criterion:} The app must be tested in multiple indoor settings and perform well without requiring any environment-specific adjustments.
+\subsubsection{OE-EP2 Noise and Audio Input Quality}
+\textbf{Requirement:} The app shall be able to capture clear audio input in environments with moderate ambient noise, such as home studios or cafes, without significant degradation in transcription accuracy.\\
+\textbf{Fit Criterion:} The app must be tested in environments with background noise to ensure that it can still accurately capture and process audio inputs without more than a 5\% drop in accuracy.
+\subsubsection{OE-EP3 Workspace Flexibility}
+\textbf{Requirement:} The app shall be usable on laptops with limited screen space, such as 13-inch displays, and must adjust its layout to accommodate various screen resolutions and sizes.\\
+\textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all screen sizes and resolutions.
+\subsubsection{OE-EP4 Portable Setup Compatibility}
+\textbf{Requirement:} The app shall be compatible with portable setups, such as laptops used in temporary workspaces like cafes or live performance venues, ensuring that it can be used effectively in different environments without special hardware.\\
+\textbf{Fit Criterion:} The app must function smoothly on portable setups with wireless internet and standard laptop hardware, and be tested for usability in transient environments where quick setup and breakdown are required.
+
 \subsection{Wider Environment Requirements}
-\lips
+\subsubsection{OE-WE1 General Hardware}
+\textbf{Requirement:} The app shall operate effectively across various computing environments, including different operating systems. The app shall also function reliably on devices with varying hardware specifications.\\
+\textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all typical screen sizes and resolutions.
+
 \subsection{Requirements for Interfacing with Adjacent Systems}
-\lips
+\subsubsection{OE-IA1 Audio Input Devices}
+\textbf{Requirement:} The app shall interface with standard audio input devices, including USB microphones, instrument pickups, and built-in computer microphones.\\
+\textbf{Fit Criterion:} The app must support audio input via devices adhering to USB Audio Class 1.0 and higher, and be tested with common setups (e.g., USB microphones, line-in jacks).\\
+\textbf{Data Content:} Digital audio signals from instrument microphones or pickups.\\
+\textbf{Physical Material Content:} Audio input via USB cable or built-in computer microphone.\\
+\textbf{Standards/Protocols:} USB Audio Class.
+\subsubsection{OE-IA2 Audio File Import and Export}
+\textbf{Requirement:} The app shall interface with common audio file formats for both import and export, including WAV and MP3.\\
+\textbf{Fit Criterion:} The app must successfully import and export audio files in WAV (PCM), and MP3 (MPEG-1 Layer III).\\
+\textbf{Data Content:} Audio file data.\\
+\textbf{Physical Material Content:} Digital audio file.\\
+\textbf{Standards/Protocols:} WAV (PCM), MP3.
+\subsubsection{OE-IA3 Music Notation Software Integration}
+\textbf{Requirement:} The app shall export sheet music in formats compatible with popular music notation software, including MusicXML and MIDI files.\\
+\textbf{Fit Criterion:} The app must generate MusicXML and MIDI files compatible with the software.\\
+\textbf{Data Content:} Music notation in XML or MIDI format.\\
+\textbf{Physical Material Content:} Digital notation file.\\
+\textbf{Standards/Protocols:} MusicXML, MIDI 1.0.
+
 \subsection{Productization Requirements}
-\lips
+\subsubsection{OE-P1 Distribution}
+\textbf{Requirement:} The app shall be distributed as a downloadable executable file.\\
+\textbf{Fit Criterion:} The app must be packaged in an installer that can be downloaded from a website or software repository, with no additional dependencies required for installation.
+\subsubsection{OE-P2 Installation Process}
+\textbf{Requirement:} The product shall be capable of being installed by an untrained user with minimal technical knowledge, requiring minimal steps from download to full installation.\\
+\textbf{Fit Criterion:} The installation wizard must guide the user through the process, providing automatic configuration options and requiring minimal user input. Instructions must be included within the installer interface.
+\subsubsection{OE-P3 Size and Compatibility}
+\textbf{Requirement:} The app’s installation file size shall not exceed 500MB, ensuring that the product can be easily downloaded even with moderate internet connections.\\
+\textbf{Fit Criterion:} The app must be easily installed on a variety of systems.
+\subsubsection{OE-P4 Post-Installation Configuration}
+\textbf{Requirement:} The product shall configure its default settings upon installation, but allow users to modify these settings (e.g., input source, output format) during or after the installation process.\\
+\textbf{Fit Criterion:} A settings configuration panel must be accessible from the app's user interface, allowing users to adjust settings without needing to edit configuration files manually.
+
 \subsection{Release Requirements}
-\lips
+\subsubsection{OE-R1 Initial Release}
+\textbf{Requirement:} The first stable version of the app shall be released within the timeline of this capstone course after completing the testing and POC phase. This release will include core functionality such as converting instrument signals to sheet music and basic editing capabilities.\\
+\textbf{Fit Criterion:} The initial release must undergo testing and pass all quality assurance checks. Core features must be fully operational, and the product should be ready for general use without major bugs.
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
