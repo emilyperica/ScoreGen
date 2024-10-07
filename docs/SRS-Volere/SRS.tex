@@ -180,25 +180,67 @@ involved in the Project}
 \subsection{Release Requirements}
 \lips
 
+
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
-\lips
+\subsection*{MS-M1 Version Releases}
+\textbf{Requirement:} The system must notify the user of new releases of the system. \\ 
+\textbf{Fit Criterion:} Following a new version release of the system, the next time the user opens the application with an internet connection they will be prompted to install the new release. 
+\subsection*{MS-M2 System Crash}
+\textbf{Requirement:} The application must self-boot following a system crash. \\ 
+\textbf{Fit Criterion:} A non-user prompted shutdown of the system shall result in the application reopening without losing data from the user’s previous session.
+
 \subsection{Supportability Requirements}
-\lips
+\subsection*{MS-S1 Software Bugs}
+\textbf{Requirement:} The system must allow users to report bugs to the development team. \\ 
+\textbf{Fit Criterion:} The development team shall be notified via email within 1 hour of a user submitting a report via the GUI.
+\subsection*{MS-S2 Monophonic Signals}
+\textbf{Requirement:} The system must support monophonic signals from a single instrument. \\ 
+\textbf{Fit Criterion:} The system accurately identifies the pitch and note length of a monophonic signal 95\% of the time.
+\subsection*{MS-S3 Polyphonic Signals}
+\textbf{Requirement:} The system must support polyphonic signals from a single instrument. \\ 
+\textbf{Fit Criterion:} The system accurately identifies the pitches and length of up to 5 notes played simultaneously 95\% of the time.
+\subsection*{MS-S4 Audio Input}
+\textbf{Requirement:} The system must support audio input from a keyboard or an electric guitar. \\ 
+\textbf{Fit Criterion:} The system shall produce output files given keyboard or electric guitar input of sufficient clarity (see <req>)
+\subsection*{MS-S5 Operating System}
+\textbf{Requirement:} The system must operate on Windows 10 and 11. \\ 
+\textbf{Fit Criterion:} The system shall be compatible with Windows 10 and later version such that it performs all expected functionalities
+
 \subsection{Adaptability Requirements}
-\lips
+\subsection*{MS-A1 Internet Connection}
+\textbf{Requirement:} The system must function with or without an internet connection. \\ 
+\textbf{Fit Criterion:} User experience of the system will be consistent during usage on an online device as well as an offline device.
+\subsection*{MS-A2 GUI Navigation}
+\textbf{Requirement:} The GUI must be navigable using keyboard shortcuts without requiring a mouse. \\ 
+\textbf{Fit Criterion:} The system shall remain functional and usable when a mouse is not connected to the device running the system.
+
 
 \section{Security Requirements}
 \subsection{Access Requirements}
-\lips
+\subsection*{S-A1 User Authentication}
+\textbf{Requirement:} The system must not require a login or password to be accessed. \\ 
+\textbf{Fit Criterion:} The user successfully accesses the system without performing any authentication activities.
+
 \subsection{Integrity Requirements}
-\lips
+N/A
+
 \subsection{Privacy Requirements}
-\lips
+\subsection*{S-P1 Data Storage}
+\textbf{Requirement:} The system must store user data (i.e., output files) in a local user-chosen location. \\ 
+\textbf{Fit Criterion:} All output files appear in the user-inputted location such that the user has read and write capabilities over the files. 
+\subsection*{S-P2 PII}
+\textbf{Requirement:} The system must not collect Personal Identifiable Information (PII) from the user. \\ 
+\textbf{Fit Criterion:} The user is never prompted to supply information to the system other than audio input files. 
+\subsection*{S-P3 Input Data}
+\textbf{Requirement:} The system must not store audio data once it has been processed. \\ 
+\textbf{Fit Criterion:} All caches and temporary files are cleared from the system once signal processing is completed.
+
 \subsection{Audit Requirements}
-\lips
+N/A
 \subsection{Immunity Requirements}
-\lips
+N/A
+
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
