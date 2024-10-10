@@ -30,6 +30,7 @@
 \date{\today}
 	
 \maketitle
+\thispagestyle{empty}
 
 ~\newpage
 
@@ -52,6 +53,8 @@ Date 2 & 1.1 & Notes\\
 ~\\
 
 ~\newpage
+
+\pagenumbering{arabic}
 \section{Purpose of the Project}
 \subsection{User Business}
 \lips
@@ -236,9 +239,78 @@ Inhibit the New Product}
 
 \section{Tasks}
 \subsection{Project Planning}
-\lips
+
+The following table displays the tasks and associated deadlines that make up the lifecycle of the project.
+\begin{table}
+  \begin{tabular}{ |c|c| } 
+    \hline
+      \textbf{Due Date} & \textbf{Task} \\
+    \hline
+      Sept 24/24 & Problem Statement, POC Plan, Development Plan \\
+    \hline
+      Oct 11/24 & Requirements Document Revision 0 \\
+    \hline
+      Oct 23/24 & Hazard Analysis \\
+    \hline
+      Nov 1/24 & V\&V Plan Revision 0 \\
+    \hline
+      Nov 11/24 & Proof of Concept Demonstration \\
+    \hline
+      Jan 15/25 & Design Document Revision 0 \\
+    \hline
+      Feb 3/25* & Revision 0 Demonstration \\
+    \hline
+      Mar 7/25 & V\&V Report Revision 0 \\
+    \hline
+      Mar 24/25 & Final Demonstration (Revision 1) \\
+    \hline
+      Apr \#\#/25 - TBD & Expo Demonstration \\
+    \hline
+      Apr 2/25 & Final Documentation (Revision 1) \\
+    \hline
+  \end{tabular}
+  \caption{Project Plan}
+\end{table}
+
+
+
 \subsection{Planning of the Development Phases}
-\lips
+\subsubsection*{Phase 1: Proof of Concept}
+\textbf{Benefit to user:} This phase will result in an MVP to present to relevant stakeholders, ensuring that the development team remains aware of potential users and their related needs. \\
+\textbf{Required operational date:} Nov 11/24 \\
+\textbf{System components included:} Backend subsytem. \\
+\textbf{Related functional requirements:} \\
+\textbf{Related non-functional requirements:} \\
+
+\subsubsection*{Phase 2: Backend Development}
+\textbf{Benefit to user:} The core functionality of the system will be developed in this phase. This is projected to occur at the same time as Phase 3.\\
+\textbf{Required operational date:} Jan 15/25 \\
+\textbf{System components included:} Backend subsytem containt the main functionalities of the system, namely signal processing of audio input and generation of output files (i.e., sheet music). 
+                                     This phase will also include necessary hardware components for signal processing and testing, such as a keyboard/guitar, microphone, audio interfacer, amplifiers, audio cables, and other audio equipment as necessary.\\
+\textbf{Related functional requirements:} \\
+\textbf{Related non-functional requirements:} \\
+
+\subsubsection*{Phase 3: User Interface}
+\textbf{Benefit to user:} This phase will make the system usable by the intended customer, so that technical knowledge is not necessary to operate the system. This is projected to occur at the same time as Phase 2. \\
+\textbf{Required operational date:} Jan 15/25 \\
+\textbf{System components included:} Frontend subsytem. \\
+\textbf{Related functional requirements:} \\
+\textbf{Related non-functional requirements:} \\
+
+\subsubsection*{Phase 4: Integration of Subsystems and Deployment}
+\textbf{Benefit to user:} This phase will result in the completion of revision 0, such that all core functionalities are present in the system and all implementation details are abstracted from user view. \\
+\textbf{Required operational date:} Feb 3/25 \\
+\textbf{System components included:} Backend subsystem, frontend subsytem.\\
+\textbf{Related functional requirements:} \\
+\textbf{Related non-functional requirements:} \\
+
+\subsubsection*{Phase 5: Refinements}
+\textbf{Benefit to user:} This phase will focus on implementing stretch goals and waiting room requirements into the system. \\
+\textbf{Required operational date}: Mar 24/25 \\
+\textbf{System components included:} \\
+\textbf{Related functional requirements:} \\
+\textbf{Related non-functional requirements:} \\
+
 
 \section{Migration to the New Product}
 \subsection{Requirements for Migration to the New Product}
