@@ -131,8 +131,73 @@ involved in the Project}
 \lips
 
 \section{Functional Requirements}
-\subsection{Functional Requirements}
-\lips
+\subsection{Audio Input Handling}
+\subsubsection*{FR-AI1 Audio Formats}
+\textbf{Requirement:} The system shall accept audio input from users in various formats (e.g., WAV, MP3, AAC). \\
+\textbf{Fit Criterion:} The system confirms a succesful upload.
+\subsubsection*{FR-AI2 Audio Recording}
+\textbf{Requirement:} The system shall provide a user interface for recording audio directly through a microphone connected to the user's device. \\
+\textbf{Fit Criterion:} The system displays a confirmation of reception during real-time recording.
+\subsubsection*{FR-AI3 Audio Uploads}
+\textbf{Requirement:} The system shall allow users to upload pre-recorded audio files. \\
+\textbf{Fit Criterion:} The system confirms reception of the pre-recorded audio file.
+\subsubsection*{FR-AI4 User Input}
+\textbf{Requirement:} The user shall give their instrument (i.e., piano or guitar) to the system as input. \\
+\textbf{Fit Criterion:} The interface and concert pitch of the generated sheet music reflect the user's choice.
+
+\subsection{Signal Processing}
+\subsubsection*{FR-SP1 Noise Reduction}
+\textbf{Requirement:} The system shall perform noise reduction on the audio input to enhance quality. \\
+\textbf{Fit Criterion:} The system generates identical sheet music for input with no background noise and input with a 10\% increase in background noise.
+\subsubsection*{FR-SP2 Note Identification}
+\textbf{Requirement:} The system shall analyze the audio to identify pitch and rhythm. \\
+\textbf{Fit Criterion:} The generated sheet music visually matches expected notes from a reference audio source and corresponding sheet music.
+\subsubsection*{FR-SP3 Key and Time Signature Identification}
+\textbf{Requirement:}	The system shall analyze the audio to identify the key and time signatures. \\
+\textbf{Fit Criterion:} The system correctly identifies key and time signatures or their equivalencies (e.g. a minor to C major, common time to cut time) from a reference audio source and corresponding sheet music.
+\subsubsection*{FR-SP4 Processing Limitations}
+\textbf{Requirement:} The system gracefully handles overly complex audio input (i.e., it is unable to perform accurate signal processing). \\
+\textbf{Fit Criterion:} The system notifies the user that their input cannot be processed.
+\subsubsection*{FR-SP5 Polyphonic Audio}
+\textbf{Requirement:} The system shall handle polyphonic audio, allowing for multiple notes to be detected simultaneously. \\
+\textbf{Fit Criterion:} The generated sheet music contains chords/simultaneous melody.
+\subsubsection*{FR-SP6 Monophonic Audio}
+\textbf{Requirement:} The system shall handle monophonic audio. \\
+\textbf{Fit Criterion:} The generated sheet music contains single pitch notes.
+
+\subsection{Sheet Music Generation}
+\subsubsection*{FR-SMG1 Notation}
+\textbf{Requirement:} The system shall generate sheet music in standard music notation based on the parsed audio data. \\
+\textbf{Fit Criterion:} The generated sheet music is visually comparable to a reference piece of sheet music.
+\subsubsection*{FR-SMG2 Concert Pitch}
+\textbf{Requirement:} The system shall generate sheet music in the concert pitch of the instrument played in the audio input. \\
+\textbf{Fit Criterion:} The generated sheet music visually matches expected notes from a reference audio source and corresponding sheet music.
+\subsubsection*{FR-SMG3 Post-Processing Edits}
+\textbf{Requirement:} The system shall allow users to view and edit the generated sheet music within the application. \\
+\textbf{Fit Criterion:} Changes made by the user are reflected in the output files produced during sheet music generation.
+
+\subsection{User Interface}
+\subsubsection*{FR-UI2 System Feedback}
+\textbf{Requirement:} The interface shall display processing feedback during audio input. \\
+\textbf{Fit Criterion:} Feedback from system is displayed to the user within 2 seconds of their input.
+\subsubsection*{FR-UI3 System Documentation}
+\textbf{Requirement:} The system shall provide help documentation and user guides for each feature. \\
+\textbf{Fit Criterion:} At least 90\% of users during user testing find the interface easy to navigate.
+\subsubsection*{FR-UI4 User Feedback}
+\textbf{Requirement:} The system shall provide a feedback mechanism for users to report issues or suggest features. \\
+\textbf{Fit Criterion:} The development team successfully receives user feedback via the feedback mechanism 100\% of the time.
+\subsubsection*{FR-UFI5 Customer Support}
+\textbf{Requirement:} The system shall include customer support contact information for troubleshooting. \\
+\textbf{Fit Criterion:} At least 90\% of users during user testing report successfull interactions with customer support.
+
+\subsection{Save and Load}
+\subsubsection*{FR-SL1 Save}
+\textbf{Requirement:} The system shall allow users to save their work, including both audio files and generated sheet music. \\
+\textbf{Fit Criterion:} 100\% of the time when the system reports a succesfull save, the user is succesfully able to locate the audio files and generated sheet music.
+\subsubsection*{FR-SL2 Load}
+\textbf{Requirement:} The system shall support loading previously saved audio files and generated sheet music for further editing. \\
+\textbf{Fit Criterion:} The system sucesfully retains user progress such that the user may return to their unfinished work seamlessly.
+
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
