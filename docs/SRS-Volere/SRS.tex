@@ -172,7 +172,7 @@ involved in the Project}
 \subsection{Precision or Accuracy Requirements}
 \subsubsection{PR-PA1 Pitch Detection Accuracy}
 \textbf{Requirement:} This app shall correctly detect musical pitch from instruments' input to ensure that all notes are transcribed correctly.\\
-\textbf{Fit Criterion:} The app must maintain this pitch accuracy over all test cases involving diverse instruments and note ranges, with no more than 1\% error.
+\textbf{Fit Criterion:} The app must maintain this pitch accuracy over all test cases involving diverse instruments and note ranges, with no more than 1\% error. Also must satisfy requirement OE-EP1 for noise tolerance.
 \subsubsection{PR-PA2 Timing Accuracy}
 \textbf{Requirement:} The app shall accurately capture note durations and rhythms within a reasonable tolerance to ensure correct rhythmic transcription.\\
 \textbf{Fit Criterion:} The app must maintain timing accuracy within the specified tolerance across all test cases.
@@ -213,15 +213,12 @@ involved in the Project}
 
 \subsection{Scalability or Extensibility Requirements}
 \subsubsection{PR-SE1 User Base Growth}
-\textbf{Requirement:} The app shall be capable of scaling to support an increase in the user base to 1000 users without requiring major architectural changes.\\
+\textbf{Requirement:} The app shall be capable of scaling to support an increase in the user base to 1000 users without requiring major architectural changes to support a change from personal to commercial use.\\
 \textbf{Fit Criterion:} The app’s infrastructure must be designed to scale up by a factor of 10 and should undergo stress testing to ensure it can handle 1000 simultaneous user sessions with no significant performance degradation.
-\subsubsection{PR-SE2 Data Storage Expansion}
-\textbf{Requirement:} The app shall scale to store up to 1 million sheet music files, each up to 100MB in size, by implementing efficient data storage and retrieval mechanisms.\\
-\textbf{Fit Criterion:} The app must be tested for large-scale storage handling, with performance benchmarks showing the ability to manage 1 million files without delays exceeding 5 seconds for any retrieval operation.
-\subsubsection{PR-SE3 Feature Extensibility}
+\subsubsection{PR-SE2 Feature Extensibility}
 \textbf{Requirement:} The app shall be designed with a modular architecture that allows for future feature additions, such as multi-instrument detection or cloud-based collaboration tools, without requiring significant refactoring.\\
 \textbf{Fit Criterion:} The app must pass code reviews and architecture validation to ensure it can integrate additional modules or features within 6 months of the product’s initial release, with minimal impact on core functionalities.
-\subsubsection{PR-SE4 Processing Power for Complex Music Compositions}
+\subsubsection{PR-SE3 Processing Power for Complex Music Compositions}
 \textbf{Requirement:} The app shall be built to be able to scale its processing capabilities to handle future complex compositions involving multiple simultaneous instrument tracks supporting growth for polyphony.\\
 \textbf{Fit Criterion:} During testing, the app must demonstrate the ability to process increasingly complex musical arrangements.
 
@@ -247,7 +244,7 @@ involved in the Project}
 
 \subsection{Wider Environment Requirements}
 \subsubsection{OE-WE1 General Hardware}
-\textbf{Requirement:} The app shall operate effectively across various computing environments, including different operating systems. The app shall also function reliably on devices with varying hardware specifications.\\
+\textbf{Requirement:} The app shall operate effectively on devices with varying interface specifications.\\
 \textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all typical screen sizes and resolutions.
 
 \subsection{Requirements for Interfacing with Adjacent Systems}
