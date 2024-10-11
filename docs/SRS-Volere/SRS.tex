@@ -17,6 +17,8 @@
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
+\usepackage{graphicx}
+\graphicspath{ {./images/} } % relative path
 
 \newcommand{\lips}{\textit{Insert your content here.}}
 
@@ -54,9 +56,23 @@ Date 2 & 1.1 & Notes\\
 ~\newpage
 \section{Purpose of the Project}
 \subsection{User Business}
-\lips
+Music theory is challenging and intimidating to learn for beginners, 
+however, the act of playing an instrument does not inherently require 
+extensive theoretical knowledge. This project aims to bridge the gap 
+between deep theoretical understanding and playing instruments. It 
+shall aid musicians with limited music theory knowledge by translating 
+analog instrument audio into sheet music and other applicable formats 
+that users can use to visualize and document their music-making. The 
+project also aims to foster ease of collaboration between musical 
+artists for efficient communication. 
 \subsection{Goals of the Project}
-\lips
+The goal of the project is to develop a fast, accurate sheet music generator 
+paired with an intuitive, user-friendly interface that requires minimal effort 
+to learn. If successful, it will encourage the proliferation of musical creativity 
+among various audiences. This goal lends itself to several metrics, such as 
+computational performance compared to existing products or its reach to certain 
+demographics. Ultimately, the benefit of the project will be measured by the number 
+of original pieces created.
 \section{Stakeholders}
 \subsection{Client}
 \lips
@@ -100,21 +116,90 @@ involved in the Project}
 
 \section{Relevant Facts And Assumptions}
 \subsection{Relevant Facts}
-\lips
+\begin{itemize}
+  \item This project is under irregular time constraints, given that it is 
+  for an undergraduate-level software engineering course. 
+  \item Digitizing and transcribing polyphonic audio from multiple instruments
+   is a difficult task and may be unachievable due to the aforementioned time constraints. 
+  \item Many products are currently available as alternatives to what this project hopes 
+  to accomplish. The team will use these products and their functionalities as metrics for success.
+\end{itemize}
 \subsection{Business Rules}
-\lips
+\begin{enumerate}
+  \item Instrument Support
+  \begin{itemize}
+    \item The application only supports a predefined list of instruments.
+    \item No instruments may be added by the user to the predefined list.
+  \end{itemize}
+  \item Music Theory Compliance
+  \begin{itemize}
+    \item The application must generate score sheets that adhere to basic music 
+    theory rules (e.g., correct note placement, no overlapping notes, etc.).
+    \item The application must generate a score sheet within a reasonable amount of time
+    to ensure a smooth user experience. 
+  \end{itemize}
+  \item Ownership
+  \begin{itemize}
+    \item The application must clearly identify and display the creator/owner of the score.
+  \end{itemize}
+\end{enumerate}
 \subsection{Assumptions}
-\lips
+Assumptions are seperated into two categories based on the effect their falsehood will have 
+on the application:
+\begin{enumerate}
+  \item Should the following assumptions be false, the application will be unusable:
+  \begin{itemize}
+    \item Users of the application have access to the hardware required, such as a music 
+    interface or quality microphone.
+    \item Users have access to a desktop or portable computer to use the application.
+  \end{itemize}
+  \item Should the following assumptions be false, the application will perform at sub-optimally: 
+  \begin{itemize}
+    \item The operational environment has low levels of background noise.
+    \item The human voice is not considered an instrument that the application can handle input from.
+    \item Users have a superficial level of understanding of music theory in order to understand 
+    what the application does.
+  \end{itemize}
+\end{enumerate}
 
 \section{The Scope of the Work}
 \subsection{The Current Situation}
-\lips
+The following activity diagram illustrates the workflow of manual score sheet generation, the process
+which the application intends to improve upon.\\\\
+\includegraphics[width=\textwidth]{SRS-manual-score-process.png}
 \subsection{The Context of the Work}
-\lips
+The diagram below shows the context in which the development of the application is taking place. It shows
+adjacent systems and their associated inputs and outputs as it relates to the application and it's work. \\\\
+\includegraphics[width=\textwidth]{SRS-contex-diagram.png}
+
 \subsection{Work Partitioning}
-\lips
+The table below summarizes the business events that might be triggered by adjacent organizations
+or application users themselves.\\
+\begingroup
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|>{\raggedright}p{3cm}|>{\raggedright}p{4.25cm}|>{\raggedright\arraybackslash}p{6cm}|}
+  \hline
+  EVENT NAME & INPUT/OUTPUT & SUMMARY OF BUC \\
+  \hline
+  BE1. User provides audio signals. & Audio signals (IN) & Digitize the input audio signals.\\
+  \hline
+  BE2. Audio transcription. & Transcription results (IN) & Record the notes transcribed. \\
+  \hline
+  BE3. Score completion. & Generated score (OUT) & Finalize the transcription results into proper music notation/symbols.\\
+  \hline
+  BE4. Export files. & Exported digital files (IN)  & Convert the generated score into a digital file format for export (see BE6.).\\
+  \hline
+  BE5. Progress reports. & Interface feedback/progress reports (OUT) & Provide visual indicators to user of transcription status.\\
+  \hline
+  BE6. Share sheet music. & Digital files (OUT)  & Output the exportable file format (see BE4.).\\
+  \hline
+\end{tabular}
+\endgroup
+
 \subsection{Specifying a Business Use Case (BUC)}
-\lips
+The use case diagram below has been used to specify the details of the BUC 
+associated with BE1.\\
+\includegraphics[width=\textwidth]{BUC.png}
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
@@ -223,14 +308,62 @@ involved in the Project}
 
 \section{New Problems}
 \subsection{Effects on the Current Environment}
-\lips
+\begin{enumerate}
+  \item Data Privacy: The application shall not access or make use of any personal data 
+  without explicit consent (if necessary).
+  \item Compatibility:  The application will be developed to ensure that it does not harm or 
+  interfere with any of the existing applications on the user’s device.
+  \item Performance Efficiency: The application will not excessively consume device resources 
+  such that it significantly degrades the performance of the user’s device.
+\end{enumerate}
 \subsection{Effects on the Installed Systems}
-\lips
+\begin{enumerate}
+  \item Application Programming Interfaces (APIs)
+  \begin{itemize}
+      \item Use of any OS-specific APIs to perform tasks like file management and user interface rendering.
+  \end{itemize}
+  \item Existing User Interfaces (UIs)
+  \begin{itemize}
+      \item The application’s graphical user interface (GUI) may use existing frameworks to handle user input and display information.
+      \item Creates application shortcuts.
+  \end{itemize}
+  \item File System
+  \begin{itemize}
+      \item Interactions with the device’s file system to read and write files using system calls and other external libraries.
+      \item Saves transcribed sheet music to the device’s disk in various formats.
+  \end{itemize}
+  \item Network
+  \begin{itemize}
+      \item Although the application is intended to be standalone, network sockets might be used for communication purposes (e.g., for updates/patches).
+  \end{itemize}
+  \item Hardware Components
+  \begin{itemize}
+      \item The application captures input signals through the existing device’s microphone or audio interfaces.
+      \item Could use the analog-to-digital Converter (ADC) built into the device’s sound card or external audio interface.
+  \end{itemize}
+\end{enumerate}
+
 \subsection{Potential User Problems}
-\lips
+\begin{enumerate}
+  \item Access Control and Elevated Permissions
+  \begin{itemize}
+      \item The application may require changes to the access control settings on the target device. This might be unexpected for 
+      some users. These changes could be necessary for audio input processing or to interact with other specific system components.
+      \item More specifically, the application might need elevated permissions to handle audio hardware, system resources, etc. Users 
+      may be required to grant administrative access during installation.
+  \end{itemize}
+
+  \item Resource Consumption
+  \begin{itemize}
+      \item The application might consume high amounts of resources, especially during complex audio conversions or real-time 
+      transcriptions. This could adversely affect the target system’s performance, especially on devices with limited processing 
+      power or memory.
+      \item The battery life of portable devices may also be significantly drained as a result of the resource consumption.
+  \end{itemize}
+\end{enumerate}
+
 \subsection{Limitations in the Anticipated Implementation Environment That May
 Inhibit the New Product}
-\lips
 \subsection{Follow-Up Problems}
 \lips
 
