@@ -364,8 +364,36 @@ associated with BE1.\\
 
 \subsection{Limitations in the Anticipated Implementation Environment That May
 Inhibit the New Product}
+\begin{enumerate}
+  \item Hardware
+  \begin{itemize}
+    \item Built-in microphones that do not meet average audio quality standards may hinder the accuracy of music transcription. External 
+     audio interfaces or microphones may be necessary for the application's intended performance.
+     \item The application may adversly affect the battery life of the user's portable device. This could be caused by high processing demands
+     during intense transcription sessions.
+  \end{itemize}
+  \item Operating System (OS)
+  \begin{itemize}
+    \item The application's performance may vary due to the user's operating system version. Older versions may 
+     not have required libraries or optimizations that the application depends on.
+     \item Some operation systems might limit real-time task programming and processing, especially on systems with restrictive 
+     scheduling or low hardware capabilities.
+  \end{itemize}
+  \item Background Processes
+  \begin{itemize}
+    \item Resource intense background processes may lower the performance of the application especially for devices with
+    lower hardware capabilities.
+  \end{itemize}
+\end {enumerate}
 \subsection{Follow-Up Problems}
-\lips
+There exist some problems that the application may not be able to cope with. These include, but are not limited to: 
+\begin{itemize}
+  \item Extremely low-quality, noisy, or distorted audio input.
+  \item Highly complex audio.
+  \item High resource demand.
+  \item Insufficient hardware.
+  \item Limitations of pitch detection algorithms.
+\end{itemize}
 
 \section{Tasks}
 \subsection{Project Planning}
