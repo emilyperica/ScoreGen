@@ -76,51 +76,51 @@
 
 \section{Mandated Constraints}
 \subsection{Solution Constraints}
-\subsubsection{Technology Stack}
+\subsubsection*{Technology Stack}
 \textbf{Description}: The app shall be developed using a fast for the core signal processing to handle real-time calculations and a robust, secure, and easy-to-configure language for backend logic.\\
 \textbf{Rationale}: Signal processing needs to be done quickly and effieciently to be done in real time, and the backend must be secure while handling user information.\\
 \textbf{Fit Criterion}: The final product shall process signals quickly and all sensitive user information is secured and nothing gets exposed.
-\subsubsection{Open-Source Libraries}
+\subsubsection*{Open-Source Libraries}
 \textbf{Description}: The app shall use open-source libraries and frameworks where applicable to save both time and money.\\
 \textbf{Rationale}: The use of open-source libraries ensures cost-effectiveness and allows for community-driven improvements and support.\\
 \textbf{Fit Criterion}: All third-party libraries used in the project must be licensed under open-source agreements such as MIT, GPL, or Apache licenses which allow for free use.
 
 \subsection{Implementation Environment of the Current System}
-\subsubsection{Hardware Specifications}
+\subsubsection*{Hardware Specifications}
 \textbf{Description}: The app shall run on personal computers with a minimum of 8GB RAM, a dual-core processor, and 256GB of available storage space, which is the minimum according to \href{https://routenote.com/blog/build-a-music-production-pc/}{this source.}\\
 \textbf{Rationale}: These hardware specifications are typical of the devices used by musicians and producers, ensuring the app performs efficiently.\\
 \textbf{Fit Criterion}: The app must pass performance tests on machines meeting the minimum hardware requirements, with no more than a 5\% reduction in performance under heavy load.
-\subsubsection{Audio Input Devices}
+\subsubsection*{Audio Input Devices}
 \textbf{Description}: The app shall support standard audio input devices, including USB microphones, and built-in microphones, with audio input via USB, or 3.5mm audio jacks.\\
 \textbf{Rationale}: These input devices are commonly used by musicians to capture sound, ensuring the app is compatible with existing hardware setups.\\
 \textbf{Fit Criterion}: The app must successfully capture and process audio from these devices, maintaining accurate signal-to-sheet transcription in at least 95\% of test cases.
 
 \subsection{Partner or Collaborative Applications}
-\subsubsection{Music Notation Software}
+\subsubsection*{Music Notation Software}
 \textbf{Description}: The app shall collaborate with music notation software that uses MusicXML formats to export sheet music. These can be seen as ‘partner’ applications since they fit very well with a use case for the application.\\
 \textbf{Rationale}: Many composers rely on professional notation software to finalize and edit their sheet music, so it’s essential that the app exports accurate, compatible sheet music files.\\
 \textbf{Fit Criterion}: The app must support MusicXML files.
 
 \subsection{Off-the-Shelf Software}
-\subsubsection{MusicXML Format for Sheet Music}
+\subsubsection*{MusicXML Format for Sheet Music}
 \textbf{Description}: The app shall use MusicXML as the primary format for storing and exporting sheet music data.\\
 \textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability.\\
 \textbf{Fit Criterion}: The app must successfully export sheet music in MusicXML format, ensuring compatibility with the latest versions of major music notation software, without requiring manual adjustments by the user.
-\subsubsection{Backward Compatibility}
+\subsubsection*{Backward Compatibility}
 \textbf{Description}: The app shall support both current and older versions of the MusicXML format to ensure maximum compatibility with various notation tools.\\
 \textbf{Rationale}: As different users may be using different versions of music notation software, supporting older MusicXML formats ensures accessibility and broader usability.\\
 \textbf{Fit Criterion}: The app must successfully import and export MusicXML files using both the latest version of MusicXML and at least one earlier version (e.g., MusicXML 2.0).
 
 \subsection{Anticipated Workplace Environment}
-\subsubsection{Indoor and Studio-Based Environments}
+\subsubsection*{Indoor and Studio-Based Environments}
 \textbf{Description}: The app shall be designed primarily for indoor environments, such as home studios, professional recording studios, classrooms, and offices where musicians and composers typically work.\\
 \textbf{Rationale}: Most users will be working in controlled indoor environments where factors like lighting and noise levels will vary. The app must function optimally in these settings without relying on environmental conditions.\\
 \textbf{Fit Criterion}: The app must be tested in various indoor settings (studios, offices, classrooms) with different lighting and noise levels to ensure usability and performance are not impacted by normal environmental variations.
-\subsubsection{Noise Considerations}
+\subsubsection*{Noise Considerations}
 \textbf{Description}: The app shall operate effectively in environments with moderate background noise, such as music rehearsal rooms or live performance spaces, without relying on audible notifications.\\
 \textbf{Rationale}: Musicians often work in noisy environments. The app should rely on visual feedback rather than any sound-based notifications and should retain its signal-processing ability (see requirement OE-EP1).\\
 \textbf{Fit Criterion}: The app must be tested in environments with background noise levels approaching a signal to noise ratio (SNR) of 2:1, indicating its effectiveness with moderate background noise.
-\subsubsection{Portable Workspaces}
+\subsubsection*{Portable Workspaces}
 \textbf{Description}: The app shall be designed to accommodate musicians working in mobile or temporary workspaces, such as cafes or on-the-go setups using laptops.\\
 \textbf{Rationale}: Musicians often work on the move or in shared spaces where setting up large equipment is impractical. The app must be optimized for laptops with limited screen space and varying internet connectivity.\\
 \textbf{Fit Criterion}: The app must be tested for usability on laptops with screen sizes as small as 13 inches.
@@ -289,18 +289,18 @@ involved in the Project}
 \subsection{Reusable Components}
 The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components which could be extremely useful listed below.\\
 
-\subsubsection{PortAudio (for Audio Input/Output)}
+\subsubsection*{PortAudio (for Audio Input/Output)}
 \textbf{Description}: PortAudio is a widely used open-source library for handling audio input and output across multiple platforms.\\
 \textbf{Rationale for Limited Use}: While audio capture and output are critical components, reinventing this from scratch would require extensive low-level work that would detract from our focus on learning signal processing and transcription. Therefore, we plan to use PortAudio for audio input/output while building the higher-level processing systems ourselves.\\
 
-\subsubsection{MusicXML Format}
+\subsubsection*{MusicXML Format}
 \textbf{Description}: MusicXML is an open standard for music notation interchange, commonly used in music software.\\
 \textbf{Rationale for Limited Use}: Rebuilding a file format from scratch would not significantly contribute to our learning, so we will use MusicXML to ensure compatibility with existing music notation software. However, we will focus our learning efforts on generating and manipulating the MusicXML data from the transcription process.\\
 
 \subsection{Products That Can Be Copied}
 Although copying or modifying parts of existing products could save time and effort, our primary goal for this capstone project is to deepen our technical knowledge by solving the challenges ourselves. This section acknowledges the potential solutions but explains why we prefer not to use them, except where strictly necessary. There is one example of an open-source product available to copy from:\\
 
-\subsubsection{LilyPond (Music Notation Rendering)}
+\subsubsection*{LilyPond (Music Notation Rendering)}
 \textbf{Description}: LilyPond is an open-source music engraving program that renders high-quality sheet music. Its notation rendering capabilities could be adapted for our needs.\\
 \textbf{Rationale for Avoiding Copying}: While using LilyPond for notation rendering would simplify output formatting, we aim to build our own system for translating audio to notation and rendering it. This will give us valuable insights into how music notation software operates, which we would miss by relying on LilyPond.\\
 \textbf{Approximate Time Savings}: Copying LilyPond’s functionality could reduce our output formatting time by 30–40\%, but we would miss out on understanding the process of rendering notation from scratch.
