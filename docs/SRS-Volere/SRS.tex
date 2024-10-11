@@ -8,6 +8,7 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{hyperref}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
@@ -203,9 +204,52 @@ associated with BE1.\\
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
-\lips
+A first-cut UML class diagram has been used to model the data entities relevant to the scope of the work. This
+abstractly describes the relationship between these entities. For definitions and attributes see section 7.2 Data Dictionary.\\
+\includegraphics[scale=0.75]{SRS-data-model.png}
 \subsection{Data Dictionary}
-\lips
+\begingroup
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|>{\raggedright}p{3cm}|>{\raggedright}p{5.5cm}|>{\raggedright\arraybackslash}p{4cm}|}
+  \hline
+  NAME & CONTENT & TYPE \\
+  \hline
+  User & userID + name + preferences & Class\\
+  \hline
+  Preferences & prefID + userID + instrument + preferredInput & Class \\
+  \hline
+  AudioFile & audioID + inFileName + format + userID + uploadDate & Class\\
+  \hline
+  Transcription & transcID + audioID + outputFormat + creationDate + outFileName  & Class \\
+  \hline
+  OutputFile & outputID + outFileName + fileType  & Class \\
+  \hline
+  *ID & Unique identifier for distinguishing between entities & Attribute/Element \\
+  \hline
+  name & Name of the user, for ownership purposes  & Attribute/Element \\
+  \hline
+  preferences & Data related to user interface preferences  & Attribute/Element \\
+  \hline
+  instrument & The musical instrument the user has selected to use for input  & Attribute/Element \\
+  \hline
+  preferredInput & Type of input the user will use (e.g., digital files, analog input)  & Attribute/Element \\
+  \hline
+  inFileName & Name given to the file that stores input data & Attribute/Element \\
+  \hline
+  format & The format of the input file (e.g., WAV, MP3, etc.) & Attribute/Element \\
+  \hline
+  uploadDate & *DD/MM/YYYY*\\ For file management and ownership purposes & Attribute/Element \\
+  \hline
+  outputFormat & The format that the exportable output file will use & Attribute/Element \\
+  \hline
+  creationDate & *DD/MM/YYYY*\\For ownership purposes & Attribute/Element \\
+  \hline
+  outFileName & Name given to the file that stores output data & Attribute/Element \\
+  \hline
+  fileType & The format that the exportable output file will use & Attribute/Element \\
+  \hline
+\end{longtable}
+\endgroup
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
