@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{cite}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,      % false: boxed links; true: colored links
@@ -132,7 +133,7 @@ Users will receive product support directly from the customer support team, and 
 
 \subsection{Implementation Environment of the Current System}
 \subsubsection*{Hardware Specifications}
-\textbf{Description}: The app shall run on personal computers with a minimum of 8GB RAM, a dual-core processor, and 256GB of available storage space, which is the minimum according to \href{https://routenote.com/blog/build-a-music-production-pc/}{this source.}\\
+\textbf{Description}: The app shall run on personal computers with a minimum of 8GB RAM, a dual-core processor, and 256GB of available storage space, which is the minimum according to general concensus~\cite{music-specs}.\\
 \textbf{Rationale}: These hardware specifications are typical of the devices used by musicians and producers, ensuring the app performs efficiently.\\
 \textbf{Fit Criterion}: The app must pass performance tests on machines meeting the minimum hardware requirements, with no more than a 5\% reduction in performance under heavy load.
 \subsubsection*{Audio Input Devices}
@@ -330,7 +331,7 @@ that have unlabeled icons.
 implementation-specific or algorithmic solutions used.
 \subsection{Accessibility Requirements}
 \subsubsection*{UH-A1 Web Content Accessibility Guidelines}
-\textbf{Requirement:} The app must comply with the standardized Web Content Accessibility Guidelines (WCAG).\\
+\textbf{Requirement:} The app must comply with the standardized Web Content Accessibility Guidelines (WCAG)~\cite{WCAG21}.\\
 \textbf{Fit Criterion:} The app must meet or exceed WCAG 2.1 Level AA compliance. This shall be verified through 
 an accessibility audit using automated tools (e.g., WAVE, Axe) and manual reviews, ensuring adherence to guidelines 
 such as text alternatives, text readability, etc.
@@ -346,7 +347,7 @@ such as text alternatives, text readability, etc.
 \subsection{Safety-Critical Requirements}
 \subsubsection*{PR-SC1 Epilepsy Safety}
 \textbf{Requirement:} The app shall not display rapid flashing lights, animations, or any visual effects that could trigger epileptic seizures in users.\\
-\textbf{Fit Criterion:} The app’s graphical interface must comply with WCAG 2.1 (Web Content Accessibility Guidelines) for flashing content, limiting visual effects to fewer than 3 flashes per second. The interface will be tested with accessibility tools to ensure compliance with these standards.
+\textbf{Fit Criterion:} The app’s graphical interface must comply with WCAG 2.1 (Web Content Accessibility Guidelines)~\cite{WCAG-Seizures} for flashing content, limiting visual effects to fewer than 3 flashes per second. The interface will be tested with accessibility tools to ensure compliance with these standards.
 \subsubsection*{PR-SC2 Instrument Input Setup}
 \textbf{Requirement:} The app shall guide users through the correct setup of instrument input to prevent audio misconfiguration, damage to the user/instrument, and damage to the application’s device.\\
 \textbf{Fit Criterion:} The app will include an interactive, step-by-step tutorial for configuring instrument inputs (via external devices or microphones). The setup process should be completed with a 95\% success rate based on user testing, ensuring correct audio input detection on the first attempt.
@@ -496,27 +497,27 @@ such as text alternatives, text readability, etc.
 
 \textbf{Products Investigated}:
 \begin{itemize}
-    \item \textbf{Sibelius}\\
+    \item \textbf{Sibelius}~\cite{sibelius}\\
     \textbf{Description}: Sibelius is a professional music notation software that supports transcription, editing, and playback of sheet music.\\
     \textbf{Applicability}: While Sibelius provides a robust notation environment, it does not directly fulfill the core requirement of real-time audio-to-sheet-music transcription. However, its export capabilities (MusicXML and MIDI) align with our needs for cross-compatibility.\\
     \textbf{Conclusion}: Sibelius is not suitable as a full solution for our project but offers useful insights into notation and export formats.
     
-    \item \textbf{AnthemScore}\\
+    \item \textbf{AnthemScore}\cite{AnthemScore}\\
     \textbf{Description}: AnthemScore is an automated music transcription software that converts audio recordings into sheet music.\\
     \textbf{Applicability}: AnthemScore is the most closely aligned with our project’s goal of audio-to-sheet-music transcription. It uses machine learning to process audio, which could provide valuable lessons on handling real-time audio input and accuracy.\\
     \textbf{Conclusion}: Although AnthemScore is a ready-made solution for audio transcription, integrating it into our project would limit our learning opportunities. However, understanding its machine learning approach offers valuable technical insights.
     
-    \item \textbf{MuseScore}\\
+    \item \textbf{MuseScore}\cite{MuseScore}\\
     \textbf{Description}: MuseScore is an open-source music notation software that supports MusicXML and MIDI input/output.\\
     \textbf{Applicability}: MuseScore offers advanced notation tools and is widely used for music transcription. While it does not handle real-time audio transcription, it could serve as a valuable resource for understanding notation standards and file format handling (MusicXML, MIDI).\\
     \textbf{Conclusion}: MuseScore provides a strong learning resource for notation and file management, but it is not directly applicable for our audio signal processing goals.
     
-    \item \textbf{Transcribe!}\\
+    \item \textbf{Transcribe!}\cite{Transcribe!}\\
     \textbf{Description}: Transcribe! is a software focused on assisting musicians in transcribing audio files into written music manually.\\
     \textbf{Applicability}: Although Transcribe! focuses more on aiding manual transcription, its use of time-stretching and pitch-shifting techniques for audio processing could offer valuable learning insights for real-time transcription in our project.\\
     \textbf{Conclusion}: Transcribe! is not a direct solution but may offer useful ideas for how to manage and process audio signals for manual transcription.
     
-    \item \textbf{Melody Scanner by Klangio}\\
+    \item \textbf{Melody Scanner by Klangio}\cite{Melody-Scanner}\\
     \textbf{Description}: Melody Scanner is an online tool that converts audio files, such as recordings of melodies, into sheet music automatically which is the general idea of this project. It focuses on providing a quick and user-friendly way to transcribe melodies for musicians.\\
     \textbf{Applicability}: Melody Scanner aligns closely with our goal of audio-to-sheet-music transcription. However, its focus is primarily on melodic transcription rather than handling complex polyphonic music or real-time input. Despite this, it offers a straightforward user interface and backend processes that could provide useful insights for our project, particularly in terms of simplicity and user experience.\\
     \textbf{Conclusion}: While Melody Scanner is not a comprehensive solution for our capstone project’s real-time transcription needs, it offers valuable lessons in streamlining the user interface and simplifying the transcription process for ease of use.
@@ -524,18 +525,18 @@ such as text alternatives, text readability, etc.
 \subsection{Reusable Components}
 The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components which could be extremely useful listed below.\\
 
-\subsubsection*{PortAudio (for Audio Input/Output)}
+\subsubsection*{PortAudio (for Audio Input/Output)~\cite{portaudio}}
 \textbf{Description}: PortAudio is a widely used open-source library for handling audio input and output across multiple platforms.\\
 \textbf{Rationale for Limited Use}: While audio capture and output are critical components, reinventing this from scratch would require extensive low-level work that would detract from our focus on learning signal processing and transcription. Therefore, we plan to use PortAudio for audio input/output while building the higher-level processing systems ourselves.\\
 
-\subsubsection*{MusicXML Format}
+\subsubsection*{MusicXML Format~\cite{musicxml}}
 \textbf{Description}: MusicXML is an open standard for music notation interchange, commonly used in music software.\\
 \textbf{Rationale for Limited Use}: Rebuilding a file format from scratch would not significantly contribute to our learning, so we will use MusicXML to ensure compatibility with existing music notation software. However, we will focus our learning efforts on generating and manipulating the MusicXML data from the transcription process.\\
 
 \subsection{Products That Can Be Copied}
 Although copying or modifying parts of existing products could save time and effort, our primary goal for this capstone project is to deepen our technical knowledge by solving the challenges ourselves. This section acknowledges the potential solutions but explains why we prefer not to use them, except where strictly necessary. There is one example of an open-source product available to copy from:\\
 
-\subsubsection*{LilyPond (Music Notation Rendering)}
+\subsubsection*{LilyPond (Music Notation Rendering)~\cite{lilypond}}
 \textbf{Description}: LilyPond is an open-source music engraving program that renders high-quality sheet music. Its notation rendering capabilities could be adapted for our needs.\\
 \textbf{Rationale for Avoiding Copying}: While using LilyPond for notation rendering would simplify output formatting, we aim to build our own system for translating audio to notation and rendering it. This will give us valuable insights into how music notation software operates, which we would miss by relying on LilyPond.\\
 \textbf{Approximate Time Savings}: Copying LilyPond’s functionality could reduce our output formatting time by 30–40\%, but we would miss out on understanding the process of rendering notation from scratch.
@@ -588,6 +589,7 @@ Given that this project is being developed from the ground up, no legacy data ex
 \lips
 
 \section{Waiting Room}
+
 \lips
 
 \section{Ideas for Solution}
@@ -599,6 +601,10 @@ Given that this project is being developed from the ground up, no legacy data ex
   \item The user manually identifies the tempo and key to be used in the generated sheet-music
   \item A sheet music editing feature compatible with the musicXML format
 \end{itemize}
+
+\newpage{}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
 
 \newpage{}
 \section*{Appendix --- Reflection}
