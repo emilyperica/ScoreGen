@@ -1,0 +1,141 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:130.0) Gecko/20100101 Firefox/130.0" version="24.7.17">
+  <diagram name="Page-1" id="An3jDuJmnXqeOljfR3Tz">
+    <mxGraphModel dx="1248" dy="574" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="10" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-14" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=1;exitDx=0;exitDy=0;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-1" target="L1poLme3YbnNNkad_m1O-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-15" value="Generated score" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-14">
+          <mxGeometry x="-0.0377" y="1" relative="1" as="geometry">
+            <mxPoint x="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-31" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;curved=1;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-1" target="L1poLme3YbnNNkad_m1O-2">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="995" y="290" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-32" value="Digital files" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-31">
+          <mxGeometry x="-0.3149" y="24" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-1" value="The work of reading and transcribing audio input data (i.e. the score generation system)" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#fff2cc;strokeColor=#d6b656;" parent="1" vertex="1">
+          <mxGeometry x="915" y="430" width="160" height="160" as="geometry" />
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-2" value="User" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="840" y="240" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-3" value="Other musician(s)" style="shape=umlActor;verticalLabelPosition=bottom;verticalAlign=top;html=1;outlineConnect=0;" parent="1" vertex="1">
+          <mxGeometry x="1075" y="240" width="30" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-4">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="910" y="495" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-7" value="Audio input" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-6">
+          <mxGeometry x="0.0785" y="-6" relative="1" as="geometry">
+            <mxPoint x="-9" y="-7" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-4" value="Audio Input Device (e.g., audio interface, microphone, instrument)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="660" y="450" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-9" value="Transcription algorithms" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.25;exitY=0;exitDx=0;exitDy=0;entryX=0.758;entryY=0.944;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-5" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="1040" y="600" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-21" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-5" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-22" value="Training data" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-21">
+          <mxGeometry x="-0.2792" y="2" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-5" value="External Libraries/Audio Processors (libsndfile, audio stream I/O drivers, etc.)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1120" y="700" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-6" value="Output Device/Mechanism (e.g., printer, export file, etc.)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1240" y="510" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-9" value="Organizations that Standardize Audio File Formats (W3C Music Notation Community Group, etc.)" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="690" y="680" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="L1poLme3YbnNNkad_m1O-10" value="Organizations that Standardize Music Theory Notation/Symbols/Rules" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="1160" y="350" width="150" height="90" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-3" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="L1poLme3YbnNNkad_m1O-4">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="830" y="280" as="sourcePoint" />
+            <mxPoint x="800" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-5" value="&lt;div&gt;Audio input&lt;/div&gt;&lt;div&gt;(analog or digital file)&lt;br&gt;&lt;/div&gt;" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-3">
+          <mxGeometry x="0.2433" y="3" relative="1" as="geometry">
+            <mxPoint x="16" y="-37" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-10" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=0.984;entryY=0.319;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-10" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-11" value="Notation guidelines" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-10">
+          <mxGeometry x="-0.1153" y="5" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-19" value="Sheet music" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.3333333333333333;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-2" target="L1poLme3YbnNNkad_m1O-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-20" value="Interface feedback/progress &lt;br&gt;reports" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="860" y="330" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-23" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.75;exitDx=0;exitDy=0;entryX=0.321;entryY=0.967;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-5" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="1120" y="770" />
+              <mxPoint x="966" y="770" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-24" value="Transcription results" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-23">
+          <mxGeometry x="-0.0122" y="-21" relative="1" as="geometry">
+            <mxPoint as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-25" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0;exitDx=0;exitDy=0;entryX=0.061;entryY=0.765;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-9" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-26" value="Music-related file format&lt;br&gt;guidelines" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-25">
+          <mxGeometry x="-0.3423" y="1" relative="1" as="geometry">
+            <mxPoint x="26" y="-35" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-27" style="rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=-0.006;entryY=0.65;entryDx=0;entryDy=0;entryPerimeter=0;edgeStyle=orthogonalEdgeStyle;curved=1;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-9" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-28" value="Documentation, technical &lt;br&gt;specs." style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-27">
+          <mxGeometry x="-0.6529" y="-7" relative="1" as="geometry">
+            <mxPoint y="-1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-29" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.01;exitY=0.14;exitDx=0;exitDy=0;entryX=0.999;entryY=0.585;entryDx=0;entryDy=0;entryPerimeter=0;curved=1;exitPerimeter=0;" edge="1" parent="1" source="L1poLme3YbnNNkad_m1O-6" target="L1poLme3YbnNNkad_m1O-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="9Km4dYbrq6brzNxLxp5N-30" value="Exported digital files" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="9Km4dYbrq6brzNxLxp5N-29">
+          <mxGeometry x="-0.1495" y="7" relative="1" as="geometry">
+            <mxPoint x="-10" y="-10" as="offset" />
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
