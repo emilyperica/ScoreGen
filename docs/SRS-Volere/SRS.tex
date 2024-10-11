@@ -9,6 +9,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{cite}
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,      % false: boxed links; true: colored links
@@ -45,8 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+09/10/2024 & 1.0 & Initial Revision\\
 \bottomrule
 \end{tabularx}
 
@@ -62,44 +62,131 @@ Date 2 & 1.1 & Notes\\
 \lips
 \section{Stakeholders}
 \subsection{Client}
-\lips
+The client is the faculty supervisor of this project, Dr. Martin Von Mohrenschildt. With direct research interests in signal processing and a personal interest in how it relates to 
+music, he is investing his own time in the development of the product.
 \subsection{Customer}
-\lips
+The archetypal customer is a musician of any skill level, with emphasis based on musicians who have little-to-no music theory knowledge. The customer will utilize the application 
+to quickly produce sheet music for either original compositions or existing songs. 
 \subsection{Other Stakeholders}
-\lips
+\begin{itemize}
+  \item \textbf{Software developers:} Provide the technical knowledge and skill to design and build the system.
+  \item \textbf{Composers:} As SMEs, provide the music theory knowledge needed to make the system useful for the customer.
+  \item \textbf{Users of music-annotating software:} As SMEs, provide opinions on the features they like or dislike about existing music-annotating softwares. This will help inform the developers on which features of the product to prioritize.
+  \item \textbf{Music teachers:} Provide similar support to students that may be replaced by usage of this product. They will have a vested interest in ensuring this product does not encourage bad composing habits in users of the product.
+  \item \textbf{Music students:} Similar to the Composers, they will provide the music theory knowledge needed to make the system useful for the customer. However, their input will be from the same learning point of view as the expected user, and thus will have a higher degree of influence on the product.
+  \item \textbf{IP lawyers:} Will ensure this product follows fair use and does not infringe on copyrights.
+  \item \textbf{Dr. Spencer Smith:} As the course instructor, the performance and outcome of this product will be a direct reflection of his role in the capstone course.
+\end{itemize}
 \subsection{Hands-On Users of the Project}
-\lips
+\subsubsection*{User Category 1: Beginner Musicians}
+\textbf{User Role:} Use this product to create sheet music, either as a learning aid or as a quick alternative to learning music notation.\\
+\textbf{Subject matter experience*:} Novice - Little experience with music theory, but likely have a moderate knowledge of music in practicality (i.e., playing an instrument or listening to music). \\
+\textbf{Technological experience*:} Novice - May or may not have limited experience with other music-annotating softwares. \\
+\textbf{User characteristics:} 
+\begin{itemize}
+  \item Little to no music theory knowledge
+  \item Passionate about music
+  \item All ages (i.e., both children and adults)
+  \item New to playing instruments
+  \item Not comfortable with complex software
+  \item Eager to learn
+  \item Less willing to spend money
+\end{itemize}
+
+\subsubsection*{User Category 2: Composers}
+\textbf{User Role:} As masters of music notation and composition, this group will use the product as a practice aid or to quickly make note of composition ideas. \\
+\textbf{Subject matter experience*:} Master - have spent years learning and practicing music theory and composition. \\
+\textbf{Technological experience*:} Journeyman to Master - Have experience with music-annotating software but haven't necessarily used them extensively. \\
+\textbf{User characteristics:}
+\begin{itemize}
+  \item Advanced music theory knowledge
+  \item Passionate about music
+  \item 25+ years old
+  \item Have a hard time learning new technologies
+  \item Willing to spend money
+\end{itemize}
+\noindent
+\textit{*User experience level may be rated as one of novice, journeyman, or master.}
+
 \subsection{Personas}
-\lips
+Harold Style is a software engineering student at McMaster University with a deep interest in music, and loves playing the guitar. Despite his lack of a formal music education, 
+he has perfect pitch and thus learns songs by listening to them rather than learn how to read sheet music. However, he recently joined a local rock band called The Beetles who 
+expect him to contribute during their songwriting sessions. He needs a quick way to produce sheet music for his own compositions, as well as learn to read the scores written by 
+his bandmates. As a future software engineer he enjoys learning new technologies that can make his life easier, and he dislikes reading of any sort.
 \subsection{Priorities Assigned to Users}
-\lips
+\textbf{Key users:} Beginner musicians
+\textbf{Secondary users:} Composers.
 \subsection{User Participation}
-\lips
+Beginner musicians will have a high level of participation in the creation of system requirements. Their feedback will be especially essential during the early to middle development phases to ensure that the system meets their various needs for simplicity, intuitive design/usage, and music theory assistance.
+Composers will have a moderate level of participation in the creation of system requiremens, slightly less than that of the Beginner Musician group. Their subject matter expertise will be useful in creating relevant requirements to ensure precision of audio transcription and its overall score editing capabilities.
 \subsection{Maintenance Users and Service Technicians}
-\lips
+This product will be maintained by a software development team, consisting of software developers, UI/UX designers, test engineers, and a project manager. 
+Users will receive product support directly from the customer support team, and IP lawyers will be engaged as necessary to address matters of intellectual property.
 
 \section{Mandated Constraints}
 \subsection{Solution Constraints}
-\lips
-\subsection{Implementation Environment of the Current System}
-\lips
-\subsection{Partner or Collaborative Applications}
-\lips
-\subsection{Off-the-Shelf Software}
-\lips
-\subsection{Anticipated Workplace Environment}
-\lips
-\subsection{Schedule Constraints}
-\lips
-\subsection{Budget Constraints}
-\lips
-\subsection{Enterprise Constraints}
-\lips
+\subsubsection*{Technology Stack}
+\textbf{Description}: The app shall be developed using a fast for the core signal processing to handle real-time calculations and a robust, secure, and easy-to-configure language for backend logic.\\
+\textbf{Rationale}: Signal processing needs to be done quickly and effieciently to be done in real time, and the backend must be secure while handling user information.\\
+\textbf{Fit Criterion}: The final product shall process signals quickly and all sensitive user information is secured and nothing gets exposed.
+\subsubsection*{Open-Source Libraries}
+\textbf{Description}: The app shall use open-source libraries and frameworks where applicable to save both time and money.\\
+\textbf{Rationale}: The use of open-source libraries ensures cost-effectiveness and allows for community-driven improvements and support.\\
+\textbf{Fit Criterion}: All third-party libraries used in the project must be licensed under open-source agreements such as MIT, GPL, or Apache licenses which allow for free use.
 
+\subsection{Implementation Environment of the Current System}
+\subsubsection*{Hardware Specifications}
+\textbf{Description}: The app shall run on personal computers with a minimum of 8GB RAM, a dual-core processor, and 256GB of available storage space, which is the minimum according to general concensus~\cite{music-specs}.\\
+\textbf{Rationale}: These hardware specifications are typical of the devices used by musicians and producers, ensuring the app performs efficiently.\\
+\textbf{Fit Criterion}: The app must pass performance tests on machines meeting the minimum hardware requirements, with no more than a 5\% reduction in performance under heavy load.
+\subsubsection*{Audio Input Devices}
+\textbf{Description}: The app shall support standard audio input devices, including USB microphones, and built-in microphones, with audio input via USB, or 3.5mm audio jacks.\\
+\textbf{Rationale}: These input devices are commonly used by musicians to capture sound, ensuring the app is compatible with existing hardware setups.\\
+\textbf{Fit Criterion}: The app must successfully capture and process audio from these devices, maintaining accurate signal-to-sheet transcription in at least 95\% of test cases.
+
+\subsection{Partner or Collaborative Applications}
+\subsubsection*{Music Notation Software}
+\textbf{Description}: The app shall collaborate with music notation software that uses MusicXML formats to export sheet music. These can be seen as ‘partner’ applications since they fit very well with a use case for the application.\\
+\textbf{Rationale}: Many composers rely on professional notation software to finalize and edit their sheet music, so it’s essential that the app exports accurate, compatible sheet music files.\\
+\textbf{Fit Criterion}: The app must support MusicXML files.
+
+\subsection{Off-the-Shelf Software}
+\subsubsection*{MusicXML Format for Sheet Music}
+\textbf{Description}: The app shall use MusicXML as the primary format for storing and exporting sheet music data.\\
+\textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability.\\
+\textbf{Fit Criterion}: The app must successfully export sheet music in MusicXML format, ensuring compatibility with the latest versions of major music notation software, without requiring manual adjustments by the user.
+\subsubsection*{Backward Compatibility}
+\textbf{Description}: The app shall support both current and older versions of the MusicXML format to ensure maximum compatibility with various notation tools.\\
+\textbf{Rationale}: As different users may be using different versions of music notation software, supporting older MusicXML formats ensures accessibility and broader usability.\\
+\textbf{Fit Criterion}: The app must successfully import and export MusicXML files using both the latest version of MusicXML and at least one earlier version (e.g., MusicXML 2.0).
+
+\subsection{Anticipated Workplace Environment}
+\subsubsection*{Indoor and Studio-Based Environments}
+\textbf{Description}: The app shall be designed primarily for indoor environments, such as home studios, professional recording studios, classrooms, and offices where musicians and composers typically work.\\
+\textbf{Rationale}: Most users will be working in controlled indoor environments where factors like lighting and noise levels will vary. The app must function optimally in these settings without relying on environmental conditions.\\
+\textbf{Fit Criterion}: The app must be tested in various indoor settings (studios, offices, classrooms) with different lighting and noise levels to ensure usability and performance are not impacted by normal environmental variations.
+\subsubsection*{Noise Considerations}
+\textbf{Description}: The app shall operate effectively in environments with moderate background noise, such as music rehearsal rooms or live performance spaces, without relying on audible notifications.\\
+\textbf{Rationale}: Musicians often work in noisy environments. The app should rely on visual feedback rather than any sound-based notifications and should retain its signal-processing ability (see requirement OE-EP1).\\
+\textbf{Fit Criterion}: The app must be tested in environments with background noise levels approaching a signal to noise ratio (SNR) of 2:1, indicating its effectiveness with moderate background noise.
+\subsubsection*{Portable Workspaces}
+\textbf{Description}: The app shall be designed to accommodate musicians working in mobile or temporary workspaces, such as cafes or on-the-go setups using laptops.\\
+\textbf{Rationale}: Musicians often work on the move or in shared spaces where setting up large equipment is impractical. The app must be optimized for laptops with limited screen space and varying internet connectivity.\\
+\textbf{Fit Criterion}: The app must be tested for usability on laptops with screen sizes as small as 13 inches.
+
+\subsection{Schedule Constraints}
+Schedule constraints are provided by the capstone course itself, for a detailed schedule refer to the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{development plan document, section 8.}
+\subsection{Budget Constraints}
+A maximum budget for this project of \$750 has been identified by the capstone course professors. This amount will likely be fine for our project but additional spending will be approved on a case-by-case basis.
+\subsection{Enterprise Constraints}
+Since this project is being completed for the McMaster University Capstone course, we must adhere to all constraints provided by the \href{https://gitlab.cas.mcmaster.ca/courses/capstone/-/blob/main/CourseOutline/Capstone_Outline.pdf}{Course Outline Document.}
 \section{Naming Conventions and Terminology}
 \subsection{Glossary of All Terms, Including Acronyms, Used by Stakeholders
 involved in the Project}
-\lips
+\begin{itemize}
+  \item \textbf{DAW}: Digital Audio Workstation
+  \item \textbf{SNR}: Signal to Noise Ratio
+\end{itemize}
 
 \section{Relevant Facts And Assumptions}
 \subsection{Relevant Facts}
@@ -134,74 +221,297 @@ involved in the Project}
 \lips
 
 \section{Functional Requirements}
-\subsection{Functional Requirements}
-\lips
+\subsection{Audio Input Handling}
+\subsubsection*{FR-AI1 Audio Formats}
+\textbf{Requirement:} The system shall accept audio input from users in various formats (e.g., WAV, MP3, AAC). \\
+\textbf{Fit Criterion:} The system confirms a succesful upload.
+\subsubsection*{FR-AI2 Audio Recording}
+\textbf{Requirement:} The system shall provide a user interface for recording audio directly through a microphone connected to the user's device. \\
+\textbf{Fit Criterion:} The system displays a confirmation of reception during real-time recording.
+\subsubsection*{FR-AI3 Audio Uploads}
+\textbf{Requirement:} The system shall allow users to upload pre-recorded audio files. \\
+\textbf{Fit Criterion:} The system confirms reception of the pre-recorded audio file.
+\subsubsection*{FR-AI4 User Input}
+\textbf{Requirement:} The user shall give their instrument (i.e., piano or guitar) to the system as input. \\
+\textbf{Fit Criterion:} The interface and concert pitch of the generated sheet music reflect the user's choice.
+
+\subsection{Signal Processing}
+\subsubsection*{FR-SP1 Noise Reduction}
+\textbf{Requirement:} The system shall perform noise reduction on the audio input to enhance quality. \\
+\textbf{Fit Criterion:} The system generates identical sheet music for input with no background noise and input with a 10\% increase in background noise.
+\subsubsection*{FR-SP2 Note Identification}
+\textbf{Requirement:} The system shall analyze the audio to identify pitch and rhythm. \\
+\textbf{Fit Criterion:} The generated sheet music visually matches expected notes from a reference audio source and corresponding sheet music.
+\subsubsection*{FR-SP3 Key and Time Signature Identification}
+\textbf{Requirement:}	The system shall analyze the audio to identify the key and time signatures. \\
+\textbf{Fit Criterion:} The system correctly identifies key and time signatures or their equivalencies (e.g. a minor to C major, common time to cut time) from a reference audio source and corresponding sheet music.
+\subsubsection*{FR-SP4 Processing Limitations}
+\textbf{Requirement:} The system gracefully handles overly complex audio input (i.e., it is unable to perform accurate signal processing). \\
+\textbf{Fit Criterion:} The system notifies the user that their input cannot be processed.
+\subsubsection*{FR-SP5 Polyphonic Audio}
+\textbf{Requirement:} The system shall handle polyphonic audio, allowing for multiple notes to be detected simultaneously. \\
+\textbf{Fit Criterion:} The generated sheet music contains chords/simultaneous melody.
+\subsubsection*{FR-SP6 Monophonic Audio}
+\textbf{Requirement:} The system shall handle monophonic audio. \\
+\textbf{Fit Criterion:} The generated sheet music contains single pitch notes.
+
+\subsection{Sheet Music Generation}
+\subsubsection*{FR-SMG1 Notation}
+\textbf{Requirement:} The system shall generate sheet music in standard music notation based on the parsed audio data. \\
+\textbf{Fit Criterion:} The generated sheet music is visually comparable to a reference piece of sheet music.
+\subsubsection*{FR-SMG2 Concert Pitch}
+\textbf{Requirement:} The system shall generate sheet music in the concert pitch of the instrument played in the audio input. \\
+\textbf{Fit Criterion:} The generated sheet music visually matches expected notes from a reference audio source and corresponding sheet music.
+\subsubsection*{FR-SMG3 Post-Processing Edits}
+\textbf{Requirement:} The system shall allow users to view and edit the generated sheet music within the application. \\
+\textbf{Fit Criterion:} Changes made by the user are reflected in the output files produced during sheet music generation.
+
+\subsection{User Interface}
+\subsubsection*{FR-UI2 System Feedback}
+\textbf{Requirement:} The interface shall display processing feedback during audio input. \\
+\textbf{Fit Criterion:} Feedback from system is displayed to the user within 2 seconds of their input.
+\subsubsection*{FR-UI3 System Documentation}
+\textbf{Requirement:} The system shall provide help documentation and user guides for each feature. \\
+\textbf{Fit Criterion:} At least 90\% of users during user testing find the interface easy to navigate.
+\subsubsection*{FR-UI4 User Feedback}
+\textbf{Requirement:} The system shall provide a feedback mechanism for users to report issues or suggest features. \\
+\textbf{Fit Criterion:} The development team successfully receives user feedback via the feedback mechanism 100\% of the time.
+\subsubsection*{FR-UFI5 Customer Support}
+\textbf{Requirement:} The system shall include customer support contact information for troubleshooting. \\
+\textbf{Fit Criterion:} At least 90\% of users during user testing report successfull interactions with customer support.
+
+\subsection{Save and Load}
+\subsubsection*{FR-SL1 Save}
+\textbf{Requirement:} The system shall allow users to save their work, including both audio files and generated sheet music. \\
+\textbf{Fit Criterion:} 100\% of the time when the system reports a succesfull save, the user is succesfully able to locate the audio files and generated sheet music.
+\subsubsection*{FR-SL2 Load}
+\textbf{Requirement:} The system shall support loading previously saved audio files and generated sheet music for further editing. \\
+\textbf{Fit Criterion:} The system sucesfully retains user progress such that the user may return to their unfinished work seamlessly.
+
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
-\lips
+\subsubsection*{LF-A1 Discoverability}
+\textbf{Requirement:} Main functionalities of the application interface must have elements that are easily identifiable.\\
+\textbf{Fit Criterion:} Upon viewing the product for the first time, 75 percent of potential 
+users shall be able to locate the interactive element that initiates the score generation process.
+\subsubsection*{LF-A2 Colour Cohesion}
+\textbf{Requirement:} The application interface must use a consistent color scheme for uniformity.\\
+\textbf{Fit Criterion:} The product shall have color guidelines that specify at least three colors to define a palette 
+(i.e. primary, secondary, and accent colors).
+\subsubsection*{LF-A3 Resolution}
+\textbf{Requirement:} The application must use high definition graphics.\\
+\textbf{Fit Criterion:} The application will only display images that are of a resolution of 720p or higher.
 \subsection{Style Requirements}
-\lips
-
+\subsubsection*{LF-S1 Authority and Trust}
+\textbf{Requirement:} The application must appear authoritative and trustworthy, users are more likely to engage
+and remain loyal to an application that is percieved as reliable.\\
+\textbf{Fit Criterion:} After one encounter with the application, 70 percent of users will agree 
+that they can trust the application and how it handles input data.
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
-\lips
+\subsubsection*{UH-EOU1 Human Centered Design (HCD)}
+\textbf{Requirement:} The app interface must adhere to human-centered design principles to be simple and intuitive to use.\\
+\textbf{Fit Criterion:} The user interface must incorporate all four fundamental HCD principles.
 \subsection{Personalization and Internationalization Requirements}
-\lips
+\subsubsection*{UH-PI1 Language}
+\textbf{Requirement:} The application must provide support for Canadian English (en-CA).\\
+\textbf{Fit Criterion:} All text, labels, and instructions within the application 
+shall be presented in Canadian English, with no grammatical or spelling errors.
 \subsection{Learning Requirements}
-\lips
+\subsubsection*{UH-L1 Music Theory Familiarity}
+\textbf{Requirement:} The application must be usable by users without a formal music theory background. \\
+\textbf{Fit Criterion:} After having 10 minutes to familiarize themselves with the app, 95\% of users without a 
+formal background will be able to generate a score sheet.
 \subsection{Understandability and Politeness Requirements}
-\lips
+\subsubsection*{UH-UP1 Icon Identification}
+\textbf{Requirement:} The app must use symbols and icons that are naturally understandable and/or self-explanatory.\\
+\textbf{Fit Criterion:} Users shall be able to easily identify the function of at least 70 percent of interactive elements
+that have unlabeled icons.
+\subsubsection*{UH-UP2 Information Hiding}
+\textbf{Requirement:} The app must hide audio processing and transcription details from the user.\\
+\textbf{Fit Criterion:} No user-accessible components of the interface or application shall reveal
+implementation-specific or algorithmic solutions used.
 \subsection{Accessibility Requirements}
-\lips
-
+\subsubsection*{UH-A1 Web Content Accessibility Guidelines}
+\textbf{Requirement:} The app must comply with the standardized Web Content Accessibility Guidelines (WCAG)~\cite{WCAG21}.\\
+\textbf{Fit Criterion:} The app must meet or exceed WCAG 2.1 Level AA compliance. This shall be verified through 
+an accessibility audit using automated tools (e.g., WAVE, Axe) and manual reviews, ensuring adherence to guidelines 
+such as text alternatives, text readability, etc.
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
-\lips
+\subsubsection*{PR-SL1 User Interface Response Time}
+\textbf{Requirement:} The interface between the user and the sheet music generator app shall respond within a reasonable time when processing input or selecting menu options.\\
+\textbf{Fit Criterion:} The product shall respond in less than 2 seconds for 90 percent of user interactions. No response shall take longer than 5 seconds.
+\subsubsection*{PR-SL2 File Import and Export Speed}
+\textbf{Requirement:} The app shall import and export music files within a reasonable time for files up to 100MB in size.\\
+\textbf{Fit Criterion:} For files up to 100MB, the app shall import and export them within a reasonable time frame for their system for more than 95 percent of operations.
+
 \subsection{Safety-Critical Requirements}
-\lips
+\subsubsection*{PR-SC1 Epilepsy Safety}
+\textbf{Requirement:} The app shall not display rapid flashing lights, animations, or any visual effects that could trigger epileptic seizures in users.\\
+\textbf{Fit Criterion:} The app’s graphical interface must comply with WCAG 2.1 (Web Content Accessibility Guidelines)~\cite{WCAG-Seizures} for flashing content, limiting visual effects to fewer than 3 flashes per second. The interface will be tested with accessibility tools to ensure compliance with these standards.
+\subsubsection*{PR-SC2 Instrument Input Setup}
+\textbf{Requirement:} The app shall guide users through the correct setup of instrument input to prevent audio misconfiguration, damage to the user/instrument, and damage to the application’s device.\\
+\textbf{Fit Criterion:} The app will include an interactive, step-by-step tutorial for configuring instrument inputs (via external devices or microphones). The setup process should be completed with a 95\% success rate based on user testing, ensuring correct audio input detection on the first attempt.
+
 \subsection{Precision or Accuracy Requirements}
-\lips
+\subsubsection*{PR-PA1 Pitch Detection Accuracy}
+\textbf{Requirement:} This app shall correctly detect musical pitch from instruments' input to ensure that all notes are transcribed correctly.\\
+\textbf{Fit Criterion:} The app must maintain this pitch accuracy over all test cases involving diverse instruments and note ranges, with no more than 1\% error. Also must satisfy requirement OE-EP1 for noise tolerance.
+\subsubsection*{PR-PA2 Timing Accuracy}
+\textbf{Requirement:} The app shall accurately capture note durations and rhythms within a reasonable tolerance to ensure correct rhythmic transcription.\\
+\textbf{Fit Criterion:} The app must maintain timing accuracy within the 100ms across all test cases.
+
 \subsection{Robustness or Fault-Tolerance Requirements}
-\lips
+\subsubsection*{PR-RFT1 Reliability (Time Between Failures)}
+\textbf{Requirement:} The app shall operate continuously for at least 24 hours between failures or system crashes, ensuring that users experience minimal interruptions during usage.\\
+\textbf{Fit Criterion:} The app must pass reliability testing by operating under typical usage conditions for 24 hours without a failure in at least 95\% of test cases.
+\subsubsection*{PR-RFT2 Availability (Uptime)}
+\textbf{Requirement:} The app shall achieve 99.5\% uptime, ensuring that it is available for use at nearly all times, excluding brief periods for necessary updates or maintenance.\\
+\textbf{Fit Criterion:} The app must demonstrate an average of 99.5\% uptime over a reasonable time.
+\subsubsection*{PR-RFT3 Crash Recovery}
+\textbf{Requirement:} In an unexpected crash, the app shall automatically save the user’s current session, including any partially transcribed sheet music, and allow the user to recover their work upon restart.\\
+\textbf{Fit Criterion:} During testing, the app must successfully recover user data in 98\% of cases where a crash occurs, with no data loss.
+\subsubsection*{PR-RFT4 Performance Under Load}
+\textbf{Requirement:} The app shall maintain reliable performance under conditions of high user activity (e.g., processing complex polyphonic inputs or large files) without significant slowdowns or crashes.\\
+\textbf{Fit Criterion:} The app must maintain stable performance, with no more than a 30\% decrease in processing speed, when tested under maximum expected load conditions.
+\subsubsection*{PR-RFT5 Handling Signal Interruptions}
+\textbf{Requirement:} The app shall continue to operate and retain the audio signals received up to the point of interruption, even if the instrument input is temporarily lost (e.g., due to cable disconnection or microphone failure).\\
+\textbf{Fit Criterion:} The app must store buffered audio data for up to 2 minutes during signal interruptions and automatically resume transcription once the input is restored, with 0\% data loss in at least 95\% of test cases.
+\subsubsection*{PR-RFT6 Graceful Degradation}
+\textbf{Requirement:} In the event of a performance slowdown (e.g., due to excessive input data or limited system resources), the app shall degrade its services gracefully by notifying the user of delays without crashing.\\
+\textbf{Fit Criterion:} During stress testing under heavy load (e.g., multiple instruments or large file sizes), the app must maintain operational status and notify the user of delays or lowered performance within 5 seconds of detection, with no system crashes in 99\% of test cases.
+\subsubsection*{PR-RFT7 Automatic Recovery from Software Glitches}
+\textbf{Requirement:} If the app encounters a minor software error (e.g., unexpected input format or corrupted file), it shall log the error, notify the user, and continue functioning by skipping the problematic section rather than halting it.\\
+\textbf{Fit Criterion:} The app must pass testing by handling minor software errors in at least 90\% of cases without crashing and will log the issue for future debugging.
+
 \subsection{Capacity Requirements}
-\lips
+\subsubsection*{PR-C1 Audio Input Capacity}
+\textbf{Requirement:} The app shall process audio input of up to 90 minutes of continuous recording in a single session without performance degradation.\\
+\textbf{Fit Criterion:} The app must be tested with audio recordings of varying lengths (up to 90 minutes) and successfully process and transcribe the entire duration with no more than a 5\% slowdown in transcription speed or accuracy.
+\subsubsection*{PR-C2 Simultaneous User Sessions}
+\textbf{Requirement:} The app shall support at least 10 simultaneous user sessions (local or cloud-based) without degradation in performance or delays in processing.\\
+\textbf{Fit Criterion:} During testing with 10 simultaneous active user sessions, the app must maintain performance levels, including stable response times and transcription accuracy, with no noticeable slowdown in 95\% of test cases.
+
 \subsection{Scalability or Extensibility Requirements}
-\lips
+\subsubsection*{PR-SE1 User Base Growth}
+\textbf{Requirement:} The app shall be capable of scaling to support an increase in the user base to 1000 users without requiring major architectural changes to support a change from personal to commercial use.\\
+\textbf{Fit Criterion:} The app’s infrastructure must be designed to scale up by a factor of 10 and should undergo stress testing to ensure it can handle 1000 simultaneous user sessions with no significant performance degradation.
+\subsubsection*{PR-SE2 Feature Extensibility}
+\textbf{Requirement:} The app shall be designed with a modular architecture that allows for future feature additions, such as multi-instrument detection or cloud-based collaboration tools, without requiring significant refactoring.\\
+\textbf{Fit Criterion:} The app must pass code reviews and architecture validation to ensure it can integrate additional modules or features within 6 months of the product’s initial release, with minimal impact on core functionalities.
+\subsubsection*{PR-SE3 Processing Power for Complex Music Compositions}
+\textbf{Requirement:} The app shall be built to be able to scale its processing capabilities to handle future complex compositions involving multiple simultaneous instrument tracks supporting growth for polyphony.\\
+\textbf{Fit Criterion:} During testing, the app must demonstrate the ability to process increasingly complex musical arrangements.
+
 \subsection{Longevity Requirements}
-\lips
+\subsubsection*{PR-L1 Expected Lifetime}
+\textbf{Requirement:} The app shall be designed to operate effectively with regular software updates and minor maintenance for a minimum of five years without requiring a major rewrite or overhaul.\\
+\textbf{Fit Criterion:} The app’s development roadmap must include planned updates and feature expansions to maintain functionality and relevance for at least five years after launch.
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
-\lips
+\subsubsection*{OE-EP1 Operating Environment}
+\textbf{Requirement:} The app shall be used on personal computers or laptops in typical indoor environments, such as home studios, classrooms, or offices. It should perform well under varying levels of ambient noise.\\
+\textbf{Fit Criterion:} The app must be tested in multiple indoor settings and perform well without requiring any environment-specific adjustments.
+\subsubsection*{OE-EP2 Noise and Audio Input Quality}
+\textbf{Requirement:} The app shall be able to capture clear audio input in environments with moderate ambient noise, such as home studios or cafes, without significant degradation in transcription accuracy.\\
+\textbf{Fit Criterion:} The app must be tested in environments with background noise to ensure that it can still accurately capture and process audio inputs without more than a 5\% drop in accuracy.
+\subsubsection*{OE-EP3 Workspace Flexibility}
+\textbf{Requirement:} The app shall be usable on laptops with limited screen space, such as 13-inch displays, and must adjust its layout to accommodate various screen resolutions and sizes.\\
+\textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all screen sizes and resolutions.
+\subsubsection*{OE-EP4 Portable Setup Compatibility}
+\textbf{Requirement:} The app shall be compatible with portable setups, such as laptops used in temporary workspaces like cafes or live performance venues, ensuring that it can be used effectively in different environments without special hardware.\\
+\textbf{Fit Criterion:} The app must function smoothly on portable setups with wireless internet and standard laptop hardware, and be tested for usability in transient environments where quick setup and breakdown are required.
+
 \subsection{Wider Environment Requirements}
-\lips
+\subsubsection*{OE-WE1 General Hardware}
+\textbf{Requirement:} The app shall operate effectively on devices with varying interface specifications.\\
+\textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all typical screen sizes and resolutions.
+
 \subsection{Requirements for Interfacing with Adjacent Systems}
-\lips
+\subsubsection*{OE-IA1 Audio Input Devices}
+\textbf{Requirement:} The app shall interface with standard audio input devices, including USB microphones, instrument pickups, and built-in computer microphones.\\
+\textbf{Fit Criterion:} The app must support audio input via devices adhering to USB Audio Class 1.0 and higher, and be tested with common setups (e.g., USB microphones, line-in jacks).\\
+\subsubsection*{OE-IA2 Audio File Import and Export}
+\textbf{Requirement:} The app shall interface with common audio file formats for both import and export, including WAV and MP3.\\
+\textbf{Fit Criterion:} The app must successfully import and export audio files in WAV (PCM), and MP3 (MPEG-1 Layer III).\\
+\subsubsection*{OE-IA3 Music Notation Software Integration}
+\textbf{Requirement:} The app shall export sheet music in formats compatible with popular music notation software, including MusicXML and MIDI files.\\
+\textbf{Fit Criterion:} The app must generate MusicXML and MIDI files compatible with the software.\\
+
 \subsection{Productization Requirements}
-\lips
+\subsubsection*{OE-P1 Distribution}
+\textbf{Requirement:} The app shall be distributed as a downloadable executable file.\\
+\textbf{Fit Criterion:} The app must be packaged in an installer that can be downloaded from a website or software repository, with no additional dependencies required for installation.
+\subsubsection*{OE-P2 Installation Process}
+\textbf{Requirement:} The product shall be capable of being installed by an untrained user with minimal technical knowledge, requiring minimal steps from download to full installation.\\
+\textbf{Fit Criterion:} The installation wizard must guide the user through the process, providing automatic configuration options and requiring minimal user input. Instructions must be included within the installer interface.
+\subsubsection*{OE-P3 Size and Compatibility}
+\textbf{Requirement:} The app’s installation file size shall not exceed 500MB, ensuring that the product can be easily downloaded even with moderate internet connections.\\
+\textbf{Fit Criterion:} The app must be easily installed on a variety of systems.
+\subsubsection*{OE-P4 Post-Installation Configuration}
+\textbf{Requirement:} The product shall configure its default settings upon installation, but allow users to modify these settings (e.g., input source, output format) during or after the installation process.\\
+\textbf{Fit Criterion:} A settings configuration panel must be accessible from the app's user interface, allowing users to adjust settings without needing to edit configuration files manually.
+
 \subsection{Release Requirements}
-\lips
+\subsubsection*{OE-R1 Initial Release}
+\textbf{Requirement:} The first stable version of the app shall be released within the timeline of this capstone course after completing the testing and POC phase. This release will include core functionality such as converting instrument signals to sheet music and basic editing capabilities.\\
+\textbf{Fit Criterion:} The initial release must undergo testing and pass all quality assurance checks. Core features must be fully operational, and the product should be ready for general use without major bugs.
+
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
-\lips
+\subsubsection*{MS-M1 Version Releases}
+\textbf{Requirement:} The system must notify the user of new releases of the system within 1 hour of the release. \\ 
+\textbf{Fit Criterion:} Following a new version release of the system, the next time the user opens the application with an internet connection they will be prompted to install the new release. 
+\subsubsection*{MS-M2 System Crash}
+\textbf{Requirement:} The application must self-boot within 1 minute of an unexpected shutdown of the application. \\ 
+\textbf{Fit Criterion:} A non-user prompted shutdown of the system shall result in the application reopening without losing data from the user’s previous session.
+
 \subsection{Supportability Requirements}
-\lips
+\subsubsection*{MS-S1 Software Bugs}
+\textbf{Requirement:} The system must allow users to report bugs to the development team. \\ 
+\textbf{Fit Criterion:} The development team shall be notified within 1 hour of a user submitting a report via the GUI.
+\subsubsection*{MS-S2 Operating System}
+\textbf{Requirement:} The system must operate on Windows 10 and 11. \\ 
+\textbf{Fit Criterion:} The system shall be compatible with Windows 10 and later version such that it performs all expected functionalities
+
 \subsection{Adaptability Requirements}
-\lips
+\subsubsection*{MS-A1 Internet Connection}
+\textbf{Requirement:} The system must function with or without an internet connection. \\ 
+\textbf{Fit Criterion:} User experience of the system will be consistent during usage on an online device as well as an offline device.
+\subsubsection*{MS-A2 GUI Navigation}
+\textbf{Requirement:} The GUI must be navigable using keyboard shortcuts without requiring a mouse. \\ 
+\textbf{Fit Criterion:} The system shall remain functional and usable when a mouse is not connected to the device running the system.
+
 
 \section{Security Requirements}
 \subsection{Access Requirements}
-\lips
+\subsubsection*{S-A1 User Authentication}
+\textbf{Requirement:} The system must not require a login or password to be accessed. \\ 
+\textbf{Fit Criterion:} The user successfully accesses the system without performing any authentication activities.
+
 \subsection{Integrity Requirements}
-\lips
+N/A: This system does not deal with storage of PII or output files (i.e., generated sheet music). It is the user's responsibility to maintain long-term storage of output files.
+
 \subsection{Privacy Requirements}
-\lips
+\subsubsection*{S-P1 Data Storage}
+\textbf{Requirement:} The system must store user data (i.e., output files) in a local user-chosen location. \\ 
+\textbf{Fit Criterion:} All output files appear in the user-inputted location such that the user has read and write capabilities over the files. 
+\subsubsection*{S-P2 PII}
+\textbf{Requirement:} The system must not collect Personal Identifiable Information (PII) from the user. \\ 
+\textbf{Fit Criterion:} The user is never prompted to supply information to the system other than audio input files. 
+\subsubsection*{S-P3 Input Data}
+\textbf{Requirement:} The system must not store audio data once it has been processed. \\ 
+\textbf{Fit Criterion:} All caches and temporary files are cleared from the system once signal processing is completed.
+
 \subsection{Audit Requirements}
-\lips
+N/A: This system is for personal and offline use, and as such the developers do not hold responsibility over the usage of the system by future customers.
 \subsection{Immunity Requirements}
-\lips
+N/A: This system does not store data and thus will not be susceptible to maleveolent actors.
+
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
@@ -218,11 +528,54 @@ involved in the Project}
 
 \section{Off-the-Shelf Solutions}
 \subsection{Ready-Made Products}
-\lips
+\textbf{Content}: In exploring potential off-the-shelf (OTS) solutions that could fulfill part or all of our project requirements, we have reviewed several existing software products related to music transcription and signal processing. While our primary focus is on learning and building the product from scratch as a capstone project, these products were considered for their applicability and potential use in enhancing our understanding of the field.\\
+\textbf{Motivation}: The goal of this investigation was to consider whether any existing solutions could meet our project’s goals or provide insight into how to address specific technical challenges. Given that our focus is on educational value rather than commercial competition, we explored these solutions to learn from their features and limitations.\\
+
+\textbf{Products Investigated}:
+\begin{itemize}
+    \item \textbf{Sibelius}~\cite{sibelius}\\
+    \textbf{Description}: Sibelius is a professional music notation software that supports transcription, editing, and playback of sheet music.\\
+    \textbf{Applicability}: While Sibelius provides a robust notation environment, it does not directly fulfill the core requirement of real-time audio-to-sheet-music transcription. However, its export capabilities (MusicXML and MIDI) align with our needs for cross-compatibility.\\
+    \textbf{Conclusion}: Sibelius is not suitable as a full solution for our project but offers useful insights into notation and export formats.
+    
+    \item \textbf{AnthemScore}\cite{AnthemScore}\\
+    \textbf{Description}: AnthemScore is an automated music transcription software that converts audio recordings into sheet music.\\
+    \textbf{Applicability}: AnthemScore is the most closely aligned with our project’s goal of audio-to-sheet-music transcription. It uses machine learning to process audio, which could provide valuable lessons on handling real-time audio input and accuracy.\\
+    \textbf{Conclusion}: Although AnthemScore is a ready-made solution for audio transcription, integrating it into our project would limit our learning opportunities. However, understanding its machine learning approach offers valuable technical insights.
+    
+    \item \textbf{MuseScore}\cite{MuseScore}\\
+    \textbf{Description}: MuseScore is an open-source music notation software that supports MusicXML and MIDI input/output.\\
+    \textbf{Applicability}: MuseScore offers advanced notation tools and is widely used for music transcription. While it does not handle real-time audio transcription, it could serve as a valuable resource for understanding notation standards and file format handling (MusicXML, MIDI).\\
+    \textbf{Conclusion}: MuseScore provides a strong learning resource for notation and file management, but it is not directly applicable for our audio signal processing goals.
+    
+    \item \textbf{Transcribe!}\cite{Transcribe!}\\
+    \textbf{Description}: Transcribe! is a software focused on assisting musicians in transcribing audio files into written music manually.\\
+    \textbf{Applicability}: Although Transcribe! focuses more on aiding manual transcription, its use of time-stretching and pitch-shifting techniques for audio processing could offer valuable learning insights for real-time transcription in our project.\\
+    \textbf{Conclusion}: Transcribe! is not a direct solution but may offer useful ideas for how to manage and process audio signals for manual transcription.
+    
+    \item \textbf{Melody Scanner by Klangio}\cite{Melody-Scanner}\\
+    \textbf{Description}: Melody Scanner is an online tool that converts audio files, such as recordings of melodies, into sheet music automatically which is the general idea of this project. It focuses on providing a quick and user-friendly way to transcribe melodies for musicians.\\
+    \textbf{Applicability}: Melody Scanner aligns closely with our goal of audio-to-sheet-music transcription. However, its focus is primarily on melodic transcription rather than handling complex polyphonic music or real-time input. Despite this, it offers a straightforward user interface and backend processes that could provide useful insights for our project, particularly in terms of simplicity and user experience.\\
+    \textbf{Conclusion}: While Melody Scanner is not a comprehensive solution for our capstone project’s real-time transcription needs, it offers valuable lessons in streamlining the user interface and simplifying the transcription process for ease of use.
+\end{itemize}
 \subsection{Reusable Components}
-\lips
+The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components which could be extremely useful listed below.\\
+
+\subsubsection*{PortAudio (for Audio Input/Output)~\cite{portaudio}}
+\textbf{Description}: PortAudio is a widely used open-source library for handling audio input and output across multiple platforms.\\
+\textbf{Rationale for Limited Use}: While audio capture and output are critical components, reinventing this from scratch would require extensive low-level work that would detract from our focus on learning signal processing and transcription. Therefore, we plan to use PortAudio for audio input/output while building the higher-level processing systems ourselves.\\
+
+\subsubsection*{MusicXML Format~\cite{musicxml}}
+\textbf{Description}: MusicXML is an open standard for music notation interchange, commonly used in music software.\\
+\textbf{Rationale for Limited Use}: Rebuilding a file format from scratch would not significantly contribute to our learning, so we will use MusicXML to ensure compatibility with existing music notation software. However, we will focus our learning efforts on generating and manipulating the MusicXML data from the transcription process.\\
+
 \subsection{Products That Can Be Copied}
-\lips
+Although copying or modifying parts of existing products could save time and effort, our primary goal for this capstone project is to deepen our technical knowledge by solving the challenges ourselves. This section acknowledges the potential solutions but explains why we prefer not to use them, except where strictly necessary. There is one example of an open-source product available to copy from:\\
+
+\subsubsection*{LilyPond (Music Notation Rendering)~\cite{lilypond}}
+\textbf{Description}: LilyPond is an open-source music engraving program that renders high-quality sheet music. Its notation rendering capabilities could be adapted for our needs.\\
+\textbf{Rationale for Avoiding Copying}: While using LilyPond for notation rendering would simplify output formatting, we aim to build our own system for translating audio to notation and rendering it. This will give us valuable insights into how music notation software operates, which we would miss by relying on LilyPond.\\
+\textbf{Approximate Time Savings}: Copying LilyPond’s functionality could reduce our output formatting time by 30–40\%, but we would miss out on understanding the process of rendering notation from scratch.
 
 \section{New Problems}
 \subsection{Effects on the Current Environment}
@@ -314,9 +667,23 @@ The following table displays the tasks and associated deadlines that make up the
 
 \section{Migration to the New Product}
 \subsection{Requirements for Migration to the New Product}
-\lips
+Since our sheet music generator app is being developed from scratch and does not replace any existing system, there are no traditional migration requirements from an old system to a new one. However, as users may want to transition from using existing software solutions to our product, the following minimal migration efforts are anticipated:
+\begin{itemize}
+    \item \textbf{File Compatibility}: Users should be able to import existing sheet music files (MusicXML) from other music notation or production software such as Sibelius, Finale, and MuseScore. The app must support these file types and ensure accurate translation into the app’s native system.
+    
+    \item \textbf{User Familiarization}: Since the app is new, existing users of other music transcription or notation software may need time to familiarize themselves with the workflow and interface. Providing clear tutorials and guidance within the app will be important to ensure a smooth transition for users.
+    
+    \item \textbf{System Requirements}: The app should clearly communicate its system requirements (e.g., minimum RAM, processor speed) to users transitioning from older or less efficient music notation tools, ensuring their hardware is compatible with the new system.
+\end{itemize}
 \subsection{Data That Has to be Modified or Translated for the New System}
-\lips
+Given that this project is being developed from the ground up, no legacy data exists that needs to be migrated. However, users may bring data from other platforms. The following types of data may need to be translated or modified to work within the new system:
+\begin{itemize}
+    \item \textbf{MusicXML and MIDI Files}: The app must allow seamless import of MusicXML files created on other platforms. Any discrepancies or unsupported elements should be flagged, and users should have the ability to adjust elements that do not translate perfectly.
+    
+    \item \textbf{Audio Files}: Users may import existing audio recordings (WAV, MP3, FLAC) for transcription. The app should accommodate different audio formats and sample rates, translating these into the internal format used for transcription without losing accuracy or quality.
+    
+    \item \textbf{Notation Adjustments}: Imported sheet music may not always align perfectly with the app’s internal notation system. In such cases, the app should automatically translate formatting elements and provide users with editing tools to make manual adjustments where necessary.
+\end{itemize}
 
 \section{Costs}
 \lips
@@ -327,10 +694,22 @@ The following table displays the tasks and associated deadlines that make up the
 \lips
 
 \section{Waiting Room}
+
 \lips
 
 \section{Ideas for Solution}
-\lips
+\begin{itemize}
+  \item Real time signal processing using C/C++ for speed
+  \item Use the libsndfile open source library for signal processing
+  \item Deploy as a .exe file
+  \item Use some modern framework for front-end development (e.g. React Native, Vue.js)
+  \item The user manually identifies the tempo and key to be used in the generated sheet-music
+  \item A sheet music editing feature compatible with the musicXML format
+\end{itemize}
+
+\newpage{}
+\bibliographystyle{IEEEtran}
+\bibliography{references}
 
 \newpage{}
 \section*{Appendix --- Reflection}
