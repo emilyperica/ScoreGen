@@ -29,7 +29,7 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
+\title{Software Requirements Specification for \progname: Automated Music Transcription from Audio to Sheet Music} 
 \author{\authname}
 \date{\today}
 	
@@ -48,7 +48,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
-09/10/2024 & 0 & Initial Revision\\
+09/11/2024 & 0 & Initial Revision\\
 \bottomrule
 \end{tabularx}
 
@@ -898,8 +898,20 @@ To ensure sufficient resources for product use, the development team will provid
 
 
 \section{Waiting Room}
-
-\lips
+\begin{itemize}
+    \item The system must support operation on macOS, Linux, and Windows operating systems. Specifically, the supported versions include:
+    \begin{itemize}
+        \item macOS Sonoma 14.0 (or later),
+        \item Ubuntu 24.04 LTS (or later),
+        \item Windows 11 (or later).
+    \end{itemize}
+    \item Real-time signal processing should be conducted using Real-Time Operating Systems (RTOS) as advised by our supervisor. A proof-of-concept must be conducted to evaluate the feasibility of using an RTOS for this purpose.
+    \item The system must offer basic MIDI-to-audio conversion for audible feedback, enabling users to determine the correctness of the transcription through a playback feature.
+    \item The system must support continuous pitch handling, specifically for instruments and vocals that do not have discrete notes, such as singing and violin performances.
+    \item The system should automatically download and install version updates when connected to the internet to ensure the user is always working with the latest software features and bug fixes.
+    \item The system must generate optimized guitar tabs that suggest the easiest finger positioning for each note or chord based on the context of the score.
+    \item The system must provide a feature to allow users to edit the transcribed sheet music. For example, users should be able to adjust the key signature if they find it incorrect or wish to make changes.
+\end{itemize}
 
 \section{Ideas for Solution}
 \begin{itemize}
