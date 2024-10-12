@@ -26,7 +26,7 @@
 
 \begin{document}
 
-\title{Software Requirements Specification for \progname: subtitle describing software} 
+\title{Software Requirements Specification for \progname: An audio-to-sheet-music generator} 
 \author{\authname}
 \date{\today}
 	
@@ -46,7 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
-09/10/2024 & 1.0 & Initial Revision\\
+11/10/2024 & 1.0 & Initial Revision\\
 \bottomrule
 \end{tabularx}
 
@@ -267,16 +267,16 @@ involved in the Project}
 \textbf{Fit Criterion:} Changes made by the user are reflected in the output files produced during sheet music generation.
 
 \subsection{User Interface}
-\subsubsection*{FR-UI2 System Feedback}
+\subsubsection*{FR-UI1 System Feedback}
 \textbf{Requirement:} The interface shall display processing feedback during audio input. \\
 \textbf{Fit Criterion:} Feedback from system is displayed to the user within 2 seconds of their input.
-\subsubsection*{FR-UI3 System Documentation}
+\subsubsection*{FR-UI2 System Documentation}
 \textbf{Requirement:} The system shall provide help documentation and user guides for each feature. \\
 \textbf{Fit Criterion:} At least 90\% of users during user testing find the interface easy to navigate.
-\subsubsection*{FR-UI4 User Feedback}
+\subsubsection*{FR-UI3 User Feedback}
 \textbf{Requirement:} The system shall provide a feedback mechanism for users to report issues or suggest features. \\
 \textbf{Fit Criterion:} The development team successfully receives user feedback via the feedback mechanism 100\% of the time.
-\subsubsection*{FR-UFI5 Customer Support}
+\subsubsection*{FR-UFI4 Customer Support}
 \textbf{Requirement:} The system shall include customer support contact information for troubleshooting. \\
 \textbf{Fit Criterion:} At least 90\% of users during user testing report successfull interactions with customer support.
 
@@ -632,7 +632,7 @@ The following table displays the tasks and associated deadlines that make up the
 \textbf{Benefit to user:} This phase will result in an MVP to present to relevant stakeholders, ensuring that the development team remains aware of potential users and their related needs. \\
 \textbf{Required operational date:} Nov 11/24 \\
 \textbf{System components included:} Backend subsytem. \\
-\textbf{Related functional requirements:} \\
+\textbf{Related functional requirements:} FR-AI1, FR-AI3, FR-SP6 \\
 \textbf{Related non-functional requirements:} \\
 
 \subsubsection*{Phase 2: Backend Development}
@@ -640,28 +640,28 @@ The following table displays the tasks and associated deadlines that make up the
 \textbf{Required operational date:} Jan 15/25 \\
 \textbf{System components included:} Backend subsytem containt the main functionalities of the system, namely signal processing of audio input and generation of output files (i.e., sheet music). 
                                      This phase will also include necessary hardware components for signal processing and testing, such as a keyboard/guitar, microphone, audio interfacer, amplifiers, audio cables, and other audio equipment as necessary.\\
-\textbf{Related functional requirements:} \\
+\textbf{Related functional requirements:} FR-SP1, FR-SP2, FR-SP3, FR-SP5, FR-SMG1, FR-SC1\\
 \textbf{Related non-functional requirements:} \\
 
 \subsubsection*{Phase 3: User Interface}
 \textbf{Benefit to user:} This phase will make the system usable by the intended customer, so that technical knowledge is not necessary to operate the system. This is projected to occur at the same time as Phase 2. \\
 \textbf{Required operational date:} Jan 15/25 \\
 \textbf{System components included:} Frontend subsytem. \\
-\textbf{Related functional requirements:} \\
+\textbf{Related functional requirements:} FR-AI2, FR-SP4, FR-UI2, FR-UI3, FR-UI4\\
 \textbf{Related non-functional requirements:} \\
 
 \subsubsection*{Phase 4: Integration of Subsystems and Deployment}
 \textbf{Benefit to user:} This phase will result in the completion of revision 0, such that all core functionalities are present in the system and all implementation details are abstracted from user view. \\
 \textbf{Required operational date:} Feb 3/25 \\
 \textbf{System components included:} Backend subsystem, frontend subsytem.\\
-\textbf{Related functional requirements:} \\
+\textbf{Related functional requirements:} FR-AI4, FR-UI1, FR-SL2\\
 \textbf{Related non-functional requirements:} \\
 
 \subsubsection*{Phase 5: Refinements}
 \textbf{Benefit to user:} This phase will focus on implementing stretch goals and waiting room requirements into the system. \\
 \textbf{Required operational date}: Mar 24/25 \\
 \textbf{System components included:} \\
-\textbf{Related functional requirements:} \\
+\textbf{Related functional requirements:} FR-SMG2, FR-SMG3\\
 \textbf{Related non-functional requirements:} \\
 
 
