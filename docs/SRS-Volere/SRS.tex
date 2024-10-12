@@ -8,8 +8,10 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
 \usepackage{hyperref}
 \usepackage{cite}
+\usepackage{enumitem}
 \usepackage{longtable}
 \usepackage{array} % Optional: For better column formatting
 
@@ -21,6 +23,8 @@
     filecolor=magenta,      % color of file links
     urlcolor=cyan           % color of external links
 }
+\usepackage{graphicx}
+\graphicspath{ {./images/} } % relative path
 
 \newcommand{\lips}{\textit{Insert your content here.}}
 
@@ -60,9 +64,23 @@
 \pagenumbering{arabic}
 \section{Purpose of the Project}
 \subsection{User Business}
-\lips
+Music theory is challenging and intimidating to learn for beginners, 
+however, the act of playing an instrument does not inherently require 
+extensive theoretical knowledge. This project aims to bridge the gap 
+between deep theoretical understanding and playing instruments. It 
+shall aid musicians with limited music theory knowledge by translating 
+analog instrument audio into sheet music and other applicable formats 
+that users can use to visualize and document their music-making. The 
+project also aims to foster ease of collaboration between musical 
+artists for efficient communication. 
 \subsection{Goals of the Project}
-\lips
+The goal of the project is to develop a fast, accurate sheet music generator 
+paired with an intuitive, user-friendly interface that requires minimal effort 
+to learn. If successful, it will encourage the proliferation of musical creativity 
+among various audiences. This goal lends itself to several metrics, such as 
+computational performance compared to existing products or its reach to certain 
+demographics. Ultimately, the benefit of the project will be measured by the number 
+of original pieces created.
 \section{Stakeholders}
 \subsection{Client}
 The client is the faculty supervisor of this project, Dr. Martin Von Mohrenschildt. With direct research interests in signal processing and a personal interest in how it relates to 
@@ -271,27 +289,139 @@ WAV & Waveform Audio File Format. \\
 
 \section{Relevant Facts And Assumptions}
 \subsection{Relevant Facts}
-\lips
+\begin{itemize}
+  \item This project is under irregular time constraints, given that it is 
+  for an undergraduate-level software engineering course. 
+  \item Digitizing and transcribing polyphonic audio from multiple instruments
+   is a difficult task and may be unachievable due to the aforementioned time constraints. 
+  \item Many products are currently available as alternatives to what this project hopes 
+  to accomplish. The team will use these products and their functionalities as metrics for success.
+\end{itemize}
 \subsection{Business Rules}
-\lips
+\begin{enumerate}
+  \item Instrument Support
+  \begin{itemize}
+    \item The application only supports a predefined list of instruments.
+    \item No instruments may be added by the user to the predefined list.
+  \end{itemize}
+  \item Music Theory Compliance
+  \begin{itemize}
+    \item The application must generate score sheets that adhere to basic music 
+    theory rules (e.g., correct note placement, no overlapping notes, etc.).
+    \item The application must generate a score sheet within a reasonable amount of time
+    to ensure a smooth user experience. 
+  \end{itemize}
+  \item Ownership
+  \begin{itemize}
+    \item The application must clearly identify and display the creator/owner of the score.
+  \end{itemize}
+\end{enumerate}
 \subsection{Assumptions}
-\lips
+Assumptions are seperated into two categories based on the effect their falsehood will have 
+on the application:
+\begin{enumerate}
+  \item Should the following assumptions be false, the application will be unusable:
+  \begin{itemize}
+    \item Users of the application have access to the hardware required, such as a music 
+    interface or quality microphone.
+    \item Users have access to a desktop or portable computer to use the application.
+  \end{itemize}
+  \item Should the following assumptions be false, the application will perform at sub-optimally: 
+  \begin{itemize}
+    \item The operational environment has low levels of background noise.
+    \item The human voice is not considered an instrument that the application can handle input from.
+    \item Users have a superficial level of understanding of music theory in order to understand 
+    what the application does.
+  \end{itemize}
+\end{enumerate}
 
 \section{The Scope of the Work}
 \subsection{The Current Situation}
-\lips
+The following activity diagram illustrates the workflow of manual score sheet generation, the process
+which the application intends to improve upon.\\\\
+\includegraphics[width=\textwidth]{SRS-manual-score-process-revised.png}
 \subsection{The Context of the Work}
-\lips
+The diagram below shows the context in which the development of the application is taking place. It shows
+adjacent systems and their associated inputs and outputs as it relates to the application and it's work. \\\\
+\includegraphics[width=\textwidth]{SRS-contex-diagram-revised.png}
+
 \subsection{Work Partitioning}
-\lips
+The table below summarizes the business events that might be triggered by adjacent organizations
+or application users themselves.\\
+\begingroup
+\renewcommand{\arraystretch}{1.25}
+\begin{tabular}{|>{\raggedright}p{3cm}|>{\raggedright}p{4.25cm}|>{\raggedright\arraybackslash}p{6cm}|}
+  \hline
+  EVENT NAME & INPUT/OUTPUT & SUMMARY OF BUC \\
+  \hline
+  BE1. User provides audio input. & Audio input (IN) & Process the input audio, digitize if necessary.\\
+  \hline
+  BE2. Audio transcription. & Transcription results (IN) & Record the notes transcribed. \\
+  \hline
+  BE3. Score completion. & Generated score (OUT) & Finalize the transcription results into proper music notation/symbols.\\
+  \hline
+  BE4. Export files. & Exported digital files (IN)  & Convert the generated score into a digital file format for export (see BE6.).\\
+  \hline
+  BE5. Progress reports. & Interface feedback/progress reports (OUT) & Provide visual indicators to user of transcription status.\\
+  \hline
+  BE6. Share sheet music. & Digital files (OUT)  & Output the exportable file format (see BE4.).\\
+  \hline
+\end{tabular}
+\endgroup
+
 \subsection{Specifying a Business Use Case (BUC)}
-\lips
+The use case diagram below has been used to specify the details of the BUC 
+associated with BE1.\\
+\includegraphics[width=\textwidth]{BUC-revised.png}
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
-\lips
+A first-cut UML class diagram has been used to model the data entities relevant to the scope of the work. This
+abstractly describes the relationship between these entities. For definitions and attributes see section 7.2 Data Dictionary.\\
+\includegraphics[scale=0.75]{SRS-data-model.png}
 \subsection{Data Dictionary}
-\lips
+\begingroup
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{|>{\raggedright}p{3cm}|>{\raggedright}p{5.5cm}|>{\raggedright\arraybackslash}p{4cm}|}
+  \hline
+  NAME & CONTENT & TYPE \\
+  \hline
+  User & userID + name + preferences & Class\\
+  \hline
+  Preferences & prefID + userID + instrument + preferredInput & Class \\
+  \hline
+  AudioFile & audioID + inFileName + format + userID + uploadDate & Class\\
+  \hline
+  Transcription & transcID + audioID + outputFormat + creationDate + outFileName  & Class \\
+  \hline
+  OutputFile & outputID + outFileName + fileType  & Class \\
+  \hline
+  *ID & Unique identifier for distinguishing between entities & Attribute/Element \\
+  \hline
+  name & Name of the user, for ownership purposes  & Attribute/Element \\
+  \hline
+  preferences & Data related to user interface preferences  & Attribute/Element \\
+  \hline
+  instrument & The musical instrument the user has selected to use for input  & Attribute/Element \\
+  \hline
+  preferredInput & Type of input the user will use (e.g., digital files, analog input)  & Attribute/Element \\
+  \hline
+  inFileName & Name given to the file that stores input data & Attribute/Element \\
+  \hline
+  format & The format of the input file (e.g., WAV, MP3, etc.) & Attribute/Element \\
+  \hline
+  uploadDate & *DD/MM/YYYY*\\ For file management and ownership purposes & Attribute/Element \\
+  \hline
+  outputFormat & The format that the exportable output file will use & Attribute/Element \\
+  \hline
+  creationDate & *DD/MM/YYYY*\\For ownership purposes & Attribute/Element \\
+  \hline
+  outFileName & Name given to the file that stores output data & Attribute/Element \\
+  \hline
+  fileType & The format that the exportable output file will use & Attribute/Element \\
+  \hline
+\end{longtable}
+\endgroup
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
@@ -842,16 +972,92 @@ Although copying or modifying parts of existing products could save time and eff
 
 \section{New Problems}
 \subsection{Effects on the Current Environment}
-\lips
+\begin{enumerate}
+  \item Data Privacy: The application shall not access or make use of any personal data 
+  without explicit consent (if necessary).
+  \item Compatibility:  The application will be developed to ensure that it does not harm or 
+  interfere with any of the existing applications on the user’s device.
+  \item Performance Efficiency: The application will not excessively consume device resources 
+  such that it significantly degrades the performance of the user’s device.
+\end{enumerate}
 \subsection{Effects on the Installed Systems}
-\lips
+\begin{enumerate}
+  \item Application Programming Interfaces (APIs)
+  \begin{itemize}
+      \item Use of any OS-specific APIs to perform tasks like file management and user interface rendering.
+  \end{itemize}
+  \item Existing User Interfaces (UIs)
+  \begin{itemize}
+      \item The application’s graphical user interface (GUI) may use existing frameworks to handle user input and display information.
+      \item Creates application shortcuts.
+  \end{itemize}
+  \item File System
+  \begin{itemize}
+      \item Interactions with the device’s file system to read and write files using system calls and other external libraries.
+      \item Saves transcribed sheet music to the device’s disk in various formats.
+  \end{itemize}
+  \item Network
+  \begin{itemize}
+      \item Although the application is intended to be standalone, network sockets might be used for communication purposes (e.g., for updates/patches).
+  \end{itemize}
+  \item Hardware Components
+  \begin{itemize}
+      \item The application captures input signals through the existing device’s microphone or audio interfaces.
+      \item Could use the analog-to-digital Converter (ADC) built into the device’s sound card or external audio interface.
+  \end{itemize}
+\end{enumerate}
+
 \subsection{Potential User Problems}
-\lips
+\begin{enumerate}
+  \item Access Control and Elevated Permissions
+  \begin{itemize}
+      \item The application may require changes to the access control settings on the target device. This might be unexpected for 
+      some users. These changes could be necessary for audio input processing or to interact with other specific system components.
+      \item More specifically, the application might need elevated permissions to handle audio hardware, system resources, etc. Users 
+      may be required to grant administrative access during installation.
+  \end{itemize}
+
+  \item Resource Consumption
+  \begin{itemize}
+      \item The application might consume high amounts of resources, especially during complex audio conversions or real-time 
+      transcriptions. This could adversely affect the target system’s performance, especially on devices with limited processing 
+      power or memory.
+      \item The battery life of portable devices may also be significantly drained as a result of the resource consumption.
+  \end{itemize}
+\end{enumerate}
+
 \subsection{Limitations in the Anticipated Implementation Environment That May
 Inhibit the New Product}
-\lips
+\begin{enumerate}
+  \item Hardware
+  \begin{itemize}
+    \item Built-in microphones that do not meet average audio quality standards may hinder the accuracy of music transcription. External 
+     audio interfaces or microphones may be necessary for the application's intended performance.
+     \item The application may adversly affect the battery life of the user's portable device. This could be caused by high processing demands
+     during intense transcription sessions.
+  \end{itemize}
+  \item Operating System (OS)
+  \begin{itemize}
+    \item The application's performance may vary due to the user's operating system version. Older versions may 
+     not have required libraries or optimizations that the application depends on.
+     \item Some operation systems might limit real-time task programming and processing, especially on systems with restrictive 
+     scheduling or low hardware capabilities.
+  \end{itemize}
+  \item Background Processes
+  \begin{itemize}
+    \item Resource intense background processes may lower the performance of the application especially for devices with
+    lower hardware capabilities.
+  \end{itemize}
+\end {enumerate}
 \subsection{Follow-Up Problems}
-\lips
+There exist some problems that the application may not be able to cope with. These include, but are not limited to: 
+\begin{itemize}
+  \item Extremely low-quality, noisy, or distorted audio input.
+  \item Highly complex audio.
+  \item High resource demand.
+  \item Insufficient hardware.
+  \item Limitations of pitch detection algorithms.
+\end{itemize}
 
 \section{Tasks}
 \subsection{Project Planning}
@@ -970,8 +1176,20 @@ To ensure sufficient resources for product use, the development team will provid
 
 
 \section{Waiting Room}
-
-\lips
+\begin{itemize}
+    \item The system must support operation on macOS, Linux, and Windows operating systems. Specifically, the supported versions include:
+    \begin{itemize}
+        \item macOS Sonoma 14.0 (or later),
+        \item Ubuntu 24.04 LTS (or later),
+        \item Windows 11 (or later).
+    \end{itemize}
+    \item Real-time signal processing should be conducted using Real-Time Operating Systems (RTOS) as advised by our supervisor. A proof-of-concept must be conducted to evaluate the feasibility of using an RTOS for this purpose.
+    \item The system must offer basic MIDI-to-audio conversion for audible feedback, enabling users to determine the correctness of the transcription through a playback feature.
+    \item The system must support continuous pitch handling, specifically for instruments and vocals that do not have discrete notes, such as singing and violin performances.
+    \item The system should automatically download and install version updates when connected to the internet to ensure the user is always working with the latest software features and bug fixes.
+    \item The system must generate optimized guitar tabs that suggest the easiest finger positioning for each note or chord based on the context of the score.
+    \item The system must provide a feature to allow users to edit the transcribed sheet music. For example, users should be able to adjust the key signature if they find it incorrect or wish to make changes.
+\end{itemize}
 
 \section{Ideas for Solution}
 \begin{itemize}
