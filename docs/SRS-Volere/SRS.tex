@@ -527,22 +527,28 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 
 
 \subsection{Individual Product Use Cases (PUC's)}
+
 \subsection*{PUC1: Record Instrument and Transcribe Notes}
 \begin{description}[style=nextline]
     \item[Description:] The user records a live performance on an instrument using their microphone, and the system transcribes the notes into sheet music.
+
     \item[Primary Actor:] Musician
+
     \item[Trigger:] The user presses the "Record" button.
+
     \item[Preconditions:]
     \begin{itemize}
-        \item User has selected an instrument (e.g., piano, guitar).
-        \item User has a working microphone connected to the desktop app.
+        \item The user has selected an instrument (e.g., piano, guitar).
+        \item The user has a working microphone connected to the desktop app.
     \end{itemize}
+
     \item[Main Success Scenario:]
     \begin{enumerate}
-        \item User begins playing the instrument.
-        \item System listens to the instrument through the microphone.
+        \item The user begins playing the instrument.
+        \item The system listens to the instrument through the microphone.
         \item Sheet music is displayed on the screen after the user finishes playing.
     \end{enumerate}
+
     \item[Exceptions:]
     \begin{itemize}
         \item If the system cannot detect a note, it skips the note and warns the user with a notification.
@@ -551,19 +557,24 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 
 \subsection*{PUC2: Save and Export Sheet Music}
 \begin{description}[style=nextline]
-    \item[Description:] The user saves the transcribed sheet music and exports it in the desired format (PDF, MIDI, musicXML).
+    \item[Description:] The user saves the transcribed sheet music and exports it in the desired format (PDF, MIDI, MusicXML).
+
     \item[Primary Actor:] Musician
+
     \item[Trigger:] The user clicks the "Save" or "Export" button.
+
     \item[Preconditions:]
     \begin{itemize}
         \item The transcription is completed, and the user has reviewed it.
     \end{itemize}
+
     \item[Main Success Scenario:]
     \begin{enumerate}
-        \item The user selects a file format (PDF, MID, musicXMLI).
+        \item The user selects a file format (PDF, MIDI, MusicXML).
         \item The system generates a file in the selected format.
         \item The file is saved to the user’s chosen directory.
     \end{enumerate}
+
     \item[Exceptions:]
     \begin{itemize}
         \item If the export fails due to file system issues, the user is prompted to retry or select another directory.
@@ -573,22 +584,28 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \subsection*{PUC3: Receive Error Warnings for Missing Notes}
 \begin{description}[style=nextline]
     \item[Description:] The user is notified if the system cannot detect or accurately transcribe certain notes during recording.
+
     \item[Primary Actor:] Musician
+
     \item[Trigger:] The system fails to detect a note.
+
     \item[Preconditions:]
     \begin{itemize}
-        \item User is actively recording their instrument.
+        \item The user is actively recording their instrument.
     \end{itemize}
+
     \item[Main Success Scenario:]
     \begin{enumerate}
         \item The system detects a missing note during recording.
         \item A warning message is displayed to the user regarding the missing note.
     \end{enumerate}
+
     \item[Exceptions:]
     \begin{itemize}
-        \item The system suggests the user retry playing the note or to manually insert it later, either within the app or using a third-party tool depending on available features.
+        \item The system suggests that the user retry playing the note or manually insert it later, either within the app or using a third-party tool depending on available features.
     \end{itemize}
 \end{description}
+
 
 
 \section{Functional Requirements}
