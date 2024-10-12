@@ -10,6 +10,9 @@
 \usepackage{tabularx}
 \usepackage{hyperref}
 \usepackage{cite}
+\usepackage{longtable}
+\usepackage{array} % Optional: For better column formatting
+
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
       colorlinks=true,      % false: boxed links; true: colored links
@@ -46,7 +49,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
-11/10/2024 & 1.0 & Initial Revision\\
+11/10/2024 & 0 & Initial Revision\\
 \bottomrule
 \end{tabularx}
 
@@ -183,10 +186,88 @@ Since this project is being completed for the McMaster University Capstone cours
 \section{Naming Conventions and Terminology}
 \subsection{Glossary of All Terms, Including Acronyms, Used by Stakeholders
 involved in the Project}
-\begin{itemize}
-  \item \textbf{DAW}: Digital Audio Workstation
-  \item \textbf{SNR}: Signal to Noise Ratio
-\end{itemize}
+
+\begin{longtable}{|l|p{12cm}|}
+\hline
+\textbf{Term} & \textbf{Definition} \\ 
+\hline
+\endfirsthead
+
+\hline
+\textbf{Term} & \textbf{Definition} \\ 
+\hline
+\endhead
+
+\hline
+\endfoot
+
+\hline
+\endlastfoot
+
+Accidental & A symbol used to raise or lower the pitch of a note from its natural state, such as a sharp, flat, or natural. \\ 
+\hline
+Barline & A vertical line on the staff that divides the music into measures or bars. \\ 
+\hline
+Bar & A segment of time defined by a given number of beats, typically indicated by vertical lines on a staff. \\ 
+\hline
+Beat & The basic unit of time in music, often associated with a pulse. \\ 
+\hline
+Chord & A combination of three or more notes played simultaneously. \\ 
+\hline
+Chord Chart & A visual representation of the chords used in a song, often used by guitarists and other instrumentalists. \\ 
+\hline
+Clef & A symbol placed at the beginning of the staff that indicates the pitch of the notes on the staff, such as treble clef (G clef) or bass clef (F clef). \\ 
+\hline
+Common Time & A musical pattern in which there are four crotchets in a bar. \\ 
+\hline
+DAW & Digital Audio Workstation. \\ 
+\hline
+Dynamics & How quietly or loudly a piece of music is played. \\ 
+\hline
+Final Barline & A double barline indicating the end of a piece of music. \\ 
+\hline
+HCD & Human-Centered Design. \\ 
+\hline
+Key Signature & In Western musical notation, a key signature is a set of sharp, flat, or rarely, natural symbols placed on the staff at the beginning of a section of music. \\ 
+\hline
+Major & A musical scale characterized by a specific pattern of whole and half steps, typically producing a bright or happy sound. \\ 
+\hline
+Minor & A musical scale that differs from the major scale by having a lowered third degree, typically producing a darker or sadder sound. \\ 
+\hline
+MIDI & Musical Instrument Digital Interface. \\ 
+\hline
+Monophonic & Using only one line of music, unaccompanied by any other voices or instruments. \\ 
+\hline
+MP3 & MPEG-1 Audio Layer 3. \\ 
+\hline
+MusicXML & Standard open format for exchanging digital sheet music. \\ 
+\hline
+MVP & Minimum Viable Product. \\ 
+\hline
+Notation & The system of writing music to represent pitches, rhythms, and dynamics. \\ 
+\hline
+Note & A symbol representing a musical sound, characterized by its pitch and duration. \\ 
+\hline
+Rest & A symbol indicating a period of silence in a piece of music. \\ 
+\hline
+PII & Personal Identifiable Information. \\ 
+\hline
+Polyphonic & The simultaneous combination of two or more tones or melodic lines. \\ 
+\hline
+Rhythm & The pattern of sounds and silences in music. \\ 
+\hline
+SNR & Signal to Noise Ratio. \\ 
+\hline
+Staff & A set of five horizontal lines and four spaces that represent different pitches for musical notation. \\ 
+\hline
+Time Signature & Definition 3. \\ 
+\hline
+UI & User Interface. \\ 
+\hline
+WAV & Waveform Audio File Format. \\ 
+\hline
+
+\end{longtable}
 
 \section{Relevant Facts And Assumptions}
 \subsection{Relevant Facts}
@@ -214,11 +295,171 @@ involved in the Project}
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
-\lips
-\subsection{Product Use Case Table}
-\lips
+Input: ScoreGen will be designed to take in and process music data which can be converted to a MIDI or musicXML file representation. The audio should not have excessive noise, or other degradation of quality which could impact the ability to clearly distinguish notes. The input will also be intended to be mono or polyphonic with a singular instrument. The input volume should remain consistent and sufficiently loud, and the user microphone should be correctly calibrated to ensure accuracy by avoiding pitch drift.
+\\ \\
+Output: The resulting music file will aim to capture the pitch and length of individual notes or chords, but will not capture accents, dynamics, or tempo markings, as well as other advanced elements. If the system detects that a note cannot be reliably transcribed (due to unclear input), it will leave that note blank on the sheet and prompt the user to review the section manually.
+\subsection{Product Use Case}
+\section*{UC1: Record and Transcribe}
+\textbf{Description:} Musician plays an instrument, and the system transcribes it into sheet music in real-time. \\
+\textbf{Actors:} Musician, Desktop App \\
+\textbf{Preconditions:} Musician has a working microphone and is playing a supported instrument. \\
+\textbf{Basic Flow:}
+\begin{enumerate}
+    \item Musician plays the instrument.
+    \item The system listens through the mic.
+    \item Sheet music is generated.
+\end{enumerate}
+\textbf{Alternate Flow:}
+\begin{itemize}
+    \item If the note is unclear, the system skips it and warns the user.
+\end{itemize}
+\textbf{Postconditions:} Sheet music is generated and displayed to the user. 
+
+\section*{UC2: Edit Transcription}
+\textbf{Description:} Musician reviews and edits the generated sheet music if there are missing or incorrect notes. \\
+\textbf{Actors:} Musician, Desktop App \\
+\textbf{Preconditions:} Sheet music has already been generated from a recording. \\
+\textbf{Basic Flow:}
+\begin{enumerate}
+    \item Musician views the transcription.
+    \item Edits or corrects notes as needed.
+    \item Saves the updated sheet.
+\end{enumerate}
+\textbf{Alternate Flow:}
+\begin{itemize}
+    \item Musician manually inserts missed or unclear notes.
+    \item Musician deletes incorrect notes.
+\end{itemize}
+\textbf{Postconditions:} Musician has an edited, correct version of the sheet music.
+
+\section*{UC3: Save and Export}
+\textbf{Description:} Save the sheet music in a chosen format (e.g., PDF, MIDI, musicXML). \\
+\textbf{Actors:} Musician, Desktop App \\
+\textbf{Preconditions:} Sheet music is completed and reviewed. \\
+\textbf{Basic Flow:}
+\begin{enumerate}
+    \item Musician chooses the save option.
+    \item Selects a file format (PDF, MIDI, musicXML).
+    \item System exports the file.
+\end{enumerate}
+\textbf{Alternate Flow:}
+\begin{itemize}
+    \item If export fails, the system provides an error message and suggests retrying.
+\end{itemize}
+\textbf{Postconditions:} The sheet music file is saved in the selected format.
+
+\section*{UC4: Instrument Setup}
+\textbf{Description:} Select instrument type before recording (e.g., piano, guitar). \\
+\textbf{Actors:} Musician, Desktop App \\
+\textbf{Preconditions:} Desktop app is open, and the user is ready to begin recording. \\
+\textbf{Basic Flow:}
+\begin{enumerate}
+    \item Musician selects the instrument.
+    \item System optimizes transcription settings for the chosen instrument.
+\end{enumerate}
+\textbf{Alternate Flow:}
+\begin{itemize}
+    \item If no instrument is selected, default settings for piano are used.
+\end{itemize}
+\textbf{Postconditions:} System is ready to accurately transcribe the chosen instrument.
+
+\section*{UC5: Error Warning}
+\textbf{Description:} System warns if it cannot hear or recognize a note during the recording process. \\
+\textbf{Actors:} Musician, Desktop App \\
+\textbf{Preconditions:} Musician is actively recording. \\
+\textbf{Basic Flow:}
+\begin{enumerate}
+    \item System detects a missing or unclear note.
+    \item A warning is displayed to the user.
+\end{enumerate}
+\textbf{Alternate Flow:}
+\begin{itemize}
+    \item The system may suggest trying again or inserting the note manually post-recording.
+\end{itemize}
+\textbf{Postconditions:} Musician is informed about missing notes and is directed on how to take corrective action, which may involve editing within the app or using a third-party tool depending on available features.
+
+\section*{UC6: Playback of Transcription}
+\textbf{Description:} Musician can play back the recorded notes in the desktop app to review transcription accuracy. \\
+\textbf{Actors:} Musician, Desktop App \\
+\textbf{Preconditions:} Transcription has been generated from a recording. \\
+\textbf{Basic Flow:}
+\begin{enumerate}
+    \item Musician selects the playback option.
+    \item System plays the transcribed notes.
+\end{enumerate}
+\textbf{Alternate Flow:}
+\begin{itemize}
+    \item Musician can pause or stop playback to make corrections.
+\end{itemize}
+\textbf{Postconditions:} Musician reviews the transcription by listening to the played-back notes.
+
+
+
+
 \subsection{Individual Product Use Cases (PUC's)}
-\lips
+\subsection*{PUC1: Record Instrument and Transcribe Notes}
+\begin{description}[style=nextline]
+    \item[Description:] The user records a live performance on an instrument using their microphone, and the system transcribes the notes into sheet music.
+    \item[Primary Actor:] Musician
+    \item[Trigger:] The user presses the "Record" button.
+    \item[Preconditions:]
+    \begin{itemize}
+        \item User has selected an instrument (e.g., piano, guitar).
+        \item User has a working microphone connected to the desktop app.
+    \end{itemize}
+    \item[Main Success Scenario:]
+    \begin{enumerate}
+        \item User begins playing the instrument.
+        \item System listens to the instrument through the microphone.
+        \item Sheet music is displayed on the screen after the user finishes playing.
+    \end{enumerate}
+    \item[Exceptions:]
+    \begin{itemize}
+        \item If the system cannot detect a note, it skips the note and warns the user with a notification.
+    \end{itemize}
+\end{description}
+
+\subsection*{PUC2: Save and Export Sheet Music}
+\begin{description}[style=nextline]
+    \item[Description:] The user saves the transcribed sheet music and exports it in the desired format (PDF, MIDI, musicXML).
+    \item[Primary Actor:] Musician
+    \item[Trigger:] The user clicks the "Save" or "Export" button.
+    \item[Preconditions:]
+    \begin{itemize}
+        \item The transcription is completed, and the user has reviewed it.
+    \end{itemize}
+    \item[Main Success Scenario:]
+    \begin{enumerate}
+        \item The user selects a file format (PDF, MID, musicXMLI).
+        \item The system generates a file in the selected format.
+        \item The file is saved to the user’s chosen directory.
+    \end{enumerate}
+    \item[Exceptions:]
+    \begin{itemize}
+        \item If the export fails due to file system issues, the user is prompted to retry or select another directory.
+    \end{itemize}
+\end{description}
+
+\subsection*{PUC3: Receive Error Warnings for Missing Notes}
+\begin{description}[style=nextline]
+    \item[Description:] The user is notified if the system cannot detect or accurately transcribe certain notes during recording.
+    \item[Primary Actor:] Musician
+    \item[Trigger:] The system fails to detect a note.
+    \item[Preconditions:]
+    \begin{itemize}
+        \item User is actively recording their instrument.
+    \end{itemize}
+    \item[Main Success Scenario:]
+    \begin{enumerate}
+        \item The system detects a missing note during recording.
+        \item A warning message is displayed to the user regarding the missing note.
+    \end{enumerate}
+    \item[Exceptions:]
+    \begin{itemize}
+        \item The system suggests the user retry playing the note or to manually insert it later, either within the app or using a third-party tool depending on available features.
+    \end{itemize}
+\end{description}
+
 
 \section{Functional Requirements}
 \subsection{Audio Input Handling}
@@ -515,16 +756,38 @@ N/A: This system does not store data and thus will not be susceptible to maleveo
 
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
-\lips
+
+\subsubsection*{CR-CR1 Musical Convention}
+\textbf{Requirement: }The application will focus on Western music notation, commonly used in the United States and other English-speaking regions. 
+\textbf{Fit Criterion:} The application must accurately represent Western music notation standards, allowing users to create and view sheet music that adheres to these conventions.
+
+\subsubsection*{CR-CR2 Expected music theory level of users}
+\textbf{Requirement: }It is designed for users with a basic to intermediate understanding of Western music theory, who can read standard sheet music, though advanced expertise is not required.
+\textbf{Fit Criterion:} The user interface and functionality of the application must be intuitive for individuals with basic to intermediate music theory knowledge, providing tutorials or guides for those who may need additional assistance.
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
-\lips
+
+\subsubsection*{CR-LR1 Copyright issues}
+\textbf{Requirement: }The app’s legality is primarily concerned with copyright issues surrounding the transcription of copyrighted music. It will generate sheet music based on audio input, and the focus will be on transcription of musical elements, which is generally allowed under copyright law, as it involves interpretation rather than direct reproduction of the original work. Users will be advised to ensure their audio inputs do not violate copyright restrictions.
+\textbf{Fit Criterion:} The application must include a disclaimer regarding copyright laws and provide users with clear instructions on ensuring their audio inputs comply with copyright restrictions.
+
 \subsection{Standards Compliance Requirements}
-\lips
+
+\subsubsection*{CR-SCR1 Technological Standards}
+\textbf{Requirement: }The application will follow established music technology standards, including MusicXML for exporting sheet music. Any third-party libraries used will be reviewed to ensure compliance with their licensing terms.
+\textbf{Fit Criterion:} The application must successfully export sheet music in MusicXML format without errors, and all third-party libraries must be documented for compliance verification.
+
+
 
 \section{Open Issues}
-\lips
+
+\textbf{Handling Complex Rhythms and Non-Monophonic Instruments:} Scoregen may struggle to accurately transcribe complex rhythms (e.g., syncopation, irregular time signatures) or multiple instruments played simultaneously. \\
+\textbf{Real-Time Processing Latency:  }Potential issue if some near real-time note generation and display system is implemented. There could be a delay between when the instrument is played and when the notes appear on the screen, disrupting the real-time transcription experience. \\
+\textbf{Inconsistent Detection of Chords:}  The system may have difficulty accurately detecting and transcribing complex chords or overlapping harmonic frequencies, leading to errors. \\
+\textbf{Difficulty with Non-Standard Tuning or Instruments:} Musicians using non-standard tuning or less common instruments may experience inaccurate note detection or transcription errors. \\
+\textbf{Microphone and Equipment Dependency:} The quality and type of microphone used can significantly affect transcription accuracy, leading to more errors for users with lower-quality equipment. \\
+\textbf{Legal and Licensing Concerns:} There may be intellectual property issues if users transcribe and share sheet music for copyrighted music without permission.
 
 \section{Off-the-Shelf Solutions}
 \subsection{Ready-Made Products}
@@ -686,12 +949,25 @@ Given that this project is being developed from the ground up, no legacy data ex
 \end{itemize}
 
 \section{Costs}
-\lips
+\textbf{Mid-Range Microphones: \$100 - \$500:} \\
+High quality Microphones are essential to capture audio by converting sound waves into electrical signals. If necessary, it may be beneficial for the project to acquire higher quality microphones for testing. \\ \\
+\textbf{Storage for Large Data Files:} \\
+Cloud or local storage could be an additional potential cost, as features like account management, stored sheet music, or other data could require subscription of a cloud database server (\$100 - \$500 per year), or purchasing more memory (\$50 - \$400).
+
 \section{User Documentation and Training}
 \subsection{User Documentation Requirements}
-\lips
+\textbf{Installation and Setup Guide:} \\ This documentation should provide clear instructions for downloading, installing, and configuring the software, including system requirements and initial setup steps to ensure users can easily get the application running on their devices.
+\\ 
+\textbf{Quick Start Guide:}\\This section should offer a streamlined overview of the essential features and workflow of the application, allowing users to quickly record their first piece of music and generate sheet music with minimal effort.\\
+\textbf{Tutorials and Walkthroughs: } \\Developers should document step-by-step guides for various user scenarios, from basic recording to advanced features, ensuring users can understand how to effectively use all functionalities of the application. \\
+\textbf{Version History and Updates: }\\ This documentation should detail changes made in each version of the software, including new features, improvements, and bug fixes, helping users stay informed about updates and how they might impact their use of the application. \\
+\textbf{Feedback and Support Channels: } \\Clear documentation should outline how users can provide feedback or seek support, including contact information for customer service or a support form, enabling users to get assistance with any issues they encounter. \\
+\textbf{Glossary of Terms:}\\ This section should define key technical and musical terminology used throughout the software, helping non-expert users understand the language and concepts related to music transcription and audio processing.
 \subsection{Training Requirements}
-\lips
+To ensure sufficient resources for product use, the development team will provide: \\
+\textbf{Tutorial Videos:} \\ Develop a series of engaging tutorial videos that visually demonstrate how to use the software, covering basic and advanced features, to cater to various learning styles and help users quickly grasp the application’s functionalities. \\
+\textbf{Feedback Mechanism:}\\ Establish a system for collecting user feedback on the training materials and sessions, enabling continuous improvement of the training content and methods based on user experiences and suggestions.
+
 
 \section{Waiting Room}
 
