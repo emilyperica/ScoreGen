@@ -107,13 +107,37 @@ documentation, and/or test cases.}
 
 \section{Safety and Security Requirements}
 
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
+Currently, there are no new safety or security requirements, but any new requirements will be added to this document as part of our iterative development process. Newly discovered requirements will also be evaluated and incorporated into the SRS to ensure alignment with evolving project needs and insights gained during development.
+
 
 \section{Roadmap}
 
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
+We will likely fulfill every one of the security and safety-critical requirements within the timeline of the capstone course, and we will be loosely following the compliance of the requirements based on the priority assigned below:
+
+\subsection{Safety-Critical Requirements}
+\begin{itemize}
+    \item \textbf{PR-SC1 Epilepsy Safety}: \textit{High priority}, as it ensures the app’s visual safety for users from the start. Compliance with WCAG 2.1 should be confirmed early on to prevent any risks during development.
+    \item \textbf{PR-SC2 Instrument Input Setup}: \textit{High priority} for both user safety and accurate functionality, ensuring users can set up their instruments without misconfiguration. This interactive guide can be iteratively refined through user testing early in development.
+\end{itemize}
+
+\subsection{Privacy Requirements}
+\begin{itemize}
+    \item \textbf{S-P2 PII}: \textit{High priority}, as ensuring the app does not collect any Personal Identifiable Information aligns with the app’s privacy-first design. This requirement should be validated as soon as any data processing is introduced.
+    \item \textbf{S-P3 Input Data}: \textit{Low priority}, focusing on ensuring that temporary files are properly cleared after processing is complete. Implementing this is less critical since we will not be storing any data outside of the user’s system.
+    \item \textbf{S-P1 Data Storage}: \textit{Medium priority}, ensuring that user-generated data is stored in local, user-chosen locations. This feature should be verified once output functions are introduced.
+\end{itemize}
+
+\subsection{Access Requirements}
+\begin{itemize}
+    \item \textbf{S-A1 User Authentication}: \textit{High priority}, by removing the need for login functionalities, we will speed up initial development. It should be verified after the core interface is complete.
+\end{itemize}
+
+\subsection{Audit and Immunity Requirements}
+\begin{itemize}
+    \item \textbf{Audit Requirements (N/A)}: \textit{Low priority}, as the system is offline and does not require developer responsibility over user data.
+    \item \textbf{Immunity Requirements (N/A)}: \textit{Low priority}, as no data storage minimizes exposure to security risks.
+\end{itemize}
+
 
 \newpage{}
 
