@@ -80,12 +80,27 @@ and the device being used to run the application.
 
 
 \section{System Boundaries and Components}
+Outlined below are the key components that define the system and its interactions. These include both software and hardware elements.  
+\subsection{The Application}
+\subsubsection{User Interface (UI)}
+A graphical user interface (GUI) that allows the users to interact with the application. The user will use the GUI to upload audio files, 
+export files, and view system feedback.
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+\subsubsection{Back-end Software}
+The core of the application that processes user input, it can be further broken down into the following:
+\begin{itemize}
+    \item \textbf{Raw audio data processing:} Read in audio signals and convert to symbolic music notation (e.g., .WAV to MIDI).
+    \item \textbf{Transcription:} Convert the processed data to music layout formats for rendering into sheet music.
+    \item \textbf{File management:} Export symbolic music data or rendered sheet music (MIDI, musicXML, PDF).
+\end{itemize}
+
+\subsection{User Device}
+The device that the user will install and run the application on. The device provides the existing hardware and software that the 
+application will interact with, such as the operating system (OS) and relevant system libraries that perform I/O operations (e.g., 
+file management, audio device access, etc.).
+
+\subsection{User External Input Devices}
+Other devices or hardware the user may have, such as microphones, audio interfaces, or instruments.
 
 \section{Critical Assumptions}
 
