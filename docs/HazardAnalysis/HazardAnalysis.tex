@@ -61,12 +61,29 @@ Date2 & Name(s) & Description of changes\\
 
 \section{Introduction}
 
-\wss{You can include your definition of what a hazard is here.}
+Hazards within a software system are not physically dangerous in the same way other engineering systems can be, 
+but nonetheless there are still inherent properties of this system that when combined with its environment have 
+the potential to cause harm. In the case of ScoreGen, a hazard is any situation or condition that may produce an 
+undesirable outcome for any of the system’s stakeholders. The hazardous outcomes of this system are not likely to 
+cause physical harm, but may instead provide harm to a user’s mental wellbeing, reputation, and other intangible 
+ill-effects. There is a possibility of physical hazards that arise from interfacing with external systems, which 
+may cause bodily harm in addition to the non-physical effects.
 
 \section{Scope and Purpose of Hazard Analysis}
 
-\wss{You should say what \textbf{loss} could be incurred because of the
-hazards.}
+Hazards within the system have potential to incur losses on behalf of the developers, users, and other stakeholders. 
+Performing a hazard analysis on the ScoreGen system can reduce the scope of potential losses and ensure the correct 
+mitigation strategies are in place. Risks and liabilities of the system are likely to reduce user satisfaction with 
+the system, pushing them away from our product and losing their trust. Accumulation of such occurrences will damage 
+the system developers’ reputation, making it difficult to compete with other software systems that provide similar 
+functionalities. \\
+
+\noindent
+This hazard analysis will focus on potential hazards arising from the software system being designed (ScoreGen), but 
+hazard scope is extended to include various external interfacing systems as well. These systems include an Audio 
+Interfacer (a device needed to process continuous signals from a cable audio input), the user’s instrument of choice, 
+and the device being used to run the application.
+
 
 \section{System Boundaries and Components}
 
@@ -117,13 +134,37 @@ this potential failure mode.}
 
 \section{Safety and Security Requirements}
 
-\wss{Newly discovered requirements.  These should also be added to the SRS.  (A
-rationale design process how and why to fake it.)}
+Currently, there are no new safety or security requirements, but any new requirements will be added to this document as part of our iterative development process. Newly discovered requirements will also be evaluated and incorporated into the SRS to ensure alignment with evolving project needs and insights gained during development.
+
 
 \section{Roadmap}
 
-\wss{Which safety requirements will be implemented as part of the capstone timeline?
-Which requirements will be implemented in the future?}
+We will likely fulfill every one of the security and safety-critical requirements within the timeline of the capstone course, and we will be loosely following the compliance of the requirements based on the priority assigned below:
+
+\subsection{Safety-Critical Requirements}
+\begin{itemize}
+    \item \textbf{PR-SC1 Epilepsy Safety}: \textit{High priority}, as it ensures the app’s visual safety for users from the start. Compliance with WCAG 2.1 should be confirmed early on to prevent any risks during development.
+    \item \textbf{PR-SC2 Instrument Input Setup}: \textit{High priority} for both user safety and accurate functionality, ensuring users can set up their instruments without misconfiguration. This interactive guide can be iteratively refined through user testing early in development.
+\end{itemize}
+
+\subsection{Privacy Requirements}
+\begin{itemize}
+    \item \textbf{S-P2 PII}: \textit{High priority}, as ensuring the app does not collect any Personal Identifiable Information aligns with the app’s privacy-first design. This requirement should be validated as soon as any data processing is introduced.
+    \item \textbf{S-P3 Input Data}: \textit{Low priority}, focusing on ensuring that temporary files are properly cleared after processing is complete. Implementing this is less critical since we will not be storing any data outside of the user’s system.
+    \item \textbf{S-P1 Data Storage}: \textit{Medium priority}, ensuring that user-generated data is stored in local, user-chosen locations. This feature should be verified once output functions are introduced.
+\end{itemize}
+
+\subsection{Access Requirements}
+\begin{itemize}
+    \item \textbf{S-A1 User Authentication}: \textit{High priority}, by removing the need for login functionalities, we will speed up initial development. It should be verified after the core interface is complete.
+\end{itemize}
+
+\subsection{Audit and Immunity Requirements}
+\begin{itemize}
+    \item \textbf{Audit Requirements (N/A)}: \textit{Low priority}, as the system is offline and does not require developer responsibility over user data.
+    \item \textbf{Immunity Requirements (N/A)}: \textit{Low priority}, as no data storage minimizes exposure to security risks.
+\end{itemize}
+
 
 \newpage{}
 
@@ -134,9 +175,30 @@ Which requirements will be implemented in the future?}
 \input{../Reflection.tex}
 
 \begin{enumerate}
-    \item What went well while writing this deliverable? 
+    \item What went well while writing this deliverable? \\
+    \textbf{Mark} \\
+    \textbf{Ian} \\
+    \textbf{Emily} Writing the introduction section for this deliverable helped me to gain 
+    an understanding of how we can mitigate risks and avoid hazards in our project, despite 
+    our system not containing many hazards in the traditional sense. When I think ‘hazard 
+    analysis’ my mind goes to things like WHMIS and high voltage training - even the lab 
+    trainings I’ve done for software courses have only ever focused on physical hazards. 
+    That being said, there are certainly still other ways for a person to incur loss, and 
+    putting this deliverable together painted a better picture in my mind of how we can do 
+    our best to mitigate risks throughout our capstone project. \\
+    \textbf{Jackson} \\
     \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
+    did you resolve them? \\
+    \textbf{Mark} \\
+    \textbf{Ian} \\
+    \textbf{Emily} The part of this deliverable that I thought went well was simultaneously 
+    the largest pain point - brainstorming the possible non-physical hazards for ScoreGen. 
+    The process overall helped me to expand my understanding of a hazard, but it took a lot 
+    of back and forth for us to settle on and come up with a viable set of potential hazards. 
+    This is the kind of pain point that can’t really be resolved, but just has to be worked 
+    through instead. Talking aloud and throwing ideas at one another helped to ease the 
+    brainstorming process and finalize the FMEA. \\
+    \textbf{Jackson} \\
     \item Which of your listed risks had your team thought of before this
     deliverable, and which did you think of while doing this deliverable? For
     the latter ones (ones you thought of while doing the Hazard Analysis), how
