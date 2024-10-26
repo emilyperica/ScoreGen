@@ -86,19 +86,47 @@ and the device being used to run the application.
 
 
 \section{System Boundaries and Components}
+Outlined below are the key components that define the system and its interactions. These include both software and hardware elements.  
+\subsection{The Application}
+\subsubsection{User Interface (UI)}
+A graphical user interface (GUI) that allows the users to interact with the application. The user will use the GUI to upload audio files, 
+export files, and view system feedback.
 
-\wss{Dividing the system into components will help you brainstorm the hazards.
-You shouldn't do a full design of the components, just get a feel for the major
-ones.  For projects that involve hardware, the components will typically include
-each individual piece of hardware.  If your software will have a database, or an
-important library, these are also potential components.}
+\subsubsection{Back-end Software}
+The core of the application that processes user input, it can be further broken down into the following:
+\begin{itemize}
+    \item \textbf{Raw audio data processing:} Read in audio signals and convert to symbolic music notation (e.g., .WAV to MIDI).
+    \item \textbf{Transcription:} Convert the processed data to music layout formats for rendering into sheet music.
+    \item \textbf{File management:} Export symbolic music data or rendered sheet music (MIDI, musicXML, PDF).
+\end{itemize}
+
+\subsection{User Device}
+The device that the user will install and run the application on. The device provides the existing hardware and software that the 
+application will interact with, such as the operating system (OS) and relevant system libraries that perform I/O operations (e.g., 
+file management, audio device access, etc.).
+
+\subsection{User External Input Devices}
+Other devices or hardware the user may have, such as microphones, audio interfaces, or instruments.
 
 \section{Critical Assumptions}
 
-\wss{These assumptions that are made about the software or system.  You should
-minimize the number of assumptions that remove potential hazards.  For instance,
-you could assume a part will never fail, but it is generally better to include
-this potential failure mode.}
+\section*{Critical Assumptions About Users}
+
+\subsection*{User Environment}
+Users will operate in a reasonably quiet environment when recording to minimize background noise and ensure clear audio capture.
+
+\subsection*{User Knowledge and Skills}
+Users possess a basic understanding of how to connect and use audio equipment (e.g., microphones) and navigate the application interface effectively.
+
+\subsection*{Technical Proficiency}
+Users have a general level of comfort and familiarity with technology, enabling them to troubleshoot minor issues independently without significant frustration.
+
+\subsection*{User Intent}
+Users are genuinely interested in creating music and will not intentionally misuse the product or engage in harmful behaviors that could disrupt functionality.
+
+\subsection*{Hardware Availability}
+Users have access to compatible devices and equipment necessary for the application to function properly (e.g., computers, microphones).
+
 
 \section{Failure Mode and Effect Analysis}
 
@@ -170,14 +198,17 @@ We will likely fulfill every one of the security and safety-critical requirement
 
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741}
-
 \input{../Reflection.tex}
 
 \begin{enumerate}
     \item What went well while writing this deliverable? \\
-    \textbf{Mark} \\
-    \textbf{Ian} \\
+    \textbf{Mark} This deliverable went very smoothly. It demonstrated that the group is on the same page regarding project understanding as there was minimal conflict, and the progress of the task was relatively consistent throughout its duration. \\ \\
+    \textbf{Ian} Outlining the system boundaries and components further solidified my 
+    understanding of the project and helped me to neatly segment it in my mind. Thinking 
+    about and contributing to the analysis also allowed me to recognize that software 
+    still has relevant hazards despite the fact that it is non-physical. Without this 
+    deliverable, I probably would have given little thought to potential software hazards 
+    in other projects or at the very least, undermined its importance.\\ \\
     \textbf{Emily} Writing the introduction section for this deliverable helped me to gain 
     an understanding of how we can mitigate risks and avoid hazards in our project, despite 
     our system not containing many hazards in the traditional sense. When I think ‘hazard 
@@ -185,24 +216,47 @@ We will likely fulfill every one of the security and safety-critical requirement
     trainings I’ve done for software courses have only ever focused on physical hazards. 
     That being said, there are certainly still other ways for a person to incur loss, and 
     putting this deliverable together painted a better picture in my mind of how we can do 
-    our best to mitigate risks throughout our capstone project. \\
-    \textbf{Jackson} \\
+    our best to mitigate risks throughout our capstone project. \\ \\
+    \textbf{Jackson} I think this deliverable was more straightforward than others which allowed 
+    us all to have a clear picture of what is expected. As a result, we were able to accomplish the 
+    sections we designated as ‘group sections’ very easily as we could have conversations about hazards 
+    without any confusion. This was also helped by our group member Emily, who kindly laid out clear definitions 
+    of hazards for us to follow.\\ \\
     \item What pain points did you experience during this deliverable, and how
     did you resolve them? \\
-    \textbf{Mark} \\
-    \textbf{Ian} \\
+    \textbf{Mark} The most significant challenge was revising my understanding of hazards, since my traditional approach would be to focus on physical dangers, but due to the software nature of the project, I had to consider issues regarding customer satisfaction, or developer reputation as well. Additionally, it was difficult to determine which hazards could be considered reasonable, as opposed to ones that cannot be addressed and would not be our fault. Fleshing out the critical assumptions helped resolve this pain point and create a better understanding of how to think of new hazards.\\ \\
+    \textbf{Ian} One of the pain points I experienced was the feeling that the system components 
+    section was lacking in quantity. I sometimes mistakenly associate quantity with quality. This 
+    was easily resolved just by going through everything our team has fleshed out for this project 
+    so far with a fine tooth comb and making sure no major components are missing.\\ \\
     \textbf{Emily} The part of this deliverable that I thought went well was simultaneously 
     the largest pain point - brainstorming the possible non-physical hazards for ScoreGen. 
     The process overall helped me to expand my understanding of a hazard, but it took a lot 
     of back and forth for us to settle on and come up with a viable set of potential hazards. 
     This is the kind of pain point that can’t really be resolved, but just has to be worked 
     through instead. Talking aloud and throwing ideas at one another helped to ease the 
-    brainstorming process and finalize the FMEA. \\
-    \textbf{Jackson} \\
+    brainstorming process and finalize the FMEA. \\ \\
+    \textbf{Jackson} I think there was one main pain point that stood out in my mind, which
+    was redundancy. This came about because much of what we are discussing in this document 
+    was already discussed at length in the form of security and safety requirements, along with 
+    use cases and risks. While we were writing some of the sections it felt very redundant to be 
+    repeating the points we already made, and in an effort to reduce redundancy, 
+    we tried our best to link things back to other sections, which proved to be difficult since the 
+    deliverables were so large in scope.\\ \\
     \item Which of your listed risks had your team thought of before this
     deliverable, and which did you think of while doing this deliverable? For
     the latter ones (ones you thought of while doing the Hazard Analysis), how
-    did they come about?
+    did they come about? \\\\
+    \textbf{Team-level Reflection:}\\
+    Before writing this deliverable our team thought that unexpected crashes would 
+    appear as a potential hazard. Since software systems aren’t inherently ‘hazardous,’ 
+    we saw unexpected crashes as a more general, intuitive hazard applicable to similar 
+    applications. All of the other hazards came about through brainstorming as a team. 
+    Our approach to brainstorming proved very effective and made the process of thinking 
+    of hazards easier. We first approached this by trying to come up with hazards directly 
+    but found that identifying the design functions first was easier. After identifying these 
+    functions, we began exploring each area individually rather than approaching the whole system 
+    at once. \\
     \item Other than the risk of physical harm (some projects may not have any
     appreciable risks of this form), list at least 2 other types of risk in
     software products. Why are they important to consider?
