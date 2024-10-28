@@ -179,14 +179,47 @@ outcomes. The other project documents include:
 
 \section{Plan}
 
-\wss{Introduce this section.  You can provide a roadmap of the sections to
-  come.}
+This section will provide formal validation and verification plans for various aspects of the project. 
+Starting with a definition of all individuals involved in the VnV process, it goes on to inform the 
+reader of VnV plans for the SRS, design, VnV plan itself, implementation, automated tests, and the 
+system software.
 
 \subsection{Verification and Validation Team}
 
-\wss{Your teammates.  Maybe your supervisor.
-  You should do more than list names.  You should say what each person's role is
-  for the project's verification.  A table is a good way to summarize this information.}
+The first 4 entries in the below table are the software developers creating the system; they will all 
+contribute to VnV activities to ensure the work is evenly distributed, but each has a specific responsibility 
+they will oversee. The last 3 entries in the table are not involved in ideation/implementation of VnV, but 
+their feedback will shape the final plan.
+
+
+\begin{table}[h!]
+  \centering
+  \caption{VnV Team}
+  \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+  \hline
+    \textbf{Name} & \textbf{Role} \\
+  \hline
+    Emily Perica & \textbf{Validation analyst}. Generates test reports and ensures the test results can be 
+    linked back to the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}.\\
+  \hline
+    Ian Algenio & \textbf{FR tester}. Leads the testing process for functional requirements. \\
+  \hline
+    Jackson Lippert & \textbf{NFR tester}. Leads the testing process for non-functional requirements. \\
+  \hline
+    Mark Kogan & \textbf{Verification specialist}. Defines the process for establishing ground truths and 
+    ensures all tests being implemented follow the VnV plans. \\
+  \hline
+    Dr. Martin von \newline Mohrenschildt & \textbf{Project supervisor}. Provides insight and suggests 
+    strategies for creating relevant tests. \\
+  \hline
+    Dr. Spencer Smith & \textbf{Course supervisor}. Similar to the project supervisor; provides insight and 
+    guides the team in creating a robut VnV plan.\\
+  \hline
+    Hunter Ceranic & \textbf{Teaching assistant}. Will provide feedback to the team on the feasibility, scope, 
+    and overall quality of the VnV plan.\\
+  \hline
+  \end{tabular}
+\end{table}
 
 \subsection{SRS Verification Plan}
 
