@@ -30,32 +30,17 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+01/11/2024 & 0 & Initial draft\\
 \bottomrule
 \end{tabularx}
 
 ~\\
-\wss{The intention of the VnV plan is to increase confidence in the software.
-However, this does not mean listing every verification and validation technique
-that has ever been devised.  The VnV plan should also be a \textbf{feasible}
-plan. Execution of the plan should be possible with the time and team available.
-If the full plan cannot be completed during the time available, it can either be
-modified to ``fake it'', or a better solution is to add a section describing
-what work has been completed and what work is still planned for the future.}
-
-\wss{The VnV plan is typically started after the requirements stage, but before
-the design stage.  This means that the sections related to unit testing cannot
-initially be completed.  The sections will be filled in after the design stage
-is complete.  the final version of the VnV plan should have all sections filled
-in.}
 
 \newpage
 
 \tableofcontents
 
 \listoftables
-\wss{Remove this section if it isn't needed}
 
 \listoffigures
 \wss{Remove this section if it isn't needed}
@@ -63,82 +48,134 @@ in.}
 \newpage
 
 \section{Symbols, Abbreviations, and Acronyms}
+See the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document for additional definitions. \\
 
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l} 
   \toprule		
-  \textbf{symbol} & \textbf{description}\\
+  \textbf{Symbol} & \textbf{Description}\\
   \midrule 
+  MG & Module Guide Specification\\
+  MIS & Module Interface Specification\\ 
+  SRS & Software Requirement Specification\\
   T & Test\\
+  VnV & Verification and Validation\\
   \bottomrule
 \end{tabular}\\
-
-\wss{symbols, abbreviations, or acronyms --- you can simply reference the SRS
-  \citep{SRS} tables, if appropriate}
-
-\wss{Remove this section if it isn't needed}
 
 \newpage
 
 \pagenumbering{arabic}
 
-This document ... \wss{provide an introductory blurb and roadmap of the
-  Verification and Validation plan}
+This document outlines the Verification and Validation (VnV) plan for the development 
+of an audio-to-sheet music generator. This includes plans to verify the SRS, system 
+design, the VnV itself, implementation, and software, as well as a plan for an automated 
+testing suite. This document will also describe the specific tests that will be used to 
+ensure all Functional and Non-functional Requirements are met.
 
 \section{General Information}
 
 \subsection{Summary}
 
-\wss{Say what software is being tested.  Give its name and a brief overview of
-  its general functions.}
+This Verification and Validation Plan describes the testing process for ScoreGen, an 
+audio-to-sheet music generator, such that the following core functionalities perform as desired:
+\begin{itemize}
+  \item Signal processing of audio input
+  \item Identification of pitch, rhythm, and timing
+  \item Generation of readable and accurate sheet music
+\end{itemize}
 
 \subsection{Objectives}
 
-\wss{State what is intended to be accomplished.  The objective will be around
-  the qualities that are most important for your project.  You might have
-  something like: ``build confidence in the software correctness,''
-  ``demonstrate adequate usability.'' etc.  You won't list all of the qualities,
-  just those that are most important.}
+\subsubsection{Desired System Qualities}
 
-\wss{You should also list the objectives that are out of scope.  You don't have 
-the resources to do everything, so what will you be leaving out.  For instance, 
-if you are not going to verify the quality of usability, state this.  It is also 
-worthwhile to justify why the objectives are left out.}
+The primary objective of this document is to ensure that the audio-to-sheet music system produces 
+highly accurate, reliable, and usable output, successfully meeting the needs of all stakeholders. 
+Key qualities this VnV will aim to accomplish include the following:
+\begin{itemize}
+  \item Demonstrate accuracy in music notation
+  \item Ease of use amongst users with varying characteristics
+  \item Readable, easy to understand outputs
+  \item An enjoyable user experience
+  \item Efficiency and Responsiveness
+  \item Portability of the software
+\end{itemize}
 
-\wss{The objectives are important because they highlight that you are aware of 
-limitations in your resources for verification and validation.  You can't do everything, 
-so what are you going to prioritize?  As an example, if your system depends on an 
-external library, you can explicitly state that you will assume that external library 
-has already been verified by its implementation team.}
+\subsubsection{Out of Scope Objectives}
+In order to meet time and cost requirements, the following objectives will be out of the scope of 
+this VnV plan:
+\begin{itemize}
+  \item Advanced polyphonic and multi-instrumental audio:
+  
+  Monophonic audio is easily processed using signal analysis, but introducing a multitude of 
+  simultaneous signals will require advanced algorithms to separate each note.
+  
+  \item Cross-platform support:
+  
+  Majority of the team members will be writing the system’s software on their personal Windows PC. 
+  Testing should thus occur in the same environment it is being developed in in order to reduce 
+  performance variability of the final system.
+  
+  \item Advanced music notation, such as dynamics and accents:
+  
+  Dynamics and accents can be tricky to differentiate, and attempting to identify them is likely to 
+  introduce a level of error to the output that is undesired. As well, a beginner musician may feel 
+  overwhelmed being faced with a large variety of notation that they don’t recognize.
+  
+  \item Support for non-Western music notation:
+  
+  This software will exclusively produce sheet music according to Western music conventions. Expanding 
+  to alternative notation conventions would require significant adapting of the output format, and is 
+  infeasible given the current scope of the project. 
+  
+\end{itemize}
 
 \subsection{Challenge Level and Extras}
 
-\wss{State the challenge level (advanced, general, basic) for your project.
-Your challenge level should exactly match what is included in your problem
-statement.  This should be the challenge level agreed on between you and the
-course instructor.  You can use a pull request to update your challenge level
-(in TeamComposition.csv or Repos.csv) if your plan changes as a result of the
-VnV planning exercise.}
+\subsubsection{Challenge Level}
 
-\wss{Summarize the extras (if any) that were tackled by this project.  Extras
-can include usability testing, code walkthroughs, user documentation, formal
-proof, GenderMag personas, Design Thinking, etc.  Extras should have already
-been approved by the course instructor as included in your problem statement.
-You can use a pull request to update your extras (in TeamComposition.csv or
-Repos.csv) if your plan changes as a result of the VnV planning exercise.}
+The ScoreGen project is categorized in the general challenge level, meaning it is not particularly novel 
+and requires a senior highschool level or junior undergraduate level of domain knowledge/implementation. 
+Projects in this category are required to include ‘extras’ in order to meet the difficulty level expected 
+of a final-year capstone course.
+
+\subsubsection{Project Extras}
+\begin{itemize}
+  \item User manual
+  \item Usability testing
+  \item GenderMag personas
+\end{itemize}
 
 \subsection{Relevant Documentation}
 
-\wss{Reference relevant documentation.  This will definitely include your SRS
-  and your other project documents (design documents, like MG, MIS, etc).  You
-  can include these even before they are written, since by the time the project
-  is done, they will be written.  You can create BibTeX entries for your
-  documents and within those entries include a hyperlink to the documents.}
+This document is just one of many written to provide a comprehensive overview of the project and its desired 
+outcomes. The other project documents include:
+\begin{itemize}
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/DevelopmentPlan/DevelopmentPlan.pdf}{Development Plan} \citep*{ScoreGenDP}: 
+  This document acts as a blueprint for the software’s creation as well as the overall structuring of the project itself. Leveraging the information 
+  outlined in this document will ensure all verification and validation activities are relevant and within the scope of the project.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/ProblemStatementAndGoals/ProblemStatement.pdf}{Problem Statement and Goals} \citep*{ScoreGenPS}:
+  This document contains an explicit definition of the problem the ScoreGen system aims to solve. It provides the VnV team with a clear understanding of how 
+  tests may shape the project to align with the system’s intended impact.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{Software Requirement Specification (SRS)} \citep*{ScoreGenSRS}:
+  States the functional and non-functional requirements that this VnV plan is developing tests for.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/HazardAnalysis/HazardAnalysis.pdf}{Hazard Analysis} \citep*{ScoreGenHA}:
+  Similar to the SRS, this document will guide VnV test plans to ensure all possible hazards to the system are mitigated.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/VnVReport/VnVReport.pdf}{Verification and Validation Report} \citep*{ScoreGenVnVReport}:
+  This document will be guided entirely by the frameworks described in this VnV plan. Its outcome will depend on the relevance and quality of the described plans.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/UserGuide/UserGuide.pdf}{User Guide} \citep*{ScoreGenUG}:
+  This guide is intended to be used directly by the end-user to inform them on usage of the software. The VnV aims to 
+  verify all use cases and user interactions, and can thus be used to identify the necessary features or steps whose inclusion 
+  in the User Guide is critical.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/Design/SoftDetailedDes/MIS.pdf}{Module Interface Specification (MIS)} \citep*{ScoreGenMIS}:
+  This document defines how different software modules within the system interact with one another, making note of all inputs and outputs. These inputs 
+  and outputs will require verification outlined in the VnV Plan to ensure feasibility and accurate constraints are put into place.
+  \item \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module Guide (MG)} \citep*{ScoreGenMG}:
+  Where the MIS defines module interactions, this document defines the modules themselves. The VnV tests should target all modules in 
+  the system - since the MG will be written after the VnV Plan, it may be necessary to revisit this plan and add/remove tests where necessary 
+  as the modules are formalized.
+\end{itemize}
 
-\citet{SRS}
-
-\wss{Don't just list the other documents.  You should explain why they are relevant and 
-how they relate to your VnV efforts.}
 
 \section{Plan}
 
@@ -503,8 +540,6 @@ Their values are defined in this section for easy maintenance.
 
 \newpage{}
 \section*{Appendix --- Reflection}
-
-\wss{This section is not required for CAS 741}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
