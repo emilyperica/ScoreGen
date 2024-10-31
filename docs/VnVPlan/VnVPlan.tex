@@ -7,6 +7,7 @@
 \usepackage{array}
 \usepackage{hyperref}
 \usepackage{enumitem}
+\usepackage{enumitem}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -46,29 +47,7 @@
 
 \listoftables
 
-\listoffigures
-\wss{Remove this section if it isn't needed}
-
 \newpage
-
-\section{Symbols, Abbreviations, and Acronyms}
-See the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document for additional definitions. \\
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{Symbol} & \textbf{Description}\\
-  \midrule 
-  MG & Module Guide Specification\\
-  MIS & Module Interface Specification\\ 
-  SRS & Software Requirement Specification\\
-  T & Test\\
-  VnV & Verification and Validation\\
-  \bottomrule
-\end{tabular}\\
-
-\newpage
-
 \pagenumbering{arabic}
 
 This document outlines the Verification and Validation (VnV) plan for the development 
@@ -76,6 +55,27 @@ of an audio-to-sheet music generator. This includes plans to verify the SRS, sys
 design, the VnV itself, implementation, and software, as well as a plan for an automated 
 testing suite. This document will also describe the specific tests that will be used to 
 ensure all Functional and Non-functional Requirements are met.
+
+\section{Symbols, Abbreviations, and Acronyms}
+See the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document for additional definitions.
+
+\renewcommand{\arraystretch}{1.2}
+\begin{table}[h!]
+  \centering
+  \caption{Document definitions}
+  \vspace{5pt}
+  \begin{tabular}{l l}
+    \toprule		
+    \textbf{Symbol} & \textbf{Description}\\
+    \midrule 
+    MG & Module Guide Specification\\
+    MIS & Module Interface Specification\\ 
+    SRS & Software Requirement Specification\\
+    T & Test\\
+    VnV & Verification and Validation\\
+    \bottomrule
+  \end{tabular}
+\end{table}
 
 \section{General Information}
 
@@ -199,6 +199,7 @@ their feedback will shape the final plan. \newpage
 \begin{table}[h!]
   \centering
   \caption{VnV Team}
+  \vspace{5pt}
   \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
   \hline
     \textbf{Name} & \textbf{Role} \\
@@ -870,23 +871,17 @@ How test will be performed:
 \subsection{Traceability Between Test Cases and Modules}
 
 \wss{Provide evidence that all of the modules have been considered.}
-				
-\bibliographystyle{plainnat}
-
-\bibliography{../../refs/References}
 
 \newpage
 
-\section{Appendix}
-
-This is where you can place additional information.
-
-\subsection{Symbolic Parameters}
+\addcontentsline{toc}{section}{Appendix A: Symbolic Parameters}
+\section*{Appendix A: Symbolic Parameters}
 
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
 
-\subsection{Usability Survey Questions}
+\addcontentsline{toc}{section}{Appendix B: Usability Survey Questions}
+\section*{Appendix B: Usability Survey Questions}
 The following usability survey will be provided to user testers alongside 
 this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document.
 
@@ -1043,26 +1038,134 @@ assigned to any one test case. Testing data is available for any test case that 
 Test files and datasets are available under the \href{https://github.com/emilyperica/ScoreGen/tree/9203b49bd6b54247517192c6b1992f5fa952478f/test}{test} folder
 in the project's GitHub repository. \\
 \newpage
-\section*{Appendix --- Reflection}
+
+\addcontentsline{toc}{section}{Appendix C: References}
+\renewcommand\refname{Appendix C: References}
+\bibliographystyle{plainnat}
+\bibliography{../../refs/References}
+
+\addcontentsline{toc}{section}{Appendix D: Reflection}
+\section*{Appendix D: Reflection}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
 
 \input{../Reflection.tex}
 
-\begin{enumerate}
-  \item What went well while writing this deliverable? 
+\begin{enumerate}[leftmargin=*]
+  \item What went well while writing this deliverable?
+  
+  \textbf{Mark} This deliverable went very well. I feel that our group was able to work separately on 
+  different sections of the document, yet when the changes were merged together, the results fit well 
+  together. This suggests we operate together smoothly without need of excessive feedback.
+
+  \textbf{Ian}
+
+  \textbf{Emily} Communication within the team for this deliverable was the best it has been to date. 
+  It had been lacking during our last deliverable, which led to a less cohesive document and team-wide
+  project issues not being fully adressed. This was a good wake-up call for us, and as a result we set
+  explicit roles for all aspects of this deliverable, removing the concept of 'group' issues to make 
+  sure we don't get stuck in the cycle of assuming someone else is getting things done.
+
+  \textbf{Jackson}
+  
   \item What pain points did you experience during this deliverable, and how
     did you resolve them?
+
+  \textbf{Mark} There were no particular pain points in this deliverable, though there was significant 
+  volume of writing out each section, and there had to be significant recall of previous documents to 
+  reference them where necessary.
+
+  \textbf{Ian}
+
+  \textbf{Emily} My biggest pain point was getting over the concept of writing a verification and 
+  validation plan before writing any code. I find it difficult to conceptualize abstract tests that are 
+  not implementation-specific, so this document was good practice in creating system-wide tests, as 
+  opposed to the unit tests I'm more comfortable with writing.
+
+  \textbf{Jackson} 
+
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
   Examples of possible knowledge and skills include dynamic testing knowledge,
   static testing knowledge, specific tool usage, Valgrind etc.  You should look to
-  identify at least one item for each team member.
+  identify at least one item for each team member. 
+
+  \vspace{5pt}
+  Proper verification and validation of this project will require the team to gain both technical 
+  and procedural knowledge on performing effectives tests. Gaining proficiency in testing frameworks 
+  such as Google Test will allow the team to design and execute a comprehensive test suite, as 
+  frameworks will become the base of our unit and integration tests, as well as in our implementation 
+  of a regression test suite. The team will need to become comfortable with YAML syntax, as well as 
+  its uses in configuration management, to ensure we use GitHub Actions for automated testing to the 
+  fullest of its ability. Usage of YAMLs in testing can greatly improve modularity and will make the 
+  process of changing test data very easy, if this is ever necessary. Static testing knowledge is a 
+  vital aspect of VnV, and all team members will aim to increase their static testing capabilities, 
+  focusing on code walkthroughs, inspections, and manual code reviews. Creating a VnV plan is useless 
+  without thorough documentation for the VnV report, and thus a vital skill to this aspect of the project 
+  is being able to write thorough documentation and taking detailed notes at every step of the process.
+
   \item For each of the knowledge areas and skills identified in the previous
   question, what are at least two approaches to acquiring the knowledge or
   mastering the skill?  Of the identified approaches, which will each team
-  member pursue, and why did they make this choice?
+  member pursue, and why did they make this choice? 
+
+  \vspace{5pt}
+  \textbf{Proficiency in testing frameworks}
+
+  APPROACH 1: Apply a framework such as Google Test to some example project, and practice creating unit, integration, and system tests. \\
+  APPROACH 2: Enroll in and complete an online course covering the usage of a specific test framework.
+  
+  \textbf{Mark}
+
+  \textbf{Emily} I often prefer learning by doing, rather than reading from a textbook, so I will pursue approach 1.
+
+  \textbf{Ian}
+
+  \textbf{Jackson}
+
+  \vspace{10pt}
+  \textbf{YAML Syntax}
+
+  APPROACH 1: Practice writing YAML syntax by creating GHA workflows. \\
+  APPROACH 2: Review YAML files of public projects, such as those from previous years of the capstone course or large open-source projects found on GitHub.
+  
+  \textbf{Mark}
+
+  \textbf{Emily} Approach 1 is more hands-on and thus applies more to my learning style than approach 2, so this will be my preferred way of gaining YAML knowledge.
+
+  \textbf{Ian}
+
+  \textbf{Jackson}
+
+  \vspace{10pt}
+  \textbf{Static testing knowledge}
+
+  APPROACH 1: Identify various tools used for static testing (ex. SonarQube, ESLint) and incorporate them in existing or example projects to get comfortable with their usage. \\
+  APPROACH 2: Research and go over existing literature outlining static testing methodologies and best practices.
+
+  \textbf{Mark}
+
+  \textbf{Emily} I will pursue approach 1, as this method is very similar to how we will use static testing within our project and can help me to get comfortable with static testing tools in a relevant environment.
+
+  \textbf{Ian}
+
+  \textbf{Jackson}
+
+  \vspace{10pt}
+  \textbf{Documentation}
+
+  APPROACH 1: Write up a variety of reports in different styles using dummy test results. \\
+  APPROACH 2: Review course notes from SFWRENG 3RA3 as well as all standards described in Dr. Smith’s lectures.
+
+  \textbf{Mark}
+
+  \textbf{Emily} I will pursue approach 2, as the ease with which I can access the necessary knowledge sources will make it simple for me to learn proper documentation guidelines.
+
+  \textbf{Ian}
+
+  \textbf{Jackson}
+
 \end{enumerate}
 
 \end{document}
