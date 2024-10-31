@@ -1025,7 +1025,23 @@ this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/do
   \vspace{5pt}
   \hrulefill
 \end{enumerate}
-
+\subsection{Ommitted Testing}
+While the majority of the functional requirements have associated test cases, 
+some were omitted for various reasons. This section explains their omission from the document. 
+\begin{enumerate}
+  \item FR-SP4 Processing Limitations \\
+  Appears under SRS section 9.2 Signal Processing. \\
+  This functional requirement does not
+  have a corresponding test case. The nature of this functional requirement demands more technical knowledge
+  about implementation details that have not yet been decided. The exact definition of 'overly complex audio input' shall
+  remain ambiguous at this stage to prevent the overextension (or underextension) of the development team's
+  capabilities during the project's irregular time constraints.
+\end{enumerate}
+\subsection{Testing Data and Files}
+Requirement test cases may have input that overlap with other test cases, as such, the testing data and files have not specifically been
+assigned to any one test case. Testing data is available for any test case that may require them. \\
+Test files and datasets are available under the \href{https://github.com/emilyperica/ScoreGen/tree/9203b49bd6b54247517192c6b1992f5fa952478f/test}{test} folder
+in the project's GitHub repository. \\
 \newpage
 \section*{Appendix --- Reflection}
 
