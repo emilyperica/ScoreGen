@@ -189,7 +189,7 @@ system software.
 The first 4 entries in the below table are the software developers creating the system; they will all 
 contribute to VnV activities to ensure the work is evenly distributed, but each has a specific responsibility 
 they will oversee. The last 3 entries in the table are not involved in ideation/implementation of VnV, but 
-their feedback will shape the final plan.
+their feedback will shape the final plan. \newpage
 
 
 \begin{table}[h!]
@@ -213,7 +213,7 @@ their feedback will shape the final plan.
     strategies for creating relevant tests. \\
   \hline
     Dr. Spencer Smith & \textbf{Course supervisor}. Similar to the project supervisor; provides insight and 
-    guides the team in creating a robut VnV plan.\\
+    guides the team in creating a robust VnV plan.\\
   \hline
     Hunter Ceranic & \textbf{Teaching assistant}. Will provide feedback to the team on the feasibility, scope, 
     and overall quality of the VnV plan.\\
@@ -222,85 +222,113 @@ their feedback will shape the final plan.
 \end{table}
 
 \subsection{SRS Verification Plan}
+\label{sec:srs_verification}
 
-\wss{List any approaches you intend to use for SRS verification.  This may
-  include ad hoc feedback from reviewers, like your classmates (like your
-  primary reviewer), or you may plan for something more rigorous/systematic.}
+To verify the SRS for our sheet music generation project, we plan to use a combination of informal feedback and structured reviews to ensure accuracy and alignment with the project's goals. The approaches are as follows:
 
-\wss{If you have a supervisor for the project, you shouldn't just say they will
-read over the SRS.  You should explain your structured approach to the review.
-Will you have a meeting?  What will you present?  What questions will you ask?
-Will you give them instructions for a task-based inspection?  Will you use your
-issue tracker?}
+\subsection*{Ad Hoc Feedback from Peers}
+We will request informal reviews from our primary reviewers (team 8). Their feedback will help identify potential ambiguities or areas needing clarification. We will ask them to focus on the clarity and feasibility of requirements, ensuring alignment with the intended functionality of the app.
 
-\wss{Maybe create an SRS checklist?}
+\subsection*{Supervisor Review Meeting}
+
+\textbf{Structured Review Meeting}: We plan to conduct a concise, structured meeting with our project supervisor to leverage their expertise effectively while respecting their time constraints. This meeting will include the following steps:
+
+\begin{enumerate}
+    \item \textbf{Overview Presentation}: We will present a high-level overview of our initial requirements, focusing on the key features and functionalities we believe are essential for the project. The purpose of this presentation is to quickly bring the supervisor up to speed on the project's direction.
+    
+    \item \textbf{Discussion on Feasibility and Priority}: We will ask the supervisor to evaluate the feasibility of the proposed requirements, help identify any that are overly ambitious or unrealistic, and highlight those that are core to the project’s success. This will help us prioritize our work based on expert advice.
+    
+    \item \textbf{Focused Questions}: To guide the discussion and make the best use of the supervisor’s time, we will prepare targeted questions that focus on critical project areas. Examples include:
+    \begin{itemize}
+        \item Which requirements are technically challenging or might present significant roadblocks?
+        \item Are there any high-priority requirements that we might have overlooked?
+        \item Which elements align closely with the project’s objectives, and which might be deferred?
+    \end{itemize}
+    
+    \item \textbf{Utilizing Issue Tracker}: To maintain transparency and track action items, we will record the supervisor’s feedback and any new insights or tasks identified during the meeting in our issue tracker. This will enable us to follow up efficiently and ensure that the supervisor's input is incorporated into subsequent iterations of our requirements document.
+\end{enumerate}
+
+
+\subsection*{Issue Tracking System}
+We will use the git issue tracker to log any concerns, suggestions, or changes requested by reviewers. This system will help maintain a clear record of all feedback and revisions made to the SRS, ensuring transparency and accountability in addressing reviewer comments.
+
+This combination of peer and supervisor reviews, structured meetings, and issue tracking should provide comprehensive coverage for SRS verification.
 
 \subsection{Design Verification Plan}
 
-\wss{Plans for design verification}
+To ensure the design of the sheet music generation app meets all functional and non-functional requirements, the following verification plan will be implemented:
 
-\wss{The review will include reviews by your classmates}
+\subsubsection*{Peer Review and Feedback}
+The design will undergo reviews by our classmates, focusing on key design elements such as the user interface and algorithm selection for audio-to-sheet music conversion. Feedback from peers will help identify usability issues, potential improvements, and ensure that the design aligns with the project goals.
 
-\wss{Create a checklists?}
+\subsubsection*{Checklist-Based Review}
+A checklist will be created to guide reviewers in assessing each design aspect. The checklist will include items such as:
+\begin{itemize}
+    \item Are the core algorithms well-suited for the required audio-to-sheet music conversion?
+    \item Are system constraints (e.g., processing time, memory usage) addressed in the design?
+    \item Is the design modular and maintainable?
+\end{itemize}
+This checklist will help standardize feedback, ensuring a thorough and consistent review process.
+
+\subsubsection*{Supervisor Review}
+In addition to peer review, we will present the design to our project supervisor for further validation. The supervisor will be provided with the design documents and checklist before the review session to facilitate a structured examination of each design component. Key discussion points will include scalability, performance optimization, and potential risks. 
+
+\subsubsection*{Issue Tracking and Follow-Up}
+Git Issues will be used to log any design issues or recommendations identified during the review process. This will provide a centralized record of all feedback and allow for systematic tracking of design revisions, ensuring that each suggestion is addressed or appropriately documented.
+
+This design verification plan, incorporating both peer and supervisor feedback along with checklist-guided reviews and structured follow-up, will ensure the design is robust, user-friendly, and aligned with project requirements.
+
 
 \subsection{Verification and Validation Plan Verification Plan}
 
-\wss{The verification and validation plan is an artifact that should also be
-verified.  Techniques for this include review and mutation testing.}
+\textbf{Verification and Validation Plan Checklist}:
 
-\wss{The review will include reviews by your classmates}
+\begin{itemize}
+    \item \textbf{Plan Review by Peers}: Ensure the verification and validation plan is reviewed by classmates to gain diverse insights and identify potential improvements.
+    \item \textbf{Requirement Coverage}: Verify that all requirements are adequately covered by the verification and validation plan, ensuring no critical areas are omitted.
+    \item \textbf{Traceability}: Confirm traceability of each verification and validation activity to specific project requirements to maintain alignment with project goals.
+    \item \textbf{Clarity and Completeness}: Review the plan for clarity, making sure all instructions and testing procedures are clear and complete for future reference.
+\end{itemize}
 
-\wss{Create a checklists?}
 
 \subsection{Implementation Verification Plan}
 
-\wss{You should at least point to the tests listed in this document and the unit
-  testing plan.}
 
-\wss{In this section you would also give any details of any plans for static
-  verification of the implementation.  Potential techniques include code
-  walkthroughs, code inspection, static analyzers, etc.}
+The Implementation Verification Plan outlines the strategies and methodologies we will employ to verify the correctness and quality of our implementation.
 
-\wss{The final class presentation in CAS 741 could be used as a code
-walkthrough.  There is also a possibility of using the final presentation (in
-CAS741) for a partial usability survey.}
+\begin{itemize}
+    \item \textbf{Unit Testing Plan}: A comprehensive unit testing plan will be developed, which includes a detailed list of tests designed to verify the functionality of individual components of the system. Each unit test will target specific functions or classes to ensure they perform as expected under various conditions. The results of these tests will be crucial for identifying and resolving issues early in the development process.
+
+    \item \textbf{Static Verification Methods}: In addition to dynamic testing, we will implement several static verification techniques to enhance the quality of our code. These methods allow us to analyze the code without executing it, thereby identifying potential issues at an early stage. The techniques we plan to use include:
+    \begin{itemize}
+        \item \textbf{Code Walkthroughs}: We will conduct peer reviews in the form of code walkthroughs, where team members will systematically review code segments. This collaborative approach encourages knowledge sharing and helps catch defects or design flaws that may not be evident to the original developer.
+        \item \textbf{Static Analyzers}: We will employ static analysis tools to automatically analyze the code for common programming errors, potential security vulnerabilities, and adherence to coding best practices. These tools provide insights that can help us improve code quality and reduce technical debt.
+    \end{itemize}
+
+    By integrating both unit testing and static verification methods into our implementation verification plan, we aim to ensure that our code is robust, maintainable, and free from critical defects. This dual approach not only enhances the reliability of our implementation but also streamlines the development process by identifying issues early on, reducing the risk of more significant problems later in the project lifecycle.
+\end{itemize}
 
 \subsection{Automated Testing and Verification Tools}
 
-\wss{What tools are you using for automated testing.  Likely a unit testing
-  framework and maybe a profiling tool, like ValGrind.  Other possible tools
-  include a static analyzer, make, continuous integration tools, test coverage
-  tools, etc.  Explain your plans for summarizing code coverage metrics.
-  Linters are another important class of tools.  For the programming language
-  you select, you should look at the available linters.  There may also be tools
-  that verify that coding standards have been respected, like flake9 for
-  Python.}
+For our project, we plan to utilize GitHub Actions to create a continuous integration pipeline, which will automate the build and testing processes. We will employ the Google Test framework for unit testing, as it provides a robust and easy-to-use interface for writing and executing C++ test cases.
 
-\wss{If you have already done this in the development plan, you can point to
-that document.}
+In addition to unit testing, we will implement linters to verify coding standards and maintain consistency across the codebase. The coding standards we will follow include:
 
-\wss{The details of this section will likely evolve as you get closer to the
-  implementation.}
+\begin{itemize}
+    \item \href{https://google.github.io/styleguide/cppguide.html}{Google's C++ Style Guide} \citep*{GoogleCppStyleGuide} for C++.
+    \item \href{https://peps.python.org/pep-0008/}{PEP8 Style Guide} \citep*{PEP8PythonStyleGuide}: for Python.
+    \item \href{https://getbem.com/}{BEM Methodology} \citep*{BEMMethodology}: for HTML and CSS.
+\end{itemize}
+
+We will summarize code coverage metrics by integrating a coverage tool like gcov with our CI pipeline, allowing us to visualize the effectiveness of our tests and identify untested code paths.
 
 \subsection{Software Validation Plan}
 
-\wss{If there is any external data that can be used for validation, you should
-  point to it here.  If there are no plans for validation, you should state that
-  here.}
+For our project, we plan to validate the functionality of our application using imported music files. These music files will serve as test cases to ensure that our software correctly processes and generates sheet music from audio inputs.
 
-\wss{You might want to use review sessions with the stakeholder to check that
-the requirements document captures the right requirements.  Maybe task based
-inspection?}
+To further validate the product we will conduct user testing to gather feedback on the functionality and usability of our application, allowing us to make improvements based on user experiences.
 
-\wss{For those capstone teams with an external supervisor, the Rev 0 demo should 
-be used as an opportunity to validate the requirements.  You should plan on 
-demonstrating your project to your supervisor shortly after the scheduled Rev 0 demo.  
-The feedback from your supervisor will be very useful for improving your project.}
-
-\wss{For teams without an external supervisor, user testing can serve the same purpose 
-as a Rev 0 demo for the supervisor.}
-
-\wss{This section might reference back to the SRS verification section.}
+There will also be a quality assurance testing effort to ensure a robust adherence to the defined SRS requirements, as further defined in the \hyperref[sec:srs_verification]{SRS Verification Plan}
 
 \section{System Tests}
 
