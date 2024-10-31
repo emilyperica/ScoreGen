@@ -3,6 +3,7 @@
 \usepackage{booktabs}
 \usepackage{tabularx}
 \usepackage{hyperref}
+\usepackage{enumitem}
 \hypersetup{
     colorlinks,
     citecolor=blue,
@@ -595,11 +596,147 @@ This is where you can place additional information.
 The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
 Their values are defined in this section for easy maintenance.
 
-\subsection{Usability Survey Questions?}
+\subsection{Usability Survey Questions}
+The following usability survey will be provided to user testers alongside 
+this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document.
 
-\wss{This is a section that would be appropriate for some projects.}
+\subsubsection*{Part 1: User Demographics}
+\begin{enumerate}[leftmargin=*]
+  \item How old are you?
+  \begin{itemize}
+    \item 0-11
+    \item 12-16
+    \item 17-24
+    \item 24+
+  \end{itemize}
+  \item What is your level of expertise in reading sheet music? 
+  \begin{itemize}
+    \item No knowledge whatsoever
+    \item Beginner
+    \item Intermediate
+    \item Advanced
+    \item Expert
+  \end{itemize}
+  \item How frequently do you use music transcription or audio analysis software?
+  \begin{itemize}
+    \item Daily
+    \item Weekly
+    \item Monthly
+    \item Rarely
+    \item Never
+  \end{itemize}
+  \item What is your primary purpose for using ScoreGen?
+  \begin{itemize}
+    \item Personal music practice
+    \item Music transcription
+    \item Composing original songs
+    \item Academic research
+    \item Other (please specify): \hrulefill
+  \end{itemize}
+\end{enumerate}
 
-\newpage{}
+\subsubsection*{Part 2: Ease of Use}
+\begin{enumerate}[resume, leftmargin=*]
+  \item How intuitive was the user interface for ScoreGen?
+  \begin{itemize}
+    \item Very intuitive
+    \item Somewhat intuitive
+    \item Neutral
+    \item Somewhat unintuitive
+    \item Very unintuitive
+  \end{itemize}
+  \item Did you find the user guide and any in-application instructions sufficient for using the software?
+  \begin{itemize}
+    \item More than sufficient
+    \item Sufficient
+    \item Neutral 
+    \item Somewhat insufficient
+    \item Very insufficient
+  \end{itemize}
+  \item How easy was it to generate sheet music from an audio file?
+  \begin{itemize}
+    \item Very easy
+    \item Somewhat easy
+    \item Neutral 
+    \item Somewhat difficult
+    \item Very difficult
+  \end{itemize}
+  \item How easy was it to generate sheet music from live input (i.e., through your microphone or audio port)?
+  \begin{itemize}
+    \item Very easy
+    \item Somewhat easy
+    \item Neutral 
+    \item Somewhat difficult
+    \item Very difficult
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection*{Part 3: Performance and Accuracy}
+\begin{enumerate}[resume, leftmargin=*]
+  \item How accurate was the transcribed sheet music to the provided audio input?
+  \begin{itemize}
+    \item Very accurate
+    \item Mostly accurate
+    \item Somewhat inaccurate
+    \item Very inaccurate
+    \item I can’t read sheet music
+  \end{itemize}
+  \item Did the VnV plan cover sufficient cases for addressing the accuracy of a variety of audio types (e.g., different instruments, polyphonic vs. monophonic sounds)?
+  \begin{itemize}
+    \item More than sufficient
+    \item Sufficient
+    \item Neutral 
+    \item Somewhat insufficient
+    \item Very insufficient
+  \end{itemize}
+  \item Were there any audio types or formats where the system performed noticeable poorly?
+  \begin{itemize}
+    \item No
+    \item Yes (please specify): \hrulefill
+  \end{itemize}
+  \item How satisfied were you with the speed of the software (e.g., start-up time, length of time between audio input and score generation)?
+  \begin{itemize}
+    \item Very satisfied
+    \item Satisfied
+    \item Neutral
+    \item Dissatisfied
+    \item Very dissatisfied
+  \end{itemize}
+\end{enumerate}
+
+\subsubsection*{Part 4: Overall Satisfaction}
+\begin{enumerate}[resume, leftmargin=*]
+  \item Ho satisfied are you with ScoreGen as a whole?
+  \begin{itemize}
+    \item Very satisfied
+    \item Satisfied
+    \item Neutral
+    \item Dissatisfied
+    \item Very dissatisfied
+  \end{itemize}
+  \item Would you recommend this software to others?
+  \begin{itemize}
+    \item Definitely
+    \item Probably
+    \item Not sure
+    \item Probably not
+    \item Definitely not
+  \end{itemize}
+  \item If comfortable, please provide your favourite part of this experience.
+  
+  \vspace{5pt}
+  \hrulefill
+  \item If comfortable, please provide your least favourite part of this experience.
+  
+  \vspace{5pt}
+  \hrulefill
+  \item Any additional comments or suggestions?
+  
+  \vspace{5pt}
+  \hrulefill
+\end{enumerate}
+
+\newpage
 \section*{Appendix --- Reflection}
 
 The information in this section will be used to evaluate the team members on the
