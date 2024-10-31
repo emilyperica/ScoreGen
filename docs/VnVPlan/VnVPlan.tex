@@ -2,6 +2,9 @@
 
 \usepackage{booktabs}
 \usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{multirow}
+\usepackage{array}
 \usepackage{hyperref}
 \usepackage{enumitem}
 \hypersetup{
@@ -333,65 +336,290 @@ There will also be a quality assurance testing effort to ensure a robust adheren
 
 \section{System Tests}
 
-\wss{There should be text between all headings, even if it is just a roadmap of
-the contents of the subsections.}
+System tests are categorized into two subsections. Section 4.1 lists test cases for functional requirements defined in 
+the SRS. Section 4.2 lists test cases for nonfunctional requirements defined in the SRS. 
 
 \subsection{Tests for Functional Requirements}
+Tests for the functional requirements of the application naturally follow the division of the major types of functional requirements
+in the SRS (see SRS section 9). Thus, tests for each major type are grouped similarly, resulting in five subcategories.
 
-\wss{Subsets of the tests may be in related, so this section is divided into
-  different areas.  If there are no identifiable subsets for the tests, this
-  level of document structure can be removed.}
+  \subsubsection{Input Handling}
+  \begin{enumerate}
+    \item \textbf{Test for Correct Audio File Formats} \\
+      \newline
+      \textbf{Test ID:} FR-AR1-3-1 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio file upload from the user. \\
+      \textbf{Input:} Audio file (e.g., \texttt{.WAV}, \texttt{.MP3}) \\
+      \textbf{Output:} File acceptance without errors, entrance into file processing state. \\
+      \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the system requirement specification (SRS).\\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Use prepared audio sample file.
+          \item Upload the audio file for transcription.
+          \item Confirm the system accepts the file through success message or by entrance into the file processing state.
+      \end{enumerate}
+  
+  \item \textbf{Test for Incorrect File Formats} \\
+    \newline
+    \textbf{Test ID:} FR-AR1-3-2 \\
+    \textbf{Control:} Automatic \\
+    \textbf{Initial State:} Application is open and idle, awaiting audio file upload from the user. \\
+    \textbf{Input:} Non-audio file (e.g., \texttt{.PDF}, \texttt{.MP4}, \texttt{.JPEG}, etc.) \\
+    \textbf{Output:} Denial of upload attempt with error message. \\
+    \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the system requirement specification (SRS). \\
+    \textbf{How Test Will Be Performed:}
+    \begin{enumerate}
+        \item Use prepared files of unsupported formats.
+        \item Upload the file for transcription.
+        \item Confirm the system denies the file and provides an error message that specifies the unsupported file format.
+    \end{enumerate}
+  
+  \item \textbf{Test User Device Microphone} \\
+  \newline
+  \textbf{Test ID:} FR-AR2 \\
+  \textbf{Control:} Manual \\
+  \textbf{Initial State:} Application is open and idle, user has navigated to the audio recording interface and microphone permissions have been granted. \\
+  \textbf{Input:} Audio recorded by the user device’s microphone. \\
+  \textbf{Output:} The application captures the correct audio and saves it in a format processable by the application (e.g., \texttt{.WAV}). \\
+  \textbf{Test Case Derivation:} For validation of functional requirement FR-AR2 in section 9.1 of the system requirement specification (SRS). \\
+  \textbf{How Test Will Be Performed:}
+  \begin{enumerate}
+      \item Navigate to the application’s audio recording interface.
+      \item Start a recording using the application’s “Record” element.
+      \item Wait for 10 seconds and stop the recording.
+      \item Confirm that the audio was recorded through:
+      \begin{itemize}
+          \item Playback using an audio player on the device.
+          \item File metadata analysis (duration, file size, etc.).
+          \item Waveform inspection using an external tool (e.g., Audacity).
+      \end{itemize}
+      \item Confirm that the captured audio matches the expected input via playback, metadata, and/or waveform inspection.
+  \end{enumerate}
+  
+  \item \textbf{Test Generated Score Alignment with Selected Instrument} \\
+    \newline
+    \textbf{Test ID:} FR-AR4 \\
+    \textbf{Control:} Automatic \\
+    \textbf{Initial State:} Application is running and idle, pre-transcription state awaiting input. \\
+    \textbf{Input:} Sample audio file or user-recorded audio and selected instrument type. \\
+    \textbf{Output:} A generated sheet music file in MusicXML format that aligns with the selected instrument’s key signature and note pitches. \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-AR4 in section 9.1 of the system requirement specification (SRS). \\
+    \textbf{How Test Will Be Performed:}
+    \begin{enumerate}
+        \item Select and submit an instrument type within the application.
+        \item Upload an audio input for the selected instrument.
+        \item Upon transcription completion, parse the generated score.
+        \item Verify that the key signature and note pitches match the expected result for the selected instrument.
+    \end{enumerate}
+  \end{enumerate}
 
-\wss{Include a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.}
+  \subsubsection{Signal Processing and Element Identification}
+  \begin{enumerate}
+    \item \textbf{Test Effect of Increased Noise in Audio Input} \\
+      \newline
+      \textbf{Test ID:} FR-SP1 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting file upload from the user. \\
+      \textbf{Input:} Two sample audio files—one unedited, the other with ~10\% noise interference. \\
+      \textbf{Output:} Two identical sheet music files in MusicXML format. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP1 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Upload the unedited audio file to the application and generate a sheet music file.
+          \item Upload the noisy audio file and generate another sheet music file.
+          \item Parse both files and identify discrepancies, if any.
+      \end{enumerate}
+    
+    \item \textbf{Test for Pitch and Rhythm Identification} \\
+      \newline
+      \textbf{Test ID:} FR-SP2 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} Sample audio file or user-recorded audio with a known sheet music equivalent. \\
+      \textbf{Output:} Sheet music correctly identifying all notes in the input audio. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP2 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Prepare an audio file containing an ascending and descending C major scale.
+          \item Upload the audio input to the application.
+          \item Generate and save the sheet music in a viewable file format.
+          \item Compare the generated sheet music visually with the sample sheet music for note discrepancies.
+      \end{enumerate}
 
-\subsubsection{Area of Testing1}
+    \item \textbf{Test for Key Signature and Time Signature Identification} \\
+      \newline
+      \textbf{Test ID:} FR-SP3 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} Sample or user-recorded audio file that has a known key signature and time signature. \\
+      \textbf{Output:} Sheet music that has the same key signature and time signature as the input’s sheet music. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP3 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Upload the sample file or recorded audio file to the application.
+          \item Save the generated sheet music in MusicXML file format.
+          \item Parse the generated file and extract the key signature and time signature.
+          \item Compare the extracted signatures to the known input’s signatures.
+      \end{enumerate}
 
-\wss{It would be nice to have a blurb here to explain why the subsections below
-  cover the requirements.  References to the SRS would be good here.  If a section
-  covers tests for input constraints, you should reference the data constraints
-  table in the SRS.}
-		
-\paragraph{Title for Test}
+    \item \textbf{Test for Polyphonic Audio Identification} \\
+      \newline
+      \textbf{Test ID:} FR-SP5 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} Sample file or user-recorded audio that contains known chords. \\
+      \textbf{Output:} Sheet music file in MusicXML format that matches the input file’s chords. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP5 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Upload the sample audio file to the application.
+          \item Ensure the sample audio file includes at least two distinct chords; single notes may or may not be interleaved.
+          \item Save the generated sheet music in MusicXML file format.
+          \item Parse the generated file.
+          \item Compare the processed and identified chords to the known input audio chords and notes.
+      \end{enumerate}
+    \item \textbf{Test for Monophonic Audio Identification} \\
+    Subsumed by test case FR-SP2 (see section 4.1.2.2)
+  \end{enumerate}
 
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs.  Output is not how you
-are going to return the results of the test.  The output is the expected
-result.}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Control: Manual versus Automatic
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Area of Testing2}
-
-...
-
+  \subsubsection{Sheet Music Generation}
+  \begin{enumerate}
+  \item \textbf{Test General Notation and Layout} \\
+    \newline
+    \textbf{Test ID:} FR-SMG1 \\
+    \textbf{Control:} Automatic with manual inspection \\
+    \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+    \textbf{Input:} Sample or user-recorded audio file with equivalent sheet music available. \\
+    \textbf{Output:} Sheet music using the same layout and notation as the input. \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG1 in section 9.3 of the system requirement specification (SRS). \\
+    \textbf{How Test Will Be Performed:}
+    \begin{enumerate}
+        \item Upload the sample or user-recorded audio file for transcription.
+        \item Save the generated sheet music in MusicXML format and a viewable document format.
+        \item Check for discrepancies:
+        \begin{itemize}
+            \item Parse the MusicXML file and compare it to the input file.
+            \item View the document formatted file (e.g., PDF) and compare it to the input’s sheet music.
+        \end{itemize}
+    \end{enumerate}
+  
+  \item \textbf{Test Instrument Specific Concert Pitch} \\
+    \newline
+    \textbf{Test ID:} FR-SMG2 \\
+    \textbf{Control:} Manual \\
+    \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+    \textbf{Input:} Two audio files—one from a non-transposing instrument and another from a transposing instrument. \\
+    \textbf{Output:} Two sets of sheet music that structurally and visually match their corresponding instrument’s concert pitch. \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG2 in section 9.3 of the system requirement specification (SRS). \\
+    \textbf{How Test Will Be Performed:}
+    \begin{enumerate}
+        \item Upload the non-transposing instrument’s audio file for transcription and save the generated sheet music in a viewable file format.
+        \item Upload the transposing instrument’s audio file for transcription and save the generated sheet music in a viewable file format.
+        \item Compare the two sets of sheet music to ensure appropriate notes are in concert pitch relative to the input sheet music.
+    \end{enumerate}
+  
+  \item \textbf{Test Post-Processing Edit and View Functionalities} \\
+    \newline
+    \textbf{Test ID:} FR-SMG3 \\
+    \textbf{Control:} Manual \\
+    \textbf{Initial State:} Application has just finished processing and transcribing audio input. \\
+    \textbf{Input:} Edit requests, save requests, open requests. \\
+    \textbf{Output:} Viewable file containing sheet music that reflects the requested edits. \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG3 in section 9.3 of the system requirement specification (SRS). \\
+    \textbf{How Test Will Be Performed:}
+    \begin{enumerate}
+        \item View the generated sheet music in the application.
+        \item Perform three edit operations:
+        \begin{itemize}
+            \item Note deletion.
+            \item Note addition.
+            \item Note pitch and/or duration change.
+        \end{itemize}
+        \item Save the edited sheet music in a viewable file format.
+        \item Open and view the edited sheet music file to confirm that changes are present and correct.
+    \end{enumerate}
+  \end{enumerate}
+  \subsubsection{User Interface (UI)}
+  \begin{enumerate}
+    \item \textbf{Test Application Feedback After Audio File is Uploaded} \\
+      \newline
+      \textbf{Test ID:} FR-UI1 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} A sample audio file. \\
+      \textbf{Output:} Visual cue(s) on the GUI in 2 seconds or less. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI1 in section 9.4 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Upload a sample audio file to the application.
+          \item Start a timer and detect visual element changes on the GUI using a testing framework (e.g., Jest).
+          \item Confirm the following conditions are met:
+          \begin{itemize}
+              \item The appropriate visual cue is detected.
+              \item The elapsed time from upload start to display of visual feedback is at most 2 seconds.
+          \end{itemize}
+      \end{enumerate}
+    
+    \item \textbf{Test Availability of System Documentation} \\
+      \newline
+      \textbf{Test ID:} FR-UI2 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Application is running and idle. \\
+      \textbf{Input:} Text-search queries. \\
+      \textbf{Output:} Navigation to appropriate documentation/user guide sections. \\
+      \textbf{Test Case Derivation:} For use during user testing to meet fit criteria for functional requirement FR-UI2 in section 9.4 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Navigate to the user documentation interface.
+          \item Perform a broad text search for major application features or for anything the user requires clarification on.
+      \end{enumerate}
+    
+    \item \textbf{Test User Feedback Report Mechanism} \\
+      \newline
+      \textbf{Test ID:} FR-UI3 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, prepared to receive input through the feedback mechanism. \\
+      \textbf{Input:} Plain text. \\
+      \textbf{Output:} GUI submission success cue and message, return of the input text. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI3 in section 9.4 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Submit a plain text report via the user feedback mechanism to the development team (e.g., through email).
+          \item Parse through inbox messages for user feedback reports and confirm the reception of the submitted report and entire plain text input.
+      \end{enumerate}
+  \end{enumerate}
+  \subsubsection{Save/Load}
+  \begin{enumerate}
+    \item \textbf{Test Application Save Function} \\
+      \newline
+      \textbf{Test ID:} FR-SL1 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Post-audio processing state with generated sheet music file(s) and original audio files accessible for download. \\
+      \textbf{Input:} Request to save file(s) to local drive. \\
+      \textbf{Output:} Non-corrupt file(s) in destination directories. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL1 in section 9.5 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Transcribe a sample audio file using the application.
+          \item Request to download both the original audio and the generated sheet music to a directory on the local drive.
+          \item Compare the contents of the downloaded files to their original copies to check for consistency.
+      \end{enumerate}
+    
+    \item \textbf{Test Application’s Ability to Load Existing Files} \\
+      \newline
+      \textbf{Test ID:} FR-SL2 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Application running and idle, waiting for user input to modify and/or view. \\
+      \textbf{Input:} An existing audio file or existing file containing previously generated sheet music. \\
+      \textbf{Output:} Successful loading of files without errors. \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL2 in section 9.5 of the system requirement specification (SRS). \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Request to load an existing file on the local drive.
+          \item Manually inspect the opened file in the editor to ensure the files appear as they were saved.
+      \end{enumerate}
+  \end{enumerate}
 \subsection{Tests for Nonfunctional Requirements}
 
 \wss{The nonfunctional requirements for accuracy will likely just reference the
@@ -453,8 +681,70 @@ How test will be performed:
 
 \subsection{Traceability Between Test Cases and Requirements}
 
-\wss{Provide a table that shows which test cases are supporting which
-  requirements.}
+For ease of traceability, test cases have been named such that each ID is identical to the ID of 
+the functional or nonfunctional requirement it is intended to verify and validate. 
+
+\begin{longtable}{|p{3cm}|p{4cm}|p{8cm}|}
+  \hline
+  \textbf{SRS Location} & \textbf{Requirement ID} & \textbf{Test IDs} \\
+  \hline
+  \endfirsthead
+
+  \hline
+  \textbf{SRS Location} & \textbf{Requirement ID} & \textbf{Test IDs} \\
+  \hline
+  \endhead
+
+  \hline
+  \endfoot
+
+  \hline
+  \endlastfoot
+
+  \multirow{3}{3cm}{Section 9.1} & FR-AR1 & FR-AR1-3-1, FR-AR1-3-2 \\
+  \cline{2-3}
+   & FR-AR2 & FR-AR2 \\
+  \cline{2-3}
+   & FR-AR3 & FR-AR1-3-1, FR-AR1-3-2 \\
+  \hline
+  \multirow{4}{3cm}{Section 9.2} & FR-SP1 & FR-SP1 \\
+  \cline{2-3}
+   & FR-SP2 & FR-SP2 \\
+   \cline{2-3}
+   & FR-SP3 & FR-SP3 \\
+   \cline{2-3}
+   & FR-SP4 & FR-SP4 \\
+   \cline{2-3}
+   & FR-SP5 & FR-SP2 \\
+  \hline
+  \multirow{3}{3cm}{Section 9.3} & FR-SMG1 & FR-SMG1 \\
+  \cline{2-3}
+   & FR-SMG2 & FR-SMG2 \\
+  \cline{2-3}
+   & FR-SMG3 & FR-SMG3 \\
+  \hline
+  \multirow{3}{3cm}{Section 9.4} & FR-UI1 & FR-UI1 \\
+  \cline{2-3}
+   & FR-UI2 & FR-UI2 \\
+   \cline{2-3}
+   & FR-UI3 & FR-UI3 \\
+  \hline
+  \multirow{3}{3cm}{Section 9.5} & FR-SL1 & FR-Sl1 \\
+  \cline{2-3}
+   & FR-SL2 & FR-SL2 \\
+  \hline
+  \multirow{3}{3cm}{Section 10.1} & NFR & TID, ... \\
+  \cline{2-3}
+   & NFR & TID, ...\\
+  \hline
+  \multirow{3}{3cm}{Section 10.2} & NFR & TID, ... \\
+  \cline{2-3}
+   & NFR & TID, ... \\
+  \cline{2-3}
+   & NFR & TID, ... \\
+  \hline
+
+\end{longtable}
 
 \section{Unit Test Description}
 
