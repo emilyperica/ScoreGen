@@ -62,7 +62,7 @@ See the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/
 \renewcommand{\arraystretch}{1.2}
 \begin{table}[h!]
   \centering
-  \caption{Document definitions}
+  \caption{Document Definitions}
   \vspace{5pt}
   \begin{tabular}{l l}
     \toprule		
@@ -101,7 +101,7 @@ Key qualities this VnV will aim to accomplish include the following:
   \item Ease of use amongst users with varying characteristics
   \item Readable, easy to understand outputs
   \item An enjoyable user experience
-  \item Efficiency and Responsiveness
+  \item Efficiency and responsiveness
   \item Portability of the software
 \end{itemize}
 
@@ -193,12 +193,12 @@ system software.
 The first 4 entries in the below table are the software developers creating the system; they will all 
 contribute to VnV activities to ensure the work is evenly distributed, but each has a specific responsibility 
 they will oversee. The last 3 entries in the table are not involved in ideation/implementation of VnV, but 
-their feedback will shape the final plan. \newpage
-
+their feedback will shape the final plan.
 
 \begin{table}[h!]
   \centering
   \caption{VnV Team}
+  \label{table:vnv}
   \vspace{5pt}
   \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
   \hline
@@ -229,45 +229,63 @@ their feedback will shape the final plan. \newpage
 \subsection{SRS Verification Plan}
 \label{sec:srs_verification}
 
-To verify the SRS for our sheet music generation project, we plan to use a combination of informal feedback and structured reviews to ensure accuracy and alignment with the project's goals. The approaches are as follows:
+To verify the SRS for our sheet music generation project, we plan to use a combination of informal feedback and 
+structured reviews to ensure accuracy and alignment with the project's goals. The following subsections describe 
+these approaches - the combination of peer and supervisor reviews, structured meetings, and issue tracking will 
+provide comprehensive coverage for SRS verification.
 
-\subsection*{Ad Hoc Feedback from Peers}
-We will request informal reviews from our primary reviewers (team 8). Their feedback will help identify potential ambiguities or areas needing clarification. We will ask them to focus on the clarity and feasibility of requirements, ensuring alignment with the intended functionality of the app.
+\subsubsection{Ad Hoc Feedback from Peers}
+We will request informal reviews from our primary reviewers (team 8). Their feedback will help identify potential 
+ambiguities or areas needing clarification. We will ask them to focus on the clarity and feasibility of requirements, 
+ensuring alignment with the intended functionality of the app.
 
-\subsection*{Supervisor Review Meeting}
+\subsubsection{Supervisor Review Meeting}
 
-\textbf{Structured Review Meeting}: We plan to conduct a concise, structured meeting with our project supervisor to leverage their expertise effectively while respecting their time constraints. This meeting will include the following steps:
+\textbf{Structured Review Meeting}: We plan to conduct a concise, structured meeting with our project supervisor, Dr. 
+von Mohrenschildt, to leverage his expertise effectively while respecting his time constraints. This meeting will 
+include the following steps:
 
 \begin{enumerate}
-    \item \textbf{Overview Presentation}: We will present a high-level overview of our initial requirements, focusing on the key features and functionalities we believe are essential for the project. The purpose of this presentation is to quickly bring the supervisor up to speed on the project's direction.
+    \item \textbf{Overview Presentation}: We will present a high-level overview of our initial requirements, focusing 
+    on the key features and functionalities we believe are essential for the project. The purpose of this presentation 
+    is to quickly bring the supervisor up to speed on the project's direction.
     
-    \item \textbf{Discussion on Feasibility and Priority}: We will ask the supervisor to evaluate the feasibility of the proposed requirements, help identify any that are overly ambitious or unrealistic, and highlight those that are core to the project’s success. This will help us prioritize our work based on expert advice.
+    \item \textbf{Discussion on Feasibility and Priority}: We will ask the supervisor to evaluate the feasibility of 
+    the proposed requirements, help identify any that are overly ambitious or unrealistic, and highlight those that 
+    are core to the project’s success. This will help us prioritize our work based on expert advice.
     
-    \item \textbf{Focused Questions}: To guide the discussion and make the best use of the supervisor’s time, we will prepare targeted questions that focus on critical project areas. Examples include:
+    \item \textbf{Focused Questions}: To guide the discussion and make the best use of the supervisor’s time, we will 
+    prepare targeted questions that focus on critical project areas. Examples include:
     \begin{itemize}
         \item Which requirements are technically challenging or might present significant roadblocks?
         \item Are there any high-priority requirements that we might have overlooked?
         \item Which elements align closely with the project’s objectives, and which might be deferred?
     \end{itemize}
     
-    \item \textbf{Utilizing Issue Tracker}: To maintain transparency and track action items, we will record the supervisor’s feedback and any new insights or tasks identified during the meeting in our issue tracker. This will enable us to follow up efficiently and ensure that the supervisor's input is incorporated into subsequent iterations of our requirements document.
+    \item \textbf{Utilizing Issue Tracker}: To maintain transparency and track action items, we will record the supervisor’s 
+    feedback and any new insights or tasks identified during the meeting in our issue tracker. This will enable us to follow 
+    up efficiently and ensure that the supervisor's input is incorporated into subsequent iterations of our requirements document.
 \end{enumerate}
 
 
-\subsection*{Issue Tracking System}
-We will use the git issue tracker to log any concerns, suggestions, or changes requested by reviewers. This system will help maintain a clear record of all feedback and revisions made to the SRS, ensuring transparency and accountability in addressing reviewer comments.
+\subsubsection{Issue Tracking System}
+We will use the \href{https://github.com/users/emilyperica/projects/1}{git issue tracker} to log any concerns, suggestions, or 
+changes requested by reviewers. This system will help maintain a clear record of all feedback and revisions made to the SRS, 
+ensuring transparency and accountability in addressing reviewer comments.
 
-This combination of peer and supervisor reviews, structured meetings, and issue tracking should provide comprehensive coverage for SRS verification.
 
 \subsection{Design Verification Plan}
 
-To ensure the design of the sheet music generation app meets all functional and non-functional requirements, the following verification plan will be implemented:
+To ensure the design of the sheet music generation app meets all functional and non-functional requirements, the following 
+verification plan will be implemented:
 
 \subsubsection*{Peer Review and Feedback}
-The design will undergo reviews by our classmates, focusing on key design elements such as the user interface and algorithm selection for audio-to-sheet music conversion. Feedback from peers will help identify usability issues, potential improvements, and ensure that the design aligns with the project goals.
+The design will undergo reviews by our classmates, focusing on key design elements such as the user interface and algorithm 
+selection for audio-to-sheet music conversion. Feedback from peers will help identify usability issues, potential improvements, 
+and ensure that the design aligns with the project goals.
 
 \subsubsection*{Checklist-Based Review}
-A checklist will be created to guide reviewers in assessing each design aspect. The checklist will include items such as:
+A checklist will be created to guide reviewers in assessing each design aspect:
 \begin{itemize}
     \item Are the core algorithms well-suited for the required audio-to-sheet music conversion?
     \item Are system constraints (e.g., processing time, memory usage) addressed in the design?
@@ -276,12 +294,18 @@ A checklist will be created to guide reviewers in assessing each design aspect. 
 This checklist will help standardize feedback, ensuring a thorough and consistent review process.
 
 \subsubsection*{Supervisor Review}
-In addition to peer review, we will present the design to our project supervisor for further validation. The supervisor will be provided with the design documents and checklist before the review session to facilitate a structured examination of each design component. Key discussion points will include scalability, performance optimization, and potential risks. 
+In addition to peer review, we will present the design to our project supervisor for further validation. The supervisor will be 
+provided with the design documents and checklist before the review session to facilitate a structured examination of each design 
+component. Key discussion points will include scalability, performance optimization, and potential risks. 
 
 \subsubsection*{Issue Tracking and Follow-Up}
-Git Issues will be used to log any design issues or recommendations identified during the review process. This will provide a centralized record of all feedback and allow for systematic tracking of design revisions, ensuring that each suggestion is addressed or appropriately documented.
+Git Issues will be used to log any design issues or recommendations identified during the review process. This will provide a 
+centralized record of all feedback and allow for systematic tracking of design revisions, ensuring that each suggestion is 
+addressed or appropriately documented.
 
-This design verification plan, incorporating both peer and supervisor feedback along with checklist-guided reviews and structured follow-up, will ensure the design is robust, user-friendly, and aligned with project requirements.
+\vspace{10pt}
+\noindent This design verification plan, incorporating both peer and supervisor feedback along with checklist-guided reviews and 
+structured follow-up, will ensure the design is robust, user-friendly, and aligns with project requirements.
 
 
 \subsection{Verification and Validation Plan Verification Plan}
@@ -289,35 +313,54 @@ This design verification plan, incorporating both peer and supervisor feedback a
 \textbf{Verification and Validation Plan Checklist}:
 
 \begin{itemize}
-    \item \textbf{Plan Review by Peers}: Ensure the verification and validation plan is reviewed by classmates to gain diverse insights and identify potential improvements.
-    \item \textbf{Requirement Coverage}: Verify that all requirements are adequately covered by the verification and validation plan, ensuring no critical areas are omitted.
-    \item \textbf{Traceability}: Confirm traceability of each verification and validation activity to specific project requirements to maintain alignment with project goals.
-    \item \textbf{Clarity and Completeness}: Review the plan for clarity, making sure all instructions and testing procedures are clear and complete for future reference.
+    \item \textbf{Plan Review by Peers}: Ensure the verification and validation plan is reviewed by classmates to gain diverse insights 
+    and identify room for improvement.
+    \item \textbf{Requirement Coverage}: Verify that all requirements are adequately covered by the verification and validation plan, 
+    ensuring no critical areas are omitted.
+    \item \textbf{Traceability}: Confirm traceability of each verification and validation activity to specific project requirements to 
+    maintain alignment with project goals.
+    \item \textbf{Clarity and Completeness}: Review the plan for clarity, making sure all instructions and testing procedures are clear 
+    and complete for future reference.
 \end{itemize}
 
 
 \subsection{Implementation Verification Plan}
 
-
-The Implementation Verification Plan outlines the strategies and methodologies we will employ to verify the correctness and quality of our implementation.
+The Implementation Verification Plan outlines the strategies and methodologies we will employ to verify the correctness and quality of 
+our implementation.
 
 \begin{itemize}
-    \item \textbf{Unit Testing Plan}: A comprehensive unit testing plan will be developed, which includes a detailed list of tests designed to verify the functionality of individual components of the system. Each unit test will target specific functions or classes to ensure they perform as expected under various conditions. The results of these tests will be crucial for identifying and resolving issues early in the development process.
+    \item \textbf{Unit Testing Plan}: A comprehensive unit testing plan (\hyperref[sec:unit_tests]{section 5}) will be developed, 
+    which includes a detailed list of tests designed to verify the functionality of individual components of the system. Each unit 
+    test will target specific functions or classes to ensure they perform as expected under various conditions. The results of 
+    these tests will be crucial for identifying and resolving issues early in the development process.
 
-    \item \textbf{Static Verification Methods}: In addition to dynamic testing, we will implement several static verification techniques to enhance the quality of our code. These methods allow us to analyze the code without executing it, thereby identifying potential issues at an early stage. The techniques we plan to use include:
+    \item \textbf{Static Verification Methods}: In addition to dynamic testing, we will implement several static verification techniques 
+    to enhance the quality of our code. These methods allow us to analyze the code without executing it, thereby identifying potential 
+    issues at an early stage. The techniques we plan to use include:
     \begin{itemize}
-        \item \textbf{Code Walkthroughs}: We will conduct peer reviews in the form of code walkthroughs, where team members will systematically review code segments. This collaborative approach encourages knowledge sharing and helps catch defects or design flaws that may not be evident to the original developer.
-        \item \textbf{Static Analyzers}: We will employ static analysis tools to automatically analyze the code for common programming errors, potential security vulnerabilities, and adherence to coding best practices. These tools provide insights that can help us improve code quality and reduce technical debt.
+        \item \textbf{Code Walkthroughs}: We will conduct peer reviews in the form of code walkthroughs, where team members will 
+        systematically review code segments. This collaborative approach encourages knowledge sharing and helps catch defects or design 
+        flaws that may not be evident to the original developer.
+        \item \textbf{Static Analyzers}: We will employ static analysis tools to automatically analyze the code for common programming 
+        errors, potential security vulnerabilities, and adherence to coding best practices. These tools provide insights that can help 
+        us improve code quality and reduce technical debt.
     \end{itemize}
-
-    By integrating both unit testing and static verification methods into our implementation verification plan, we aim to ensure that our code is robust, maintainable, and free from critical defects. This dual approach not only enhances the reliability of our implementation but also streamlines the development process by identifying issues early on, reducing the risk of more significant problems later in the project lifecycle.
 \end{itemize}
+
+\noindent By integrating both unit testing and static verification methods into our implementation verification plan, we aim to ensure 
+that our code is robust, maintainable, and free from critical defects. The combination of unit testing and static verification not only 
+enhances the reliability of our implementation but also streamlines the development process by identifying issues early on. Implementing
+this plan will reduce the possibility of accruing technical debt, and overall increase the ease of software development.
 
 \subsection{Automated Testing and Verification Tools}
 
-For our project, we plan to utilize GitHub Actions to create a continuous integration pipeline, which will automate the build and testing processes. We will employ the Google Test framework for unit testing, as it provides a robust and easy-to-use interface for writing and executing C++ test cases.
+For our project, we plan to utilize GitHub Actions to create a continuous integration pipeline, which will automate the build and 
+testing processes. We will employ the Google Test framework for unit testing, as it provides a robust and easy-to-use interface 
+for writing and executing C++ test cases.
 
-In addition to unit testing, we will implement linters to verify coding standards and maintain consistency across the codebase. The coding standards we will follow include:
+In addition to unit testing, we will implement linters to verify coding standards and maintain consistency across the codebase. 
+The coding standards we will follow include:
 
 \begin{itemize}
     \item \href{https://google.github.io/styleguide/cppguide.html}{Google's C++ Style Guide} \citep*{GoogleCppStyleGuide} for C++.
@@ -325,24 +368,29 @@ In addition to unit testing, we will implement linters to verify coding standard
     \item \href{https://getbem.com/}{BEM Methodology} \citep*{BEMMethodology}: for HTML and CSS.
 \end{itemize}
 
-We will summarize code coverage metrics by integrating a coverage tool like gcov with our CI pipeline, allowing us to visualize the effectiveness of our tests and identify untested code paths.
+We will summarize code coverage metrics by integrating a coverage tool like gcov with our CI pipeline, allowing us to visualize 
+the effectiveness of our tests and identify untested code paths.
 
 \subsection{Software Validation Plan}
 
-For our project, we plan to validate the functionality of our application using imported music files. These music files will serve as test cases to ensure that our software correctly processes and generates sheet music from audio inputs.
+For our project, we plan to validate the functionality of our application using imported music files. These music files will serve 
+as test cases to ensure that our software correctly processes and generates sheet music from audio inputs.
 
-To further validate the product we will conduct user testing to gather feedback on the functionality and usability of our application, allowing us to make improvements based on user experiences.
+To further validate the product we will conduct user testing to gather feedback on the functionality and usability of our application, 
+allowing us to make improvements based on user experiences.
 
-There will also be a quality assurance testing effort to ensure a robust adherence to the defined SRS requirements, as further defined in the \hyperref[sec:srs_verification]{SRS Verification Plan}
+There will also be a quality assurance testing effort to ensure a robust adherence to the defined SRS requirements, as further defined 
+in the \hyperref[sec:srs_verification]{SRS Verification Plan}
 
 \section{System Tests}
 
 System tests are categorized into two subsections. Section 4.1 lists test cases for functional requirements defined in 
-the SRS. Section 4.2 lists test cases for nonfunctional requirements defined in the SRS. 
+the SRS, and section 4.2 lists test cases for nonfunctional requirements defined in the SRS. 
 
 \subsection{Tests for Functional Requirements}
 Tests for the functional requirements of the application naturally follow the division of the major types of functional requirements
-in the SRS (see SRS section 9). Thus, tests for each major type are grouped similarly, resulting in five subcategories.
+in section 9 of the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. Thus, tests for each major 
+type are grouped similarly, resulting in five subcategories.
 
   \subsubsection{Input Handling}
   \begin{enumerate}
@@ -353,7 +401,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, awaiting audio file upload from the user. \\
       \textbf{Input:} Audio file (e.g., \texttt{.WAV}, \texttt{.MP3}) \\
       \textbf{Output:} File acceptance without errors, entrance into file processing state. \\
-      \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the system requirement specification (SRS).\\
+      \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}.\\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Use prepared audio sample file.
@@ -368,7 +417,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
     \textbf{Initial State:} Application is open and idle, awaiting audio file upload from the user. \\
     \textbf{Input:} Non-audio file (e.g., \texttt{.PDF}, \texttt{.MP4}, \texttt{.JPEG}, etc.) \\
     \textbf{Output:} Denial of upload attempt with error message. \\
-    \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the system requirement specification (SRS). \\
+    \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
     \textbf{How Test Will Be Performed:}
     \begin{enumerate}
         \item Use prepared files of unsupported formats.
@@ -380,10 +430,13 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
   \newline
   \textbf{Test ID:} FR-AR2 \\
   \textbf{Control:} Manual \\
-  \textbf{Initial State:} Application is open and idle, user has navigated to the audio recording interface and microphone permissions have been granted. \\
+  \textbf{Initial State:} Application is open and idle, user has navigated to the audio recording interface and microphone 
+  permissions have been granted. \\
   \textbf{Input:} Audio recorded by the user device’s microphone. \\
-  \textbf{Output:} The application captures the correct audio and saves it in a format processable by the application (e.g., \texttt{.WAV}). \\
-  \textbf{Test Case Derivation:} For validation of functional requirement FR-AR2 in section 9.1 of the system requirement specification (SRS). \\
+  \textbf{Output:} The application captures the correct audio and saves it in a format processable by the application 
+  (e.g., \texttt{.WAV}). \\
+  \textbf{Test Case Derivation:} For validation of functional requirement FR-AR2 in section 9.1 of the 
+  \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
   \textbf{How Test Will Be Performed:}
   \begin{enumerate}
       \item Navigate to the application’s audio recording interface.
@@ -404,8 +457,10 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
     \textbf{Control:} Automatic \\
     \textbf{Initial State:} Application is running and idle, pre-transcription state awaiting input. \\
     \textbf{Input:} Sample audio file or user-recorded audio and selected instrument type. \\
-    \textbf{Output:} A generated sheet music file in MusicXML format that aligns with the selected instrument’s key signature and note pitches. \\
-    \textbf{Test Case Derivation:} For validation of functional requirement FR-AR4 in section 9.1 of the system requirement specification (SRS). \\
+    \textbf{Output:} A generated sheet music file in MusicXML format that aligns with the selected instrument’s key signature 
+    and note pitches. \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-AR4 in section 9.1 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
     \textbf{How Test Will Be Performed:}
     \begin{enumerate}
         \item Select and submit an instrument type within the application.
@@ -424,7 +479,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, awaiting file upload from the user. \\
       \textbf{Input:} Two sample audio files—one unedited, the other with ~10\% noise interference. \\
       \textbf{Output:} Two identical sheet music files in MusicXML format. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP1 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP1 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Upload the unedited audio file to the application and generate a sheet music file.
@@ -439,7 +495,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
       \textbf{Input:} Sample audio file or user-recorded audio with a known sheet music equivalent. \\
       \textbf{Output:} Sheet music correctly identifying all notes in the input audio. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP2 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP2 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Prepare an audio file containing an ascending and descending C major scale.
@@ -455,7 +512,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
       \textbf{Input:} Sample or user-recorded audio file that has a known key signature and time signature. \\
       \textbf{Output:} Sheet music that has the same key signature and time signature as the input’s sheet music. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP3 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP3 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Upload the sample file or recorded audio file to the application.
@@ -471,7 +529,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
       \textbf{Input:} Sample file or user-recorded audio that contains known chords. \\
       \textbf{Output:} Sheet music file in MusicXML format that matches the input file’s chords. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP5 in section 9.2 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP5 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Upload the sample audio file to the application.
@@ -493,7 +552,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
     \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
     \textbf{Input:} Sample or user-recorded audio file with equivalent sheet music available. \\
     \textbf{Output:} Sheet music using the same layout and notation as the input. \\
-    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG1 in section 9.3 of the system requirement specification (SRS). \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG1 in section 9.3 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
     \textbf{How Test Will Be Performed:}
     \begin{enumerate}
         \item Upload the sample or user-recorded audio file for transcription.
@@ -501,7 +561,7 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
         \item Check for discrepancies:
         \begin{itemize}
             \item Parse the MusicXML file and compare it to the input file.
-            \item View the document formatted file (e.g., PDF) and compare it to the input’s sheet music.
+            \item View the document formatted file (e.g., \texttt{.PDF}) and compare it to the input’s sheet music.
         \end{itemize}
     \end{enumerate}
   
@@ -512,11 +572,14 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
     \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
     \textbf{Input:} Two audio files—one from a non-transposing instrument and another from a transposing instrument. \\
     \textbf{Output:} Two sets of sheet music that structurally and visually match their corresponding instrument’s concert pitch. \\
-    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG2 in section 9.3 of the system requirement specification (SRS). \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG2 in section 9.3 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
     \textbf{How Test Will Be Performed:}
     \begin{enumerate}
-        \item Upload the non-transposing instrument’s audio file for transcription and save the generated sheet music in a viewable file format.
-        \item Upload the transposing instrument’s audio file for transcription and save the generated sheet music in a viewable file format.
+        \item Upload the non-transposing instrument’s audio file for transcription and save the generated sheet music in a 
+        viewable file format.
+        \item Upload the transposing instrument’s audio file for transcription and save the generated sheet music in a viewable 
+        file format.
         \item Compare the two sets of sheet music to ensure appropriate notes are in concert pitch relative to the input sheet music.
     \end{enumerate}
   
@@ -527,7 +590,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
     \textbf{Initial State:} Application has just finished processing and transcribing audio input. \\
     \textbf{Input:} Edit requests, save requests, open requests. \\
     \textbf{Output:} Viewable file containing sheet music that reflects the requested edits. \\
-    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG3 in section 9.3 of the system requirement specification (SRS). \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG3 in section 9.3 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
     \textbf{How Test Will Be Performed:}
     \begin{enumerate}
         \item View the generated sheet music in the application.
@@ -550,7 +614,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
       \textbf{Input:} A sample audio file. \\
       \textbf{Output:} Visual cue(s) on the GUI in 2 seconds or less. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI1 in section 9.4 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI1 in section 9.4 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Upload a sample audio file to the application.
@@ -569,7 +634,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle. \\
       \textbf{Input:} Text-search queries. \\
       \textbf{Output:} Navigation to appropriate documentation/user guide sections. \\
-      \textbf{Test Case Derivation:} For use during user testing to meet fit criteria for functional requirement FR-UI2 in section 9.4 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For use during user testing to meet fit criteria for functional requirement FR-UI2 in section 
+      9.4 of the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Navigate to the user documentation interface.
@@ -583,11 +649,13 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application is running and idle, prepared to receive input through the feedback mechanism. \\
       \textbf{Input:} Plain text. \\
       \textbf{Output:} GUI submission success cue and message, return of the input text. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI3 in section 9.4 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI3 in section 9.4 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Submit a plain text report via the user feedback mechanism to the development team (e.g., through email).
-          \item Parse through inbox messages for user feedback reports and confirm the reception of the submitted report and entire plain text input.
+          \item Parse through inbox messages for user feedback reports and confirm the reception of the submitted report and 
+          entire plain text input.
       \end{enumerate}
   \end{enumerate}
   \subsubsection{Save/Load}
@@ -596,10 +664,12 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \newline
       \textbf{Test ID:} FR-SL1 \\
       \textbf{Control:} Manual \\
-      \textbf{Initial State:} Post-audio processing state with generated sheet music file(s) and original audio files accessible for download. \\
+      \textbf{Initial State:} Post-audio processing state with generated sheet music file(s) and original audio files accessible 
+      for download. \\
       \textbf{Input:} Request to save file(s) to local drive. \\
       \textbf{Output:} Non-corrupt file(s) in destination directories. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL1 in section 9.5 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL1 in section 9.5 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Transcribe a sample audio file using the application.
@@ -614,7 +684,8 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
       \textbf{Initial State:} Application running and idle, waiting for user input to modify and/or view. \\
       \textbf{Input:} An existing audio file or existing file containing previously generated sheet music. \\
       \textbf{Output:} Successful loading of files without errors. \\
-      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL2 in section 9.5 of the system requirement specification (SRS). \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL2 in section 9.5 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Request to load an existing file on the local drive.
@@ -625,9 +696,12 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
 
 The following tests are for nonfunctional requirements. There are a few things to note about the tests:
 \begin{enumerate}
-  \item Tests will be carried out by a member of our team (led by NFR tester Jackson Lippert as shown in table 1), the tests have not been assigned at this time as we are unsure what the future of testing will look like at this time.
-  \item Wherever the tests refer to a 'sample group of people' (such as for usability testing), we will decide at a later time who that will be.
-  \item Usability Tests are left semi-ambiguous at this time to give us room to expand in the future when implementation details are better known.
+  \item Tests will be carried out by a member of our team (led by NFR tester Jackson Lippert as shown in table \ref{table:vnv}), 
+  the tests have not been assigned at this time as we are unsure what the future of testing will look like at this time.
+  \item Wherever the tests refer to a 'sample group of people' (such as for usability testing), we will decide at a later time 
+  who that will be.
+  \item Usability Tests are left semi-ambiguous at this time to give us room to expand in the future when implementation details 
+  are better known.
 \end{enumerate}
 
 \subsubsection{Look and Feel Testing}
@@ -641,7 +715,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} 75\% of users should be able to locate the interactive element that initiates the score generation process. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Recruit a sample group of users unfamiliar with the app and explain that they need to initiate the score generation process.
+          \item Recruit a sample group of users unfamiliar with the app and explain that they need to initiate the score generation 
+          process.
           \item Record if each user is able to locate the score generation button within 10 seconds.
           \item Ask users to describe why they selected the specific element as the score generation option.
       \end{enumerate}
@@ -653,7 +728,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Static, Manual, Visual Inspection \\
       \textbf{Initial State:} The application interface is fully designed. \\
       \textbf{Input/Condition:} Inspect the interface to verify colour usage. \\
-      \textbf{Output/Result:} To meet the fit criterion, the colour scheme should have at least three distinct colours: primary, secondary, and accent. \\
+      \textbf{Output/Result:} To meet the fit criterion, the colour scheme should have at least three distinct colours: primary, 
+      secondary, and accent. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Identify and document the primary, secondary, and accent colours as specified in the app's design guidelines.
@@ -688,27 +764,33 @@ The following tests are for nonfunctional requirements. There are a few things t
       \begin{enumerate}
           \item After a user’s initial interaction with the app, provide them with a survey containing the following questions:
           \begin{itemize}
-              \item Q1: On a scale of 1-5, how trustworthy does this app feel when handling your data? (1 = Not Trustworthy, 5 = Very Trustworthy)
+              \item Q1: On a scale of 1-5, how trustworthy does this app feel when handling your data? (1 = Not Trustworthy, 5 = 
+              Very Trustworthy)
               \item Q2: Do you feel confident using this app for your music notation needs? (Yes/No)
               \item Q3: Please briefly explain any factors that contributed to your level of trust in the app.
           \end{itemize}
-          \item Collect responses and analyze the data to calculate the percentage of users rating the app as 4 or 5 for trustworthiness in Q1 and answering "Yes" to Q2.
+          \item Collect responses and analyze the data to calculate the percentage of users rating the app as 4 or 5 for 
+          trustworthiness in Q1 and answering "Yes" to Q2.
       \end{enumerate}
-      \textbf{Success Criterion:} If 70\% or more users rate the app 4 or higher on trustworthiness and respond “Yes” to Q2, the test passes.
+      \textbf{Success Criterion:} If 70\% or more users rate the app 4 or higher on trustworthiness and respond “Yes” to Q2, the 
+      test passes.
 \end{enumerate}
+
 \subsubsection{Usability and Humanity Testing}
 \begin{enumerate}
     \item \textbf{Test for UH-EOU1 Human-Centered Design (HCD)} \\
       \newline
       \textbf{Test ID:} UH-EOU1 \\
       \textbf{Type:} Usability, Static, Inspection-Based \\
-      \textbf{Initial State:} The app interface is fully developed, adhering to HCD principles \cite{HCD}. \\
+      \textbf{Initial State:} The app interface is fully developed, adhering to HCD principles \citep*{HCD}. \\
       \textbf{Input/Condition:} Inspect the app interface for compliance with the four fundamental HCD principles. \\
       \textbf{Output/Result:} The user interface must visibly incorporate all four HCD principles. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Review the app’s design documentation to verify its adherence to the HCD principles: visibility, consistency, user control, and feedback.
-          \item Conduct an inspection-based evaluation of the interface with usability experts, identifying examples of each HCD principle in action.
+          \item Review the app’s design documentation to verify its adherence to the HCD principles: visibility, consistency, 
+          user control, and feedback.
+          \item Conduct an inspection-based evaluation of the interface with usability experts, identifying examples of each HCD 
+          principle in action.
       \end{enumerate}
       \textbf{Success Criterion:} The app passes if all four HCD principles are clearly implemented and documented within the interface.
 
@@ -721,7 +803,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} All text should be presented in Canadian English, with no grammatical or spelling errors. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Conduct a manual review of all textual elements within the app, ensuring they are correctly localized in Canadian English.
+          \item Conduct a manual review of all textual elements within the app, ensuring they are correctly localized in Canadian 
+          English.
           \item Use a grammar and spell-check tool to verify accuracy.
       \end{enumerate}
       \textbf{Success Criterion:} The test is passed if all text is in Canadian English and no errors are found.
@@ -732,7 +815,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Usability, Dynamic, User Testing \\
       \textbf{Initial State:} The user is unfamiliar with the app and has no formal music theory background. \\
       \textbf{Input/Condition:} The user has 10 minutes to explore and use the app without guidance. \\
-      \textbf{Output/Result:} 95\% of users without a music theory background are able to generate a score sheet within the allotted time. \\
+      \textbf{Output/Result:} 95\% of users without a music theory background are able to generate a score sheet within the allotted 
+      time. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Recruit a sample of users with no formal music theory background.
@@ -750,7 +834,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} At least 70\% of icons are accurately identified by users. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Present a sample of users with the app interface and ask them to identify the function of each interactive icon without clicking or interacting with them.
+          \item Present a sample of users with the app interface and ask them to identify the function of each interactive icon 
+          without clicking or interacting with them.
           \item Record user responses and compare them to the correct icon functions.
       \end{enumerate}
       \textbf{Success Criterion:} If at least 70\% of the icons are correctly identified by the majority of users, the test is passed.
@@ -767,7 +852,8 @@ The following tests are for nonfunctional requirements. There are a few things t
           \item Conduct a static inspection of all user-accessible components in the interface, including settings, menus, and tooltips.
           \item Confirm that no elements or descriptions expose the internal implementation or processing details.
       \end{enumerate}
-      \textbf{Success Criterion:} The test is passed if no user-accessible components reveal underlying algorithms or implementation details.
+      \textbf{Success Criterion:} The test is passed if no user-accessible components reveal underlying algorithms or implementation 
+      details.
 
     \item \textbf{Test for UH-A1 Web Content Accessibility Guidelines (WCAG) Compliance} \\
       \newline
@@ -775,15 +861,18 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Accessibility, Static and Dynamic, Automated and Manual \\
       \textbf{Initial State:} The app interface is complete and ready for accessibility testing. \\
       \textbf{Input/Condition:} Perform an accessibility audit using automated tools and manual checks. \\
-      \textbf{Output/Result:} The app meets or exceeds WCAG 2.1 Level AA compliance \cite{WCAG21}. \\
+      \textbf{Output/Result:} The app meets or exceeds WCAG 2.1 Level AA compliance \citep*{WCAG21}. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Run automated accessibility testing tools to identify any WCAG Level AA compliance issues, including alt text for images, colour contrast, keyboard navigability, etc.
+          \item Run automated accessibility testing tools to identify any WCAG Level AA compliance issues, including alt text for 
+          images, colour contrast, keyboard navigability, etc.
           \item Conduct manual testing for areas not covered by automated tools, such as text readability and interaction.
           \item Document any issues and confirm adherence to all WCAG 2.1 Level AA standards.
       \end{enumerate}
-      \textbf{Success Criterion:} The test is passed if the app fully complies with WCAG 2.1 Level AA standards, confirmed by both automated and manual testing.
+      \textbf{Success Criterion:} The test is passed if the app fully complies with WCAG 2.1 Level AA standards, confirmed by both 
+      automated and manual testing.
 \end{enumerate}
+
 \subsubsection{Performance Testing}
 \begin{enumerate}
     \item \textbf{Test for PR-SL1 User Interface Response Time} \\
@@ -792,10 +881,12 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Performance, Dynamic \\
       \textbf{Initial State:} The application is open and ready for user interaction. \\
       \textbf{Input/Condition:} Perform multiple interactions, such as menu navigation and input processing. \\
-      \textbf{Output/Result:} The app should respond within 2 seconds for 90\% of interactions, with no interaction taking longer than 5 seconds. \\
+      \textbf{Output/Result:} The app should respond within 2 seconds for 90\% of interactions, with no interaction taking longer 
+      than 5 seconds. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Conduct a series of interactions across the application, including navigation through menus and processing various inputs.
+          \item Conduct a series of interactions across the application, including navigation through menus and processing various 
+          inputs.
           \item Record response times for each interaction.
           \item Calculate the percentage of interactions that respond within 2 seconds and confirm that no response exceeds 5 seconds.
       \end{enumerate}
@@ -809,7 +900,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} The app should complete imports and exports within a reasonable time frame for at least 95\% of operations. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Import and export a range of music files up to 100MB in size, timing each operation. An example music file is given \href{https://github.com/JaakLipp/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-songs/hot-cross-buns-piano-solo.wav}{here}.
+          \item Import and export a range of music files up to 100MB in size, timing each operation. An example music file is given 
+          \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-songs/hot-cross-buns-piano-solo.wav}{here}.
           \item Document the time taken for each operation and calculate the percentage of imports and exports that complete within an acceptable time.
           \item Confirm that 95\% of operations meet the expected time frame.
       \end{enumerate}
@@ -819,7 +911,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} PR-SC1 \\
       \textbf{Type:} Accessibility, Static, Automated \\
       \textbf{Initial State:} The application is open with all visual elements loaded. \\
-      \textbf{Input/Condition:} Inspect graphical interface elements for compliance with WCAG 2.1 guidelines on flashing content \cite{WCAG21}. \\
+      \textbf{Input/Condition:} Inspect graphical interface elements for compliance with WCAG 2.1 guidelines on flashing content 
+      \citep*{WCAG21}. \\
       \textbf{Output/Result:} No visual elements should flash at a rate of more than 3 flashes per second. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
@@ -834,7 +927,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Usability \\
       \textbf{Initial State:} The app is open, with the instrument input configuration tutorial available. \\
       \textbf{Input/Condition:} Use the tutorial to set up an external instrument or microphone. \\
-      \textbf{Output/Result:} The setup should be completed successfully on the first attempt with a 95\% success rate across user testing. \\
+      \textbf{Output/Result:} The setup should be completed successfully on the first attempt with a 95\% success rate across 
+      user testing. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Guide a sample group of users through the step-by-step input configuration tutorial.
@@ -847,7 +941,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} PR-PA1 \\
       \textbf{Type:} Functional, Performance \\
       \textbf{Initial State:} The app is configured for audio input from diverse instruments. \\
-      \textbf{Input/Condition:} Test pitch detection with a range of instruments and note ranges. Test samples found \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets}{here.}\\
+      \textbf{Input/Condition:} Test pitch detection with a range of instruments and note ranges. Test samples found 
+      \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets}{here.}\\
       \textbf{Output/Result:} The pitch detection accuracy should be within a 1\% error margin across all tests. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
@@ -865,7 +960,9 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} The app should capture note durations and rhythms with an accuracy tolerance within 100ms. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Play or record \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio samples} with known timing and rhythm.
+          \item Play or record 
+          \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio samples} 
+          with known timing and rhythm.
           \item Analyze the transcribed timing for each note and compare it to the original timing.
           \item Verify that timing discrepancies are within the 100ms tolerance limit.
       \end{enumerate}
@@ -876,7 +973,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Performance, Dynamic \\
       \textbf{Initial State:} The app is running under typical usage conditions. \\
       \textbf{Input/Condition:} Operate the app continuously for 24 hours. \\
-      \textbf{Output/Result:} The app should function without crashes or failures for the entire 24-hour period in at least 95\% of cases. \\
+      \textbf{Output/Result:} The app should function without crashes or failures for the entire 24-hour period in at least 
+      95\% of cases. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Start the app under standard usage conditions and monitor it for 24 hours.
@@ -904,7 +1002,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Dynamic \\
       \textbf{Initial State:} The app is open and in active use with an ongoing transcription. \\
       \textbf{Input/Condition:} Simulate an unexpected crash. \\
-      \textbf{Output/Result:} The app should automatically save the current session and allow users to recover their work upon restarting, achieving 98\% recovery success. \\
+      \textbf{Output/Result:} The app should automatically save the current session and allow users to recover their work 
+      upon restarting, achieving 98\% recovery success. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Begin a transcription session and simulate a crash.
@@ -916,13 +1015,15 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} PR-RFT4 \\
       \textbf{Type:} Performance, Dynamic \\
       \textbf{Initial State:} The app is running and ready to process complex or large inputs. \\
-      \textbf{Input/Condition:} Test the app’s performance under maximum load conditions (e.g., \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-chords}{complex polyphonic inputs, large files}). \\
+      \textbf{Input/Condition:} Test the app’s performance under maximum load conditions (e.g., 
+      \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-chords}{complex polyphonic inputs, large files}). \\
       \textbf{Output/Result:} The app should maintain stable performance with no more than a 30\% decrease in processing speed. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Load the app with large or complex audio files that simulate high activity conditions.
           \item Measure processing speed and performance metrics during this test.
-          \item Verify that performance remains stable with no significant slowdowns or crashes and that any speed decrease is within 30\%.
+          \item Verify that performance remains stable with no significant slowdowns or crashes and that any speed decrease 
+          is within 30\%.
       \end{enumerate}
 
     \item \textbf{Test for PR-RFT5 Handling Signal Interruptions} \\
@@ -931,12 +1032,14 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Dynamic \\
       \textbf{Initial State:} The app is receiving audio input from an external instrument or microphone. \\
       \textbf{Input/Condition:} Temporarily disconnect and then reconnect the audio input device. \\
-      \textbf{Output/Result:} The app should retain buffered audio data for up to 2 minutes during interruptions and resume transcription seamlessly. \\
+      \textbf{Output/Result:} The app should retain buffered audio data for up to 2 minutes during interruptions and resume 
+      transcription seamlessly. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Begin an audio input session and then simulate a signal interruption by disconnecting the audio source.
           \item Wait up to 2 minutes, then reconnect the audio source.
-          \item Verify that buffered audio data is retained, and transcription resumes without any data loss in at least 95\% of test cases.
+          \item Verify that buffered audio data is retained, and transcription resumes without any data loss in at least 95\% 
+          of test cases.
       \end{enumerate}
 
     \item \textbf{Test for PR-RFT6 Graceful Degradation} \\
@@ -945,7 +1048,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Performance, Dynamic \\
       \textbf{Initial State:} The app is running and under increasing system load. \\
       \textbf{Input/Condition:} Apply stress by loading multiple instruments or large files until performance begins to degrade. \\
-      \textbf{Output/Result:} The app should notify the user of delays within 5 seconds of detection and avoid crashing in 99\% of test cases. \\
+      \textbf{Output/Result:} The app should notify the user of delays within 5 seconds of detection and avoid crashing in 99\% 
+      of test cases. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Gradually increase system load by adding complex inputs or running multiple processes.
@@ -958,8 +1062,10 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} PR-RFT7 \\
       \textbf{Type:} Functional, Dynamic \\
       \textbf{Initial State:} The app is running and processes files with varied input types. \\
-      \textbf{Input/Condition:} Introduce minor software errors (e.g., \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/sample-formats}{unexpected input format}). \\
-      \textbf{Output/Result:} The app should log the error, notify the user, skip the problematic section, and continue without crashing in 90\% of cases. \\
+      \textbf{Input/Condition:} Introduce minor software errors (e.g., 
+      \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/sample-formats}{unexpected input format}). \\
+      \textbf{Output/Result:} The app should log the error, notify the user, skip the problematic section, and continue 
+      without crashing in 90\% of cases. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Feed the app corrupted or incompatible files.
@@ -973,7 +1079,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Performance, Dynamic \\
       \textbf{Initial State:} The app is ready to record audio input. \\
       \textbf{Input/Condition:} Record audio continuously for up to 90 minutes. \\
-      \textbf{Output/Result:} The app should process and transcribe the entire duration with no more than a 5\% slowdown in speed or accuracy. \\
+      \textbf{Output/Result:} The app should process and transcribe the entire duration with no more than a 5\% slowdown 
+      in speed or accuracy. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Start recording and let the app run continuously for 90 minutes.
@@ -987,7 +1094,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Performance, Dynamic \\
       \textbf{Initial State:} The app supports simultaneous user sessions. \\
       \textbf{Input/Condition:} Run 10 simultaneous active user sessions. \\
-      \textbf{Output/Result:} The app should maintain stable performance, response times, and transcription accuracy in 95\% of cases. \\
+      \textbf{Output/Result:} The app should maintain stable performance, response times, and transcription accuracy in 
+      95\% of cases. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Initiate 10 user sessions, each running different tasks.
@@ -1014,7 +1122,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} PR-SE3 \\
       \textbf{Type:} Performance, Scalability \\
       \textbf{Initial State:} The app is prepared to process complex musical compositions. \\
-      \textbf{Input/Condition:} Process \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-chords}{increasingly complex compositions} with multiple instrument tracks. \\
+      \textbf{Input/Condition:} Process 
+      \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-chords}{increasingly complex compositions} with multiple instrument tracks. \\
       \textbf{Output/Result:} The app should maintain stability and performance as complexity increases. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
@@ -1029,7 +1138,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Structural, Static \\
       \textbf{Initial State:} The app’s development roadmap is complete. \\
       \textbf{Input/Condition:} Review the roadmap for planned updates and feature expansions over the next five years. \\
-      \textbf{Output/Result:} The roadmap should ensure that the app remains functional and relevant for at least five years with minor maintenance. \\
+      \textbf{Output/Result:} The roadmap should ensure that the app remains functional and relevant for at least five 
+      years with minor maintenance. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Review the app’s development roadmap with the team.
@@ -1049,7 +1159,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Set up the app in indoor environments such as a home studio, classroom, and office.
-          \item Record observations of the app's functionality in each environment, noting any issues related to lighting or ambient noise.
+          \item Record observations of the app's functionality in each environment, noting any issues related to lighting 
+          or ambient noise.
           \item Confirm that the app functions as expected across all tested environments.
       \end{enumerate}
 
@@ -1057,7 +1168,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \newline
       \textbf{Test ID:} OE-EP2 \\
       \textbf{Type:} Functional, Dynamic, Environmental \\
-      \textbf{Initial State:} The app is configured to receive audio input in an environment with moderate \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/noise-samples}{background noise}. \\
+      \textbf{Initial State:} The app is configured to receive audio input in an environment with moderate 
+      \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/noise-samples}{background noise}. \\
       \textbf{Input/Condition:} The app’s transcription accuracy is tested in environments with varying ambient noise levels. \\
       \textbf{Output/Result:} The app’s transcription accuracy should not degrade by more than 5\%. \\
       \textbf{How Test Will Be Performed:}
@@ -1071,9 +1183,11 @@ The following tests are for nonfunctional requirements. There are a few things t
       \newline
       \textbf{Test ID:} OE-EP3 \\
       \textbf{Type:} Usability, Dynamic, Environmental \\
-      \textbf{Initial State:} The app is installed on devices with various screen sizes and resolutions, from 13-inch to 27-inch displays. \\
+      \textbf{Initial State:} The app is installed on devices with various screen sizes and resolutions, from 13-inch to 
+      27-inch displays. \\
       \textbf{Input/Condition:} The app is run on screens of varying sizes to check layout flexibility. \\
-      \textbf{Output/Result:} The app’s interface should be adaptable to each screen size and resolution, maintaining full functionality. \\
+      \textbf{Output/Result:} The app’s interface should be adaptable to each screen size and resolution, maintaining 
+      full functionality. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Open the app on devices with screen sizes ranging from 13 to 27 inches.
@@ -1086,8 +1200,10 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} OE-EP4 \\
       \textbf{Type:} Usability, Dynamic, Environmental \\
       \textbf{Initial State:} The app is installed on a laptop in a temporary workspace, such as a cafe or live performance venue. \\
-      \textbf{Input/Condition:} The app is used in transient environments to evaluate setup and operation without specialized hardware. \\
-      \textbf{Output/Result:} The app should function smoothly on standard laptop hardware, performing effectively in transient conditions. \\
+      \textbf{Input/Condition:} The app is used in transient environments to evaluate setup and operation without specialized 
+      hardware. \\
+      \textbf{Output/Result:} The app should function smoothly on standard laptop hardware, performing effectively in transient 
+      conditions. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Set up the app on a laptop with standard specifications in a cafe or similar temporary workspace.
@@ -1146,7 +1262,7 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} The exported files should be compatible with popular music notation software. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Convert an \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio sample} to sheet music within the app.
+          \item Convert an \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio sample} to sheet music within the app.
           \item Export the generated sheet music as a MusicXML file.
           \item Test the exported files in another music notation software (TBD) to ensure compatibility and accuracy.
       \end{enumerate}
@@ -1185,7 +1301,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Static \\
       \textbf{Initial State:} The app installation file is prepared. \\
       \textbf{Input/Condition:} Check the installation file size and install it on various systems. \\
-      \textbf{Output/Result:} The installation file should be 500MB or less, and the app should be compatible with different system setups. \\
+      \textbf{Output/Result:} The installation file should be 500MB or less, and the app should be compatible with different 
+      system setups. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Confirm the installation file size does not exceed 500MB.
@@ -1216,7 +1333,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Output/Result:} Core features should be functional with no major bugs, and ready for initial release. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Perform a full quality assurance test on the app, focusing on core functionality such as audio-to-sheet-music conversion in a production environment.
+          \item Perform a full quality assurance test on the app, focusing on core functionality such as audio-to-sheet music 
+          conversion in a production environment.
           \item Document any bugs or issues and resolve them before release.
           \item Verify that the app is stable and ready for general use by conducting a final user acceptance test.
       \end{enumerate}
@@ -1330,7 +1448,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Static \\
       \textbf{Initial State:} The application is running, and the user has chosen a specific location for file storage. \\
       \textbf{Input/Condition:} Save an output file in the user-selected directory. \\
-      \textbf{Output/Result:} The output file should be saved in the specified directory with full read and write permissions for the user. \\
+      \textbf{Output/Result:} The output file should be saved in the specified directory with full read and write permissions 
+      for the user. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Configure the application to store output files in a user-defined location.
@@ -1348,7 +1467,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Launch the application and monitor for any prompts requesting personal data.
-          \item Interact with all features of the app, verifying that no PII requests (e.g., name, address, or contact information) are made.
+          \item Interact with all features of the app, verifying that no PII requests (e.g., name, address, or contact 
+          information) are made.
           \item Document any instance where PII might be requested, and confirm the app remains free of such prompts.
       \end{enumerate}
 
@@ -1358,10 +1478,12 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Dynamic \\
       \textbf{Initial State:} The application has processed an audio input file. \\
       \textbf{Input/Condition:} Complete an audio processing session. \\
-      \textbf{Output/Result:} The application should clear all caches and temporary files associated with the processed audio upon completion. \\
+      \textbf{Output/Result:} The application should clear all caches and temporary files associated with the processed 
+      audio upon completion. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Process an \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples}{audio file} within the application.
+          \item Process an \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/piano-samples}{audio file} 
+          within the application.
           \item After processing, check the system’s temporary file storage to ensure no audio data or temporary files remain.
           \item Confirm that all caches are cleared, and no residual audio data is left on the system.
       \end{enumerate}
@@ -1373,11 +1495,13 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} CR-CR1 \\
       \textbf{Type:} Functional, Static \\
       \textbf{Initial State:} The application is open, ready to display and create sheet music. \\
-      \textbf{Input/Condition:} Use the app to create and display sheet music, verifying adherence to Western music notation \cite{music-notation}. \\
+      \textbf{Input/Condition:} Use the app to create and display sheet music, verifying adherence to Western music notation 
+      \citep*{music-notation}. \\
       \textbf{Output/Result:} The generated and displayed sheet music should accurately follow Western music notation standards. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Generate a sample sheet music file using the app, incorporating various standard Western notation elements (e.g., treble and bass clefs, notes, rests, time signatures).
+          \item Generate a sample sheet music file using the app, incorporating various standard Western notation elements 
+          (e.g., treble and bass clefs, notes, rests, time signatures).
           \item Compare the sheet music against standard Western notation guidelines, ensuring proper symbol usage and layout.
           \item Confirm that all notation adheres to Western music conventions without deviations or omissions.
       \end{enumerate}
@@ -1394,7 +1518,8 @@ The following tests are for nonfunctional requirements. There are a few things t
           \item Recruit a sample group of users with basic to intermediate music theory knowledge.
           \item Have users complete a task (e.g., creating a simple sheet of music) and observe their interaction with the app.
           \item Provide tutorials or guides as needed and gather feedback on their clarity and usefulness.
-          \item Verify that users can successfully navigate and use the application without advanced music theory knowledge, meeting usability expectations.
+          \item Verify that users can successfully navigate and use the application without advanced music theory knowledge, 
+          meeting usability expectations.
       \end{enumerate}
 
     \item \textbf{Test for CR-LR1 Copyright Issues} \\
@@ -1403,7 +1528,8 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Type:} Functional, Static \\
       \textbf{Initial State:} The application is open, ready for user interaction. \\
       \textbf{Input/Condition:} Observe the app’s interface for the presence of a copyright disclaimer. \\
-      \textbf{Output/Result:} The app should display a clear disclaimer advising users on copyright compliance related to audio input. \\
+      \textbf{Output/Result:} The app should display a clear disclaimer advising users on copyright compliance related to 
+      audio input. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Open the application and navigate to any sections that mention user responsibilities or usage terms.
@@ -1421,8 +1547,10 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Generate a sheet music file within the app and export it in MusicXML format.
-          \item Open the exported file in compatible notation software (TBD) to confirm it is error-free and follows the MusicXML standard.
-          \item Review the app’s documentation to verify that all third-party libraries are listed with their licensing terms for compliance purposes.
+          \item Open the exported file in compatible notation software (TBD) to confirm it is error-free and follows the 
+          MusicXML standard.
+          \item Review the app’s documentation to verify that all third-party libraries are listed with their licensing 
+          terms for compliance purposes.
       \end{enumerate}
 \end{enumerate}
 
@@ -1431,7 +1559,8 @@ The following tests are for nonfunctional requirements. There are a few things t
 For ease of traceability, test cases have been named such that each ID is identical to the ID of 
 the functional or nonfunctional requirement it is intended to verify and validate. 
   
-\begin{longtable}{|p{3cm}|p{4cm}|p{8cm}|}
+\begin{longtable}{|p{3cm}|p{4cm}|p{4cm}|}
+  \caption{Requirements Traceability Matrix} \\
   \hline
   \textbf{SRS Location} & \textbf{Requirement ID} & \textbf{Test IDs} \\
   \hline
@@ -1448,11 +1577,11 @@ the functional or nonfunctional requirement it is intended to verify and validat
   \hline
   \endlastfoot
 
-  \multirow{3}{3cm}{Section 9.1} & FR-AR1 & FR-AR1-3-1, FR-AR1-3-2 \\
+  \multirow{3}{3cm}{Section 9.1} & FR-AR1 & FR-AR1-3-1 \newline FR-AR1-3-2 \\
   \cline{2-3}
   & FR-AR2 & FR-AR2 \\
   \cline{2-3}
-  & FR-AR3 & FR-AR1-3-1, FR-AR1-3-2 \\
+  & FR-AR3 & FR-AR1-3-1 \newline FR-AR1-3-2 \\
   \hline
   \multirow{4}{3cm}{Section 9.2} & FR-SP1 & FR-SP1 \\
   \cline{2-3}
@@ -1629,56 +1758,65 @@ the functional or nonfunctional requirement it is intended to verify and validat
   & CR-SCR1 & CR-SCR1 \\
   \hline
 \end{longtable}
-\pagebreak
-
-\section{Unit Test Description}
-
-\wss{This section should not be filled in until after the MIS (detailed design
-  document) has been completed.}
-
-\wss{Reference your MIS (detailed design document) and explain your overall
-philosophy for test case selection.}  
-
-\wss{To save space and time, it may be an option to provide less detail in this section.  
-For the unit tests you can potentially layout your testing strategy here.  That is, you 
-can explain how tests will be selected for each module.  For instance, your test building 
-approach could be test cases for each access program, including one test for normal behaviour 
-and as many tests as needed for edge cases.  Rather than create the details of the input 
-and output here, you could point to the unit testing code.  For this to work, you code 
-needs to be well-documented, with meaningful names for all of the tests.}
-
-\subsection{Unit Testing Scope}
-
-\wss{What modules are outside of the scope.  If there are modules that are
-  developed by someone else, then you would say here if you aren't planning on
-  verifying them.  There may also be modules that are part of your software, but
-  have a lower priority for verification than others.  If this is the case,
-  explain your rationale for the ranking of module importance.}
-
-\subsection{Tests for Functional Requirements}
-
-\wss{Most of the verification will be through automated unit testing.  If
-  appropriate specific modules can be verified by a non-testing based
-  technique.  That can also be documented in this section.}
-
-\wss{Include a blurb here to explain why the subsections below cover the module.
-  References to the MIS would be good.  You will want tests from a black box
-  perspective and from a white box perspective.  Explain to the reader how the
-  tests were selected.}
-
-
-\subsection{Traceability Between Test Cases and Modules for Unit Tests}
-
-\wss{Provide evidence that all of the modules have been considered.}
 
 \newpage
 
-\section{Appendix}
-\addcontentsline{toc}{section}{Appendix A: Symbolic Parameters}
-\section*{Appendix A: Symbolic Parameters}
+\section{Unit Test Description}
+\label{sec:unit_tests}
+This section will remain blank for revision 0 of the VnV plan, as the design document has not been completed yet.
+
+% \wss{This section should not be filled in until after the MIS (detailed design
+%   document) has been completed.}
+
+% \wss{Reference your MIS (detailed design document) and explain your overall
+% philosophy for test case selection.}  
+
+% \wss{To save space and time, it may be an option to provide less detail in this section.  
+% For the unit tests you can potentially layout your testing strategy here.  That is, you 
+% can explain how tests will be selected for each module.  For instance, your test building 
+% approach could be test cases for each access program, including one test for normal behaviour 
+% and as many tests as needed for edge cases.  Rather than create the details of the input 
+% and output here, you could point to the unit testing code.  For this to work, you code 
+% needs to be well-documented, with meaningful names for all of the tests.}
+
+\subsection{Unit Testing Scope}
+N/A.
+
+% \wss{What modules are outside of the scope.  If there are modules that are
+%   developed by someone else, then you would say here if you aren't planning on
+%   verifying them.  There may also be modules that are part of your software, but
+%   have a lower priority for verification than others.  If this is the case,
+%   explain your rationale for the ranking of module importance.}
+
+\subsection{Tests for Functional Requirements}
+N/A.
+
+% \wss{Most of the verification will be through automated unit testing.  If
+%   appropriate specific modules can be verified by a non-testing based
+%   technique.  That can also be documented in this section.}
+
+% \wss{Include a blurb here to explain why the subsections below cover the module.
+%   References to the MIS would be good.  You will want tests from a black box
+%   perspective and from a white box perspective.  Explain to the reader how the
+%   tests were selected.}
+
+
+\subsection{Traceability Between Test Cases and Modules for Unit Tests}
+N/A.
+
+% \wss{Provide evidence that all of the modules have been considered.}
+
+\newpage
+
+\addcontentsline{toc}{section}{Appendices}
+\section*{Appendices}
+
+\appendix
+
+\section{Symbolic Parameters}
 For Revision 0 we do not have any implementation details of the symbolic parameters for the tests, however, this section will be filled out as we progress.
-\addcontentsline{toc}{section}{Appendix B: Usability Survey Questions}
-\section*{Appendix B: Usability Survey Questions}
+
+\section{Usability Survey Questions}
 The following usability survey will be provided to user testers alongside 
 this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document.
 
@@ -1817,7 +1955,11 @@ this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/do
   \vspace{5pt}
   \hrulefill
 \end{enumerate}
+
+
+\section{Supplementary Testing Information}
 \subsection{Ommitted Testing}
+
 While the majority of the functional and nonfunctional requirements have associated test cases, 
 some were omitted for various reasons. This section explains their omission from the document. 
 \begin{enumerate}
@@ -1833,6 +1975,7 @@ some were omitted for various reasons. This section explains their omission from
   This nonfunctional requirement will not be tested as the scope of having 1000 users simultaneously using the application doesn't make sense
   for our use case.\\
 \end{enumerate}
+
 \subsection{Testing Data and Files}
 Requirement test cases may have input that overlap with other test cases, as such, the testing data and files have not specifically been
 assigned to any one test case. Testing data is available for any test case that may require them. \\
@@ -1840,13 +1983,14 @@ Test files and datasets are available under the \href{https://github.com/emilype
 in the project's GitHub repository. \\
 \newpage
 
-\addcontentsline{toc}{section}{Appendix C: References}
-\renewcommand\refname{Appendix C: References}
+\addcontentsline{toc}{section}{References}
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}
 
-\addcontentsline{toc}{section}{Appendix D: Reflection}
-\section*{Appendix D: Reflection}
+\newpage
+
+\addcontentsline{toc}{section}{Reflections}
+\section*{Reflections}
 
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Lifelong Learning.
@@ -1860,7 +2004,11 @@ graduate attribute of Lifelong Learning.
   different sections of the document, yet when the changes were merged together, the results fit well 
   together. This suggests we operate together smoothly without need of excessive feedback.
 
-  \textbf{Ian}
+  \textbf{Ian} The effort and work we put into our initial SRS paid off very well for this deliverable, 
+  especially when it came to functional requirements and the structure that was used in the SRS. This 
+  structure and breakdown naturally fit well into the breakdown required by the creation of test cases 
+  for specific testing areas. Additionally, I think our team communicated very well while writing this 
+  deliverable, both individually for parts that were dependent on multiple members and team-wide.
 
   \textbf{Emily} Communication within the team for this deliverable was the best it has been to date. 
   It had been lacking during our last deliverable, which led to a less cohesive document and team-wide
@@ -1881,7 +2029,12 @@ graduate attribute of Lifelong Learning.
   volume of writing out each section, and there had to be significant recall of previous documents to 
   reference them where necessary.
 
-  \textbf{Ian}
+  \textbf{Ian} The largest pain point for me was creating explicit differences between many test cases 
+  that share not only the same input, but relatively similar expected results/output. Many of the tests 
+  could cover multiple functional aspects but in order to keep the approximate 1:1 ratio of requirements 
+  to test cases, this required deeper thought into how the test cases can be effectively differentiated. 
+  Ultimately this was beneficial as it further separates functionalities that often depend on one another 
+  due to the nature of the project.
 
   \textbf{Emily} My biggest pain point was getting over the concept of writing a verification and 
   validation plan before writing any code. I find it difficult to conceptualize abstract tests that are 
@@ -1889,9 +2042,9 @@ graduate attribute of Lifelong Learning.
   opposed to the unit tests I'm more comfortable with writing.
 
   \textbf{Jackson} The biggest pain point in my opinion was the high coupling between the NFR and FR sections. 
-  This caused me to have to wait on creating some sections for the non-functional requirements because the performance 
-  requirements specifically were very similar to the functional requirements. Additionally, we had to make sure there were 
-  no merge conflicts when adding the mapping chart between test IDs and requirements.
+  This caused me to have to wait on creating some sections for the non-functional requirements because the 
+  performance requirements specifically were very similar to the functional requirements. Additionally, we 
+  had to make sure there were no merge conflicts when adding the mapping chart between test IDs and requirements.
 
   \item What knowledge and skills will the team collectively need to acquire to
   successfully complete the verification and validation of your project?
@@ -1921,14 +2074,18 @@ graduate attribute of Lifelong Learning.
   \vspace{5pt}
   \textbf{Proficiency in testing frameworks}
 
-  APPROACH 1: Apply a framework such as Google Test to some example project, and practice creating unit, integration, and system tests. \\
+  APPROACH 1: Apply a framework such as Google Test to some example project, and practice creating unit, 
+  integration, and system tests. \\
   APPROACH 2: Enroll in and complete an online course covering the usage of a specific test framework.
   
-  \textbf{Mark}
+  \textbf{Mark} I would prefer to practice some basic implementation, but begin applying the skills on the 
+  actual project ASAP and learn as I go. Overall for the initial learning I’d rather use approach 1.
 
-  \textbf{Emily} I often prefer learning by doing, rather than reading from a textbook, so I will pursue approach 1.
+  \textbf{Emily} I often prefer learning by doing, rather than reading from a textbook, so I will pursue 
+  approach 1.
 
-  \textbf{Ian}
+  \textbf{Ian} Due to the tight timing, approach 1 is more attractive. I will pursue this approach since 
+  I’m already enrolled in enough courses for the semester.
 
   \textbf{Jackson} Likely approach 1, I’d rather be hands-on.
 
@@ -1936,29 +2093,39 @@ graduate attribute of Lifelong Learning.
   \textbf{YAML Syntax}
 
   APPROACH 1: Practice writing YAML syntax by creating GHA workflows. \\
-  APPROACH 2: Review YAML files of public projects, such as those from previous years of the capstone course or large open-source projects found on GitHub.
+  APPROACH 2: Review YAML files of public projects, such as those from previous years of the capstone course 
+  or large open-source projects found on GitHub.
   
-  \textbf{Mark}
+  \textbf{Mark} I would prefer approach 2 where needed. It is faster for learning in the short term and I can 
+  get the practical experience I need when working on crucial workflows for the project.
 
-  \textbf{Emily} Approach 1 is more hands-on and thus applies more to my learning style than approach 2, so this will be my preferred way of gaining YAML knowledge.
+  \textbf{Emily} Approach 1 is more hands-on and thus applies more to my learning style than approach 2, so 
+  this will be my preferred way of gaining YAML knowledge.
 
-  \textbf{Ian}
+  \textbf{Ian} I will pursue approach 2 as it can provide me with a gauge of what is expected for this course 
+  in terms of GHA and YAML files, while also allowing me 
+  to view them in a variety of context-specific applications.
 
   \textbf{Jackson} Approach 2 is more attractive to me, I do like reading reference material if I know it's correct.
 
   \vspace{10pt}
   \textbf{Static testing knowledge}
 
-  APPROACH 1: Identify various tools used for static testing (ex. SonarQube, ESLint) and incorporate them in existing or example projects to get comfortable with their usage. \\
+  APPROACH 1: Identify various tools used for static testing (ex. SonarQube, ESLint) and incorporate them in 
+  existing or example projects to get comfortable with their usage. \\
   APPROACH 2: Research and go over existing literature outlining static testing methodologies and best practices.
 
-  \textbf{Mark}
+  \textbf{Mark} I would prefer Approach 2 to get a strong overview of the best principles to follow before applying 
+  the skills on our capstone project.
 
-  \textbf{Emily} I will pursue approach 1, as this method is very similar to how we will use static testing within our project and can help me to get comfortable with static testing tools in a relevant environment.
+  \textbf{Emily} I will pursue approach 1, as this method is very similar to how we will use static testing within our 
+  project and can help me to get comfortable with static testing tools in a relevant environment.
 
-  \textbf{Ian}
+  \textbf{Ian} Approach 1 makes more sense to me for the purposes of this course and the rate we should be improving 
+  our static testing knowledge. Practice will accelerate this process.
 
-  \textbf{Jackson} Approach 1 is better in the case of our project, and I'd rather do that than go through all that documentation about 'best practices'.
+  \textbf{Jackson} Approach 1 is better in the case of our project, and I'd rather do that than go through all that 
+  documentation about 'best practices'.
 
   \vspace{10pt}
   \textbf{Documentation}
@@ -1966,11 +2133,12 @@ graduate attribute of Lifelong Learning.
   APPROACH 1: Write up a variety of reports in different styles using dummy test results. \\
   APPROACH 2: Review course notes from SFWRENG 3RA3 as well as all standards described in Dr. Smith’s lectures.
 
-  \textbf{Mark}
+  \textbf{Mark} I will choose approach 2 as it is much quicker and it is an effective way to grasp a lot of information quickly.
 
-  \textbf{Emily} I will pursue approach 2, as the ease with which I can access the necessary knowledge sources will make it simple for me to learn proper documentation guidelines.
+  \textbf{Emily} I will pursue approach 2, as the ease with which I can access the necessary knowledge sources will make 
+  it simple for me to learn proper documentation guidelines.
 
-  \textbf{Ian}
+  \textbf{Ian} I’ll choose approach 2 in this case as it’s more specific to the expectations of the course.
 
   \textbf{Jackson} Since I already took 3RA3, I believe I'd rather review my course notes as a starting point.
 
