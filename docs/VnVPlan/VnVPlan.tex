@@ -623,68 +623,814 @@ in the SRS (see SRS section 9). Thus, tests for each major type are grouped simi
   \end{enumerate}
 \subsection{Tests for Nonfunctional Requirements}
 
-\wss{The nonfunctional requirements for accuracy will likely just reference the
-  appropriate functional tests from above.  The test cases should mention
-  reporting the relative error for these tests.  Not all projects will
-  necessarily have nonfunctional requirements related to accuracy.}
-
-\wss{For some nonfunctional tests, you won't be setting a target threshold for
-passing the test, but rather describing the experiment you will do to measure
-the quality for different inputs.  For instance, you could measure speed versus
-the problem size.  The output of the test isn't pass/fail, but rather a summary
-table or graph.}
-
-\wss{Tests related to usability could include conducting a usability test and
-  survey.  The survey will be in the Appendix.}
-
-\wss{Static tests, review, inspections, and walkthroughs, will not follow the
-format for the tests given below.}
-
-\wss{If you introduce static tests in your plan, you need to provide details.
-How will they be done?  In cases like code (or document) walkthroughs, who will
-be involved? Be specific.}
-
-\subsubsection{Area of Testing1}
-		
-\paragraph{Title for Test}
-
+The following tests are for nonfunctional requirements. There are a few things to note about the tests:
 \begin{enumerate}
-
-\item{test-id1\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
+  \item Tests will be carried out by a member of our team (led by NFR tester Jackson Lippert as shown in table 1), the tests have not been assigned at this time as we are unsure what the future of testing will look like at this time.
+  \item Wherever the tests refer to a 'sample group of people' (such as for usability testing), we will decide at a later time who that will be.
+  \item Usability Tests are left semi-ambiguous at this time to give us room to expand in the future when implementation details are better known.
 \end{enumerate}
 
-\subsubsection{Area of Testing2}
+\subsubsection{Look and Feel Testing}
+\begin{enumerate}
+    \item \textbf{Test for LF-A1 Discoverability} \\
+      \newline
+      \textbf{Test ID:} LF-A1 \\
+      \textbf{Type:} Usability, Dynamic, Manual \\
+      \textbf{Initial State:} The application is launched, showing the main interface. \\
+      \textbf{Input/Condition:} The user views the interface for the first time without guidance. \\
+      \textbf{Output/Result:} 75\% of users should be able to locate the interactive element that initiates the score generation process. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Recruit a sample group of users unfamiliar with the app and explain that they need to initiate the score generation process.
+          \item Record if each user is able to locate the score generation button within 10 seconds.
+          \item Ask users to describe why they selected the specific element as the score generation option.
+      \end{enumerate}
+      \textbf{Success Criterion:} If 75\% or more of the users identify the correct element, the test is marked as passed.
 
-...
+    \item \textbf{Test for LF-A2 Colour Cohesion} \\
+      \newline
+      \textbf{Test ID:} LF-A2 \\
+      \textbf{Type:} Static, Manual, Visual Inspection \\
+      \textbf{Initial State:} The application interface is fully designed. \\
+      \textbf{Input/Condition:} Inspect the interface to verify colour usage. \\
+      \textbf{Output/Result:} To meet the fit criterion, the colour scheme should have at least three distinct colours: primary, secondary, and accent. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Identify and document the primary, secondary, and accent colours as specified in the app's design guidelines.
+          \item Conduct a visual inspection of each screen and interactive element within the app to confirm adherence to these colours.
+          \item Verify there are no unintended or extraneous colours used across the app.
+      \end{enumerate}
+      \textbf{Success Criterion:} If all screens consistently use the defined colour palette, the test passes.
+
+    \item \textbf{Test for LF-A3 Resolution} \\
+      \newline
+      \textbf{Test ID:} LF-A3 \\
+      \textbf{Type:} Functional, Manual, Dynamic \\
+      \textbf{Initial State:} All graphics are loaded within the application. \\
+      \textbf{Input/Condition:} Inspect images to verify resolution. \\
+      \textbf{Output/Result:} All graphics should display at 720p resolution or higher. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Compile a list of all graphical assets used in the app, including their file locations.
+          \item Use image inspection tools to verify the resolution of each image.
+          \item Document the resolution of each graphic and flag any below 720p for replacement.
+      \end{enumerate}
+      \textbf{Success Criterion:} If all images meet or exceed 720p resolution, the test passes.
+
+    \item \textbf{Test for LF-S1 Authority and Trust} \\
+      \newline
+      \textbf{Test ID:} LF-S1 \\
+      \textbf{Type:} Usability, Dynamic, Survey-Based \\
+      \textbf{Initial State:} The user has interacted with the application once. \\
+      \textbf{Input/Condition:} The user provides feedback on their perception of the app’s authority and trustworthiness. \\
+      \textbf{Output/Result:} 70\% of surveyed users report feeling that the application is reliable and trustworthy. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item After a user’s initial interaction with the app, provide them with a survey containing the following questions:
+          \begin{itemize}
+              \item Q1: On a scale of 1-5, how trustworthy does this app feel when handling your data? (1 = Not Trustworthy, 5 = Very Trustworthy)
+              \item Q2: Do you feel confident using this app for your music notation needs? (Yes/No)
+              \item Q3: Please briefly explain any factors that contributed to your level of trust in the app.
+          \end{itemize}
+          \item Collect responses and analyze the data to calculate the percentage of users rating the app as 4 or 5 for trustworthiness in Q1 and answering "Yes" to Q2.
+      \end{enumerate}
+      \textbf{Success Criterion:} If 70\% or more users rate the app 4 or higher on trustworthiness and respond “Yes” to Q2, the test passes.
+\end{enumerate}
+\subsubsection{Usability and Humanity Testing}
+\begin{enumerate}
+    \item \textbf{Test for UH-EOU1 Human-Centered Design (HCD)} \\
+      \newline
+      \textbf{Test ID:} UH-EOU1 \\
+      \textbf{Type:} Usability, Static, Inspection-Based \\
+      \textbf{Initial State:} The app interface is fully developed, adhering to HCD principles \cite{HCD}. \\
+      \textbf{Input/Condition:} Inspect the app interface for compliance with the four fundamental HCD principles. \\
+      \textbf{Output/Result:} The user interface must visibly incorporate all four HCD principles. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Review the app’s design documentation to verify its adherence to the HCD principles: visibility, consistency, user control, and feedback.
+          \item Conduct an inspection-based evaluation of the interface with usability experts, identifying examples of each HCD principle in action.
+      \end{enumerate}
+      \textbf{Success Criterion:} The app passes if all four HCD principles are clearly implemented and documented within the interface.
+
+    \item \textbf{Test for UH-PI1 Language} \\
+      \newline
+      \textbf{Test ID:} UH-PI1 \\
+      \textbf{Type:} Functional, Static, Manual \\
+      \textbf{Initial State:} The app is fully localized with text in Canadian English (en-CA). \\
+      \textbf{Input/Condition:} Inspect all text, labels, and instructions in the app. \\
+      \textbf{Output/Result:} All text should be presented in Canadian English, with no grammatical or spelling errors. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Conduct a manual review of all textual elements within the app, ensuring they are correctly localized in Canadian English.
+          \item Use a grammar and spell-check tool to verify accuracy.
+      \end{enumerate}
+      \textbf{Success Criterion:} The test is passed if all text is in Canadian English and no errors are found.
+
+    \item \textbf{Test for UH-L1 Music Theory Familiarity} \\
+      \newline
+      \textbf{Test ID:} UH-L1 \\
+      \textbf{Type:} Usability, Dynamic, User Testing \\
+      \textbf{Initial State:} The user is unfamiliar with the app and has no formal music theory background. \\
+      \textbf{Input/Condition:} The user has 10 minutes to explore and use the app without guidance. \\
+      \textbf{Output/Result:} 95\% of users without a music theory background are able to generate a score sheet within the allotted time. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Recruit a sample of users with no formal music theory background.
+          \item Allow users 10 minutes to familiarize themselves with the interface.
+          \item Observe and document whether each user is able to generate a score sheet within this period.
+      \end{enumerate}
+      \textbf{Success Criterion:} The test is passed if 95\% or more of the users complete score generation without assistance.
+
+    \item \textbf{Test for UH-UP1 Icon Identification} \\
+      \newline
+      \textbf{Test ID:} UH-UP1 \\
+      \textbf{Type:} Usability, Dynamic, Survey-Based \\
+      \textbf{Initial State:} The app displays interactive elements with unlabeled icons. \\
+      \textbf{Input/Condition:} Users attempt to identify the function of each interactive icon. \\
+      \textbf{Output/Result:} At least 70\% of icons are accurately identified by users. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Present a sample of users with the app interface and ask them to identify the function of each interactive icon without clicking or interacting with them.
+          \item Record user responses and compare them to the correct icon functions.
+      \end{enumerate}
+      \textbf{Success Criterion:} If at least 70\% of the icons are correctly identified by the majority of users, the test is passed.
+
+    \item \textbf{Test for UH-UP2 Information Hiding} \\
+      \newline
+      \textbf{Test ID:} UH-UP2 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The app is fully developed and ready for inspection. \\
+      \textbf{Input/Condition:} Inspect the app interface and accessible areas. \\
+      \textbf{Output/Result:} No user-accessible elements reveal implementation-specific or algorithmic details. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Conduct a static inspection of all user-accessible components in the interface, including settings, menus, and tooltips.
+          \item Confirm that no elements or descriptions expose the internal implementation or processing details.
+      \end{enumerate}
+      \textbf{Success Criterion:} The test is passed if no user-accessible components reveal underlying algorithms or implementation details.
+
+    \item \textbf{Test for UH-A1 Web Content Accessibility Guidelines (WCAG) Compliance} \\
+      \newline
+      \textbf{Test ID:} UH-A1 \\
+      \textbf{Type:} Accessibility, Static and Dynamic, Automated and Manual \\
+      \textbf{Initial State:} The app interface is complete and ready for accessibility testing. \\
+      \textbf{Input/Condition:} Perform an accessibility audit using automated tools and manual checks. \\
+      \textbf{Output/Result:} The app meets or exceeds WCAG 2.1 Level AA compliance \cite{WCAG21}. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Run automated accessibility testing tools to identify any WCAG Level AA compliance issues, including alt text for images, colour contrast, keyboard navigability, etc.
+          \item Conduct manual testing for areas not covered by automated tools, such as text readability and interaction.
+          \item Document any issues and confirm adherence to all WCAG 2.1 Level AA standards.
+      \end{enumerate}
+      \textbf{Success Criterion:} The test is passed if the app fully complies with WCAG 2.1 Level AA standards, confirmed by both automated and manual testing.
+\end{enumerate}
+\subsubsection{Performance Testing}
+\begin{enumerate}
+    \item \textbf{Test for PR-SL1 User Interface Response Time} \\
+      \newline
+      \textbf{Test ID:} PR-SL1 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The application is open and ready for user interaction. \\
+      \textbf{Input/Condition:} Perform multiple interactions, such as menu navigation and input processing. \\
+      \textbf{Output/Result:} The app should respond within 2 seconds for 90\% of interactions, with no interaction taking longer than 5 seconds. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Conduct a series of interactions across the application, including navigation through menus and processing various inputs.
+          \item Record response times for each interaction.
+          \item Calculate the percentage of interactions that respond within 2 seconds and confirm that no response exceeds 5 seconds.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-SL2 File Import and Export Speed} \\
+      \newline
+      \textbf{Test ID:} PR-SL2 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The app is ready to import and export files. \\
+      \textbf{Input/Condition:} Test with music files up to 100MB in size for both import and export functions. \\
+      \textbf{Output/Result:} The app should complete imports and exports within a reasonable time frame for at least 95\% of operations. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Import and export a range of music files up to 100MB in size, timing each operation. An example music file is given \href{https://github.com/JaakLipp/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-songs/hot-cross-buns-piano-solo.wav}{here}.
+          \item Document the time taken for each operation and calculate the percentage of imports and exports that complete within an acceptable time.
+          \item Confirm that 95\% of operations meet the expected time frame.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-SC1 Epilepsy Safety} \\
+      \newline
+      \textbf{Test ID:} PR-SC1 \\
+      \textbf{Type:} Accessibility, Static, Automated \\
+      \textbf{Initial State:} The application is open with all visual elements loaded. \\
+      \textbf{Input/Condition:} Inspect graphical interface elements for compliance with WCAG 2.1 guidelines on flashing content \cite{WCAG21}. \\
+      \textbf{Output/Result:} No visual elements should flash at a rate of more than 3 flashes per second. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Use accessibility tools to scan the interface for flashing content.
+          \item Verify that all visual effects adhere to the flash rate limitation.
+          \item Document any elements that exceed the flash rate and adjust them to ensure compliance.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-SC2 Instrument Input Setup} \\
+      \newline
+      \textbf{Test ID:} PR-SC2 \\
+      \textbf{Type:} Functional, Usability \\
+      \textbf{Initial State:} The app is open, with the instrument input configuration tutorial available. \\
+      \textbf{Input/Condition:} Use the tutorial to set up an external instrument or microphone. \\
+      \textbf{Output/Result:} The setup should be completed successfully on the first attempt with a 95\% success rate across user testing. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Guide a sample group of users through the step-by-step input configuration tutorial.
+          \item Track the completion success rate for each user on their first attempt.
+          \item Confirm that at least 95\% of users complete the setup successfully on their first attempt.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-PA1 Pitch Detection Accuracy} \\
+      \newline
+      \textbf{Test ID:} PR-PA1 \\
+      \textbf{Type:} Functional, Performance \\
+      \textbf{Initial State:} The app is configured for audio input from diverse instruments. \\
+      \textbf{Input/Condition:} Test pitch detection with a range of instruments and note ranges. Test samples found \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets}{here.}\\
+      \textbf{Output/Result:} The pitch detection accuracy should be within a 1\% error margin across all tests. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Play or record test audio samples from various instruments covering diverse note ranges.
+          \item Measure pitch detection accuracy by comparing transcribed notes to the actual pitches.
+          \item Calculate the error rate and confirm it remains below 1\%.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-PA2 Timing Accuracy} \\
+      \newline
+      \textbf{Test ID:} PR-PA2 \\
+      \textbf{Type:} Functional, Performance \\
+      \textbf{Initial State:} The app is set to capture audio input. \\
+      \textbf{Input/Condition:} Test with audio samples that have precise note durations and rhythms. \\
+      \textbf{Output/Result:} The app should capture note durations and rhythms with an accuracy tolerance within 100ms. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Play or record \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio samples} with known timing and rhythm.
+          \item Analyze the transcribed timing for each note and compare it to the original timing.
+          \item Verify that timing discrepancies are within the 100ms tolerance limit.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-RFT1 Reliability (Time Between Failures)} \\
+      \newline
+      \textbf{Test ID:} PR-RFT1 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The app is running under typical usage conditions. \\
+      \textbf{Input/Condition:} Operate the app continuously for 24 hours. \\
+      \textbf{Output/Result:} The app should function without crashes or failures for the entire 24-hour period in at least 95\% of cases. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Start the app under standard usage conditions and monitor it for 24 hours.
+          \item Track and log any crashes or failures.
+          \item Confirm that at least 95\% of the tests meet the requirement of continuous operation without interruption.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-RFT2 Availability (Uptime)} \\
+      \newline
+      \textbf{Test ID:} PR-RFT2 \\
+      \textbf{Type:} Performance, Static \\
+      \textbf{Initial State:} The app is installed and operational over an extended period. \\
+      \textbf{Input/Condition:} Monitor app uptime over several weeks. \\
+      \textbf{Output/Result:} The app should demonstrate 99.5\% uptime, accounting for any brief planned downtime. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Log the app’s operational status over an extended period.
+          \item Calculate the percentage of time the app is accessible and operational.
+          \item Verify that uptime meets or exceeds 99.5\%.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-RFT3 Crash Recovery} \\
+      \newline
+      \textbf{Test ID:} PR-RFT3 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app is open and in active use with an ongoing transcription. \\
+      \textbf{Input/Condition:} Simulate an unexpected crash. \\
+      \textbf{Output/Result:} The app should automatically save the current session and allow users to recover their work upon restarting, achieving 98\% recovery success. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Begin a transcription session and simulate a crash.
+          \item Reopen the app and check if the session is restored, including any partially transcribed sheet music.
+          \item Confirm that data recovery occurs in at least 98\% of test cases.
+      \end{enumerate}
+      \item \textbf{Test for PR-RFT4 Performance Under Load} \\
+      \newline
+      \textbf{Test ID:} PR-RFT4 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The app is running and ready to process complex or large inputs. \\
+      \textbf{Input/Condition:} Test the app’s performance under maximum load conditions (e.g., \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-chords}{complex polyphonic inputs, large files}). \\
+      \textbf{Output/Result:} The app should maintain stable performance with no more than a 30\% decrease in processing speed. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Load the app with large or complex audio files that simulate high activity conditions.
+          \item Measure processing speed and performance metrics during this test.
+          \item Verify that performance remains stable with no significant slowdowns or crashes and that any speed decrease is within 30\%.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-RFT5 Handling Signal Interruptions} \\
+      \newline
+      \textbf{Test ID:} PR-RFT5 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app is receiving audio input from an external instrument or microphone. \\
+      \textbf{Input/Condition:} Temporarily disconnect and then reconnect the audio input device. \\
+      \textbf{Output/Result:} The app should retain buffered audio data for up to 2 minutes during interruptions and resume transcription seamlessly. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Begin an audio input session and then simulate a signal interruption by disconnecting the audio source.
+          \item Wait up to 2 minutes, then reconnect the audio source.
+          \item Verify that buffered audio data is retained, and transcription resumes without any data loss in at least 95\% of test cases.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-RFT6 Graceful Degradation} \\
+      \newline
+      \textbf{Test ID:} PR-RFT6 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The app is running and under increasing system load. \\
+      \textbf{Input/Condition:} Apply stress by loading multiple instruments or large files until performance begins to degrade. \\
+      \textbf{Output/Result:} The app should notify the user of delays within 5 seconds of detection and avoid crashing in 99\% of test cases. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Gradually increase system load by adding complex inputs or running multiple processes.
+          \item Observe if the app notifies the user within 5 seconds when performance slows.
+          \item Confirm the app remains operational without crashing in at least 99\% of test cases.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-RFT7 Automatic Recovery from Software Glitches} \\
+      \newline
+      \textbf{Test ID:} PR-RFT7 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app is running and processes files with varied input types. \\
+      \textbf{Input/Condition:} Introduce minor software errors (e.g., \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/sample-formats}{unexpected input format}). \\
+      \textbf{Output/Result:} The app should log the error, notify the user, skip the problematic section, and continue without crashing in 90\% of cases. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Feed the app corrupted or incompatible files.
+          \item Verify that the app logs the error, notifies the user, and skips the problematic section.
+          \item Confirm that the app continues functioning without crashing in at least 90\% of test cases.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-C1 Audio Input Capacity} \\
+      \newline
+      \textbf{Test ID:} PR-C1 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The app is ready to record audio input. \\
+      \textbf{Input/Condition:} Record audio continuously for up to 90 minutes. \\
+      \textbf{Output/Result:} The app should process and transcribe the entire duration with no more than a 5\% slowdown in speed or accuracy. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Start recording and let the app run continuously for 90 minutes.
+          \item Monitor transcription speed and accuracy.
+          \item Verify that performance remains consistent and within the 5\% slowdown limit.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-C2 Simultaneous User Sessions} \\
+      \newline
+      \textbf{Test ID:} PR-C2 \\
+      \textbf{Type:} Performance, Dynamic \\
+      \textbf{Initial State:} The app supports simultaneous user sessions. \\
+      \textbf{Input/Condition:} Run 10 simultaneous active user sessions. \\
+      \textbf{Output/Result:} The app should maintain stable performance, response times, and transcription accuracy in 95\% of cases. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Initiate 10 user sessions, each running different tasks.
+          \item Monitor performance metrics for each session, including response time and accuracy.
+          \item Confirm that performance remains stable with no significant slowdown in 95\% of test cases.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-SE2 Feature Extensibility} \\
+      \newline
+      \textbf{Test ID:} PR-SE2 \\
+      \textbf{Type:} Structural, Static \\
+      \textbf{Initial State:} The app’s codebase is available for review. \\
+      \textbf{Input/Condition:} Evaluate the app’s modular architecture for future extensibility. \\
+      \textbf{Output/Result:} The app’s design should allow feature additions without major refactoring. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Conduct a code review with development and architecture teams.
+          \item Assess the modularity of the codebase and document potential areas for future feature integration.
+          \item Confirm that new modules could be added with minimal impact on core functionalities.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-SE3 Processing Power for Complex Music Compositions} \\
+      \newline
+      \textbf{Test ID:} PR-SE3 \\
+      \textbf{Type:} Performance, Scalability \\
+      \textbf{Initial State:} The app is prepared to process complex musical compositions. \\
+      \textbf{Input/Condition:} Process \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-chords}{increasingly complex compositions} with multiple instrument tracks. \\
+      \textbf{Output/Result:} The app should maintain stability and performance as complexity increases. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Gradually add instrument tracks and polyphonic elements to a composition.
+          \item Monitor processing speed and stability.
+          \item Confirm that the app handles increased complexity without significant performance issues.
+      \end{enumerate}
+
+    \item \textbf{Test for PR-L1 Expected Lifetime} \\
+      \newline
+      \textbf{Test ID:} PR-L1 \\
+      \textbf{Type:} Structural, Static \\
+      \textbf{Initial State:} The app’s development roadmap is complete. \\
+      \textbf{Input/Condition:} Review the roadmap for planned updates and feature expansions over the next five years. \\
+      \textbf{Output/Result:} The roadmap should ensure that the app remains functional and relevant for at least five years with minor maintenance. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Review the app’s development roadmap with the team.
+          \item Verify that updates, feature expansions, and maintenance plans are documented.
+          \item Confirm that no major rewrites or overhauls are anticipated to keep the app functional and relevant.
+      \end{enumerate}
+\end{enumerate}
+\subsubsection{Operational and Environmental Requirements Testing}
+\begin{enumerate}
+    \item \textbf{Test for OE-EP1 Operating Environment} \\
+      \newline
+      \textbf{Test ID:} OE-EP1 \\
+      \textbf{Type:} Functional, Dynamic, Environmental \\
+      \textbf{Initial State:} The app is running on a personal computer or laptop in a controlled indoor setting. \\
+      \textbf{Input/Condition:} The app is operated in various typical indoor environments. \\
+      \textbf{Output/Result:} The app should perform consistently without requiring any adjustments based on the environment. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Set up the app in indoor environments such as a home studio, classroom, and office.
+          \item Record observations of the app's functionality in each environment, noting any issues related to lighting or ambient noise.
+          \item Confirm that the app functions as expected across all tested environments.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-EP2 Noise and Audio Input Quality} \\
+      \newline
+      \textbf{Test ID:} OE-EP2 \\
+      \textbf{Type:} Functional, Dynamic, Environmental \\
+      \textbf{Initial State:} The app is configured to receive audio input in an environment with moderate \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/noise-samples}{background noise}. \\
+      \textbf{Input/Condition:} The app’s transcription accuracy is tested in environments with varying ambient noise levels. \\
+      \textbf{Output/Result:} The app’s transcription accuracy should not degrade by more than 5\%. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Play a controlled background noise source in an environment and start the audio capture process.
+          \item Record the transcription accuracy in the presence of moderate ambient noise.
+          \item Calculate the error rate, confirming it remains within the acceptable threshold of no more than a 5\% drop in accuracy.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-EP3 Workspace Flexibility} \\
+      \newline
+      \textbf{Test ID:} OE-EP3 \\
+      \textbf{Type:} Usability, Dynamic, Environmental \\
+      \textbf{Initial State:} The app is installed on devices with various screen sizes and resolutions, from 13-inch to 27-inch displays. \\
+      \textbf{Input/Condition:} The app is run on screens of varying sizes to check layout flexibility. \\
+      \textbf{Output/Result:} The app’s interface should be adaptable to each screen size and resolution, maintaining full functionality. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Open the app on devices with screen sizes ranging from 13 to 27 inches.
+          \item Check the layout, navigation, and accessibility of interactive elements on each screen size.
+          \item Verify that all interactive elements remain visible and functional across screen sizes.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-EP4 Portable Setup Compatibility} \\
+      \newline
+      \textbf{Test ID:} OE-EP4 \\
+      \textbf{Type:} Usability, Dynamic, Environmental \\
+      \textbf{Initial State:} The app is installed on a laptop in a temporary workspace, such as a cafe or live performance venue. \\
+      \textbf{Input/Condition:} The app is used in transient environments to evaluate setup and operation without specialized hardware. \\
+      \textbf{Output/Result:} The app should function smoothly on standard laptop hardware, performing effectively in transient conditions. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Set up the app on a laptop with standard specifications in a cafe or similar temporary workspace.
+          \item Test the app’s functionality, including quick setup and breakdown, ensuring smooth operation.
+          \item Document any usability issues encountered during setup and breakdown in the transient environment.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-WE1 General Hardware} \\
+      \newline
+      \textbf{Test ID:} OE-WE1 \\
+      \textbf{Type:} Usability, Dynamic, Environmental \\
+      \textbf{Initial State:} The app is installed on devices with varying screen interfaces and sizes. \\
+      \textbf{Input/Condition:} The app is run on screens from 13 to 27 inches with different resolutions. \\
+      \textbf{Output/Result:} The app should be fully functional, maintaining usability across all screen sizes and resolutions. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Launch the app on devices with screen sizes ranging from 13 to 27 inches.
+          \item Confirm that all UI elements are accessible, functional, and scale correctly on each screen size.
+          \item Record any deviations in layout or usability and confirm functionality across all specified screen configurations.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-IA1 Audio Input Devices} \\
+      \newline
+      \textbf{Test ID:} OE-IA1 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app is installed and configured to receive audio input. \\
+      \textbf{Input/Condition:} Connect standard audio input devices (USB microphone, instrument pickup, built-in microphone). \\
+      \textbf{Output/Result:} The app should support audio input from USB Audio Class 1.0 and higher devices. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Connect various standard audio input devices, including USB microphones, instrument pickups, and built-in microphones.
+          \item Record audio using each device and monitor the app’s performance.
+          \item Verify that audio is captured successfully from all tested devices without connectivity issues.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-IA2 Audio File Import and Export} \\
+      \newline
+      \textbf{Test ID:} OE-IA2 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app is running and ready to import and export audio files. \\
+      \textbf{Input/Condition:} Use sample audio files in WAV (PCM) and MP3 (MPEG-1 Layer III) formats for import and export. \\
+      \textbf{Output/Result:} The app should successfully import and export audio files in WAV and MP3 formats. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Import WAV and MP3 files into the app and verify playback or analysis accuracy.
+          \item Export audio files in WAV and MP3 formats, ensuring they are playable in standard audio players.
+          \item Confirm that imported and exported files retain their quality and format specifications.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-IA3 Music Notation Software Integration} \\
+      \newline
+      \textbf{Test ID:} OE-IA3 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app has completed audio processing and is ready to export sheet music. \\
+      \textbf{Input/Condition:} Generate sheet music and export in MusicXML format. \\
+      \textbf{Output/Result:} The exported files should be compatible with popular music notation software. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Convert an \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio sample} to sheet music within the app.
+          \item Export the generated sheet music as a MusicXML file.
+          \item Test the exported files in another music notation software (TBD) to ensure compatibility and accuracy.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-P1 Distribution} \\
+      \newline
+      \textbf{Test ID:} OE-P1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The app is packaged and ready for distribution. \\
+      \textbf{Input/Condition:} Package the app as a downloadable installer. \\
+      \textbf{Output/Result:} The installer should be downloadable from a website or repository without additional dependencies. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Package the app into an executable installer.
+          \item Upload the installer to a hosting site (TBD) and download it on test devices.
+          \item Verify that installation completes successfully with no dependencies required.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-P2 Installation Process} \\
+      \newline
+      \textbf{Test ID:} OE-P2 \\
+      \textbf{Type:} Usability, Functional \\
+      \textbf{Initial State:} The app installer is ready for use. \\
+      \textbf{Input/Condition:} Begin installation with minimal technical guidance. \\
+      \textbf{Output/Result:} The installation should be simple and guide users effectively. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Run the installer and proceed through the installation process.
+          \item Confirm that instructions are clear and that users can install the app with minimal input.
+          \item Verify that the app installs correctly and launches without issues.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-P3 Size and Compatibility} \\
+      \newline
+      \textbf{Test ID:} OE-P3 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The app installation file is prepared. \\
+      \textbf{Input/Condition:} Check the installation file size and install it on various systems. \\
+      \textbf{Output/Result:} The installation file should be 500MB or less, and the app should be compatible with different system setups. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Confirm the installation file size does not exceed 500MB.
+          \item Install the app on multiple devices with different operating systems and hardware specifications.
+          \item Ensure the app operates smoothly across all tested systems.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-P4 Post-Installation Configuration} \\
+      \newline
+      \textbf{Test ID:} OE-P4 \\
+      \textbf{Type:} Usability, Functional \\
+      \textbf{Initial State:} The app is installed and launched for the first time. \\
+      \textbf{Input/Condition:} Access the settings configuration panel. \\
+      \textbf{Output/Result:} Users should be able to modify settings from the configuration panel without editing files manually. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Launch the app and navigate to the settings configuration panel.
+          \item Verify that users can adjust the input source and output format through the panel.
+          \item Confirm that all settings save correctly and can be accessed again upon reopening.
+      \end{enumerate}
+
+    \item \textbf{Test for OE-R1 Initial Release} \\
+      \newline
+      \textbf{Test ID:} OE-R1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The app has completed development and quality assurance. \\
+      \textbf{Input/Condition:} Conduct a final testing phase to ensure all core functionalities are operational. \\
+      \textbf{Output/Result:} Core features should be functional with no major bugs, and ready for initial release. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Perform a full quality assurance test on the app, focusing on core functionality such as audio-to-sheet-music conversion in a production environment.
+          \item Document any bugs or issues and resolve them before release.
+          \item Verify that the app is stable and ready for general use by conducting a final user acceptance test.
+      \end{enumerate}
+
+\end{enumerate}
+\subsubsection{Maintainability and Support Requirements Tests}
+\begin{enumerate}
+    \item \textbf{Test for MS-M1 Version Releases} \\
+      \newline
+      \textbf{Test ID:} MS-M1 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} A new version of the app has just been released. \\
+      \textbf{Input/Condition:} The user opens the app with an internet connection after a new release. \\
+      \textbf{Output/Result:} The user should receive a notification to install the new version. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Release a test version update while the app is active on a connected device.
+          \item Open the app on the test device and verify that the user receives a prompt to install the new version.
+          \item Document any delays or failures in notification.
+      \end{enumerate}
+
+    \item \textbf{Test for MS-M2 System Crash} \\
+      \newline
+      \textbf{Test ID:} MS-M2 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The application is running and unexpectedly shuts down. \\
+      \textbf{Input/Condition:} Force a non-user-prompted shutdown of the application. \\
+      \textbf{Output/Result:} The app should reopen within 1 minute and recover data from the previous session. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Simulate an unexpected shutdown (e.g., force-close the app).
+          \item Verify that the app automatically reboots within 1 minute.
+          \item Confirm that data from the last session is preserved and accessible upon reopening.
+      \end{enumerate}
+
+    \item \textbf{Test for MS-S1 Software Bugs} \\
+      \newline
+      \textbf{Test ID:} MS-S1 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The user encounters a bug and accesses the reporting feature. \\
+      \textbf{Input/Condition:} Submit a bug report via the app’s GUI. \\
+      \textbf{Output/Result:} The development team should be notified within 1 hour of report submission. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Use the app’s bug reporting feature to submit a test report.
+          \item Verify that the report is logged in the development team’s system within 1 hour.
+          \item Document any delays or issues in the notification process.
+      \end{enumerate}
+
+    \item \textbf{Test for MS-S2 Operating System} \\
+      \newline
+      \textbf{Test ID:} MS-S2 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The app is ready to be installed on various Windows versions. \\
+      \textbf{Input/Condition:} Install and run the app on devices with Windows 10 and 11. \\
+      \textbf{Output/Result:} The app should perform all expected functionalities on both Windows 10 and Windows 11. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Install the app on devices with Windows 10 and Windows 11.
+          \item Confirm that all core functionalities (e.g., audio capture, transcription) work as expected on each operating system.
+          \item Document any compatibility issues or functional limitations on each OS version.
+      \end{enumerate}
+
+    \item \textbf{Test for MS-A1 Internet Connection} \\
+      \newline
+      \textbf{Test ID:} MS-A1 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The app is running on a device with intermittent internet connectivity. \\
+      \textbf{Input/Condition:} Test the app’s functionality both online and offline. \\
+      \textbf{Output/Result:} The app should provide a consistent user experience regardless of internet connection status. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Launch the app and test core functionalities (e.g., audio processing, and navigation) with a stable internet connection.
+          \item Disconnect the internet and continue using the app, verifying that the user experience remains consistent.
+          \item Document any discrepancies in functionality when offline.
+      \end{enumerate}
+
+    \item \textbf{Test for MS-A2 GUI Navigation} \\
+      \newline
+      \textbf{Test ID:} MS-A2 \\
+      \textbf{Type:} Usability, Functional \\
+      \textbf{Initial State:} The app’s GUI is displayed with a connected keyboard and without a mouse. \\
+      \textbf{Input/Condition:} Navigate the app’s interface solely using keyboard shortcuts. \\
+      \textbf{Output/Result:} The app should remain fully functional and navigable without a mouse. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Disconnect any mouse from the test device and launch the app.
+          \item Use keyboard shortcuts to navigate through each major feature and menu within the app.
+          \item Confirm that all functionalities are accessible and that navigation is smooth using only the keyboard.
+      \end{enumerate}
+\end{enumerate}
+\subsubsection{Security Requirement Tests}
+\begin{enumerate}
+    \item \textbf{Test for S-A1 User Authentication} \\
+      \newline
+      \textbf{Test ID:} S-A1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The application is closed. \\
+      \textbf{Input/Condition:} Open the application as a standard user without any authentication. \\
+      \textbf{Output/Result:} The application should allow access without requiring login credentials or password input. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Launch the application and verify that the user is granted access without needing to enter any login details.
+          \item Document whether any authentication prompt appears unexpectedly.
+          \item Confirm that the user can freely access all functionalities without an authentication barrier.
+      \end{enumerate}
+
+    \item \textbf{Test for S-P1 Data Storage} \\
+      \newline
+      \textbf{Test ID:} S-P1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The application is running, and the user has chosen a specific location for file storage. \\
+      \textbf{Input/Condition:} Save an output file in the user-selected directory. \\
+      \textbf{Output/Result:} The output file should be saved in the specified directory with full read and write permissions for the user. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Configure the application to store output files in a user-defined location.
+          \item Generate and save an output file, then verify that the file appears in the specified directory.
+          \item Check that the user has read and write permissions for the saved file.
+      \end{enumerate}
+
+    \item \textbf{Test for S-P2 PII} \\
+      \newline
+      \textbf{Test ID:} S-P2 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The application is running. \\
+      \textbf{Input/Condition:} Use the application, observing all interactions for data input requests. \\
+      \textbf{Output/Result:} The application should not request any Personal Identifiable Information (PII) from the user. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Launch the application and monitor for any prompts requesting personal data.
+          \item Interact with all features of the app, verifying that no PII requests (e.g., name, address, or contact information) are made.
+          \item Document any instance where PII might be requested, and confirm the app remains free of such prompts.
+      \end{enumerate}
+
+    \item \textbf{Test for S-P3 Input Data} \\
+      \newline
+      \textbf{Test ID:} S-P3 \\
+      \textbf{Type:} Functional, Dynamic \\
+      \textbf{Initial State:} The application has processed an audio input file. \\
+      \textbf{Input/Condition:} Complete an audio processing session. \\
+      \textbf{Output/Result:} The application should clear all caches and temporary files associated with the processed audio upon completion. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Process an \href{https://github.com/JaakLipp/ScoreGen/tree/main/test/TestingDatasets/piano-samples}{audio file} within the application.
+          \item After processing, check the system’s temporary file storage to ensure no audio data or temporary files remain.
+          \item Confirm that all caches are cleared, and no residual audio data is left on the system.
+      \end{enumerate}
+\end{enumerate}
+\subsubsection{Cultural and Compliance Requirements Tests}
+\begin{enumerate}
+    \item \textbf{Test for CR-CR1 Musical Convention} \\
+      \newline
+      \textbf{Test ID:} CR-CR1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The application is open, ready to display and create sheet music. \\
+      \textbf{Input/Condition:} Use the app to create and display sheet music, verifying adherence to Western music notation \cite{music-notation}. \\
+      \textbf{Output/Result:} The generated and displayed sheet music should accurately follow Western music notation standards. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Generate a sample sheet music file using the app, incorporating various standard Western notation elements (e.g., treble and bass clefs, notes, rests, time signatures).
+          \item Compare the sheet music against standard Western notation guidelines, ensuring proper symbol usage and layout.
+          \item Confirm that all notation adheres to Western music conventions without deviations or omissions.
+      \end{enumerate}
+
+    \item \textbf{Test for CR-CR2 Expected Music Theory Level of Users} \\
+      \newline
+      \textbf{Test ID:} CR-CR2 \\
+      \textbf{Type:} Usability, Dynamic \\
+      \textbf{Initial State:} The application is open and available to users with varying levels of music theory knowledge. \\
+      \textbf{Input/Condition:} Users with basic to intermediate knowledge of music theory interact with the app. \\
+      \textbf{Output/Result:} The app should be intuitive and accessible, allowing users to navigate and use core features comfortably. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Recruit a sample group of users with basic to intermediate music theory knowledge.
+          \item Have users complete a task (e.g., creating a simple sheet of music) and observe their interaction with the app.
+          \item Provide tutorials or guides as needed and gather feedback on their clarity and usefulness.
+          \item Verify that users can successfully navigate and use the application without advanced music theory knowledge, meeting usability expectations.
+      \end{enumerate}
+
+    \item \textbf{Test for CR-LR1 Copyright Issues} \\
+      \newline
+      \textbf{Test ID:} CR-LR1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The application is open, ready for user interaction. \\
+      \textbf{Input/Condition:} Observe the app’s interface for the presence of a copyright disclaimer. \\
+      \textbf{Output/Result:} The app should display a clear disclaimer advising users on copyright compliance related to audio input. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Open the application and navigate to any sections that mention user responsibilities or usage terms.
+          \item Confirm that a disclaimer is present, informing users of copyright restrictions and advising compliance.
+          \item Verify that instructions are clear, guiding users on ensuring their audio inputs do not violate copyright laws.
+      \end{enumerate}
+
+    \item \textbf{Test for CR-SCR1 Technological Standards} \\
+      \newline
+      \textbf{Test ID:} CR-SCR1 \\
+      \textbf{Type:} Functional, Static \\
+      \textbf{Initial State:} The application has a completed sheet music file ready for export. \\
+      \textbf{Input/Condition:} Export sheet music in MusicXML format and verify the use of third-party libraries. \\
+      \textbf{Output/Result:} The app should export error-free MusicXML files and have documentation of all third-party libraries. \\
+      \textbf{How Test Will Be Performed:}
+      \begin{enumerate}
+          \item Generate a sheet music file within the app and export it in MusicXML format.
+          \item Open the exported file in compatible notation software (TBD) to confirm it is error-free and follows the MusicXML standard.
+          \item Review the app’s documentation to verify that all third-party libraries are listed with their licensing terms for compliance purposes.
+      \end{enumerate}
+\end{enumerate}
 
 \subsection{Traceability Between Test Cases and Requirements}
 
 For ease of traceability, test cases have been named such that each ID is identical to the ID of 
 the functional or nonfunctional requirement it is intended to verify and validate. 
-
+  
 \begin{longtable}{|p{3cm}|p{4cm}|p{8cm}|}
   \hline
   \textbf{SRS Location} & \textbf{Requirement ID} & \textbf{Test IDs} \\
@@ -704,48 +1450,186 @@ the functional or nonfunctional requirement it is intended to verify and validat
 
   \multirow{3}{3cm}{Section 9.1} & FR-AR1 & FR-AR1-3-1, FR-AR1-3-2 \\
   \cline{2-3}
-   & FR-AR2 & FR-AR2 \\
+  & FR-AR2 & FR-AR2 \\
   \cline{2-3}
-   & FR-AR3 & FR-AR1-3-1, FR-AR1-3-2 \\
+  & FR-AR3 & FR-AR1-3-1, FR-AR1-3-2 \\
   \hline
   \multirow{4}{3cm}{Section 9.2} & FR-SP1 & FR-SP1 \\
   \cline{2-3}
-   & FR-SP2 & FR-SP2 \\
-   \cline{2-3}
-   & FR-SP3 & FR-SP3 \\
-   \cline{2-3}
-   & FR-SP4 & FR-SP4 \\
-   \cline{2-3}
-   & FR-SP5 & FR-SP2 \\
+  & FR-SP2 & FR-SP2 \\
+  \cline{2-3}
+  & FR-SP3 & FR-SP3 \\
+  \cline{2-3}
+  & FR-SP4 & FR-SP4 \\
+  \cline{2-3}
+  & FR-SP5 & FR-SP2 \\
   \hline
   \multirow{3}{3cm}{Section 9.3} & FR-SMG1 & FR-SMG1 \\
   \cline{2-3}
-   & FR-SMG2 & FR-SMG2 \\
+  & FR-SMG2 & FR-SMG2 \\
   \cline{2-3}
-   & FR-SMG3 & FR-SMG3 \\
+  & FR-SMG3 & FR-SMG3 \\
   \hline
   \multirow{3}{3cm}{Section 9.4} & FR-UI1 & FR-UI1 \\
   \cline{2-3}
-   & FR-UI2 & FR-UI2 \\
-   \cline{2-3}
-   & FR-UI3 & FR-UI3 \\
-  \hline
-  \multirow{3}{3cm}{Section 9.5} & FR-SL1 & FR-Sl1 \\
+  & FR-UI2 & FR-UI2 \\
   \cline{2-3}
-   & FR-SL2 & FR-SL2 \\
+  & FR-UI3 & FR-UI3 \\
   \hline
-  \multirow{3}{3cm}{Section 10.1} & NFR & TID, ... \\
+  \multirow{2}{3cm}{Section 9.5} & FR-SL1 & FR-SL1 \\
   \cline{2-3}
-   & NFR & TID, ...\\
+  & FR-SL2 & FR-SL2 \\
   \hline
-  \multirow{3}{3cm}{Section 10.2} & NFR & TID, ... \\
+  \multirow{3}{3cm}{Section 10.1} 
+  & LF-A1 & LF-A1 \\
   \cline{2-3}
-   & NFR & TID, ... \\
+  & LF-A2 & LF-A2 \\
   \cline{2-3}
-   & NFR & TID, ... \\
+  & LF-A3 & LF-A3 \\
   \hline
-
+  \multirow{1}{3cm}{Section 10.2} 
+  & LF-S1 & LF-S1 \\
+  \hline
+  \multirow{1}{3cm}{Section 11.1} 
+  & UH-EOU1 & UH-EOU1 \\
+  \hline
+  \multirow{1}{3cm}{Section 11.2} 
+  & UH-PI1 & UH-PI1 \\
+  \hline
+  \multirow{1}{3cm}{Section 11.3} 
+  & UH-L1 & UH-L1 \\
+  \hline
+  \multirow{2}{3cm}{Section 11.4} 
+  & UH-UP1 & UH-UP1 \\
+  \cline{2-3}
+  & UH-UP2 & UH-UP2 \\
+  \hline
+  \multirow{1}{3cm}{Section 11.5} 
+  & UH-A1 & UH-A1 \\
+  \hline
+  \multirow{2}{3cm}{Section 12.1} 
+  & PR-SL1 & PR-SL1 \\
+  \cline{2-3}
+  & PR-SL2 & PR-SL2 \\
+  \hline
+  \multirow{2}{3cm}{Section 12.2} 
+  & PR-SC1 & PR-SC1 \\
+  \cline{2-3}
+  & PR-SC2 & PR-SC2 \\
+  \hline
+  \multirow{2}{3cm}{Section 12.3} 
+  & PR-PA1 & PR-PA1 \\
+  \cline{2-3}
+  & PR-PA2 & PR-PA2 \\
+  \hline
+  \multirow{7}{3cm}{Section 12.4} 
+  & PR-RFT1 & PR-RFT1 \\
+  \cline{2-3}
+  & PR-RFT2 & PR-RFT2 \\
+  \cline{2-3}
+  & PR-RFT3 & PR-RFT3 \\
+  \cline{2-3}
+  & PR-RFT3 & PR-RFT3 \\
+  \cline{2-3}
+  & PR-RFT3 & PR-RFT3 \\
+  \cline{2-3}
+  & PR-RFT3 & PR-RFT3 \\
+  \cline{2-3}
+  & PR-RFT3 & PR-RFT3 \\
+  \hline
+  \multirow{2}{3cm}{Section 12.5} 
+  & PR-C1 & PR-C1 \\
+  \cline{2-3}
+  & PR-C2 & PR-C2 \\
+  \hline
+  \multirow{3}{3cm}{Section 12.6} 
+  & PR-SE1 & Omitted \\
+  \cline{2-3}
+  & PR-SE2 & PR-SE2 \\
+  \cline{2-3}
+  & PR-SE3 & PR-SE3 \\
+  \hline
+  \multirow{1}{3cm}{Section 12.7} 
+  & PR-L1 & PR-L1 \\
+  \hline
+  \multirow{4}{3cm}{Section 13.1} 
+  & OE-EP1 & OE-EP1 \\
+  \cline{2-3}
+  & OE-EP2 & OE-EP2 \\
+  \cline{2-3}
+  & OE-EP3 & OE-EP3 \\
+  \cline{2-3}
+  & OE-EP4 & OE-EP4 \\
+  \hline
+  \multirow{1}{3cm}{Section 13.2} 
+  & OE-WE1 & OE-WE1 \\
+  \hline
+  \multirow{3}{3cm}{Section 13.3} 
+  & OE-IA1 & OE-IA1 \\
+  \cline{2-3}
+  & OE-IA2 & OE-IA2 \\
+  \cline{2-3}
+  & OE-IA3 & OE-IA3 \\
+  \hline
+  \multirow{4}{3cm}{Section 13.4} 
+  & OE-P1 & OE-P1 \\
+  \cline{2-3}
+  & OE-P2 & OE-P2 \\
+  \cline{2-3}
+  & OE-P3 & OE-P3 \\
+  \cline{2-3}
+  & OE-P4 & OE-P4 \\
+  \hline
+  \multirow{1}{3cm}{Section 13.5} 
+  & OE-R1 & OE-R1 \\
+  \hline
+  \multirow{2}{3cm}{Section 14.1} 
+  & MS-M1 & MS-M1 \\
+  \cline{2-3}
+  & MS-M2 & MS-M2 \\
+  \hline
+  \multirow{2}{3cm}{Section 14.2} 
+  & MS-S1 & MS-S1 \\
+  \cline{2-3}
+  & MS-S2 & MS-S2 \\
+  \hline
+  \multirow{2}{3cm}{Section 14.3} 
+  & MS-A1 & MS-A1 \\
+  \cline{2-3}
+  & MS-A2 & MS-A2 \\
+  \hline
+  \multirow{1}{3cm}{Section 15.1} 
+  & S-A1 & S-A1 \\
+  \hline
+  \multirow{1}{3cm}{Section 15.2} 
+  & N/A & N/A \\
+  \hline
+  \multirow{3}{3cm}{Section 15.3} 
+  & S-P1 & S-P1 \\
+  \cline{2-3}
+  & S-P2 & S-P2 \\
+  \cline{2-3}
+  & S-P3 & S-P3 \\
+  \hline
+  \multirow{1}{3cm}{Section 15.4} 
+  & N/A & N/A \\
+  \hline
+  \multirow{1}{3cm}{Section 15.5} 
+  & N/A & N/A \\
+  \hline
+  \multirow{2}{3cm}{Section 16.1} 
+  & CR-CR1 & CR-CR1 \\
+  \cline{2-3}
+  & CR-CR1 & CR-CR1 \\
+  \hline
+  \multirow{1}{3cm}{Section 17.1} 
+  & CR-LR1 & CR-LR1 \\
+  \hline
+  \multirow{1}{3cm}{Section 17.2} 
+  & CR-SCR1 & CR-SCR1 \\
+  \hline
 \end{longtable}
+\pagebreak
 
 \section{Unit Test Description}
 
@@ -777,109 +1661,22 @@ needs to be well-documented, with meaningful names for all of the tests.}
   appropriate specific modules can be verified by a non-testing based
   technique.  That can also be documented in this section.}
 
-\subsubsection{Module 1}
-
 \wss{Include a blurb here to explain why the subsections below cover the module.
   References to the MIS would be good.  You will want tests from a black box
   perspective and from a white box perspective.  Explain to the reader how the
   tests were selected.}
 
-\begin{enumerate}
 
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input: 
-					
-Output: \wss{The expected result for the given inputs}
-
-Test Case Derivation: \wss{Justify the expected value given in the Output field}
-
-How test will be performed: 
-
-\item{...\\}
-    
-\end{enumerate}
-
-\subsubsection{Module 2}
-
-...
-
-\subsection{Tests for Nonfunctional Requirements}
-
-\wss{If there is a module that needs to be independently assessed for
-  performance, those test cases can go here.  In some projects, planning for
-  nonfunctional tests of units will not be that relevant.}
-
-\wss{These tests may involve collecting performance data from previously
-  mentioned functional tests.}
-
-\subsubsection{Module ?}
-		
-\begin{enumerate}
-
-\item{test-id1\\}
-
-Type: \wss{Functional, Dynamic, Manual, Automatic, Static etc. Most will
-  be automatic}
-					
-Initial State: 
-					
-Input/Condition: 
-					
-Output/Result: 
-					
-How test will be performed: 
-					
-\item{test-id2\\}
-
-Type: Functional, Dynamic, Manual, Static etc.
-					
-Initial State: 
-					
-Input: 
-					
-Output: 
-					
-How test will be performed: 
-
-\end{enumerate}
-
-\subsubsection{Module ?}
-
-...
-
-\subsection{Traceability Between Test Cases and Modules}
+\subsection{Traceability Between Test Cases and Modules for Unit Tests}
 
 \wss{Provide evidence that all of the modules have been considered.}
 
 \newpage
 
+\section{Appendix}
 \addcontentsline{toc}{section}{Appendix A: Symbolic Parameters}
 \section*{Appendix A: Symbolic Parameters}
-
-The definition of the test cases will call for SYMBOLIC\_CONSTANTS.
-Their values are defined in this section for easy maintenance.
-
+For Revision 0 we do not have any implementation details of the symbolic parameters for the tests, however, this section will be filled out as we progress.
 \addcontentsline{toc}{section}{Appendix B: Usability Survey Questions}
 \section*{Appendix B: Usability Survey Questions}
 The following usability survey will be provided to user testers alongside 
@@ -1021,7 +1818,7 @@ this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/do
   \hrulefill
 \end{enumerate}
 \subsection{Ommitted Testing}
-While the majority of the functional requirements have associated test cases, 
+While the majority of the functional and nonfunctional requirements have associated test cases, 
 some were omitted for various reasons. This section explains their omission from the document. 
 \begin{enumerate}
   \item FR-SP4 Processing Limitations \\
@@ -1030,7 +1827,11 @@ some were omitted for various reasons. This section explains their omission from
   have a corresponding test case. The nature of this functional requirement demands more technical knowledge
   about implementation details that have not yet been decided. The exact definition of 'overly complex audio input' shall
   remain ambiguous at this stage to prevent the overextension (or underextension) of the development team's
-  capabilities during the project's irregular time constraints.
+  capabilities during the project's irregular time constraints.\\
+  \item PR-SE1 User Base Growth\\
+  Appears under SRS section 12.6\\
+  This nonfunctional requirement will not be tested as the scope of having 1000 users simultaneously using the application doesn't make sense
+  for our use case.\\
 \end{enumerate}
 \subsection{Testing Data and Files}
 Requirement test cases may have input that overlap with other test cases, as such, the testing data and files have not specifically been
