@@ -1,4 +1,4 @@
-﻿{
+{
     "version": 3,
     "configurePresets": [
         {
@@ -53,6 +53,42 @@
             "name": "x86-release",
             "displayName": "x86 Release",
             "inherits": "x86-debug",
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Release"
+            }
+        },
+        {
+            "name": "macos-base",
+            "hidden": true,
+            "generator": "Unix Makefiles",
+            "binaryDir": "${sourceDir}/out/build/${presetName}",
+            "installDir": "${sourceDir}/out/install/${presetName}",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "/usr/bin/clang",
+                "CMAKE_CXX_COMPILER": "/usr/bin/clang++"
+            },
+            "condition": {
+                "type": "equals",
+                "lhs": "${hostSystemName}",
+                "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "x64-debug-macos",
+            "displayName": "x64 Debug (macOS)",
+            "inherits": "macos-base",
+            "architecture": {
+                "value": "x64",
+                "strategy": "external"
+            },
+            "cacheVariables": {
+                "CMAKE_BUILD_TYPE": "Debug"
+            }
+        },
+        {
+            "name": "x64-release-macos",
+            "displayName": "x64 Release (macOS)",
+            "inherits": "x64-debug-macos",
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }

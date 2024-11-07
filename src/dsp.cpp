@@ -10,7 +10,7 @@
 #define BUFFER_LEN 1024
 
 // digital signal processing
-int dsp(const char *file_name) {
+int dsp(char const* file_name) {
 	// open file
 	static double data[BUFFER_LEN];
 	SNDFILE *infile;
