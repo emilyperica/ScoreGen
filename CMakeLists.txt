@@ -3,8 +3,10 @@
 set(VCPKG_DIR $ENV{VCPKG_DIR})
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake")
 
-set(VCPKG_CRT_LINKAGE static)
-set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+if(MSVC)
+    set(VCPKG_CRT_LINKAGE static)
+    set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+endif()
 project("ScoreGen")
 
 # Set the C++ standard
@@ -24,7 +26,8 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_HOME_DIRECTORY
 # Link libraries
 find_package(SndFile REQUIRED)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SndFile::sndfile)
-
+find_package(FFTW3 REQUIRED)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE FFTW3::fftw3)
 find_path(FFTWPP_INCLUDE_DIRS "fftwpp/Array.cc")
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${FFTWPP_INCLUDE_DIRS})
 
