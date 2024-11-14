@@ -1,44 +1,51 @@
-// https://github.com/libsndfile/libsndfile/blob/master/examples/sfprocess.c
-
 #include <stdio.h>
 #include <string.h>
 #include <iostream>
-#include <vector>
-#include <memory>
 #include <sndfile.h>
+#include <detect_pitch.h>
 
-#define BUFFER_LEN 1024
+/* Length of buffer used to hold frames being processed */
+#define BUFFER_SIZE 4096
 
-// digital signal processing
-int dsp(char const* file_name) {
-	// open file
-	static double data[BUFFER_LEN];
+/* Digital Signal Processing */
+int dsp(char const* infilename) 
+{
+	int readcount;
 	SNDFILE *infile;
-	SF_INFO file_info;
-	int count;
+	/* Initialize SF_INFO struct before use. */
+    SF_INFO sfinfo;
+	memset(&sfinfo, 0, sizeof(sfinfo));
 
-	memset(&file_info, 0, sizeof(file_info));
-
-	// read data
-	if (!(infile = sf_open(file_name, SFM_READ, &file_info)))
-	{	/* Open failed so print an error message. */
-		printf("Failed to opend %s\n", file_name);
-		/* Print the error message from libsndfile. */
-		puts(sf_strerror(NULL));
+	/* Open the SNDFILE in read mode, pass pointer for SF_STRUCT for 
+	libsndfile to fill with information about the audio file. */
+    if (!(infile = sf_open (infilename, SFM_READ, &sfinfo)))
+	{	/* Open failure, print error message. */
+		printf("Not able to open input file %s.\n", infilename) ;
+		/* Print libsndfile error message. */
+		puts(sf_strerror (NULL));
 		return 1;
-	};
+	}
 
-	// process data
-	//while ((count = (int)sf_read_double(infile, data, BUFFER_LEN)))
-	//{
-	//	
-	//};
+	/* Initialize buffer, allocate memory */
+    float *buf = (float *)malloc(BUFFER_SIZE * sizeof(float));
+    if (!buf)
+	{
+		/* Memory allocation failure, print an error message, close the 
+		opened SNDFILE */
+        fprintf(stderr, "Memory allocation failed.\n");
+        sf_close(infile);
+        return 1;
+    }
 
-	//const float *buffer = malloc(file_info.frames * file_info.channels * sizeof(float));
-	std::vector<float> buffer(file_info.frames + file_info.channels);
-	std::cout << buffer[1] << std::endl;
+	/* Read in the data from the SNDFILE, pass into buffer. readcount will store the 
+	number of frames/samples being passed in, once all time-domain values have been read,
+	0 will be returned */
+	while ((readcount = (int)sf_read_float(infile, buf, BUFFER_SIZE)))
+	{
+		// Begin processing audio chunk by chunk
+	}
 
+	free(buf);
 	sf_close(infile);
-
 	return 0;
 }
