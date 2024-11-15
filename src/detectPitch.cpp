@@ -1,15 +1,15 @@
 #include <fftw3.h>
 #include <math.h>
-#include <string>
-#include<iostream>
+#include <string.h>
+#include <iostream>
 
 using namespace std;
 
 #define MAG_THRESHOLD 100
 
-std::string get_MIDI_note(double freq);
+string getNote(double freq);
 
-void detect_pitch(float *buf, int frames, int sample_rate) 
+void detectPitch(float *buf, int frames, int sample_rate) 
 {
     // prepare FFT arrays that will store the resulting complex numbers
     fftw_complex *in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * frames);
@@ -31,7 +31,7 @@ void detect_pitch(float *buf, int frames, int sample_rate)
         if (magnitude > MAG_THRESHOLD)
         {
             //printf("Frequency: %f Hz, Magnitude: %f\n", frequency, magnitude);
-            std::cout << get_MIDI_note(frequency) << std::endl;
+            cout << getNote(frequency) << endl;
         }
     }
 
@@ -40,15 +40,15 @@ void detect_pitch(float *buf, int frames, int sample_rate)
     fftw_free(out);
 }
 
-std::string get_MIDI_note(double freq)
+string getNote(double freq)
 {
     int A4 = 440;
     float C0 = A4*pow(2,-4.75);
-    std::string name[12] = {"C", "C#", "D", "D#","E", "F", "F#", "G", "G#", "A", "A#", "B"};
+    string name[12] = {"C", "C#", "D", "D#","E", "F", "F#", "G", "G#", "A", "A#", "B"};
 
     int h = round(12*log2(freq/C0));
     int octave = h/12;
     int n = h%12;
 
-    return (name[n] + std::to_string(octave));
+    return name[n] + to_string(octave);
 }

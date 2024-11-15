@@ -2,7 +2,6 @@
 #include <string.h>
 #include <iostream>
 #include <sndfile.h>
-#include <detect_pitch.h>
 
 /* Length of buffer used to hold frames being processed */
 #define BUFFER_SIZE 4096

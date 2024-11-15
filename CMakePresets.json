@@ -1,12 +1,4 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 {
-=======
-﻿{
->>>>>>> 8a57175 (Issue #135: Adding cmake - WIP)
-=======
-{
->>>>>>> 4796778 (Issue #135: modify CMakeLists.txt, add macos cmake presets)
     "version": 3,
     "configurePresets": [
         {
@@ -64,10 +56,6 @@
             "cacheVariables": {
                 "CMAKE_BUILD_TYPE": "Release"
             }
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 4796778 (Issue #135: modify CMakeLists.txt, add macos cmake presets)
         },
         {
             "name": "macos-base",
@@ -106,13 +94,4 @@
             }
         }
     ]
-<<<<<<< HEAD
 }
-=======
-        }
-    ]
-}
->>>>>>> 8a57175 (Issue #135: Adding cmake - WIP)
-=======
-}
->>>>>>> 4796778 (Issue #135: modify CMakeLists.txt, add macos cmake presets)
