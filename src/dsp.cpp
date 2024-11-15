@@ -1,6 +1,6 @@
 #include <iostream>
 #include <sndfile.h>
-#include "detect_pitch.h"
+#include "detectPitch.h"
 
 /* Length of buffer used to hold frames being processed */
 #define BUFFER_SIZE 4096
@@ -40,7 +40,7 @@ int dsp(char const* infilename)
 	0 will be returned */
 	while ((readcount = (int)sf_read_float(infile, buf, BUFFER_SIZE)))
 	{
-		detect_pitch(buf, readcount, sfinfo.samplerate);
+		detectPitch(buf, readcount, sfinfo.samplerate);
 	}
 
 	free(buf);
