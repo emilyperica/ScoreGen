@@ -7,9 +7,9 @@ using namespace std;
 
 #define MAG_THRESHOLD 100
 
-string get_note(double freq);
+string getNote(double freq);
 
-void detect_pitch(float *buf, int frames, int sample_rate) 
+void detectPitch(float *buf, int frames, int sample_rate) 
 {
     // prepare FFT arrays that will store the resulting complex numbers
     fftw_complex *in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * frames);
@@ -31,16 +31,16 @@ void detect_pitch(float *buf, int frames, int sample_rate)
         if (magnitude > MAG_THRESHOLD)
         {
             //printf("Frequency: %f Hz, Magnitude: %f\n", frequency, magnitude);
-            cout << get_note(frequency) << endl;
+            cout << getNote(frequency) << endl;
         }
     }
-    
+
     fftw_destroy_plan(plan);
     fftw_free(in);
     fftw_free(out);
 }
 
-string get_note(double freq)
+string getNote(double freq)
 {
     int A4 = 440;
     float C0 = A4*pow(2,-4.75);
@@ -50,5 +50,5 @@ string get_note(double freq)
     int octave = h/12;
     int n = h%12;
 
-    return (name[n] + to_string(octave));
+    return name[n] + to_string(octave);
 }
