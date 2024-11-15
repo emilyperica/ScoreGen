@@ -1,7 +1,6 @@
 #ifndef DSP_H
 #define DSP_H
 
-int dsp(const char* input_file);
+int dsp(char const* input_file);
 
 #endif
-
