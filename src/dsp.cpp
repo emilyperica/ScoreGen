@@ -2,6 +2,9 @@
 #include <string.h>
 #include <iostream>
 #include <sndfile.h>
+#include "detectNoteDuration.h"
+
+using namespace std;
 
 /* Length of buffer used to hold frames being processed */
 #define BUFFER_SIZE 4096
@@ -41,7 +44,9 @@ int dsp(char const* infilename)
 	0 will be returned */
 	while ((readcount = (int)sf_read_float(infile, buf, BUFFER_SIZE)))
 	{
-		// Begin processing audio chunk by chunk
+		int bpm = 60;
+		std::vector<std::pair<std::string, double>> notes = detectNoteDuration(buf, readcount, sfinfo.samplerate , 1,  bpm);
+		//break;
 	}
 
 	free(buf);
