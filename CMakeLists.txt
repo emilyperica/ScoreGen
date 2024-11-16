@@ -20,8 +20,6 @@ file(GLOB SOURCES "src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
 # Include headers
-find_path(DSP dsp)
-find_path(FINDKEY findKey)
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_HOME_DIRECTORY}/include")
 
 # Link libraries
