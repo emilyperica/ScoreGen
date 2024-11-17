@@ -1,71 +1,111 @@
-#include <iostream>
 #include <vector>
-#include <cmath>
+#include <iostream>
+#include <sndfile.h>
 
-// Function to calculate duration in seconds
-double calculateDuration(int startSample, int endSample, int sampleRate) {
-    double duration = (endSample - startSample) / static_cast<double>(sampleRate);
-std::cerr << "Duration (in seconds): " << duration << std::endl;
-return duration;
-}
+using namespace std;
 
-// Function to map duration to note types
-std::string mapToNoteType(double duration, double tempo) {
-    
-    double quarterNoteDuration = 60.0 / tempo; // Quarter note duration in seconds
-    if (duration >= 4 * quarterNoteDuration) return "Whole Note";
-    if (duration >= 2 * quarterNoteDuration) return "Half Note";
-    if (duration >= quarterNoteDuration) return "Quarter Note";
-    if (duration >= quarterNoteDuration / 2) return "Eighth Note";
-    return "Smaller than Eighth Note";
-}
+// Detection parameters
+const float threshold = 0.1; // Amplitude threshold for detecting a note
+const int silenceDurationFrames = 4410; // Silence duration to confirm note end (~0.1 seconds)
 
-// Core function: Process audio data directly from buffer
-std::vector<std::pair<std::string, double>> detectNoteDuration(float* buf, int numFrames, int sampleRate, int channels, double tempo) {
-    // Detect note onsets and offsets using amplitude threshold
-    double threshold = 0.05; // Adjust threshold based on the recording
-    std::vector<int> onsets;
-    std::vector<int> offsets;
-    bool inNote = false;
+void detect_notes(SNDFILE* infile, SF_INFO& sfinfo, float* buf, int framesPerBeat) {
+    bool foundFirstNote = false;
+    double firstNoteTime = 0.0;
+    double totalAudioLength = 0.0;
+    int readCount;
+    int totalFrames = 0;  // Keep track of the total number of frames read
 
-    for (size_t i = 0; i < numFrames; ++i) {
-        // Use the first channel for amplitude analysis (simplified mono processing)
-        double amplitude = std::abs(buf[i * channels]);
+    while ((readCount = sf_read_float(infile, buf, framesPerBeat)) > 0) {
+        totalFrames += readCount;
+        vector<pair<double, double>> notes; // Store start and end times for notes
+        bool noteOngoing = false;
+        int noteStartFrame = -1;
 
-        if (amplitude > threshold) {
-            if (!inNote) {
-                inNote = true;
-                onsets.push_back(i);  // Record the onset
+        int silenceCounter = 0;
+
+        for (int i = 0; i < readCount; i++) {
+            float amplitude = fabs(buf[i]);
+
+            if (amplitude > threshold) {
+                // Note starts
+                if (!noteOngoing) {
+                    noteStartFrame = i;
+                    noteOngoing = true;
+                    silenceCounter = 0;
+
+                    // Record the first note start time if not already done
+                    if (!foundFirstNote) {
+                        foundFirstNote = true;
+                        firstNoteTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
+                    }
+                }
+                else {
+                    silenceCounter = 0; // Reset silence counter during a note
+                }
+            }
+            else if (noteOngoing && amplitude < 0.0005) {
+                // Silence detected
+                silenceCounter++;
+
+                if (silenceCounter >= silenceDurationFrames) {
+                    // Note ends
+                    double noteStartTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
+                    double noteEndTime = (double)(totalFrames - readCount + i - silenceCounter) / (sfinfo.samplerate * sfinfo.channels);
+
+                    notes.push_back({ noteStartTime, noteEndTime });
+
+                    noteOngoing = false;
+                    silenceCounter = 0;
+                }
             }
         }
-        else {
-            if (inNote) {
-                inNote = false;
-                offsets.push_back(i);  // Record the offset
+
+        // Handle ongoing note at the end of the buffer
+        if (noteOngoing) {
+            double noteStartTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
+            double noteEndTime = (double)totalFrames / (sfinfo.samplerate * sfinfo.channels);
+            notes.push_back({ noteStartTime, noteEndTime });
+        }
+
+        // Output detected notes for this chunk
+        if (foundFirstNote) {
+            for (const auto& note : notes) {
+                cout << "Note Start: " << note.first << "s, End: " << note.second << "s" << endl;
+                float noteDuration = note.second - note.first;
+
+                if (noteDuration >= 0.2 && noteDuration < 0.35) {
+                    cout << "Note is a Sixteenth Note" << endl;
+                }
+                else if (noteDuration >= 0.35 && noteDuration < 0.6) {
+                    cout << "Note is a Dotted Sixteenth Note" << endl;
+                }
+                else if (noteDuration >= 0.6 && noteDuration < 0.8) {
+                    cout << "Note is an Eighth Note" << endl;
+                }
+                else if (noteDuration >= 0.8 && noteDuration < 1.2) {
+                    cout << "Note is a Quarter Note" << endl;
+                }
+                else if (noteDuration >= 1.2 && noteDuration < 1.6) {
+                    cout << "Note is a Dotted Eighth Note" << endl;
+                }
+                else if (noteDuration >= 1.6 && noteDuration < 2.4) {
+                    cout << "Note is a Half Note" << endl;
+                }
+                else if (noteDuration >= 2.4 && noteDuration < 3.2) {
+                    cout << "Note is a Dotted Half Note" << endl;
+                }
+                else if (noteDuration >= 3.2 && noteDuration <= 4.8) {
+                    cout << "Note is a Whole Note" << endl;
+                }
+
             }
         }
     }
 
-    // If there's one more onset than offset, handle it
-    if (onsets.size() > offsets.size()) {
-        std::cerr << "Mismatch detected: more onsets than offsets. Adjusting the last onset." << std::endl;
-        onsets.pop_back();  // Remove last onset that doesn't have a corresponding offset
-    }
+    // Calculate total length of the audio based on frames read
+    totalAudioLength = (double)totalFrames / (sfinfo.samplerate * sfinfo.channels);
 
-    // Final mismatch check
-    if (onsets.size() != offsets.size()) {
-        std::cerr << "Mismatch in onsets and offsets detected. Exiting." << std::endl;
-        std::cerr << "Onsets: " << onsets.size() << ", Offsets: " << offsets.size() << std::endl;
-        exit(1);
-    }
-
-    // Calculate durations and map to note types
-    std::vector<std::pair<std::string, double>> noteDurations;
-    for (size_t i = 0; i < onsets.size(); ++i) {
-        double duration = calculateDuration(onsets[i], offsets[i], sampleRate);
-        std::string noteType = mapToNoteType(duration, tempo);
-        noteDurations.emplace_back(noteType, duration);
-    }
-
-    return noteDurations;
+    // Output file details
+    cout << "First note starts at: " << firstNoteTime << " seconds." << endl;
+    cout << "Total audio length: " << totalAudioLength << " seconds." << endl;
 }
