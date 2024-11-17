@@ -5,7 +5,7 @@
 using namespace std;
 
 // Detection parameters
-const float threshold = 0.1; // Amplitude threshold for detecting a note
+const float threshold = 0.01; // Amplitude threshold for detecting a note
 const int silenceDurationFrames = 4410; // Silence duration to confirm note end (~0.1 seconds)
 
 void detect_notes(SNDFILE* infile, SF_INFO& sfinfo, float* buf, int framesPerBeat) {
@@ -43,7 +43,7 @@ void detect_notes(SNDFILE* infile, SF_INFO& sfinfo, float* buf, int framesPerBea
                     silenceCounter = 0; // Reset silence counter during a note
                 }
             }
-            else if (noteOngoing && amplitude < 0.0005) {
+            else if (noteOngoing && amplitude < 0.005) {
                 // Silence detected
                 silenceCounter++;
 
@@ -76,13 +76,13 @@ void detect_notes(SNDFILE* infile, SF_INFO& sfinfo, float* buf, int framesPerBea
                 if (noteDuration >= 0.2 && noteDuration < 0.35) {
                     cout << "Note is a Sixteenth Note" << endl;
                 }
-                else if (noteDuration >= 0.35 && noteDuration < 0.6) {
+                else if (noteDuration >= 0.35 && noteDuration < 0.4) {
                     cout << "Note is a Dotted Sixteenth Note" << endl;
                 }
-                else if (noteDuration >= 0.6 && noteDuration < 0.8) {
+                else if (noteDuration >= 0.4 && noteDuration < 0.65) {
                     cout << "Note is an Eighth Note" << endl;
                 }
-                else if (noteDuration >= 0.8 && noteDuration < 1.2) {
+                else if (noteDuration >= 0.65 && noteDuration < 1.2) {
                     cout << "Note is a Quarter Note" << endl;
                 }
                 else if (noteDuration >= 1.2 && noteDuration < 1.6) {
