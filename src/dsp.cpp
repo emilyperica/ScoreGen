@@ -74,19 +74,21 @@ int dsp(char const* infilename) {
                         foundFirstNote = true;
                         firstNoteTime = (totalFrames - readCount + noteStartFrame) / (double)sfinfo.samplerate;
                     }
-                } else {
+                }
+                else {
                     silenceCounter = 0; // Reset silence counter during a note
                 }
-            } else if (noteOngoing && amplitude < 0.0001) {
+            }
+            else if (noteOngoing && amplitude < 0.008) {
                 // Silence detected, check if it exceeds silence threshold
                 silenceCounter++;
 
                 if (silenceCounter >= silenceDurationFrames) {
                     // Note ends
-                    double noteStartTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
-                    double noteEndTime = (double)(totalFrames - readCount + i - silenceCounter) / (sfinfo.samplerate * sfinfo.channels);
+                    double noteStartTime = (totalFrames - readCount + noteStartFrame) / (double)sfinfo.samplerate;
+                    double noteEndTime = (totalFrames - readCount + i - silenceCounter) / (double)sfinfo.samplerate;
 
-                    notes.push_back({noteStartTime, noteEndTime});
+                    notes.push_back({ noteStartTime, noteEndTime });
 
                     noteOngoing = false;
                     silenceCounter = 0;
@@ -96,30 +98,46 @@ int dsp(char const* infilename) {
 
         // Handle ongoing note at the end of the buffer
         if (noteOngoing) {
-            double noteStartTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
-            double noteEndTime = (double)totalFrames / (sfinfo.samplerate * sfinfo.channels);
-            notes.push_back({noteStartTime, noteEndTime});
+            double noteStartTime = (totalFrames - readCount + noteStartFrame) / (double)sfinfo.samplerate;
+            double noteEndTime = totalFrames / (double)sfinfo.samplerate;
+            notes.push_back({ noteStartTime, noteEndTime });
         }
 
-        // Output detected notes for this second
-        if (foundFirstNote) {  // Only process after the first note
-            cout << "Beat " << secondsProcessed + (int)firstNoteTime << ":" << endl;
+        // Output detected notes for this chunk
+        if (foundFirstNote) {
             for (const auto& note : notes) {
-                cout << "  Note Start: " << note.first << "s, End: " << note.second << "s" << endl;
-				if (note.second - note.first >= 0.8 && note.second - note.first <= 1.2){
-					cout << "Note is a Quarter Note" << endl;
-				}
+                cout << "Note Start: " << note.first << "s, End: " << note.second << "s" << endl;
+                float noteDuration = note.second - note.first;
+
+                if (noteDuration >= 0.2 && noteDuration < 0.35) {
+                    cout << "Note is a Sixteenth Note" << endl;
+                }
+                else if (noteDuration >= 0.35 && noteDuration < 0.6) {
+                    cout << "Note is a Dotted Sixteenth Note" << endl;
+                }
+                else if (noteDuration >= 0.6 && noteDuration < 0.8) {
+                    cout << "Note is an Eighth Note" << endl;
+                }
+                else if (noteDuration >= 0.8 && noteDuration < 1.2) {
+                    cout << "Note is a Quarter Note" << endl;
+                }
+                else if (noteDuration >= 1.2 && noteDuration < 1.6) {
+                    cout << "Note is a Dotted Eighth Note" << endl;
+                }
+                else if (noteDuration >= 1.6 && noteDuration < 2.4) {
+                    cout << "Note is a Half Note" << endl;
+                }
+                else if (noteDuration >= 2.4 && noteDuration < 3.2) {
+                    cout << "Note is a Dotted Half Note" << endl;
+                }
+                else if (noteDuration >= 3.2 && noteDuration <= 4.8) {
+                    cout << "Note is a Whole Note" << endl;
+                }
+
             }
-            secondsProcessed++;
         }
-
-        // Stop processing if we're past the last note
-        if (readCount < framesPerBeat && !noteOngoing) {
-            break;
-        }
-
-
     }
+
 
     // Calculate total length of the audio based on frames read
     totalAudioLength = (double)totalFrames / (sfinfo.samplerate * sfinfo.channels);
