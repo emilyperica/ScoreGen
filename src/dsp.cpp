@@ -69,6 +69,5 @@ int dsp(char const* infilename)
 
 	free(buf);
 	sf_close(infile);
-
 	return 0;
 }
