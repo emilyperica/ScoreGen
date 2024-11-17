@@ -72,7 +72,7 @@ int dsp(char const* infilename) {
                     // Record the first note start time if not already done
                     if (!foundFirstNote) {
                         foundFirstNote = true;
-                        firstNoteTime = (totalFrames - readCount + noteStartFrame) / (double)sfinfo.samplerate;
+                        firstNoteTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
                     }
                 }
                 else {
@@ -80,13 +80,13 @@ int dsp(char const* infilename) {
                 }
             }
             else if (noteOngoing && amplitude < 0.008) {
-                // Silence detected, check if it exceeds silence threshold
+                // Silence detected. Relatively high amplitude used to eliminate noise issues
                 silenceCounter++;
 
                 if (silenceCounter >= silenceDurationFrames) {
                     // Note ends
-                    double noteStartTime = (totalFrames - readCount + noteStartFrame) / (double)sfinfo.samplerate;
-                    double noteEndTime = (totalFrames - readCount + i - silenceCounter) / (double)sfinfo.samplerate;
+                    double noteStartTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
+                    double noteEndTime = (double)(totalFrames - readCount + i - silenceCounter) / (sfinfo.samplerate * sfinfo.channels);
 
                     notes.push_back({ noteStartTime, noteEndTime });
 
@@ -98,8 +98,8 @@ int dsp(char const* infilename) {
 
         // Handle ongoing note at the end of the buffer
         if (noteOngoing) {
-            double noteStartTime = (totalFrames - readCount + noteStartFrame) / (double)sfinfo.samplerate;
-            double noteEndTime = totalFrames / (double)sfinfo.samplerate;
+            double noteStartTime = (double)(totalFrames - readCount + noteStartFrame) / (sfinfo.samplerate * sfinfo.channels);
+            double noteEndTime = (double)totalFrames / (sfinfo.samplerate * sfinfo.channels);
             notes.push_back({ noteStartTime, noteEndTime });
         }
 
@@ -108,6 +108,7 @@ int dsp(char const* infilename) {
             for (const auto& note : notes) {
                 cout << "Note Start: " << note.first << "s, End: " << note.second << "s" << endl;
                 float noteDuration = note.second - note.first;
+                noteDuration *= 2; //Note duration is crudely doubled to compensate for high amplitude used
 
                 if (noteDuration >= 0.2 && noteDuration < 0.35) {
                     cout << "Note is a Sixteenth Note" << endl;
