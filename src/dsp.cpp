@@ -1,17 +1,21 @@
 #include <iostream>
+#include <vector>
 #include <sndfile.h>
+#include "detectNoteDuration.h"
 #include "detectPitch.h"
 
-/* Length of buffer used to hold frames being processed */
-#define BUFFER_SIZE 4096
+using namespace std;
+
+// hard-coded for now
+#define BPM 60
 
 /* Digital Signal Processing */
-int dsp(char const* infilename) 
-{
-	int readcount;
-	SNDFILE *infile;
-	/* Initialize SF_INFO struct before use. */
+int dsp(const char* infilename) {
+    SNDFILE* infile;
     SF_INFO sfinfo;
+    // Calculate frames per second
+    float framesPerBeat = (sfinfo.samplerate * sfinfo.channels) / (60.0 / BPM);
+    float* buf = (float*)malloc(framesPerBeat * sizeof(float));
 	memset(&sfinfo, 0, sizeof(sfinfo));
 
 	/* Open the SNDFILE in read mode, pass pointer for SF_STRUCT for 
@@ -33,8 +37,10 @@ int dsp(char const* infilename)
         fprintf(stderr, "Memory allocation failed.\n");
         sf_close(infile);
         return 1;
-    }
+   }
 
+  // Call the note detection function
+  detect_notes(infile, sfinfo, buf, framesPerBeat);
 	/* Display input file properties. */
 	std::cout << "The input file has a sample rate of " << sfinfo.samplerate << " Hz." << std::endl;
 	std::cout << "The input file has " << sfinfo.channels << " channels.\n" << std::endl;
