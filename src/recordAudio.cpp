@@ -75,7 +75,7 @@ static void saveAsWav(std::vector<SAMPLE> &recordedSamples, int sampleRate, int 
 
     // Convert float samples to int16_t for writing to WAV
     std::vector<int16_t> intSamples(recordedSamples.size());
-    for (size_t i=0; i<recordedSamples.size(); ++i) {
+    for (size_t i = 0; i < recordedSamples.size(); ++i) {
         intSamples[i] = static_cast<int16_t>(recordedSamples[i] * 32767.0f);
     }
 
@@ -88,28 +88,28 @@ static void saveAsWav(std::vector<SAMPLE> &recordedSamples, int sampleRate, int 
 
     // Close the file
     sf_close(outfile);
-    printf("Audio saved to %s\n", filename); fflush(stdout);
+    printf("\nAudio saved to %s in the working directory.\n", filename); fflush(stdout);
 }
 
 static int recordCallback(const void *inputBuffer, void *outputBuffer,
                           unsigned long framesPerBuffer,
-                          const PaStreamCallbackTimeInfo* timeInfo,
+                          const PaStreamCallbackTimeInfo *timeInfo,
                           PaStreamCallbackFlags statusFlags,
                           void *userData) {
-    audioData *data = (audioData*)userData;
-    const SAMPLE *rptr = (const SAMPLE*)inputBuffer;
+    audioData *data = (audioData *)userData;
+    const SAMPLE *rptr = (const SAMPLE *)inputBuffer;
     
     size_t requiredSize = (data->frameIndex + framesPerBuffer) * NUM_CHANNELS;
     data->recordedSamples.resize(requiredSize);
     
     SAMPLE *wptr = &data->recordedSamples[data->frameIndex * NUM_CHANNELS];
     if (inputBuffer == NULL) {
-        for (unsigned long i=0; i<framesPerBuffer; i++) {
+        for (unsigned long i = 0; i<framesPerBuffer; i++) {
             *wptr++ = SAMPLE_SILENCE;
             if (NUM_CHANNELS == 2) *wptr++ = SAMPLE_SILENCE;
         }
     } else {
-        for (unsigned long i=0; i<framesPerBuffer; i++) {
+        for (unsigned long i = 0; i<framesPerBuffer; i++) {
             *wptr++ = *rptr++;
             if (NUM_CHANNELS == 2) *wptr++ = *rptr++;
         }
@@ -117,12 +117,13 @@ static int recordCallback(const void *inputBuffer, void *outputBuffer,
 
     data->frameIndex += framesPerBuffer;
     if (!isRecording) return paComplete;
+
     return paContinue;
 }
 
 static int playCallback(const void *inputBuffer, void *outputBuffer,
                         unsigned long framesPerBuffer,
-                        const PaStreamCallbackTimeInfo* timeInfo,
+                        const PaStreamCallbackTimeInfo *timeInfo,
                         PaStreamCallbackFlags statusFlags,
                         void *userData) {
     audioData *data = (audioData *) userData;
@@ -145,6 +146,7 @@ static int playCallback(const void *inputBuffer, void *outputBuffer,
 
 int recordAudio(void) {
     PaStreamParameters inputParameters, outputParameters;
+    const PaDeviceInfo *inputDeviceInfo, *outputDeviceInfo;
     PaStream*          stream;
     PaError            err = paNoError;
     audioData          data;
@@ -168,7 +170,7 @@ int recordAudio(void) {
     freopen("/dev/tty", "w", stderr);
 #endif
 
-    if( err != paNoError ) goto done;
+    if (err != paNoError) goto done;
 
     inputParameters.device = Pa_GetDefaultInputDevice();
     if (inputParameters.device == paNoDevice) {
@@ -176,7 +178,7 @@ int recordAudio(void) {
         goto done;
     }
 
-    const PaDeviceInfo* inputDeviceInfo = Pa_GetDeviceInfo(inputParameters.device);
+    inputDeviceInfo = Pa_GetDeviceInfo(inputParameters.device);
     inputParameters.channelCount = inputDeviceInfo->maxInputChannels >= 2 ? 2 : 1;
     inputParameters.sampleFormat = PA_SAMPLE_TYPE;
     inputParameters.suggestedLatency = inputDeviceInfo->defaultLowInputLatency;
@@ -195,8 +197,8 @@ int recordAudio(void) {
               FRAMES_PER_BUFFER,
               paClipOff,
               recordCallback,
-              &data );
-    if( err != paNoError ) goto done;
+              &data);
+    if (err != paNoError) goto done;
 
     printf("\n=== Ready to record!! Press 'R' to start. ===\n"); fflush(stdout);
     // Start the keyboard monitoring thread
@@ -206,8 +208,8 @@ int recordAudio(void) {
         Pa_Sleep(100);
     }
 
-    err = Pa_StartStream( stream );
-    if( err != paNoError ) goto done;
+    err = Pa_StartStream(stream);
+    if (err != paNoError) goto done;
     printf("\n=== Now recording!! Press 'R' to stop. ===\n"); fflush(stdout);
 
     while (isRecording) {
@@ -218,8 +220,8 @@ int recordAudio(void) {
     err = Pa_StopStream(stream);
     if (err != paNoError) goto done;
 
-    err = Pa_CloseStream( stream );
-    if( err != paNoError ) goto done;
+    err = Pa_CloseStream(stream);
+    if (err != paNoError) goto done;
 
     exitRequested = true;
     inputThread.join();
@@ -233,7 +235,7 @@ int recordAudio(void) {
         goto done;
     }
 
-    const PaDeviceInfo* outputDeviceInfo = Pa_GetDeviceInfo(outputParameters.device);
+    outputDeviceInfo = Pa_GetDeviceInfo(outputParameters.device);
     outputParameters.channelCount = outputDeviceInfo->maxOutputChannels >= 2 ? 2 : 1;
     outputParameters.sampleFormat =  PA_SAMPLE_TYPE;
     outputParameters.suggestedLatency = outputDeviceInfo->defaultLowOutputLatency;
@@ -257,7 +259,7 @@ int recordAudio(void) {
 
     if (stream) {
         err = Pa_StartStream(stream);
-        if(err != paNoError) goto done;
+        if (err != paNoError) goto done;
 
         printf("Waiting for playback to finish.\n"); fflush(stdout);
 
@@ -265,13 +267,13 @@ int recordAudio(void) {
         if (err < 0) goto done;
 
         err = Pa_CloseStream(stream);
-        if(err != paNoError) goto done;
+        if (err != paNoError) goto done;
 
         printf("Done.\n"); fflush(stdout);
     }
 
 done:
-    Pa_Terminate();
+    Pa_Terminate(); // TODO: if error ocurred during Pa_Initialize, this should not be called
     if (err != paNoError) {
         fprintf(stderr, "An error occurred while using the portaudio stream\n");
         fprintf(stderr, "Error number: %d\n", err);
