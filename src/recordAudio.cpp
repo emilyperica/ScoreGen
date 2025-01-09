@@ -41,7 +41,7 @@ static void getUserInput() {
             char ch;
             read(STDIN_FILENO, &ch, 1);
             if (ch == 'r') { // Start/stop recording on 'r'
-                keepRecording = false;
+                isRecording = !isRecording;
             }
         }
         tcsetattr(STDIN_FILENO, TCSANOW, &oldt); // Restore original settings

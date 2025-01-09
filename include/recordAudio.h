@@ -1,5 +1,8 @@
 #ifdef _WIN32
 #include <conio.h>
+#else
+#include <termios.h>
+#include <unistd.h>
 #endif
 
 #include <iostream>
@@ -28,23 +31,17 @@ typedef struct
 audioData;
 
 static void getUserInput();
-
 static void saveAsWav(std::vector<SAMPLE> &recordedSamples, int sampleRate, int numChannels, const char *filename = "recorded.wav");
-
-static int recordCallback( const void *inputBuffer, void *outputBuffer,
-                           unsigned long framesPerBuffer,
-                           const PaStreamCallbackTimeInfo* timeInfo,
-                           PaStreamCallbackFlags statusFlags,
-                           void *userData );
-                           
-static int playCallback( const void *inputBuffer, void *outputBuffer,
-                         unsigned long framesPerBuffer,
-                         const PaStreamCallbackTimeInfo* timeInfo,
-                         PaStreamCallbackFlags statusFlags,
-                         void *userData );
-
-//void nullLogCallback(PaLogLevel level, const char *message);
-
+static int recordCallback(const void *inputBuffer, void *outputBuffer,
+                          unsigned long framesPerBuffer,
+                          const PaStreamCallbackTimeInfo *timeInfo,
+                          PaStreamCallbackFlags statusFlags,
+                          void *userData);
+static int playCallback(const void *inputBuffer, void *outputBuffer,
+                        unsigned long framesPerBuffer,
+                        const PaStreamCallbackTimeInfo *timeInfo,
+                        PaStreamCallbackFlags statusFlags,
+                        void *userData );
 int recordAudio(void);
 
 #endif
