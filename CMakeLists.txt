@@ -15,6 +15,8 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
 
+add_compile_definitions(PA_ENABLE_DEBUG_OUTPUT=0)
+
 # Add source to this project's executable.
 file(GLOB SOURCES "src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
@@ -24,10 +26,14 @@ target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_HOME_DIRECTORY
 
 # Link libraries
 find_package(SndFile REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SndFile::sndfile)
 find_package(FFTW3 REQUIRED)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE FFTW3::fftw3)
+find_package(portaudio CONFIG REQUIRED)
 find_path(FFTWPP_INCLUDE_DIRS "fftwpp/Array.cc")
+
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SndFile::sndfile)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE FFTW3::fftw3)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE portaudio)
+
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${FFTWPP_INCLUDE_DIRS})
 
 # Additional platform-specific settings
