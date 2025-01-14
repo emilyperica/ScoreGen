@@ -32,7 +32,7 @@ void dsp(const char* infilename) {
         buf = move(tempBuffer);
     }
 
-    vector<Note> notes = detect_notes(buf, sfinfo.samplerate, sfinfo.channels);
+    vector<Note> notes = detectNotes(buf, sfinfo.samplerate, sfinfo.channels);
     for (Note note : notes) {
         cout << "Note: " << note.pitch << "\tDuration: " << note.endTime-note.startTime << endl;
     }

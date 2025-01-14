@@ -23,7 +23,7 @@ const map<string, float> beats = {
     {"sixteenth", 0.25f}
 };
 
-string get_note(double freq) {
+string getNoteName(double freq) {
     int h = round(12 * log2(freq / C0));
     int octave = h / 12;
     int n = h % 12;
@@ -31,7 +31,7 @@ string get_note(double freq) {
     return note_names[n] + std::to_string(octave);
 }
 
-string detect_pitch(std::vector<float> buf, size_t start, size_t end, int sample_rate) {
+string detectPitch(std::vector<float> buf, size_t start, size_t end, int sample_rate) {
     int frames = end - start;
     vector<double> window(frames);
     string curr_note = "";
@@ -62,7 +62,7 @@ string detect_pitch(std::vector<float> buf, size_t start, size_t end, int sample
     }
 
     if (dominant_freq > 0.0) {
-        curr_note = get_note(dominant_freq);
+        curr_note = getNoteName(dominant_freq);
     }
 
     fftw_destroy_plan(plan);
@@ -81,7 +81,7 @@ string determineNoteType(float noteDuration, int bpm, int beatsPerBar) {
     return "";
 }
 
-vector<Note> detect_notes(const vector<float>& buf, int sample_rate, int channels) {
+vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels) {
     int totalFrames = 0;
     size_t bufferSize = buf.size();
     vector<Note> notes;
@@ -106,7 +106,7 @@ vector<Note> detect_notes(const vector<float>& buf, int sample_rate, int channel
                 // Note ends
                 float noteStartTime = (float)(noteStartFrame) / (sample_rate * channels);
                 float noteEndTime = (float)(i - silenceCounter) / (sample_rate * channels);
-                string pitch = detect_pitch(buf, noteStartFrame, i, sample_rate);
+                string pitch = detectPitch(buf, noteStartFrame, i, sample_rate);
                 if (!pitch.empty()) {
                     string noteType = determineNoteType(noteEndTime - noteStartTime, BPM, METER);
                     notes.push_back({noteStartTime, noteEndTime, pitch, noteType});
