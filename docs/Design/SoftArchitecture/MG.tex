@@ -192,7 +192,12 @@ actually be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
-\item ...
+\item [\refstepcounter{mnum} \mthemnum \label{mUI}:] User Interface Module
+\item [\refstepcounter{mnum} \mthemnum \label{mSG}:] Score Generation Module
+\item [\refstepcounter{mnum} \mthemnum \label{mRSM}:] Raw Signal Processing Module
+\item [\refstepcounter{mnum} \mthemnum \label{mAFE}:] Audio Feature Extraction Module
+\item [\refstepcounter{mnum} \mthemnum \label{mFFC}:] File Format Conversion Module
+\item [\refstepcounter{mnum} \mthemnum \label{mARP}:] Audio Recording/Playback Module
 \end{description}
 
 
@@ -206,19 +211,14 @@ actually be implemented.
 {Hardware-Hiding Module} & ~ \\
 \midrule
 
-\multirow{7}{0.3\textwidth}{Behaviour-Hiding Module} & ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\
-& ?\\ 
-& ?\\
+\multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} & User Interface\\
+& Score Generation\\
+& File Format Conversion\\
 \midrule
 
-\multirow{3}{0.3\textwidth}{Software Decision Module} & {?}\\
-& ?\\
-& ?\\
+\multirow{3}{0.3\textwidth}{Software Decision Module} & Raw Signal Processing\\
+& Audio Feature Extraction\\
+& Audio Recording/Playback\\
 \bottomrule
 
 \end{tabular}
@@ -231,13 +231,6 @@ actually be implemented.
 The design of the system is intended to satisfy the requirements developed in
 the SRS. In this stage, the system is decomposed into modules. The connection
 between requirements and modules is listed in Table~\ref{TblRT}.
-
-\wss{The intention of this section is to document decisions that are made
-  ``between'' the requirements and the design.  To satisfy some requirements,
-  design decisions need to be made.  Rather than make these decisions implicit,
-  they are explicitly recorded here.  For instance, if a program has security
-  requirements, a specific design decision may be made to satisfy those
-  requirements with a password.}
 
 \section{Module Decomposition} \label{SecMD}
 
