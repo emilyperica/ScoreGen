@@ -46,8 +46,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2025-01-xx & 1.0 & Initial version\\
 \bottomrule
 \end{tabularx}
 
@@ -65,16 +64,23 @@ This section records information for easy reference.
   \textbf{symbol} & \textbf{description}\\
   \midrule 
   AC & Anticipated Change\\
+  API & Application Programming Interface\\
   DAG & Directed Acyclic Graph \\
+  DSP & Digital Signal Processing\\
+  I/O & Input/Output\\
   M & Module \\
   MG & Module Guide \\
+  MIDI & Musical Instrument Digital Interface\\
+  MIS & Module Interface Specification\\
+  NFR & Non-Functional Requirement\\
   OS & Operating System \\
+  PDF & Portable Document Format\\
   R & Requirement\\
-  SC & Scientific Computing \\
   SRS & Software Requirements Specification\\
-  \progname & Explanation of program name\\
-  UC & Unlikely Change \\
-  \wss{etc.} & \wss{...}\\
+  UC & Unlikely Change\\
+  UI & User Interface\\
+  XML & eXtensible Markup Language\\
+  \progname & An audio to sheet music generator \\
   \bottomrule
 \end{tabular}\\
 
@@ -91,7 +97,6 @@ This section records information for easy reference.
 \pagenumbering{arabic}
 
 \section{Introduction}
-
 Decomposing a system into modules is a commonly accepted approach to developing
 software.  A module is a work assignment for a programmer or programming
 team~\citep{ParnasEtAl1984}.  We advocate a decomposition
@@ -130,16 +135,20 @@ potential readers of this document are as follows:
   decomposition, and flexibility of the design.
 \end{itemize}
 
-The rest of the document is organized as follows. Section
-\ref{SecChange} lists the anticipated and unlikely changes of the software
-requirements. Section \ref{SecMH} summarizes the module decomposition that
-was constructed according to the likely changes. Section \ref{SecConnection}
-specifies the connections between the software requirements and the
-modules. Section \ref{SecMD} gives a detailed description of the
-modules. Section \ref{SecTM} includes two traceability matrices. One checks
-the completeness of the design against the requirements provided in the SRS. The
-other shows the relation between anticipated changes and the modules. Section
-\ref{SecUse} describes the use relation between modules.
+The rest of the document is organized as follows, as per the rules laid out by 
+Parnas et al. (1984). Section 4 lists the anticipated and unlikely changes 
+of the software requirements. Section 5 summarizes the module decomposition that was 
+constructed according to the likely changes. Section 6 specifies the connections 
+between the software requirements and the modules. Section 7 gives a detailed 
+description of the modules. Section 8 includes two traceability matrices. One checks 
+the completeness of the design against the requirements provided in the SRS. 
+The other shows the relation between anticipated changes and the modules. 
+Section 9 describes the use relation between modules. Section 10 illustrates the design 
+of the user interface through drawings, sketches, and design tool prototyping 
+(e.g. Figma, Marvel, etc.). Section 11 describes the design of communication protocols 
+used by the system, in the case of ScoreGen, this section is not relevant. Finally, section 
+12 outlines the schedule of tasks related to the development of ScoreGen as well as the 
+development team members responsible for these tasks.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
 
@@ -153,34 +162,29 @@ unlikely changes are listed in Section \ref{SecUchange}.
 Anticipated changes are the source of the information that is to be hidden
 inside the modules. Ideally, changing one of the anticipated changes will only
 require changing the one module that hides the associated decision. The approach
-adapted here is called design for
-change.
+adapted here adheres to the development principle called design for change.
 
 \begin{description}
-\item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific
-  hardware on which the software is running.
-\item[\refstepcounter{acnum} \actheacnum \label{acInput}:] The format of the
-  initial input data.
-\item ...
+  \item[\refstepcounter{acnum} \actheacnum \label{acExtractionMapping}:] Musical element extraction and mapping techniques.
+  \item[\refstepcounter{acnum} \actheacnum \label{acMonophonic}:] Monophonic audio processing algorithm(s).
+  \item[\refstepcounter{acnum} \actheacnum \label{acComplex}:] Complex audio processing algorithm(s).
+  \item[\refstepcounter{acnum} \actheacnum \label{acPerformance}:] Performance and latency benchmarks and targets.
 \end{description}
-
-\wss{Anticipated changes relate to changes that would be made in requirements,
-design or implementation choices.  They are not related to changes that are made
-at run-time, like the values of parameters.}
-
+  
 \subsection{Unlikely Changes} \label{SecUchange}
 
-The module design should be as general as possible. However, a general system is
-more complex. Sometimes this complexity is not necessary. Fixing some design
-decisions at the system architecture stage can simplify the software design. If
-these decision should later need to be changed, then many parts of the design
+The module design aims to be as general as possible. If some design decisions
+should need to be changed later, then many parts of the design
 will potentially need to be modified. Hence, it is not intended that these
 decisions will be changed.
 
 \begin{description}
-\item[\refstepcounter{ucnum} \uctheucnum \label{ucIO}:] Input/Output devices
-  (Input: File and/or Keyboard, Output: File, Memory, and/or Screen).
-\item ...
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucInputFormat}:] File format of input data.
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucOutputFormat}:] File format of output audio data.
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucEditing}:] Post-generation editing and progress saving.
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucNotation}:] Choice of sheet music notation.
+  \item[\refstepcounter{ucnum} \uctheucnum \label{ucUI}:] User interface features, requirements, usability, styling, etc.
+  \item[\refstepcounter{ucnum} \uctheucnum \label{nfrStability}:] Non-functional requirements are unlikely to change.
 \end{description}
 
 \section{Module Hierarchy} \label{SecMH}
@@ -188,7 +192,7 @@ decisions will be changed.
 This section provides an overview of the module design. Modules are summarized
 in a hierarchy decomposed by secrets in Table \ref{TblMH}. The modules listed
 below, which are leaves in the hierarchy tree, are the modules that will
-actually be implemented.
+be implemented.
 
 \begin{description}
 \item [\refstepcounter{mnum} \mthemnum \label{mHH}:] Hardware-Hiding Module
@@ -200,31 +204,33 @@ actually be implemented.
 \item [\refstepcounter{mnum} \mthemnum \label{mARP}:] Audio Recording/Playback Module
 \end{description}
 
-
 \begin{table}[h!]
-\centering
-\begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
-\toprule
-\textbf{Level 1} & \textbf{Level 2}\\
-\midrule
-
-{Hardware-Hiding Module} & ~ \\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} & User Interface\\
-& Score Generation\\
-& File Format Conversion\\
-\midrule
-
-\multirow{3}{0.3\textwidth}{Software Decision Module} & Raw Signal Processing\\
-& Audio Feature Extraction\\
-& Audio Recording/Playback\\
-\bottomrule
-
-\end{tabular}
-\caption{Module Hierarchy}
-\label{TblMH}
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.6\textwidth}}
+  \toprule
+  \textbf{Level 1} & \textbf{Level 2}\\
+  \midrule
+  
+  {Hardware-Hiding Module} & -\\
+  \midrule
+  
+  \multirow{3}{0.3\textwidth}{Behaviour-Hiding Module} 
+  & User Interface Module \\
+  & Score Generation Module \\
+  & File Format Conversion Module \\
+  \midrule
+  
+  \multirow{3}{0.3\textwidth}{Software Decision Module} 
+  & Raw Signal Processing Module \\
+  & Audio Feature Extraction Module \\
+  & Audio Recording and Playback Module \\
+  \bottomrule
+  
+  \end{tabular}
+  \caption{Module Hierarchy}
+  \label{TblMH}
 \end{table}
+  
 
 \section{Connection Between Requirements and Design} \label{SecConnection}
 
@@ -235,20 +241,19 @@ between requirements and modules is listed in Table~\ref{TblRT}.
 \section{Module Decomposition} \label{SecMD}
 
 Modules are decomposed according to the principle of ``information hiding''
-proposed by \citet{ParnasEtAl1984}. The \emph{Secrets} field in a module
+proposed by Parnas et al. (1984) . The \emph{Secrets} field in a module
 decomposition is a brief statement of the design decision hidden by the
 module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
 implementing software is given under the \emph{Implemented By} title. If the
 entry is \emph{OS}, this means that the module is provided by the operating
-system or by standard programming language libraries.  \emph{\progname{}} means the
+system or by standard programming language libraries. \emph{\progname{}} means the
 module will be implemented by the \progname{} software.
-
-Only the leaf modules in the hierarchy have to be implemented. If a dash
+Only the leaf modules in the hierarchy will be implemented. If a dash
 (\emph{--}) is shown, this means that the module is not a leaf and will not have
 to be implemented.
 
-\subsection{Hardware Hiding Modules (\mref{mHH})}
+\subsection{Hardware Hiding Module (\mref{mHH})}
 
 \begin{description}
 \item[Secrets:]The data structure and algorithm used to implement the virtual
@@ -259,11 +264,11 @@ to be implemented.
 \item[Implemented By:] OS
 \end{description}
 
-\subsection{Behaviour-Hiding Module}
+\subsection{Behaviour-Hiding Modules}
 
 \begin{description}
-\item[Secrets:]The contents of the required behaviours.
-\item[Services:]Includes programs that provide externally visible behaviour of
+\item[Secrets:] The contents of the required behaviours.
+\item[Services:] Includes programs that provide externally visible behaviour of
   the system as specified in the software requirements specification (SRS)
   documents. This module serves as a communication layer between the
   hardware-hiding module and the software decision module. The programs in this
@@ -271,21 +276,37 @@ to be implemented.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Input Format Module (\mref{mInput})}
+\subsubsection{User Interface Module (\mref{mUI})}
 
 \begin{description}
-\item[Secrets:]The format and structure of the input data.
-\item[Services:]Converts the input data into the data structure used by the
-  input parameters module.
-\item[Implemented By:] [Your Program Name Here]
-\item[Type of Module:] [Record, Library, Abstract Object, or Abstract Data Type]
-  [Information to include for leaf modules in the decomposition by secrets tree.]
+\item[Secrets:] Style and layout standards, user input management, and event- and display-handling.
+\item[Services:] Provides the user with an intuitive, graphical interface for interacting with the system.
+  Maps user input to appropriate system functions. Dynamically updates the display to reflect user interactions.
+\item[Implemented By:] ScoreGen.
+\item[Type of Module:] Unsure
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Score Generation Module (\mref{mSG})}
 
+\begin{description}
+\item[Secrets:] Musical notation standards and conventions used by the system.
+\item[Services:] Ends the audio to sheet music transcription pipeline by providing the user with viewable, human-readable sheet music.
+  Maps pre-processed audio data to elements used by viewable or exportable file formats such as MusicXML, PDF, etc.
+  Renders the viewable sheet music for the UI to display to the user.
+\item[Implemented By:] ScoreGen.
+\item[Type of Module:] Library, contains reusable routines.
+\end{description}
 
-\subsection{Software Decision Module}
+\subsubsection{File Format Conversion Module (\mref{mFFC})}
+
+\begin{description}
+\item[Secrets:] Details of reading and writing to files in order to perform conversions from one file format to another.
+\item[Services:] Converts files to other supported formats (e.g., PDF to MIDI).
+\item[Implemented By:] OS, external libraries.
+\item[Type of Module:] Library, contains reusable routines for file format conversions.
+\end{description}
+
+\subsection{Software Decision Modules}
 
 \begin{description}
 \item[Secrets:] The design decision based on mathematical theorems, physical
@@ -293,12 +314,43 @@ to be implemented.
   \emph{not} described in the SRS.
 \item[Services:] Includes data structure and algorithms used in the system that
   do not provide direct interaction with the user. 
-  % Changes in these modules are more likely to be motivated by a desire to
-  % improve performance than by externally imposed changes.
 \item[Implemented By:] --
 \end{description}
 
-\subsubsection{Etc.}
+\subsubsection{Raw Signal Processing Module (\mref{mRSM})}
+
+\begin{description}
+\item[Secrets:] The underlying mathematical and physical principles that govern sound waves and their transformation into digital representations.
+  Techniques used to transform time domain audio signals into the frequency domain.
+\item[Services:] Digital signal processing.
+  Takes in raw audio data and transforms them into frequency domain representations.
+  Provides the system with data prepared for subsequent audio feature extraction.
+\item[Implemented By:] External libraries.
+\item[Type of Module:] Library, contains reusable methods for digital signal processing.
+\end{description}
+
+\subsubsection{Audio Feature Extraction Module (\mref{mAFE})}
+
+\begin{description}
+\item[Secrets:] The techniques and algorithms chosen to derive pitch, key signature, rhythm, and timing from frequency domain data.
+\item[Services:] Detection and classification of musical elements such as pitches, key signature, rhythm, and timing.
+  Identifies pitches based on dominant frequencies.
+  Classifies musical characteristics including key signature, rhythm, and timing.
+  Provides the system with data prepared for subsequent score generation.
+\item[Implemented By:] External libraries.
+\item[Type of Module:] Library, contains reusable methods for extracting musical elements from pre-processed data.
+\end{description}
+
+\subsubsection{Audio Recording and Playback Module (\mref{mARP})}
+
+\begin{description}
+\item[Secrets:] Audio input and output management and related device-specific configurations.
+\item[Services:] Allows the user to capture audio with a device of their choosing and to listen to their recordings.
+  Sets and configures input and output streams for the device ScoreGen is running on.
+  User-directed recording (i.e. start, stop, playback).
+\item[Implemented By:] OS, external libraries.
+\item[Type of Module:] Library, contains reusable routines for accessing and configuring audio I/O.
+\end{description}
 
 \section{Traceability Matrix} \label{SecTM}
 
@@ -313,17 +365,25 @@ requirements and between the modules and the anticipated changes.
 \toprule
 \textbf{Req.} & \textbf{Modules}\\
 \midrule
-R1 & \mref{mHH}, \mref{mInput}, \mref{mParams}, \mref{mControl}\\
-R2 & \mref{mInput}, \mref{mParams}\\
-R3 & \mref{mVerify}\\
-R4 & \mref{mOutput}, \mref{mControl}\\
-R5 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R6 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}, \mref{mSeqDS}, \mref{mSolver}, \mref{mPlot}\\
-R7 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R8 & \mref{mOutput}, \mref{mEnergy}, \mref{mControl}, \mref{mSeqDS}, \mref{mPlot}\\
-R9 & \mref{mVerifyOut}\\
-R10 & \mref{mOutput}, \mref{mODEs}, \mref{mControl}\\
-R11 & \mref{mOutput}, \mref{mODEs}, \mref{mEnergy}, \mref{mControl}\\
+FR-AI1 & \mref{mHH}, \mref{mARP}\\
+FR-AI2 & \mref{mARP}\\
+FR-AI3 & \mref{mUI}, \mref{mRSM}\\
+FR-AI4 & \mref{mUI}\\
+FR-SP1 & \mref{mRSM}\\
+FR-SP2 & \mref{mAFE}\\
+FR-SP3 & \mref{mAFE}\\
+FR-SP4 & \mref{mRSM}\\
+FR-SP5 & \mref{mRSM}\\
+FR-SP6 & \mref{mRSM}\\
+FR-SMG1 & \mref{mSG}, \mref{mAFE}\\
+FR-SMG2 & \mref{mSG}, \mref{mAFE}\\
+FR-SMG3 & \mref{mUI}, \mref{mSG}\\
+FR-UI1 & \mref{mUI}, \mref{mARP}\\
+FR-UI2 & \mref{mUI}\\
+FR-UI3 & \mref{mUI}\\
+FR-UI4 & \mref{mUI}\\
+FR-SL1 & \mref{mUI}, \mref{mFFC}\\
+FR-SL2 & \mref{mUI}, \mref{mFFC}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Requirements and Modules}
@@ -392,7 +452,7 @@ needed. Drawings, Sketches, Figma}
 
 \section{Design of Communication Protocols}
 
-\wss{If appropriate}
+N/A.
 
 \section{Timeline}
 
@@ -400,7 +460,7 @@ needed. Drawings, Sketches, Figma}
 
 \wss{You can point to GitHub if this information is included there}
 
-\bibliographystyle {plainnat}
+\bibliographystyle{plainnat}
 \bibliography{../../../refs/References}
 
 \newpage{}
