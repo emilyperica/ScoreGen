@@ -19,6 +19,9 @@
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{fullpage}
+\usepackage{xr}
+\usepackage{hyperref}
+\externaldocument{../SoftArchitecture/MG}
 
 \hypersetup{
 bookmarks=true,     % show bookmarks bar?
@@ -70,7 +73,7 @@ Date 2 & 1.1 & Notes\\
     \item \textbf{M3}: Score Generation Module
     \item \textbf{M4}: Raw Signal Processing
     \item \textbf{M5}: Audio Feature Extraction (note, key, sig, etc.)
-    \item \textbf{M6}: Import/Export Module for File Format Conversions
+    \item \textbf{M6}: File Format Conversions Module
     \item \textbf{M7}: Audio Recording and Playback Module
 \end{itemize}
 
@@ -159,10 +162,10 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
-\section{MIS of Hardware Hiding Module} \label{M1}
+\section{\hyperref[mHH]{MIS of Hardware-Hiding Module}} \label{M1}
 
 \subsection{Module}  
-Hardware Hiding Module  
+Hardware-Hiding Module  
 
 \subsection{Uses}  
 Provides abstraction for hardware (microphone and speakers), simplifying access for other modules.  
@@ -205,7 +208,7 @@ sendToAudioOutput & audioData & None & PlaybackError \\
 
 \subsubsection{Assumptions}  
 \begin{itemize}  
-    \item Functional microphone and speaker hardware is available.  
+    \item Functional hardware to take in user audio (i.e. microphone) and play out audio (i.e. speaker, headphones) is available.
     \item Necessary drivers are installed.  
 \end{itemize}  
 
@@ -229,7 +232,7 @@ sendToAudioOutput & audioData & None & PlaybackError \\
     \item \texttt{configureDeviceSettings(deviceType)}  
 \end{itemize}  
 
-\section{MIS of User Interface Module} \label{M2}  
+\section{\hyperref[mUI]{MIS of User Interface Module}} \label{M2}  
 
 \subsection{Module}  
 User Interface Module  
@@ -296,13 +299,13 @@ triggerPlayback & audioData & None & PlaybackError \\
     \item \texttt{renderScreen(screenType)}  
 \end{itemize}  
 
-\section{MIS of Score Generation Module} \label{M3}  
+\section{\hyperref[mSG]{MIS of Score Generation Module}} \label{M3}  
 
 \subsection{Module}  
 Score Generation Module  
 
 \subsection{Uses}  
-Generates musical scores (PDF format) from note sequences processed by previous modules.  
+Generates musical scores in compressed musicXML format (.mxl) from note sequences processed by previous modules.  
 
 \subsection{Syntax}  
 
@@ -318,7 +321,7 @@ Generates musical scores (PDF format) from note sequences processed by previous 
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
-generateScore & noteSequence & pdfFile & GenerationError \\  
+generateScore & noteSequence & .mxl file & GenerationError \\  
 customizeScoreSettings & settings & None & ValidationError \\  
 \hline  
 \end{tabular}  
@@ -339,14 +342,14 @@ customizeScoreSettings & settings & None & ValidationError \\
 \subsubsection{Assumptions}  
 \begin{itemize}  
     \item Input note sequences are formatted correctly.  
-    \item The file system is writable for saving PDFs.  
+    \item The file system is writable for saving .mxl files.  
 \end{itemize}  
 
 \subsubsection{Access Routine Semantics}  
 
 \noindent \texttt{generateScore(noteSequence)}:
 \begin{itemize}  
-    \item \textbf{Output:} A PDF representing the musical score.  
+    \item \textbf{Output:} An mxl file representing the musical score.  
     \item \textbf{Exception:} \texttt{GenerationError} if input is invalid.  
 \end{itemize}  
 
@@ -362,7 +365,7 @@ customizeScoreSettings & settings & None & ValidationError \\
     \item \texttt{renderPDF(noteSequence, scoreSettings)}  
 \end{itemize}  
 
-\section{MIS of Raw Signal Processing Module} \label{M4}  
+\section{\hyperref[mRSM]{MIS of Raw Signal Processing Module}} \label{M4}  
 
 \subsection{Module}  
 Raw Signal Processing Module  
@@ -424,11 +427,12 @@ adjustSamplingRate & audioData, rate & resampledAudioData & ResamplingError \\
 
 \subsubsection{Local Functions}  
 \begin{itemize}  
+    \item \texttt{computeSpectralFeatures(audioData)}
     \item \texttt{applyFilter(rawAudioData, filterParameters)}  
     \item \texttt{resample(audioData, rate)}  
 \end{itemize}  
 
-\section{MIS of Audio Feature Extraction Module} \label{M5}  
+\section{\hyperref[mAFE]{MIS of Audio Feature Extraction Module}} \label{M5}  
 
 \subsection{Module}  
 Audio Feature Extraction Module  
@@ -489,17 +493,15 @@ configureFeatureSettings & settings & None & ValidationError \\
 
 \subsubsection{Local Functions}  
 \begin{itemize}  
-    \item \texttt{computeSpectralFeatures(audioData)}  
     \item \texttt{calculateTempoDynamics(audioData)}  
 \end{itemize}  
 
-\section{MIS of Import/Export Module for File Format Conversions} \label{M6}  
+\section{\hyperref[mFFC]{MIS of File Format Conversions Module}} \label{M6}  
 
 \subsection{Module}  
-Import/Export Module  
-
+File Format Conversions Module
 \subsection{Uses}  
-Handles conversion of input and output files between supported formats (e.g., WAV, MP3, PDF).  
+Handles conversion of input and output files between supported formats  (.mxl \Rightarrow PDF).  
 
 \subsection{Syntax}  
 
@@ -515,7 +517,7 @@ Handles conversion of input and output files between supported formats (e.g., WA
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
-importFile & filePath, format & rawAudioData & ImportError \\  
+importFile & filePath, format & mxl data & ImportError \\  
 exportFile & data, format, filePath & None & ExportError \\  
 \hline  
 \end{tabular}  
@@ -543,7 +545,7 @@ exportFile & data, format, filePath & None & ExportError \\
 
 \noindent \texttt{importFile(filePath, format)}:
 \begin{itemize}  
-    \item \textbf{Output:} Raw audio data extracted from the specified file.  
+    \item \textbf{Output:} .mxl data extracted from Raw audio input.  
     \item \textbf{Exception:} \texttt{ImportError} if the file or format is invalid.  
 \end{itemize}  
 
@@ -559,7 +561,7 @@ exportFile & data, format, filePath & None & ExportError \\
     \item \texttt{writeToFile(data, format, filePath)}  
 \end{itemize}  
 
-\section{MIS of Audio Recording and Playback Module} \label{M7}  
+\section{\hyperref[mARP]{MIS of Audio Recording and Playback Module}} \label{M7}  
 
 \subsection{Module}  
 Audio Recording and Playback Module  
