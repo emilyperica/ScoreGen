@@ -135,19 +135,20 @@ potential readers of this document are as follows:
   decomposition, and flexibility of the design.
 \end{itemize}
 
-The rest of the document is organized as follows, as per the rules laid out by 
-Parnas et al. (1984). Section 4 lists the anticipated and unlikely changes 
-of the software requirements. Section 5 summarizes the module decomposition that was 
-constructed according to the likely changes. Section 6 specifies the connections 
-between the software requirements and the modules. Section 7 gives a detailed 
-description of the modules. Section 8 includes two traceability matrices. One checks 
-the completeness of the design against the requirements provided in the SRS. 
-The other shows the relation between anticipated changes and the modules. 
-Section 9 describes the use relation between modules. Section 10 illustrates the design 
+The rest of the document is organized as follows. Section
+\ref{SecChange} lists the anticipated and unlikely changes of the software
+requirements. Section \ref{SecMH} summarizes the module decomposition that
+was constructed according to the likely changes. Section \ref{SecConnection}
+specifies the connections between the software requirements and the
+modules. Section \ref{SecMD} gives a detailed description of the
+modules. Section \ref{SecTM} includes two traceability matrices. One checks
+the completeness of the design against the requirements provided in the SRS. The
+other shows the relation between anticipated changes and the modules. Section
+\ref{SecUse} describes the use relation between modules. Section \ref{SecUI} illustrates the design 
 of the user interface through drawings, sketches, and design tool prototyping 
-(e.g. Figma, Marvel, etc.). Section 11 describes the design of communication protocols 
+(e.g. Figma, Marvel, etc.). Section \ref{SecCP} describes the design of communication protocols 
 used by the system, in the case of ScoreGen, this section is not relevant. Finally, section 
-12 outlines the schedule of tasks related to the development of ScoreGen as well as the 
+\ref{SecTL} outlines the schedule of tasks related to the development of ScoreGen as well as the 
 development team members responsible for these tasks.
 
 \section{Anticipated and Unlikely Changes} \label{SecChange}
@@ -165,6 +166,7 @@ require changing the one module that hides the associated decision. The approach
 adapted here adheres to the development principle called design for change.
 
 \begin{description}
+  \item[\refstepcounter{acnum} \actheacnum \label{acHardware}:] The specific hardware on which the software is running.
   \item[\refstepcounter{acnum} \actheacnum \label{acExtractionMapping}:] Musical element extraction and mapping techniques.
   \item[\refstepcounter{acnum} \actheacnum \label{acMonophonic}:] Monophonic audio processing algorithm(s).
   \item[\refstepcounter{acnum} \actheacnum \label{acComplex}:] Complex audio processing algorithm(s).
@@ -241,7 +243,7 @@ between requirements and modules is listed in Table~\ref{TblRT}.
 \section{Module Decomposition} \label{SecMD}
 
 Modules are decomposed according to the principle of ``information hiding''
-proposed by Parnas et al. (1984) . The \emph{Secrets} field in a module
+proposed by \citep{ParnasEtAl1984} . The \emph{Secrets} field in a module
 decomposition is a brief statement of the design decision hidden by the
 module. The \emph{Services} field specifies \emph{what} the module will do
 without documenting \emph{how} to do it. For each module, a suggestion for the
@@ -445,16 +447,16 @@ arrows in the diagram typically correspond to the presence of import statement.}
 
 %\section*{References}
 
-\section{User Interfaces}
+\section{User Interfaces} \label{SecUI}
 
 \wss{Design of user interface for software and hardware.  Attach an appendix if
 needed. Drawings, Sketches, Figma}
 
-\section{Design of Communication Protocols}
+\section{Design of Communication Protocols} \label{SecCP}
 
 N/A.
 
-\section{Timeline}
+\section{Timeline} \label{SecTL}
 
 \wss{Schedule of tasks and who is responsible}
 
