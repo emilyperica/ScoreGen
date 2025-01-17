@@ -1,18 +1,28 @@
-#ifndef DETECT_NOTE_DURATION_H
-#define DETECT_NOTE_DURATION_H
+#ifndef NOTE_DETECTION_H
+#define NOTE_DETECTION_H
+
+#define _USE_MATH_DEFINES
 
 #include <vector>
+#include <iostream>
+#include <cmath>
+#include <map>
 #include <string>
-#include <utility> // For std::pair
+#include <sndfile.h>
+#include <fftw3.h>
 
-// Structure to store detected note information
+using namespace std;
+
 struct Note {
-    double start_time;  // in seconds
-    double end_time;    // in seconds
-    std::string length; // Note length (Whole, Half, Quarter, etc.)
+    float startTime; // seconds
+    float endTime;   // seconds
+    string pitch;
+    string noteType;
 };
 
-// Function to assign note lengths based on time signature and BPM
-std::vector<std::pair<std::string, double>> detectNoteDuration(float* buf, int numFrames, int sampleRate, int channels, double tempo);
+string getNoteName(double freq);
+string determineNoteType(float noteDuration, int bpm, int beatsPerBar);
+string detectPitch(vector<float> buf, size_t start, size_t end, int sample_rate);
+vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels);
 
-#endif // DETECT_NOTE_DURATION_H
+#endif
