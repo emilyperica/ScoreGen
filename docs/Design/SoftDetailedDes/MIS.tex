@@ -663,32 +663,31 @@ graduate attribute of Problem Analysis and Design.
 
 \begin{enumerate}
   \item What went well while writing this deliverable?  \\ \\
-  Emily: \\ \\
+  Emily: Since a lot of the code has already been written (or at least planned out), the process of identifying modules and their behaviours for this deliverable went quickly and made the whole process a lot simpler.\\ \\
 
-  Mark: \\ \\
+  Mark: This document was helpful in creating a better understanding of the future of ScoreGen at a more practical, rather than conceptual level. \\ \\
 
-  Ian: \\ \\
+  Ian: Splitting the work and dividing into sub teams helped speed up the process of breaking down the two documents and their sections. This was good for work efficiency. Communication before the deadline of this deliverable was productive and informative. \\ \\
 
-  Jackson: \\ \\
+  Jackson: I think this deliverable was a good step to lay out all of our plans for our code. This will honestly benefit us in our development of the app itself, as having this to look back at will benefit us greatly.  \\ \\
   
   \item What pain points did you experience during this deliverable, and how
     did you resolve them? \\ \\
 
-    Emily: \\ \\
+    Emily: Making the traceability matrix between modules and anticipated changes proved to be a bit of a challenge. We were directed to identify anticipated changes that ideally affect only a single module, which forced me to think more critically about each AC and why they are needed. \\ \\
 
-    Mark: \\ \\
+    Mark: As some modules are in the process of completion it was difficult to define specific terms that hadn’t yet been implemented, thus completing the documentation required a lot of communication and assumptions. It is also highly likely that changes will need to be made in future revisions of this document to align with design choices that occur later during implementation. \\ \\
 
-    Ian: \\ \\
+    Ian:  One pain point was deciding how abstract some of the descriptions of the module secrets/services in the module guide. A balance had to be struck between being able to adequately describe something vs explaining too many details/choices. This was easily solved by re-reading the MG template, and by taking a look at previous students’ work and how they handle this. \\ \\
 
-    Jackson: \\ \\
+    Jackson: This deliverable was due very soon after the winter break, and getting back into the flow of school plus reconnecting with the group and getting everyone on the same page was tough. Additionally, breaking down the modules into their specifics proved tough, as creating detailed information about our implementation at this stage. At the same time, the app is still being developed, which was difficult to do. \\ \\
 
     
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
   were not, why, and where did they come from? \\ \\
 
-  No changes in design occurred during initial creation of this documentation. Certain design choices were made earlier in the planning stage from discussion with clients \\
-
+  The majority of design decisions made up until this point did not stem from speaking to clients. The main decisions made such as the algorithmic choices and which file formats to support were decisions made based on the team’s knowledge of signals and systems and human-computer interfacing. These decisions included selecting the Fast Fourier Transform for pitch detection due to its performance and efficiency and supporting widely used file formats for distribution purposes (PDF) and musical representation (musicXML).
 
   \item While creating the design doc, what parts of your other documents (e.g.
   requirements, hazard analysis, etc), if any, needed to be changed, and why? \\ \\
@@ -702,6 +701,8 @@ graduate attribute of Problem Analysis and Design.
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
   (LO\_Explores)
+
+  \\ We considered several design solutions, including purely rule-based algorithms and advanced signal processing techniques. The rule-based approach would have been easier to implement but lacks the flexibility to interpret complex musical nuances like dynamics and articulation. Advanced signal processing, while more capable of handling these intricacies, would require more computational resources and expertise in the field. After weighing the tradeoffs, we chose a hybrid approach that combines signal processing with rule-based methods. This design provides a balance between accuracy, flexibility, and resource efficiency, ensuring a strong foundation for transcription while leaving room for future refinement.
 \end{enumerate}
 
 
