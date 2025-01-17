@@ -19,6 +19,9 @@
 \usepackage[section]{placeins}
 \usepackage{caption}
 \usepackage{fullpage}
+\usepackage{xr}
+\usepackage{hyperref}
+\externaldocument{../SoftArchitecture/MG}
 
 \hypersetup{
 bookmarks=true,     % show bookmarks bar?
@@ -62,9 +65,17 @@ Date 2 & 1.1 & Notes\\
 
 \section{Symbols, Abbreviations and Acronyms}
 
-See SRS Documentation at \wss{give url}
-
-\wss{Also add any additional symbols, abbreviations or acronyms}
+\begin{itemize}
+    \item \textbf{SRS}: System Requirements Specifications
+    \item \textbf{MG}: Module Guide
+    \item \textbf{M1}: Hardware-Hiding Module
+    \item \textbf{M2}: User Interface Module
+    \item \textbf{M3}: Score Generation Module
+    \item \textbf{M4}: Raw Signal Processing
+    \item \textbf{M5}: Audio Feature Extraction (note, key, sig, etc.)
+    \item \textbf{M6}: File Format Conversions Module
+    \item \textbf{M7}: Audio Recording and Playback Module
+\end{itemize}
 
 \newpage
 
@@ -75,13 +86,8 @@ See SRS Documentation at \wss{give url}
 \pagenumbering{arabic}
 
 \section{Introduction}
+This document details the Module Interface Specifications for ScoreGen. A service designed to transcribe user-recorded musical compositions into accurate sheet music by determining pitch, duration, tempo, and more advanced musical features. The service also aims to provide a user interface to use and interact with the product. Complementary documents include the SRS and MG documents. The full documentation can be found on \href{https://github.com/emilyperica/ScoreGen}{github}.
 
-The following document details the Module Interface Specifications for
-\wss{Fill in your project name and description}
-
-Complementary documents include the System Requirement Specifications
-and Module Guide.  The full documentation and implementation can be
-found at \url{...}.  \wss{provide the url for your repo}
 
 \section{Notation}
 
@@ -156,76 +162,480 @@ The following table is taken directly from the Module Guide document for this pr
 \newpage
 ~\newpage
 
-\section{MIS of \wss{Module Name}} \label{Module} \wss{Use labels for
-  cross-referencing}
+\section{\hyperref[mHH]{MIS of Hardware-Hiding Module}} \label{M1}
 
-\wss{You can reference SRS labels, such as R\ref{R_Inputs}.}
+\subsection{Module}  
+Hardware-Hiding Module  
 
-\wss{It is also possible to use \LaTeX for hypperlinks to external documents.}
+\subsection{Uses}  
+Provides abstraction for hardware (microphone and speakers), simplifying access for other modules.  
 
-\subsection{Module}
+\subsection{Syntax}  
 
-\wss{Short name for the module}
-
-\subsection{Uses}
-
-
-\subsection{Syntax}
-
-\subsubsection{Exported Constants}
-
-\subsubsection{Exported Access Programs}
-
-\begin{center}
-\begin{tabular}{p{2cm} p{4cm} p{4cm} p{2cm}}
-\hline
-\textbf{Name} & \textbf{In} & \textbf{Out} & \textbf{Exceptions} \\
-\hline
-\wss{accessProg} & - & - & - \\
-\hline
-\end{tabular}
-\end{center}
-
-\subsection{Semantics}
-
-\subsubsection{State Variables}
-
-\wss{Not all modules will have state variables.  State variables give the module
-  a memory.}
-
-\subsubsection{Environment Variables}
-
-\wss{This section is not necessary for all modules.  Its purpose is to capture
-  when the module has external interaction with the environment, such as for a
-  device driver, screen interface, keyboard, file, etc.}
-
-\subsubsection{Assumptions}
-
-\wss{Try to minimize assumptions and anticipate programmer errors via
-  exceptions, but for practical purposes assumptions are sometimes appropriate.}
-
-\subsubsection{Access Routine Semantics}
-
-\noindent \wss{accessProg}():
+\subsubsection{Exported Constants}  
 \begin{itemize}
-\item transition: \wss{if appropriate} 
-\item output: \wss{if appropriate} 
-\item exception: \wss{if appropriate} 
-\end{itemize}
+    \item \texttt{DEFAULT\_MICROPHONE}  
+    \item \texttt{DEFAULT\_AUDIO\_OUTPUT}  
+\end{itemize}  
 
-\wss{A module without environment variables or state variables is unlikely to
-  have a state transition.  In this case a state transition can only occur if
-  the module is changing the state of another module.}
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{5cm}|p{2cm}|p{4cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+initializeMicrophone & None & None & InitializationError \\  
+initializeAudioOutput & None & None & InitializationError \\  
+readMicrophoneBuffer & None & rawAudioData & ReadError \\  
+sendToAudioOutput & audioData & None & PlaybackError \\  
+\hline  
+\end{tabular}  
+\end{center}  
 
-\wss{Modules rarely have both a transition and an output.  In most cases you
-  will have one or the other.}
+\subsection{Semantics}  
 
-\subsubsection{Local Functions}
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item \texttt{microphoneState}  
+    \item \texttt{audioOutputState}  
+\end{itemize}  
 
-\wss{As appropriate} \wss{These functions are for the purpose of specification.
-  They are not necessarily something that is going to be implemented
-  explicitly.  Even if they are implemented, they are not exported; they only
-  have local scope.}
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item \texttt{hardwareDriverLibrary}  
+    \item \texttt{deviceConfig}  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item Functional hardware to take in user audio (i.e. microphone) and play out audio (i.e. speaker, headphones) is available.
+    \item Necessary drivers are installed.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{initializeMicrophone}():
+\begin{itemize}  
+    \item \textbf{Transition:} Sets \texttt{microphoneState} to "active".  
+    \item \textbf{Exception:} \texttt{InitializationError} if device fails to initialize.  
+\end{itemize}  
+
+\noindent \texttt{sendToAudioOutput(audioData)}:
+\begin{itemize}  
+    \item \textbf{Transition:} Sends \texttt{audioData} to hardware.  
+    \item \textbf{Exception:} \texttt{PlaybackError} if playback fails.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{detectAvailableHardware()}  
+    \item \texttt{configureDeviceSettings(deviceType)}  
+\end{itemize}  
+
+\section{\hyperref[mUI]{MIS of User Interface Module}} \label{M2}  
+
+\subsection{Module}  
+User Interface Module  
+
+\subsection{Uses}  
+Defines the interaction mechanisms for uploading audio, recording, playback, and accessing generated PDFs.  
+
+\subsection{Syntax}  
+
+\subsubsection{Exported Constants}  
+\begin{itemize}
+    \item \texttt{DEFAULT\_THEME}  
+    \item \texttt{MAX\_UPLOAD\_SIZE}  
+\end{itemize}  
+
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{5cm}|p{2cm}|p{4cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+displayUploadInterface & None & None & RenderError \\  
+triggerPlayback & audioData & None & PlaybackError \\  
+\hline  
+\end{tabular}  
+\end{center}  
+
+\subsection{Semantics}  
+
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item \texttt{currentScreen}  
+    \item \texttt{userPreferences}  
+\end{itemize}  
+
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item \texttt{displayDriver}  
+    \item \texttt{inputDevices}  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item User devices support modern UI rendering.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{displayUploadInterface}():
+\begin{itemize}  
+    \item \textbf{Transition:} Sets \texttt{currentScreen} to "Upload".  
+    \item \textbf{Exception:} \texttt{RenderError} if rendering fails.  
+\end{itemize}  
+
+\noindent \texttt{triggerPlayback(audioData)}:
+\begin{itemize}  
+    \item \textbf{Transition:} Initiates playback of provided \texttt{audioData}.  
+    \item \textbf{Exception:} \texttt{PlaybackError} if audio fails to play.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{validateUserInput()}  
+    \item \texttt{renderScreen(screenType)}  
+\end{itemize}  
+
+\section{\hyperref[mSG]{MIS of Score Generation Module}} \label{M3}  
+
+\subsection{Module}  
+Score Generation Module  
+
+\subsection{Uses}  
+Generates musical scores in compressed musicXML format (.mxl) from note sequences processed by previous modules.  
+
+\subsection{Syntax}  
+
+\subsubsection{Exported Constants}  
+\begin{itemize}
+    \item \texttt{DEFAULT\_FONT\_STYLE}  
+    \item \texttt{DEFAULT\_PAGE\_SIZE}  
+\end{itemize}  
+
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{5cm}|p{4cm}|p{2cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+generateScore & noteSequence & .mxl file & GenerationError \\  
+customizeScoreSettings & settings & None & ValidationError \\  
+\hline  
+\end{tabular}  
+\end{center}  
+
+\subsection{Semantics}  
+
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item \texttt{scoreSettings}  
+\end{itemize}  
+
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item \texttt{fileSystemAccess}  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item Input note sequences are formatted correctly.  
+    \item The file system is writable for saving .mxl files.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{generateScore(noteSequence)}:
+\begin{itemize}  
+    \item \textbf{Output:} An mxl file representing the musical score.  
+    \item \textbf{Exception:} \texttt{GenerationError} if input is invalid.  
+\end{itemize}  
+
+\noindent \texttt{customizeScoreSettings(settings)}:
+\begin{itemize}  
+    \item \textbf{Transition:} Updates \texttt{scoreSettings} with new values.  
+    \item \textbf{Exception:} \texttt{ValidationError} if settings are invalid.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{validateSettings(settings)}  
+    \item \texttt{renderPDF(noteSequence, scoreSettings)}  
+\end{itemize}  
+
+\section{\hyperref[mRSM]{MIS of Raw Signal Processing Module}} \label{M4}  
+
+\subsection{Module}  
+Raw Signal Processing Module  
+
+\subsection{Uses}  
+Processes raw audio signals to prepare them for feature extraction.  
+
+\subsection{Syntax}  
+
+\subsubsection{Exported Constants}  
+\begin{itemize}
+    \item \texttt{DEFAULT\_SAMPLING\_RATE}  
+    \item \texttt{DEFAULT\_FILTER\_SETTINGS}  
+\end{itemize}  
+
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+filterSignal & rawAudioData & filteredAudioData & FilterError \\  
+adjustSamplingRate & audioData, rate & resampledAudioData & ResamplingError \\  
+\hline  
+\end{tabular}  
+\end{center}  
+
+\subsection{Semantics}  
+
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item \texttt{currentSamplingRate}  
+    \item \texttt{filterParameters}  
+\end{itemize}  
+
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item None  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item Input audio data is in a readable format.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{filterSignal(rawAudioData)}:
+\begin{itemize}  
+    \item \textbf{Output:} Filters noise and returns cleaned audio data.  
+    \item \textbf{Exception:} \texttt{FilterError} if filtering fails.  
+\end{itemize}  
+
+\noindent \texttt{adjustSamplingRate(audioData, rate)}:
+\begin{itemize}  
+    \item \textbf{Output:} Resamples audioData to the desired rate.  
+    \item \textbf{Exception:} \texttt{ResamplingError} if resampling fails.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{computeSpectralFeatures(audioData)}
+    \item \texttt{applyFilter(rawAudioData, filterParameters)}  
+    \item \texttt{resample(audioData, rate)}  
+\end{itemize}  
+
+\section{\hyperref[mAFE]{MIS of Audio Feature Extraction Module}} \label{M5}  
+
+\subsection{Module}  
+Audio Feature Extraction Module  
+
+\subsection{Uses}  
+Extracts meaningful features from processed audio for use in score generation.  
+
+\subsection{Syntax}  
+
+\subsubsection{Exported Constants}  
+\begin{itemize}
+    \item \texttt{DEFAULT\_FEATURE\_SET}  
+    \item \texttt{DEFAULT\_WINDOW\_SIZE}  
+\end{itemize}  
+
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{4.5cm}|p{4cm}|p{2.5cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+extractFeatures & processedAudioData & featureSet & ExtractionError \\  
+configureFeatureSettings & settings & None & ValidationError \\  
+\hline  
+\end{tabular}  
+\end{center}  
+
+\subsection{Semantics}  
+
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item \texttt{featureSettings}  
+\end{itemize}  
+
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item None  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item Input audio has been processed by the Raw Signal Processing Module.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{extractFeatures(processedAudioData)}:
+\begin{itemize}  
+    \item \textbf{Output:} Extracted features such as pitch, tempo, and dynamics.  
+    \item \textbf{Exception:} \texttt{ExtractionError} if feature extraction fails.  
+\end{itemize}  
+
+\noindent \texttt{configureFeatureSettings(settings)}:
+\begin{itemize}  
+    \item \textbf{Transition:} Updates \texttt{featureSettings} with new values.  
+    \item \textbf{Exception:} \texttt{ValidationError} if settings are invalid.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{calculateTempoDynamics(audioData)}  
+\end{itemize}  
+
+\section{\hyperref[mFFC]{MIS of File Format Conversions Module}} \label{M6}  
+
+\subsection{Module}  
+File Format Conversions Module
+\subsection{Uses}  
+Handles conversion of input and output files between supported formats  (.mxl \Rightarrow PDF).  
+
+\subsection{Syntax}  
+
+\subsubsection{Exported Constants}  
+\begin{itemize}
+    \item \texttt{SUPPORTED\_IMPORT\_FORMATS}  
+    \item \texttt{SUPPORTED\_EXPORT\_FORMATS}  
+\end{itemize}  
+
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+importFile & filePath, format & mxl data & ImportError \\  
+exportFile & data, format, filePath & None & ExportError \\  
+\hline  
+\end{tabular}  
+\end{center}  
+
+\subsection{Semantics}  
+
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item None  
+\end{itemize}  
+
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item \texttt{fileSystemAccess}  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item The specified file path exists for import operations.  
+    \item The export destination is writable.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{importFile(filePath, format)}:
+\begin{itemize}  
+    \item \textbf{Output:} .mxl data extracted from Raw audio input.  
+    \item \textbf{Exception:} \texttt{ImportError} if the file or format is invalid.  
+\end{itemize}  
+
+\noindent \texttt{exportFile(data, format, filePath)}:
+\begin{itemize}  
+    \item \textbf{Output:} Saves data in the specified format at the given file path.  
+    \item \textbf{Exception:} \texttt{ExportError} if writing fails.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{convertToRawAudio(fileData, format)}  
+    \item \texttt{writeToFile(data, format, filePath)}  
+\end{itemize}  
+
+\section{\hyperref[mARP]{MIS of Audio Recording and Playback Module}} \label{M7}  
+
+\subsection{Module}  
+Audio Recording and Playback Module  
+
+\subsection{Uses}  
+Provides functionalities for recording audio through the microphone and playing back recorded or imported audio.  
+
+\subsection{Syntax}  
+
+\subsubsection{Exported Constants}  
+\begin{itemize}
+    \item \texttt{DEFAULT\_AUDIO\_FORMAT}  
+    \item \texttt{MAX\_RECORDING\_DURATION}  
+\end{itemize}  
+
+\subsubsection{Exported Access Programs}  
+\begin{center}  
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3cm}|}  
+\hline  
+\textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
+\hline  
+startRecording & None & None & RecordingError \\  
+stopRecording & None & rawAudioData & RecordingError \\  
+playAudio & audioData & None & PlaybackError \\  
+\hline  
+\end{tabular}  
+\end{center}  
+
+\subsection{Semantics}  
+
+\subsubsection{State Variables}  
+\begin{itemize}  
+    \item \texttt{isRecording}  
+    \item \texttt{currentAudioBuffer}  
+\end{itemize}  
+
+\subsubsection{Environment Variables}  
+\begin{itemize}  
+    \item \texttt{microphoneAccess}  
+    \item \texttt{speakerOutput}  
+\end{itemize}  
+
+\subsubsection{Assumptions}  
+\begin{itemize}  
+    \item Microphone and speaker are functional and accessible.  
+\end{itemize}  
+
+\subsubsection{Access Routine Semantics}  
+
+\noindent \texttt{startRecording()}:
+\begin{itemize}  
+    \item \textbf{Transition:} Sets \texttt{isRecording} to true and starts capturing audio from the microphone.  
+    \item \textbf{Exception:} \texttt{RecordingError} if the microphone is unavailable.  
+\end{itemize}  
+
+\noindent \texttt{stopRecording()}:
+\begin{itemize}  
+    \item \textbf{Output:} Captured audio as raw data.  
+    \item \textbf{Transition:} Sets \texttt{isRecording} to false.  
+    \item \textbf{Exception:} \texttt{RecordingError} if no recording is in progress.  
+\end{itemize}  
+
+\noindent \texttt{playAudio(audioData)}:
+\begin{itemize}  
+    \item \textbf{Output:} Plays the specified audio data through the speaker.  
+    \item \textbf{Exception:} \texttt{PlaybackError} if playback fails.  
+\end{itemize}  
+
+\subsubsection{Local Functions}  
+\begin{itemize}  
+    \item \texttt{captureMicrophoneInput()}  
+    \item \texttt{sendToSpeaker(audioData)}  
+\end{itemize}  
+
 
 \newpage
 
@@ -242,24 +652,48 @@ The following table is taken directly from the Module Guide document for this pr
 
 \section*{Appendix --- Reflection}
 
-\wss{Not required for CAS 741 projects}
-
 The information in this section will be used to evaluate the team members on the
 graduate attribute of Problem Analysis and Design.
 
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable?  \\ \\
+  Emily: \\ \\
+
+  Mark: \\ \\
+
+  Ian: \\ \\
+
+  Jackson: \\ \\
+  
   \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
+    did you resolve them? \\ \\
+
+    Emily: \\ \\
+
+    Mark: \\ \\
+
+    Ian: \\ \\
+
+    Jackson: \\ \\
+
+    
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from?
+  were not, why, and where did they come from? \\ \\
+
+  No changes in design occurred during initial creation of this documentation. Certain design choices were made earlier in the planning stage from discussion with clients \\
+
+
   \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), it any, needed to be changed, and why?
+  requirements, hazard analysis, etc), if any, needed to be changed, and why? \\ \\
+
+  N/A \\
   \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions)
+  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions) \\ \\
+
+  Our project aims to create as strong an ability as possible for non-technical musicians to create highly detailed notation, but there are intricacies that are extremely difficult to extract from audio alone. Features like staccato, crescendo, chords, grace notes, or tempo changes are difficult to differentiate from variance that occurs from regular human playing. Tackling this issue effectively would probably best be done with very advanced signal processing and personally trained, or fine-tuned machine learning models. Given more time, it would also be helpful to implement advanced options for users to maximise precision. If for example there is a music piece with lower confidence sections, such an area where there is a similar likelihood of a note being a fast-played 16th note, or a grace note, it could be possible for the user to toggle through most likely interpretations with playback to determine the ideal representation of their playing. \\
   \item Give a brief overview of other design solutions you considered.  What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
