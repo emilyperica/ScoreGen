@@ -399,17 +399,10 @@ FR-SL2 & \mref{mUI}, \mref{mFFC}\\
 \textbf{AC} & \textbf{Modules}\\
 \midrule
 \acref{acHardware} & \mref{mHH}\\
-\acref{acInput} & \mref{mInput}\\
-\acref{acParams} & \mref{mParams}\\
-\acref{acVerify} & \mref{mVerify}\\
-\acref{acOutput} & \mref{mOutput}\\
-\acref{acVerifyOut} & \mref{mVerifyOut}\\
-\acref{acODEs} & \mref{mODEs}\\
-\acref{acEnergy} & \mref{mEnergy}\\
-\acref{acControl} & \mref{mControl}\\
-\acref{acSeqDS} & \mref{mSeqDS}\\
-\acref{acSolver} & \mref{mSolver}\\
-\acref{acPlot} & \mref{mPlot}\\
+\acref{acExtractionMapping} & \mref{mAFE}\\
+\acref{acMonophonic} & \mref{mRSM}\\
+\acref{acComplex} & \mref{mRSM}\\
+\acref{acPerformance} & \mref{mRSM}\\
 \bottomrule
 \end{tabular}
 \caption{Trace Between Anticipated Changes and Modules}
@@ -429,18 +422,9 @@ the modules. It can be seen that the graph is a directed acyclic graph
 system, and modules in the higher level of the hierarchy are essentially simpler
 because they use modules from the lower levels.
 
-\wss{The uses relation is not a data flow diagram.  In the code there will often
-be an import statement in module A when it directly uses module B.  Module B
-provides the services that module A needs.  The code for module A needs to be
-able to see these services (hence the import statement).  Since the uses
-relation is transitive, there is a use relation without an import, but the
-arrows in the diagram typically correspond to the presence of import statement.}
-
-\wss{If module A uses module B, the arrow is directed from A to B.}
-
 \begin{figure}[H]
 \centering
-%\includegraphics[width=0.7\textwidth]{UsesHierarchy.png}
+\includegraphics[width=0.5\textwidth]{./images/ModuleGuideUseHierarchy.jpg}
 \caption{Use hierarchy among modules}
 \label{FigUH}
 \end{figure}
@@ -458,10 +442,33 @@ arrows in the diagram typically correspond to the presence of import statement.}
 N/A.
 
 \section{Timeline} \label{SecTL}
+The following table breaks down the tasks that must be completed in order to 
+accurately implement all modules of the software.
 
-\wss{Schedule of tasks and who is responsible}
-
-\wss{You can point to GitHub if this information is included there}
+\begin{table}[H]
+  \centering
+  \begin{tabular}{p{0.3\textwidth} p{0.3\textwidth} p{0.25\textwidth}}
+  \toprule
+  \textbf{Task} & \textbf{Developer} & \textbf{Completion Date}\\
+  \midrule
+  \mref{mUI} Implementation & Jackson & Jan 20/25\\
+  \mref{mUI} Unit Testing & Jackson & Jan 27/25\\
+  \mref{mSG} Implementation & Ian & Jan 20/25\\
+  \mref{mSG} Unit Testing & Ian & Jan 27/25\\
+  \mref{mRSM} Implementation & Emily, Ian & Nov 15/24\\
+  \mref{mRSM} Unit Testing & Emily, Ian & Jan 27/25\\
+  \mref{mAFE} Implementation & Emily, Ian, Mark, Jackson & Jan 20/25\\
+  \mref{mAFE} Unit Testing & Emily, Ian, Mark, Jackson & Jan 27/25\\
+  \mref{mFFC} Implementation & Mark & Jan 20/25\\
+  \mref{mFFC} Unit Testing & Mark & Jan 27/25\\
+  \mref{mARP} Implementation & Emily & Jan 11/25\\
+  \mref{mARP} Unit Testing & Emily & Jan 27/25\\
+  Integration Testing & Emily, Ian, Mark, Jackson & Feb 3/25\\
+  \bottomrule
+  \end{tabular}
+  \caption{Task Completion Timeline}
+  \label{TblSched}
+  \end{table}
 
 \bibliographystyle{plainnat}
 \bibliography{../../../refs/References}
