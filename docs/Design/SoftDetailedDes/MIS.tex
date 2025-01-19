@@ -25,11 +25,11 @@
 
 \hypersetup{
 bookmarks=true,     % show bookmarks bar?
-colorlinks=true,       % false: boxed links; true: colored links
-linkcolor=red,          % color of internal links (change box color with linkbordercolor)
-citecolor=blue,      % color of links to bibliography
+colorlinks=true,    % false: boxed links; true: colored links
+linkcolor=red,      % color of internal links (change box color with linkbordercolor)
+citecolor=blue,     % color of links to bibliography
 filecolor=magenta,  % color of file links
-urlcolor=cyan          % color of external links
+urlcolor=cyan       % color of external links
 }
 
 \usepackage{array}
@@ -56,8 +56,7 @@ urlcolor=cyan          % color of external links
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-Date 1 & 1.0 & Notes\\
-Date 2 & 1.1 & Notes\\
+2025-01-17 & 1.0 & Initial version\\
 \bottomrule
 \end{tabularx}
 
@@ -66,7 +65,6 @@ Date 2 & 1.1 & Notes\\
 \section{Symbols, Abbreviations and Acronyms}
 
 \begin{itemize}
-    \item \textbf{SRS}: System Requirements Specifications
     \item \textbf{MG}: Module Guide
     \item \textbf{M1}: Hardware-Hiding Module
     \item \textbf{M2}: User Interface Module
@@ -75,6 +73,8 @@ Date 2 & 1.1 & Notes\\
     \item \textbf{M5}: Audio Feature Extraction (note, key, sig, etc.)
     \item \textbf{M6}: File Format Conversions Module
     \item \textbf{M7}: Audio Recording and Playback Module
+    \item \textbf{SRS}: System Requirements Specifications
+    
 \end{itemize}
 
 \newpage
@@ -86,13 +86,14 @@ Date 2 & 1.1 & Notes\\
 \pagenumbering{arabic}
 
 \section{Introduction}
-This document details the Module Interface Specifications for ScoreGen. A service designed to transcribe user-recorded musical compositions into accurate sheet music by determining pitch, duration, tempo, and more advanced musical features. The service also aims to provide a user interface to use and interact with the product. Complementary documents include the SRS and MG documents. The full documentation can be found on \href{https://github.com/emilyperica/ScoreGen}{github}.
-
+This document details the Module Interface Specifications for ScoreGen. A service
+designed to transcribe user-recorded musical compositions into accurate sheet music 
+by determining pitch, duration, tempo, and more advanced musical features. The service 
+also aims to provide a user interface to use and interact with the product. Complementary 
+documents include the SRS and MG documents. The full documentation can be found on 
+\href{https://github.com/emilyperica/ScoreGen}{GitHub}.
 
 \section{Notation}
-
-\wss{You should describe your notation.  You can use what is below as
-  a starting point.}
 
 The structure of the MIS for modules comes from \citet{HoffmanAndStrooper1995},
 with the addition that template modules have been adapted from
@@ -134,7 +135,9 @@ described by giving their type signature followed by their specification.
 
 \section{Module Decomposition}
 
-The following table is taken directly from the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/Design/SoftArchitecture/MG.pdf}{Module Guide} document for this project.
+The following table is taken directly from the 
+\href{https://github.com/emilyperica/ScoreGen/blob/main/docs/Design/SoftArchitecture/MG.pdf}
+{Module Guide} document for this project.
 
 \begin{table}[h!]
   \centering
@@ -164,7 +167,6 @@ The following table is taken directly from the \href{https://github.com/emilyper
 \end{table}
 
 \newpage
-~\newpage
 
 \section{\hyperref[mHH]{MIS of Hardware-Hiding Module}} \label{M1}
 
@@ -184,7 +186,7 @@ Provides abstraction for hardware (microphone and speakers), simplifying access 
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{5cm}|p{2cm}|p{4cm}|p{3cm}|}  
+\begin{tabular}{|p{5cm}|p{2cm}|p{4cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -212,7 +214,8 @@ sendToAudioOutput & audioData & None & PlaybackError \\
 
 \subsubsection{Assumptions}  
 \begin{itemize}  
-    \item Functional hardware to take in user audio (i.e. microphone) and play out audio (i.e. speaker, headphones) is available.
+    \item Functional hardware to take in user audio (i.e. microphone) 
+    and play out audio (i.e. speaker, headphones) is available.
     \item Necessary drivers are installed.  
 \end{itemize}  
 
@@ -254,7 +257,7 @@ Defines the interaction mechanisms for uploading audio, recording, playback, and
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{5cm}|p{2cm}|p{4cm}|p{3cm}|}  
+\begin{tabular}{|p{5cm}|p{2cm}|p{4cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -309,7 +312,8 @@ triggerPlayback & audioData & None & PlaybackError \\
 Score Generation Module  
 
 \subsection{Uses}  
-Generates musical scores in compressed musicXML format (.mxl) from note sequences processed by previous modules.  
+Generates musical scores in compressed musicXML format (.mxl) from note 
+sequences processed by previous modules.  
 
 \subsection{Syntax}  
 
@@ -321,7 +325,7 @@ Generates musical scores in compressed musicXML format (.mxl) from note sequence
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{5cm}|p{4cm}|p{2cm}|p{3cm}|}  
+\begin{tabular}{|p{5cm}|p{4cm}|p{2cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -387,7 +391,7 @@ Processes raw audio signals to prepare them for feature extraction.
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{3cm}|}  
+\begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -454,7 +458,7 @@ Extracts meaningful features from processed audio for use in score generation.
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{4.5cm}|p{4cm}|p{2.5cm}|p{3cm}|}  
+\begin{tabular}{|p{4.5cm}|p{4cm}|p{2.5cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -505,7 +509,7 @@ configureFeatureSettings & settings & None & ValidationError \\
 \subsection{Module}  
 File Format Conversions Module
 \subsection{Uses}  
-Handles conversion of input and output files between supported formats  (.mxl \Rightarrow PDF).  
+Handles conversion of input and output files between supported formats  (.mxl $\Rightarrow$ PDF).  
 
 \subsection{Syntax}  
 
@@ -517,7 +521,7 @@ Handles conversion of input and output files between supported formats  (.mxl \R
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3cm}|}  
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -571,7 +575,8 @@ exportFile & data, format, filePath & None & ExportError \\
 Audio Recording and Playback Module  
 
 \subsection{Uses}  
-Provides functionalities for recording audio through the microphone and playing back recorded or imported audio.  
+Provides functionalities for recording audio through the microphone and playing 
+back recorded or imported audio.
 
 \subsection{Syntax}  
 
@@ -583,7 +588,7 @@ Provides functionalities for recording audio through the microphone and playing 
 
 \subsubsection{Exported Access Programs}  
 \begin{center}  
-\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3cm}|}  
+\begin{tabular}{|p{3cm}|p{4cm}|p{4cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
@@ -640,70 +645,105 @@ playAudio & audioData & None & PlaybackError \\
     \item \texttt{sendToSpeaker(audioData)}  
 \end{itemize}  
 
-
 \newpage
 
-\bibliographystyle {plainnat}
-\bibliography {../../../refs/References}
+\bibliographystyle{plainnat}
+\bibliography{../../../refs/References}
 
 \newpage
-
-\section{Appendix} \label{Appendix}
-
-\wss{Extra information if required}
-
-\newpage{}
 
 \section*{Appendix --- Reflection}
-
-The information in this section will be used to evaluate the team members on the
-graduate attribute of Problem Analysis and Design.
 
 \input{../../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable?  \\ \\
-  Emily: Since a lot of the code has already been written (or at least planned out), the process of identifying modules and their behaviours for this deliverable went quickly and made the whole process a lot simpler.\\ \\
+  \item What went well while writing this deliverable?  \\
+  
+    Emily: Since a lot of the code has already been written (or at least planned out), 
+    the process of identifying modules and their behaviours for this deliverable went 
+    quickly and made the whole process a lot simpler.\\
 
-  Mark: This document was helpful in creating a better understanding of the future of ScoreGen at a more practical, rather than conceptual level. \\ \\
+    Mark: This document was helpful in creating a better understanding of the future 
+    of ScoreGen at a more practical, rather than conceptual level. \\
 
-  Ian: Splitting the work and dividing into sub teams helped speed up the process of breaking down the two documents and their sections. This was good for work efficiency. Communication before the deadline of this deliverable was productive and informative. \\ \\
+    Ian: Splitting the work and dividing into sub teams helped speed up the process of 
+    breaking down the two documents and their sections. This was good for work efficiency. 
+    Communication before the deadline of this deliverable was productive and informative. \\
 
-  Jackson: I think this deliverable was a good step to lay out all of our plans for our code. This will honestly benefit us in our development of the app itself, as having this to look back at will benefit us greatly.  \\ \\
+    Jackson: I think this deliverable was a good step to lay out all of our plans for 
+    our code. This will honestly benefit us in our development of the app itself, as 
+    having this to look back at will benefit us greatly.  \\
   
   \item What pain points did you experience during this deliverable, and how
-    did you resolve them? \\ \\
+  did you resolve them? \\
 
-    Emily: Making the traceability matrix between modules and anticipated changes proved to be a bit of a challenge. We were directed to identify anticipated changes that ideally affect only a single module, which forced me to think more critically about each AC and why they are needed. \\ \\
+    Emily: Making the traceability matrix between modules and anticipated changes proved
+    to be a bit of a challenge. We were directed to identify anticipated changes that ideally 
+    affect only a single module, which forced me to think more critically about each AC and 
+    why they are needed. \\
 
-    Mark: As some modules are in the process of completion it was difficult to define specific terms that hadn’t yet been implemented, thus completing the documentation required a lot of communication and assumptions. It is also highly likely that changes will need to be made in future revisions of this document to align with design choices that occur later during implementation. \\ \\
+    Mark: As some modules are in the process of completion it was difficult to define specific 
+    terms that hadn’t yet been implemented, thus completing the documentation required a lot of 
+    communication and assumptions. It is also highly likely that changes will need to be made in 
+    future revisions of this document to align with design choices that occur later during 
+    implementation. \\
 
-    Ian:  One pain point was deciding how abstract some of the descriptions of the module secrets/services in the module guide. A balance had to be struck between being able to adequately describe something vs explaining too many details/choices. This was easily solved by re-reading the MG template, and by taking a look at previous students’ work and how they handle this. \\ \\
+    Ian:  One pain point was deciding how abstract some of the descriptions of the module 
+    secrets/services in the module guide. A balance had to be struck between being able to 
+    adequately describe something vs explaining too many details/choices. This was easily solved 
+    by re-reading the MG template, and by taking a look at previous students’ work and how 
+    they handle this. \\
 
-    Jackson: This deliverable was due very soon after the winter break, and getting back into the flow of school plus reconnecting with the group and getting everyone on the same page was tough. Additionally, breaking down the modules into their specifics proved tough, as creating detailed information about our implementation at this stage. At the same time, the app is still being developed, which was difficult to do. \\ \\
+    Jackson: This deliverable was due very soon after the winter break, and getting back into 
+    the flow of school plus reconnecting with the group and getting everyone on the same page 
+    was tough. Additionally, breaking down the modules into their specifics proved tough, as 
+    creating detailed information about our implementation at this stage. At the same time, 
+    the app is still being developed, which was difficult to do. \\
 
     
   \item Which of your design decisions stemmed from speaking to your client(s)
   or a proxy (e.g. your peers, stakeholders, potential users)? For those that
-  were not, why, and where did they come from? \\ \\
+  were not, why, and where did they come from? \\
 
-  The majority of design decisions made up until this point did not stem from speaking to clients. The main decisions made such as the algorithmic choices and which file formats to support were decisions made based on the team’s knowledge of signals and systems and human-computer interfacing. These decisions included selecting the Fast Fourier Transform for pitch detection due to its performance and efficiency and supporting widely used file formats for distribution purposes (PDF) and musical representation (musicXML).
+    The majority of design decisions made up until this point did not stem from speaking to clients. 
+    The main decisions made such as the algorithmic choices and which file formats to support were 
+    decisions made based on the team’s knowledge of signals and systems and human-computer interfacing. 
+    These decisions included selecting the Fast Fourier Transform for pitch detection due to its 
+    performance and efficiency and supporting widely used file formats for distribution purposes (PDF) 
+    and musical representation (musicXML). \\
 
   \item While creating the design doc, what parts of your other documents (e.g.
-  requirements, hazard analysis, etc), if any, needed to be changed, and why? \\ \\
+  requirements, hazard analysis, etc), if any, needed to be changed, and why? \\
 
-  N/A \\
-  \item What are the limitations of your solution?  Put another way, given
-  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions) \\ \\
+    N/A \\
 
-  Our project aims to create as strong an ability as possible for non-technical musicians to create highly detailed notation, but there are intricacies that are extremely difficult to extract from audio alone. Features like staccato, crescendo, chords, grace notes, or tempo changes are difficult to differentiate from variance that occurs from regular human playing. Tackling this issue effectively would probably best be done with very advanced signal processing and personally trained, or fine-tuned machine learning models. Given more time, it would also be helpful to implement advanced options for users to maximise precision. If for example there is a music piece with lower confidence sections, such an area where there is a similar likelihood of a note being a fast-played 16th note, or a grace note, it could be possible for the user to toggle through most likely interpretations with playback to determine the ideal representation of their playing. \\
-  \item Give a brief overview of other design solutions you considered.  What
+  \item What are the limitations of your solution? Put another way, given
+  unlimited resources, what could you do to make the project better? (LO\_ProbSolutions) \\
+
+    Our project aims to create as strong an ability as possible for non-technical musicians to create 
+    highly detailed notation, but there are intricacies that are extremely difficult to extract from 
+    audio alone. Features like staccato, crescendo, chords, grace notes, or tempo changes are difficult 
+    to differentiate from variance that occurs from regular human playing. Tackling this issue effectively 
+    would probably best be done with very advanced signal processing and personally trained, or fine-tuned 
+    machine learning models. Given more time, it would also be helpful to implement advanced options for 
+    users to maximise precision. If for example there is a music piece with lower confidence sections, such 
+    an area where there is a similar likelihood of a note being a fast-played 16th note, or a grace note, 
+    it could be possible for the user to toggle through most likely interpretations with playback to determine 
+    the ideal representation of their playing. \\
+
+  \item Give a brief overview of other design solutions you considered. What
   are the benefits and tradeoffs of those other designs compared with the chosen
   design?  From all the potential options, why did you select the documented design?
-  (LO\_Explores)
+  (LO\_Explores) \\
 
-  \\ We considered several design solutions, including purely rule-based algorithms and advanced signal processing techniques. The rule-based approach would have been easier to implement but lacks the flexibility to interpret complex musical nuances like dynamics and articulation. Advanced signal processing, while more capable of handling these intricacies, would require more computational resources and expertise in the field. After weighing the tradeoffs, we chose a hybrid approach that combines signal processing with rule-based methods. This design provides a balance between accuracy, flexibility, and resource efficiency, ensuring a strong foundation for transcription while leaving room for future refinement.
+    We considered several design solutions, including purely rule-based algorithms and advanced signal processing 
+    techniques. The rule-based approach would have been easier to implement but lacks the flexibility to interpret 
+    complex musical nuances like dynamics and articulation. Advanced signal processing, while more capable of handling 
+    these intricacies, would require more computational resources and expertise in the field. After weighing the 
+    tradeoffs, we chose a hybrid approach that combines signal processing with rule-based methods. This design provides 
+    a balance between accuracy, flexibility, and resource efficiency, ensuring a strong foundation for transcription 
+    while leaving room for future refinement.
+
 \end{enumerate}
-
 
 \end{document}
