@@ -41,7 +41,7 @@ void dsp(const char* infilename) {
     size_t silenceLength = 512; // Equivalent to one frame
     std::vector<float> paddedBuf = prependSilence(buf, silenceLength);
 
-    vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, 60);
+    vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
     for (Note note : notes) {
         cout << "Note: " << note.pitch << "\tDuration: " << note.endTime-note.startTime << "\tNote Type: " << note.type << endl;
     }
