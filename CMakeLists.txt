@@ -25,6 +25,13 @@ add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_HOME_DIRECTORY}/include")
 
 # Link libraries
+
+# Specify the root path to the library
+set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
+set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/lib/liblibmusicxml.3.2.2.dylib")
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${LIBMUSICXML_ROOT}/include/libmusicxml")
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "${LIBMUSICXML_LIBRARY}")
+
 find_package(SndFile REQUIRED)
 find_package(FFTW3 REQUIRED)
 find_package(portaudio CONFIG REQUIRED)
@@ -32,7 +39,7 @@ find_path(FFTWPP_INCLUDE_DIRS "fftwpp/Array.cc")
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SndFile::sndfile)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE FFTW3::fftw3)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE portaudio)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE portaudio_static)
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${FFTWPP_INCLUDE_DIRS})
 
