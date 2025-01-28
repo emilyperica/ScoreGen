@@ -1,28 +1,24 @@
 #ifndef NOTE_DETECTION_H
 #define NOTE_DETECTION_H
 
-#define _USE_MATH_DEFINES
-
 #include <vector>
-#include <iostream>
+#include <string>
 #include <cmath>
 #include <map>
-#include <string>
-#include <sndfile.h>
-#include <fftw3.h>
+#include <iostream>
+#include "aubio.h"
 
-using namespace std;
-
+// Struct to represent a detected note
 struct Note {
-    float startTime; // seconds
-    float endTime;   // seconds
-    string pitch;
-    string noteType;
+    float startTime;
+    float endTime;
+    std::string pitch;
+    std::string type;   // Note type (e.g., "quarter", "eighth")
 };
 
-string getNoteName(double freq);
-string determineNoteType(float noteDuration, int bpm, int beatsPerBar);
-string detectPitch(vector<float> buf, size_t start, size_t end, int sample_rate);
-vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels);
+// Function declarations
+std::string getNoteName(double freq);
+std::string determineNoteType(float noteDuration, int bpm);
+std::vector<Note> detectNotes(const std::vector<float>& buf, int sample_rate, int channels, int bpm);
 
-#endif
+#endif // NOTE_DETECTION_H
