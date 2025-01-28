@@ -7,22 +7,13 @@
 #include <vector>
 #include <string>
 #include "libmusicxml.h"
+#include "common.h"
 
 #ifndef MUSICXML_GENERATOR_H
 #define MUSICXML_GENERATOR_H
 
 using namespace std;
 using namespace MusicXML2;
-
-struct Note 
-{
-    string pitch; // Note pitch (e.g., "C")
-    float alter = 0; // Chromatic alteration 
-    int octave = 4; // Octave
-    int duration = 0; // Duration in divisions
-    string type; // Note type (i.e. quarter, half, etc.)
-    bool isRest = false; // Rest note flag
-};
 
 class MusicXMLGenerator 
 {

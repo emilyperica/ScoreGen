@@ -1,7 +1,4 @@
 #include <fstream>
-#include <vector>
-#include <string>
-#include "libmusicxml.h"
 #include "generateMusicXML.h"
 
 using namespace std;
