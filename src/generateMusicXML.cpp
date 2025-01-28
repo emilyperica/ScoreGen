@@ -30,7 +30,7 @@ MusicXMLGenerator::~MusicXMLGenerator()
 };
 
 // Generate MusicXML file from note sequence and rhythm (divisions) determined by our DSP
-bool MusicXMLGenerator::generate(const vector<Note>& noteSequence, const string& outputPath,int divisions) {
+bool MusicXMLGenerator::generate(const vector<Note>& noteSequence, const string& outputPath, int divisions) {
     if (noteSequence.empty()) return false;
 
     TElement scorePart = createScorePart();
@@ -93,10 +93,10 @@ TElement MusicXMLGenerator::createMeasure(const vector<Note>& measureNotes, int 
     TElement measure = factoryMeasureWithAttributes(
         factory, 
         measureNumber, 
-        "4/4", // Time signature
-        "G", // Clef type
-        2, // Clef line 
-        0, // Key signature (0 = C major)
+        TIME_SIG,
+        CLEF,
+        CLEF_LINE,
+        KEY_SIG,
         divisions
     );
 

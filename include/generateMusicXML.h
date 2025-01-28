@@ -15,6 +15,12 @@
 using namespace std;
 using namespace MusicXML2;
 
+#define KEY_SIG 0 // C major, +ve for sharps, -ve for flats
+#define CLEF "G" // Clef in "G", "F", "C", "percussion", "TAB" or "none"
+#define CLEF_LINE 2 // Treble clef line
+#define TIME_SIG "4/4"
+#define DIVISIONS 4 // Divisions per beat
+
 class MusicXMLGenerator 
 {
 
@@ -34,7 +40,7 @@ public:
 
     ~MusicXMLGenerator();
 
-    bool generate(const vector<Note>& noteSequence, const string& outputPath, int divisions = 4); // Temp. assumed divisions
+    bool generate(const vector<Note>& noteSequence, const string& outputPath, int divisions = DIVISIONS);
 
 private:
     TFactory factory;
