@@ -57,8 +57,8 @@ TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int div
 {
     TElement part = factoryPart(factory, "P1");
     
-    // Group notes into measures (assuming 4/4 time here)
-    const int notesPerMeasure = 4 * divisions;
+    // Group notes into measures
+    const int notesPerMeasure = BEATS_PER_DIV * divisions;
     int currentDivision = 0;
     int measureNumber = 1;
     vector<Note> currentMeasureNotes;
