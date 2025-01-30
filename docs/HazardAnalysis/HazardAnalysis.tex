@@ -40,7 +40,8 @@
 \midrule
 25-10-2024 & Jackson, Emily, Mark, Ian & Revision 0\\
 28-10-2024 & Jackson & Issue 123: peer review\\
-30-01-2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue 128}\\
+30-01-2025 & Jackson & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue 128}\\
+30-01-2025 & Jackson & \href{https://github.com/emilyperica/ScoreGen/issues/124}{Issue 124}\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -140,7 +141,7 @@ Users have access to compatible devices and equipment necessary for the applicat
   \hline
     Generate sheet music & Sheet music flashes on the screen & Potential trigger for users with epilepsy. & Incorrect rendering or scrolling through the sheet music & Limit screen effects that could potentially flicker & PR-SC1 & \\
   \cline{2-7}
-    & A bad microphone causes notes to be off due to pitch drift & Embarassment for the user & The user microphone has pitch drift (mechanical issue) & Suggest that the User acquire a new/higher quality microphone & N/A & \\
+    & A bad microphone causes notes to be off due to pitch drift & Embarassment for the user & The user microphone has pitch drift (mechanical issue) & Point to troubleshooting steps or suggest that the User should acquire a new/higher quality microphone & N/A & \\
   \hline
     Process \newline audio & Audio improperly recorded & Loss of musical performance & Microphone error & Notify the user that there is a microphone issue & N/A & \\
   \cline{4-7}
@@ -175,7 +176,7 @@ We will aim to fulfill every one of the security and safety-critical requirement
 
 \subsection{Privacy Requirements}
 \begin{itemize}
-    \item \textbf{S-P2 PII}: \textit{High priority}, as ensuring the app does not collect any Personal Identifiable Information or session logs aligns with the app’s privacy-first design. This requirement should be validated as soon as any data processing is introduced.
+    \item \textbf{S-P2 PII}: \textit{High priority}, as ensuring the app does not collect any Personal Identifiable Information aligns with the app’s privacy-first design. This requirement should be validated as soon as any data processing is introduced.
     \item \textbf{S-P3 Input Data}: \textit{Low priority}, focusing on ensuring that temporary files are properly cleared after processing is complete. Implementing this is less critical since we will not be storing any data outside of the user’s system.
     \item \textbf{S-P1 Data Storage}: \textit{Medium priority}, ensuring that user-generated data is stored in local, user-chosen locations. This feature should be verified once output functions are introduced.
 \end{itemize}
