@@ -25,6 +25,13 @@ add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_HOME_DIRECTORY}/include")
 
 # Link libraries
+set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
+if(APPLE)
+    set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/macos/lib/libmusicxml2.a")
+else()
+    #
+endif()
+
 find_package(SndFile REQUIRED)
 find_package(FFTW3 REQUIRED)
 find_package(portaudio CONFIG REQUIRED)
@@ -32,9 +39,11 @@ find_path(FFTWPP_INCLUDE_DIRS "fftwpp/Array.cc")
 
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SndFile::sndfile)
 target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE FFTW3::fftw3)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE portaudio)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE portaudio_static)
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE "${LIBMUSICXML_LIBRARY}")
 
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${FFTWPP_INCLUDE_DIRS})
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${LIBMUSICXML_ROOT}/include")
 
 # Additional platform-specific settings
 if (APPLE)
