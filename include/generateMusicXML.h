@@ -21,6 +21,7 @@ using namespace MusicXML2;
 #define TIME_SIG "4/4"
 #define BEATS_PER_DIV 4 // Beats per division
 
+
 class MusicXMLGenerator 
 {
 
@@ -40,7 +41,7 @@ public:
 
     ~MusicXMLGenerator();
 
-    bool generate(const vector<Note>& noteSequence, const string& outputPath, int divisions = DIVISIONS);
+    bool generate(const vector<Note>& noteSequence, const string& outputPath, int divisions);
 
 private:
     TFactory factory;
