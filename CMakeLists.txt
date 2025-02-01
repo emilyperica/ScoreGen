@@ -21,9 +21,9 @@ find_package(SndFile REQUIRED)
 # Link non-vcpkg dependencies
 set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
 if(APPLE)
-    set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/macos/lib/libmusicxml2.a")
+    set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.a")
 else()
-    #
+    set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.lib")
 endif()
 
 # Create the project's executable
