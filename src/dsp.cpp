@@ -1,7 +1,6 @@
 #include "dsp.h"
 
 #define SILENCE_LENGTH 512
-#define defaultBPM 60
 
 std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceLength) {
     std::vector<float> paddedBuffer(silenceLength, 0.0f); // Add silence
@@ -43,7 +42,7 @@ void dsp(const char* infilename) {
 
     std::vector<float> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
 
-    vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, defaultBPM);
+    vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
     for (Note note : notes) {
         cout << "Note: " << note.pitch << "\tDuration: " << note.endTime-note.startTime << "\tNote Type: " << note.type << endl;
     }
