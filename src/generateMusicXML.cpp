@@ -30,7 +30,7 @@ MusicXMLGenerator::~MusicXMLGenerator()
 };
 
 // Generate MusicXML file from note sequence and rhythm (divisions) determined by our DSP
-bool MusicXMLGenerator::generate(const vector<Note>& noteSequence, const string& outputPath, int divisions) {
+bool MusicXMLGenerator::generate(const vector<xmlNote>& noteSequence, const string& outputPath, int divisions) {
     if (noteSequence.empty()) return false;
 
     TElement scorePart = createScorePart();
@@ -53,7 +53,7 @@ TElement MusicXMLGenerator::createScorePart(const string& partId, const string& 
    return factoryScorepart(factory, partId.c_str(), partName.c_str(), partAbbrev.c_str());
 }
 
-TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int divisions) 
+TElement MusicXMLGenerator::createPart(const vector<xmlNote>& noteSequence, int divisions) 
 {
     TElement part = factoryPart(factory, "P1");
     
@@ -61,7 +61,7 @@ TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int div
     const int notesPerMeasure = BEATS_PER_DIV * divisions;
     int currentDivision = 0;
     int measureNumber = 1;
-    vector<Note> currentMeasureNotes;
+    vector<xmlNote> currentMeasureNotes;
 
     for (const auto& note : noteSequence) 
     {
@@ -87,7 +87,7 @@ TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int div
     return part;
 }
 
-TElement MusicXMLGenerator::createMeasure(const vector<Note>& measureNotes, int measureNumber, int divisions) 
+TElement MusicXMLGenerator::createMeasure(const vector<xmlNote>& measureNotes, int measureNumber, int divisions) 
 {
     // Create measure with attributes
     TElement measure = factoryMeasureWithAttributes(
@@ -112,7 +112,7 @@ TElement MusicXMLGenerator::createMeasure(const vector<Note>& measureNotes, int 
     return measure;
 }
 
-TElement MusicXMLGenerator::createNoteElement(const Note& note, int divisions) 
+TElement MusicXMLGenerator::createNoteElement(const xmlNote& note, int divisions) 
 {
     if (note.isRest){
         return factoryRest(factory, note.duration, note.type.c_str());
