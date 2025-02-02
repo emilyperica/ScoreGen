@@ -30,12 +30,14 @@ MusicXMLGenerator::~MusicXMLGenerator()
 };
 
 // Generate MusicXML file from note sequence and rhythm (divisions) determined by our DSP
-bool MusicXMLGenerator::generate(const vector<Note>& noteSequence, const string& outputPath, int divisions) {
+bool MusicXMLGenerator::generate(const string& outputPath, const vector<XMLNote>& noteSequence, const string& clef, 
+                                 const int& clefLine, const string& timeSignature, const int& keySignature, int divisions) 
+{
     if (noteSequence.empty()) return false;
 
     TElement scorePart = createScorePart();
     factoryAddPart(factory, scorePart);
-    TElement part = createPart(noteSequence, divisions);
+    TElement part = createPart(noteSequence, clef, clefLine, timeSignature, keySignature, divisions);
     factoryAddPart(factory, part);
 
     // Print to file
@@ -53,15 +55,17 @@ TElement MusicXMLGenerator::createScorePart(const string& partId, const string& 
    return factoryScorepart(factory, partId.c_str(), partName.c_str(), partAbbrev.c_str());
 }
 
-TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int divisions) 
+TElement MusicXMLGenerator::createPart(const vector<XMLNote>& noteSequence,  const string& clef, 
+                                 const int& clefLine, const string& timeSignature, const int& keySignature, int divisions) 
 {
     TElement part = factoryPart(factory, "P1");
     
     // Group notes into measures
-    const int notesPerMeasure = BEATS_PER_DIV * divisions;
+    const int beatsPerMeasure = stoi(timeSignature.substr(0, timeSignature.find('/')));
+    const int notesPerMeasure = beatsPerMeasure * divisions;
     int currentDivision = 0;
     int measureNumber = 1;
-    vector<Note> currentMeasureNotes;
+    vector<XMLNote> currentMeasureNotes;
 
     for (const auto& note : noteSequence) 
     {
@@ -69,7 +73,7 @@ TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int div
         currentDivision += note.duration;
 
         if (currentDivision >= notesPerMeasure) {
-            TElement measure = createMeasure(currentMeasureNotes, measureNumber, divisions);
+            TElement measure = createMeasure(currentMeasureNotes, measureNumber, clef, clefLine, timeSignature, keySignature, divisions);
             factoryAddElement(factory, part, measure);
             currentMeasureNotes.clear();
             currentDivision = 0;
@@ -80,25 +84,25 @@ TElement MusicXMLGenerator::createPart(const vector<Note>& noteSequence, int div
     // Add last measure if not empty
     if (!currentMeasureNotes.empty()) 
     {
-        TElement measure = createMeasure(currentMeasureNotes, measureNumber, divisions);
+        TElement measure = createMeasure(currentMeasureNotes, measureNumber, clef, clefLine, timeSignature, keySignature, divisions);
         factoryAddElement(factory, part, measure);
     }
 
     return part;
 }
 
-TElement MusicXMLGenerator::createMeasure(const vector<Note>& measureNotes, int measureNumber, int divisions) 
+TElement MusicXMLGenerator::createMeasure(const vector<XMLNote>& measureNotes, int measureNumber, const string& clef, 
+                                 const int& clefLine, const string& timeSignature, const int& keySignature, int divisions) 
 {
     // Create measure with attributes
     TElement measure = factoryMeasureWithAttributes(
         factory, 
         measureNumber, 
-        TIME_SIG,
-        CLEF,
-        CLEF_LINE,
-        KEY_SIG,
-        divisions
-    );
+        timeSignature.c_str(),
+        clef.c_str(),
+        clefLine,
+        keySignature,
+        divisions);
 
     // Add notes to measure
     vector<TElement> noteElements;
@@ -112,7 +116,7 @@ TElement MusicXMLGenerator::createMeasure(const vector<Note>& measureNotes, int 
     return measure;
 }
 
-TElement MusicXMLGenerator::createNoteElement(const Note& note, int divisions) 
+TElement MusicXMLGenerator::createNoteElement(const XMLNote& note, int divisions) 
 {
     if (note.isRest){
         return factoryRest(factory, note.duration, note.type.c_str());
