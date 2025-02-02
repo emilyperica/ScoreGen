@@ -24,10 +24,6 @@ float getCorrelation(float x_hat, float y_hat, std::vector<float> x, std::vector
 
 std::string findKey(std::vector<int> durations)
 {
-    // test_data values from above link
-    std::vector<int> test_data{432, 231, 0, 405, 12, 316, 4, 126, 612, 0, 191, 1};
-    durations = test_data;
-
     float minor_coeff;
     float major_coeff;
     std::pair<std::string, float> key("C", 0.0f);
@@ -42,11 +38,11 @@ std::string findKey(std::vector<int> durations)
     for (int i=0; i<12; i++) {
         std::vector<int> key_sig;
         if (i == 0) {
-            key_sig = test_data;
+            key_sig = durations;
         }
         else {
-            key_sig.assign(test_data.begin() + i, test_data.end());
-            key_sig.insert(key_sig.end(), test_data.begin(), test_data.begin() + i);
+            key_sig.assign(durations.begin() + i, durations.end());
+            key_sig.insert(key_sig.end(), durations.begin(), durations.begin() + i);
         }
 
         minor_coeff = getCorrelation(minor_avg, duration_avg, minor_prof, key_sig);

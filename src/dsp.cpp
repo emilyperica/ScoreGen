@@ -2,6 +2,7 @@
 
 #define SILENCE_LENGTH 512
 #define defaultBPM 60
+#define PPQ 480 // Pulses per quarter note, default for MusicXML
 
 std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceLength) {
     std::vector<float> paddedBuffer(silenceLength, 0.0f); // Add silence
@@ -9,7 +10,77 @@ std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceL
     return paddedBuffer;
 }
 
-void dsp(const char* infilename) {
+XMLNote convertToXMLNote(const Note& note) {
+    XMLNote xmlNote;
+    int octave = 0;
+    std::string noteName;
+
+    // Extract note name and octave
+    if (note.pitch == "Rest") {
+        xmlNote.isRest = true;
+        return xmlNote;
+    }
+
+    for (char c : note.pitch) {
+        if (std::isalpha(c) || c == '#') {
+            noteName += c;
+        } else if (std::isdigit(c)) {
+            octave = octave * 10 + (c - '0');
+        }
+    }
+
+    // Convert note duration in s to duration in divisions
+    float noteDurationInSeconds = note.endTime - note.startTime;
+    xmlNote.duration = static_cast<int>(noteDurationInSeconds * (defaultBPM / 60.0) * PPQ);
+
+    xmlNote.pitch = noteName;
+    xmlNote.octave = octave;
+    xmlNote.type = note.type;
+    xmlNote.isRest = false;
+
+    return xmlNote;
+}
+
+std::vector<int> calculatePitchDurations(const std::vector<XMLNote>& xmlNotes) {
+    std::vector<int> durations(12, 0);
+    std::map<std::string, int> pitchClasses = 
+    {
+        {"C", 0}, {"C#", 1}, {"D", 2}, {"D#", 3}, 
+        {"E", 4},{"F", 5}, {"F#", 6}, {"G", 7}, 
+        {"G#", 8},{"A", 9}, {"A#", 10}, {"B", 11}
+    };
+    
+    for (const auto& xmlNote : xmlNotes) 
+    {
+        int pitchClass = pitchClasses[xmlNote.pitch];
+        durations[pitchClass] += xmlNote.duration;
+    }
+    
+    return durations;
+}
+
+int convertToKeySignature(const string& key) {
+    static const map<string, int> keyToSignature = 
+    {
+        // Major keys
+        {"C", 0},  {"G", 1},  {"D", 2},   {"A", 3}, 
+        {"E", 4},  {"B", 5},  {"F#", 6},  {"C#", 7},
+        {"F", -1}, {"Bb", -2}, {"Eb", -3}, {"Ab", -4},
+        {"Db", -5}, {"Gb", -6}, {"Cb", -7},
+        
+        // Minor keys
+        {"a", 0},  {"e", 1},  {"b", 2},   {"f#", 3},
+        {"c#", 4}, {"g#", 5}, {"d#", 6},  {"a#", 7},
+        {"d", -1}, {"g", -2}, {"c", -3},  {"f", -4},
+        {"bb", -5}, {"eb", -6}, {"ab", -7}
+    };
+    auto it = keyToSignature.find(key);
+    return (it != keyToSignature.end()) ? it->second : 0;  // Default to C major
+}
+
+DSPResult dsp(const char* infilename) {
+    DSPResult result;
+
     SNDFILE* infile;
     SF_INFO sfinfo;
     vector<float> buf;
@@ -18,7 +89,7 @@ void dsp(const char* infilename) {
     if (!(infile = sf_open(infilename, SFM_READ, &sfinfo))) {
 		printf("Not able to open requested file %s.\n", infilename) ;
 		puts(sf_strerror(NULL));
-		return;
+        exit(EXIT_FAILURE);
 	}
 
     size_t numFrames = sfinfo.frames * sfinfo.channels;
@@ -43,8 +114,16 @@ void dsp(const char* infilename) {
 
     std::vector<float> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
 
-    vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, defaultBPM);
-    for (Note note : notes) {
-        cout << "Note: " << note.pitch << "\tDuration: " << note.endTime-note.startTime << "\tNote Type: " << note.type << endl;
+    // Extract notes
+    std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, defaultBPM);
+    for (const Note& note : notes) {
+        result.XMLNotes.push_back(convertToXMLNote(note));
     }
+
+    // Extract key signature
+    std::vector<int> durations = calculatePitchDurations(result.XMLNotes);
+    std::string detectedKey = findKey(durations);
+    result.keySignature = convertToKeySignature(detectedKey);
+
+    return result;
 }
