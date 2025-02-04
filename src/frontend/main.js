@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
+const addon = require('./build/Release/addon.node');
 
 let mainWindow;
 
@@ -53,6 +54,18 @@ function createWindow() {
 }
 
 app.whenReady().then(createWindow);
+
+// Expose a function via IPC
+ipcMain.handle('process-audio', async (event, filePath) => {
+    try {
+      // Call your C++ backend function through the addon.
+      const result = addon.processAudio(filePath);
+      return result;  // Return the result (e.g., a status message).
+    } catch (error) {
+      console.error("Error processing audio:", error);
+      throw error;
+    }
+  });
 
 app.on('window-all-closed', () => {
     // On macOS, it's common for applications to stay open until the user explicitly quits
