@@ -6,7 +6,7 @@
 #include <cmath>
 #include <map>
 #include <iostream>
-#include "aubio.h"
+#include "aubio/aubio.h"
 
 // Struct to represent a detected note
 struct Note {
