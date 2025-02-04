@@ -18,17 +18,34 @@ find_package(Aubio CONFIG REQUIRED)
 find_package(portaudio CONFIG REQUIRED)
 find_package(SndFile REQUIRED)
 
-# Link non-vcpkg dependencies
-set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
-if(APPLE)
-    set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.a")
-else()
-    set(LIBMUSICXML_LIBRARY "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.lib")
-endif()
-
 # Create the project's executable
 file(GLOB SOURCES "src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
+
+# Link non-vcpkg dependencies
+set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
+if(APPLE)
+    set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.a")
+    set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.dylib")
+    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/libmusicxml.dylib")
+else()
+    set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.lib")
+    set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.dll")
+    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/libmusicxml.dll")
+endif()
+
+add_library(libmusicxml SHARED IMPORTED)
+set_target_properties(libmusicxml PROPERTIES
+    IMPORTED_IMPLIB ${LIBMUSICXML_STATIC_PATH}
+    IMPORTED_LOCATION ${LIBMUSICXML_SHARED_PATH}
+)
+
+# Copy libmusicxml library to same directory as executable
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${LIBMUSICXML_SHARED_PATH}
+    ${LIBMUSICXML_DEST}
+)
 
 # Include headers
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE 
@@ -41,7 +58,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     Aubio::aubio
     SndFile::sndfile
     portaudio
-    ${LIBMUSICXML_LIBRARY}
+    libmusicxml
 )
 
 # Additional platform-specific settings
