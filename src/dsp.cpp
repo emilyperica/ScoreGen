@@ -23,7 +23,7 @@ XMLNote convertToXMLNote(const Note& note) {
     }
 
     for (char c : note.pitch) {
-        if ((std::isalpha(c) == 1) && (c != 'b')) {
+        if ((std::isalpha(c) != 0) && (c != 'b')) {
             noteName += c;
         } 
         else if (c == '#' || c == 'b') {
@@ -124,6 +124,7 @@ DSPResult dsp(const char* infilename) {
     std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, defaultBPM);
     for (const Note& note : notes) {
         result.XMLNotes.push_back(convertToXMLNote(note));
+        cout << "Note: " << note.pitch << "\tDuration: " << note.endTime-note.startTime << "\tNote Type: " << note.type << endl;
     }
 
     // Extract key signature

@@ -204,8 +204,8 @@ int recordAudio(void) {
     // Start the keyboard monitoring thread
     inputThread = std::thread(getUserInput);
     while (!isRecording) {
-        if (exitRequested) break;
         Pa_Sleep(100);
+        if (exitRequested) break;
     }
 
     err = Pa_StartStream(stream);
@@ -213,8 +213,8 @@ int recordAudio(void) {
     printf("\n=== Now recording!! Press 'R' to stop. ===\n"); fflush(stdout);
 
     while (isRecording) {
-        if (exitRequested) break;
         Pa_Sleep(100);
+        if (exitRequested) break;
     }
 
     err = Pa_StopStream(stream);
@@ -245,32 +245,32 @@ int recordAudio(void) {
             outputDeviceInfo->name, outputDeviceInfo->maxOutputChannels, outputDeviceInfo->defaultSampleRate);
     fflush(stdout);
     saveAsWav(data.recordedSamples, outputDeviceInfo->defaultSampleRate, outputParameters.channelCount);
-    printf("\n=== Now playing back. ===\n"); fflush(stdout);
-    err = Pa_OpenStream(
-              &stream,
-              NULL,
-              &outputParameters,
-              outputDeviceInfo->defaultSampleRate,
-              FRAMES_PER_BUFFER,
-              paClipOff,
-              playCallback,
-              &data);
-    if (err != paNoError) goto done;
+    // printf("\n=== Now playing back. ===\n"); fflush(stdout);
+    // err = Pa_OpenStream(
+    //           &stream,
+    //           NULL,
+    //           &outputParameters,
+    //           outputDeviceInfo->defaultSampleRate,
+    //           FRAMES_PER_BUFFER,
+    //           paClipOff,
+    //           playCallback,
+    //           &data);
+    // if (err != paNoError) goto done;
 
-    if (stream) {
-        err = Pa_StartStream(stream);
-        if (err != paNoError) goto done;
+    // if (stream) {
+    //     err = Pa_StartStream(stream);
+    //     if (err != paNoError) goto done;
 
-        printf("Waiting for playback to finish.\n"); fflush(stdout);
+    //     printf("Waiting for playback to finish.\n"); fflush(stdout);
 
-        while ((err = Pa_IsStreamActive(stream)) == 1) Pa_Sleep(100);
-        if (err < 0) goto done;
+    //     while ((err = Pa_IsStreamActive(stream)) == 1) Pa_Sleep(100);
+    //     if (err < 0) goto done;
 
-        err = Pa_CloseStream(stream);
-        if (err != paNoError) goto done;
+    //     err = Pa_CloseStream(stream);
+    //     if (err != paNoError) goto done;
 
-        printf("Done.\n"); fflush(stdout);
-    }
+    //     printf("Done.\n"); fflush(stdout);
+    // }
 
 done:
     Pa_Terminate(); // TODO: if error ocurred during Pa_Initialize, this should not be called

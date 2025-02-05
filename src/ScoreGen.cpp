@@ -1,6 +1,7 @@
 #include <iostream>
 #include "dsp.h"
 #include "generateMusicXML.h"
+#include "recordAudio.h"
 
 #define TEST_DATA "test/TestingDatasets/Computer-Generated-Samples/D4_to_E5_1_second_per_note.wav"
 
@@ -12,7 +13,11 @@
 #define DIVISIONS 480 // Divisions per beat
 
 int main() {
-    DSPResult res = dsp(TEST_DATA);
+    // record audio here
+    recordAudio();
+    // CLI app
+
+    DSPResult res = dsp("recorded.wav");
     MusicXMLGenerator XMLgenerator;
 
     // Defaults are being used for clef, key, time, and divisions, see generateMusicXML.h
