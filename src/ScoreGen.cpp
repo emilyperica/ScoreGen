@@ -14,10 +14,24 @@
 
 int main() {
     // record audio here
-    recordAudio();
     // CLI app
-
-    DSPResult res = dsp("recorded.wav");
+    const char* file = "recorded.wav";
+    printf("Welcome to ScoreGen!\nWould you like to record some audio? (y/n)\n");
+    while (true) {
+        if (_kbhit()) {
+            char ch = _getch(); // Get the character
+            if (ch == 'y') {
+                recordAudio();
+                break;
+            }
+            else if (ch == 'n') {
+                file = TEST_DATA;
+                printf("Generating a score from default file %s\n", TEST_DATA);
+                break;
+            }
+        }
+    }
+    DSPResult res = dsp(file);
     MusicXMLGenerator XMLgenerator;
 
     // Defaults are being used for clef, key, time, and divisions, see generateMusicXML.h
