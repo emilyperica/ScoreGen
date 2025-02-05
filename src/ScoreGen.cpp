@@ -9,7 +9,7 @@
 #define CLEF "G" // Clef in "G", "F", "C", "percussion", "TAB" or "none"
 #define CLEF_LINE 2 // Treble clef line
 #define TIME_SIG "4/4"
-#define DIVISIONS 4 // Divisions per beat
+#define DIVISIONS 480 // Divisions per beat
 
 int main() {
     DSPResult res = dsp(TEST_DATA);
