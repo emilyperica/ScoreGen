@@ -5,7 +5,7 @@
 
 struct XMLNote {
     std::string pitch; // Note pitch (e.g., "C")
-    float alter = 0; // Chromatic alteration 
+    int alter = 0; // Chromatic alteration 
     int octave; // Octave
     int duration; // Duration in divisions
     std::string type; // Note type (i.e. quarter, half, etc.)
