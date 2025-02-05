@@ -19,6 +19,7 @@ XMLNote convertToXMLNote(const Note& note) {
     // Convert note duration in s to duration in divisions
     float noteDurationInSeconds = note.endTime - note.startTime;
     xmlNote.duration = (int) std::round(noteDurationInSeconds * (defaultBPM / 60.0) * PPQ);
+    xmlNote.type = note.type;
 
     // Extract note name and octave
     if (note.pitch == "Rest") {
@@ -41,7 +42,6 @@ XMLNote convertToXMLNote(const Note& note) {
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
     xmlNote.alter = alter;
-    xmlNote.type = note.type;
     xmlNote.isRest = false;
 
     return xmlNote;
