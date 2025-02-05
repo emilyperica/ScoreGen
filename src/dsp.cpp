@@ -31,7 +31,7 @@ XMLNote convertToXMLNote(const Note& note) {
 
     // Convert note duration in s to duration in divisions
     float noteDurationInSeconds = note.endTime - note.startTime;
-    xmlNote.duration = static_cast<int>(noteDurationInSeconds * (defaultBPM / 60.0) * PPQ);
+    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (defaultBPM / 60.0) * PPQ) / PPQ) * PPQ);
 
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
