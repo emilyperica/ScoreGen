@@ -1,8 +1,9 @@
 #include <iostream>
+
 #include "dsp.h"
 #include "generateMusicXML.h"
 
-#define TEST_DATA "test/TestingDatasets/Computer-Generated-Samples/D4_to_E5_1_second_per_note.wav"
+#define TEST_DATA "test/TestingDatasets/piano-samples/sample-songs/hot-cross-buns-piano-solo.wav"
 
 #define DEFAULT_OUT "output.xml"
 #define KEY_SIG 0 // C major, +ve for sharps, -ve for flats
@@ -12,6 +13,8 @@
 #define DIVISIONS 480 // Divisions per beat
 
 int main() {
+    std::string command = std::string("python src/python-scripts/midi_generation.py ") + TEST_DATA;
+    std::system(command.c_str());
     DSPResult res = dsp(TEST_DATA);
     MusicXMLGenerator XMLgenerator;
 
