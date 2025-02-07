@@ -7,6 +7,7 @@
 #include <map>
 #include <iostream>
 #include "aubio/aubio.h"
+#include "common.h"
 
 // Struct to represent a detected note
 struct Note {
@@ -14,6 +15,7 @@ struct Note {
     float endTime;
     std::string pitch;
     std::string type;   // Note type (e.g., "quarter", "eighth")
+    Staff staff;
 };
 
 // Function declarations

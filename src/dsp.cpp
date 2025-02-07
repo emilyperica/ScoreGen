@@ -1,8 +1,11 @@
 #include "dsp.h"
+#include "processJson.h"
 
 #define SILENCE_LENGTH 512
 #define defaultBPM 60
 #define PPQ 480 // Pulses per quarter note, default for MusicXML
+const float TIME_THRESHOLD = 0.1f; // 0.05 seconds threshold for intersection
+
 
 std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceLength) {
     std::vector<float> paddedBuffer(silenceLength, 0.0f); // Add silence
@@ -10,42 +13,149 @@ std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceL
     return paddedBuffer;
 }
 
-XMLNote convertToXMLNote(const Note& note) {
+XMLNote convertSingleNote(const Note& note, double startTime, double endTime) {
     XMLNote xmlNote;
     int octave = 0;
     int alter = 0;
     std::string noteName;
 
-    // Extract note name and octave
+    // Convert note duration in seconds to divisions
+    double noteDurationInSeconds = endTime - startTime;
+    xmlNote.duration = std::round(noteDurationInSeconds * (defaultBPM / 60.0) * PPQ);
+
+    xmlNote.type = note.type;
+
+    // If it's a rest, mark it and return
     if (note.pitch == "Rest") {
         xmlNote.isRest = true;
         return xmlNote;
     }
 
+    // Extract note name, octave, and alteration
     for (char c : note.pitch) {
-        if ((std::isalpha(c) == 1) && (c != 'b')) {
+        if (std::isalpha(c) && c != 'b') {
             noteName += c;
-        } 
+        }
         else if (c == '#' || c == 'b') {
-            alter = c == '#' ? 1 : -1;
+            alter = (c == '#') ? 1 : -1;
         }
         else if (std::isdigit(c)) {
             octave = octave * 10 + (c - '0');
         }
     }
 
-    // Convert note duration in s to duration in divisions
+    xmlNote.pitch = noteName;
+    xmlNote.octave = octave;
+    xmlNote.alter = alter;
+    xmlNote.staff = note.staff;
+
+    return xmlNote;
+}
+
+// Convert Note to XMLNote (monophonic conversion)
+XMLNote convertToXMLNote(const Note& note) {
+    XMLNote xmlNote;
+    int octave = 0;
+    int alter = 0;
+    std::string noteName;
+
+    // Convert note duration in seconds to duration in divisions
     float noteDurationInSeconds = note.endTime - note.startTime;
-    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (defaultBPM / 60.0) * PPQ) / PPQ) * PPQ);
+    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (defaultBPM / 60.0f) * PPQ)));
+    xmlNote.type = note.type;
+    xmlNote.startTime = static_cast<int>(std::round(note.startTime * (defaultBPM / 60.0f) * PPQ)); // Start time in divisions
+    xmlNote.staff = note.staff;
+
+    // Extract note name and octave
+    if (note.pitch == "Rest") {
+        xmlNote.isRest = true;
+        xmlNote.pitch = "";
+        xmlNote.alter = 0;
+        xmlNote.octave = 0;
+        return xmlNote;
+    }
+
+
+    for (char c : note.pitch) {
+        if (std::isalpha(c) && c != 'b') {
+            noteName += c;
+        }
+        else if (c == '#' || c == 'b') {
+            alter = (c == '#') ? 1 : -1;
+        }
+        else if (std::isdigit(c)) {
+            octave = octave * 10 + (c - '0');
+        }
+    }
 
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
     xmlNote.alter = alter;
-    xmlNote.type = note.type;
     xmlNote.isRest = false;
 
     return xmlNote;
 }
+
+void findIntersectingNotes(std::vector<XMLNote>& xmlNotes) {
+    size_t i = 0;
+    while (i < xmlNotes.size()) {
+        std::vector<XMLNote*> trebleNotes;
+        std::vector<XMLNote*> bassNotes;
+
+        // Separate notes into treble and bass
+        for (; i < xmlNotes.size(); ++i) {
+            if (xmlNotes[i].staff == Staff::Treble)
+                trebleNotes.push_back(&xmlNotes[i]);
+            else
+                bassNotes.push_back(&xmlNotes[i]);
+        }
+
+        // Sort and process treble clef
+        std::sort(trebleNotes.begin(), trebleNotes.end(), [](const XMLNote* a, const XMLNote* b) {
+            return a->startTime < b->startTime;
+            });
+
+		cout << TIME_THRESHOLD * PPQ << endl;
+
+        for (size_t k = 0; k < trebleNotes.size(); ++k) {
+            trebleNotes[k]->voice = 1;
+            trebleNotes[k]->isChord = (k > 0) &&
+                (trebleNotes[k - 1]->startTime <= trebleNotes[k]->startTime &&
+                    trebleNotes[k - 1]->startTime + trebleNotes[k - 1]->duration > trebleNotes[k]->startTime + TIME_THRESHOLD*PPQ) &&
+                    trebleNotes[k]->startTime - trebleNotes[k-1]->startTime <= TIME_THRESHOLD*PPQ;
+        }
+
+        // Sort and process bass clef
+        std::sort(bassNotes.begin(), bassNotes.end(), [](const XMLNote* a, const XMLNote* b) {
+            return a->startTime < b->startTime;
+            });
+
+        for (size_t k = 0; k < bassNotes.size(); ++k) {
+            bassNotes[k]->voice = 2;
+            bassNotes[k]->isChord = (k > 0) &&
+                (bassNotes[k - 1]->startTime <= bassNotes[k]->startTime + TIME_THRESHOLD * PPQ &&
+                    bassNotes[k - 1]->startTime + bassNotes[k - 1]->duration > bassNotes[k]->startTime + TIME_THRESHOLD*PPQ) &&
+                    bassNotes[k]->startTime - bassNotes[k-1]->startTime <= TIME_THRESHOLD*PPQ;
+        }
+    }
+}
+
+// Convert a list of Notes to XMLNotes with polyphonic handling
+std::vector<XMLNote> convertToPolyphonicXMLNotes(const std::vector<Note>& notes) {
+    std::vector<XMLNote> xmlNotes;
+
+    // Convert all notes to XMLNotes
+    for (const auto& note : notes) {
+        xmlNotes.push_back(convertToXMLNote(note));
+    }
+
+
+    // Find intersecting notes and mark chords
+    findIntersectingNotes(xmlNotes);
+
+    return xmlNotes;
+}
+
 
 std::vector<int> calculatePitchDurations(const std::vector<XMLNote>& xmlNotes) {
     std::vector<int> durations(12, 0);
@@ -121,9 +231,32 @@ DSPResult dsp(const char* infilename) {
     std::vector<float> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
 
     // Extract notes
-    std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, defaultBPM);
+    std::vector<Note> notes = processNotes("note_events.json", defaultBPM);
+	std::vector<XMLNote> xmlNotes = convertToPolyphonicXMLNotes(notes);
     for (const Note& note : notes) {
-        result.XMLNotes.push_back(convertToXMLNote(note));
+        cout << "Note: " << note.pitch << "\tDuration: " << note.endTime - note.startTime << "\tNote Type: " << note.type << endl;
+    }
+    result.XMLNotes = xmlNotes;
+
+    // Write the first 10 notes to a text file
+    std::ofstream outFile("XmlNotes.txt");
+    if (outFile.is_open()) {
+        for (size_t i = 0; i < result.XMLNotes.size(); ++i) {
+            const XMLNote& xmlNote = result.XMLNotes[i];
+            outFile << "Pitch: " << xmlNote.pitch << ", "
+                << "Alter: " << xmlNote.alter << ", "
+                << "Octave: " << xmlNote.octave << ", "
+                << "Start Time: " << xmlNote.startTime << ", "
+                << "Duration: " << xmlNote.duration << ", "
+                << "Type: " << xmlNote.type << ", "
+                << "Is Rest: " << (xmlNote.isRest ? "true" : "false") << ", "
+                << "Is Chord: " << (xmlNote.isChord ? "true" : "false") << ", "
+                << "Voice: " << xmlNote.voice << ", " << std::endl;
+        }
+        outFile.close();
+    }
+    else {
+        std::cerr << "Unable to open file for writing." << std::endl;
     }
 
     // Extract key signature
