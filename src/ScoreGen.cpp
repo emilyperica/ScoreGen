@@ -2,6 +2,7 @@
 
 #include "dsp.h"
 #include "generateMusicXML.h"
+#include "processJson.h"
 
 #define TEST_DATA "test/TestingDatasets/piano-samples/sample-songs/hot-cross-buns-piano-solo.wav"
 

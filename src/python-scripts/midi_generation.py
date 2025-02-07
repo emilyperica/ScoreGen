@@ -10,7 +10,7 @@ audio_path = sys.argv[1]
 model_output, midi_data, note_events = predict(audio_path)
 
 note_events_json = []
-for item in note_events:
+for item in note_events[::-1]:
     if len(item) != 5:
         print(f"Unexpected structure: {item}")  # Debugging print
         continue  # Skip unexpected items
