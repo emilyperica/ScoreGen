@@ -5,7 +5,8 @@
       pull_request:
         branches: [ main ]
     
-    permissions: {}
+    permissions:
+        contents: read
     
     jobs:
       build:
