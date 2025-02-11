@@ -19,6 +19,6 @@ struct Note {
 // Function declarations
 std::string getNoteName(double freq);
 std::string determineNoteType(float noteDuration, int bpm);
-std::vector<Note> detectNotes(const std::vector<float>& buf, int sample_rate, int channels, int bpm);
+std::vector<Note> detectNotes(const std::vector<float>& buf, int sample_rate, int channels);
 
 #endif // NOTE_DETECTION_H

@@ -1,7 +1,7 @@
 #include "dsp.h"
+#include "determineBPM.h"
 
 #define SILENCE_LENGTH 512
-#define defaultBPM 60
 #define PPQ 480 // Pulses per quarter note, default for MusicXML
 
 std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceLength) {
@@ -10,7 +10,7 @@ std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceL
     return paddedBuffer;
 }
 
-XMLNote convertToXMLNote(const Note& note) {
+XMLNote convertToXMLNote(const Note& note, int bpm) {
     XMLNote xmlNote;
     int octave = 0;
     int alter = 0;
@@ -36,7 +36,7 @@ XMLNote convertToXMLNote(const Note& note) {
 
     // Convert note duration in s to duration in divisions
     float noteDurationInSeconds = note.endTime - note.startTime;
-    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (defaultBPM / 60.0) * PPQ) / PPQ) * PPQ);
+    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (bpm / 60.0) * PPQ) / PPQ) * PPQ);
 
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
@@ -121,9 +121,10 @@ DSPResult dsp(const char* infilename) {
     std::vector<float> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
 
     // Extract notes
-    std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels, defaultBPM);
+    std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
+    int bpm = getBufferBPM(paddedBuf, sfinfo.samplerate);
     for (const Note& note : notes) {
-        result.XMLNotes.push_back(convertToXMLNote(note));
+        result.XMLNotes.push_back(convertToXMLNote(note, bpm));
     }
 
     // Extract key signature

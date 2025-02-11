@@ -1,4 +1,6 @@
 #include "detectNoteDuration.h"
+#include "determineBPM.h"
+
 
 FILE _iob[] = { *stdin, *stdout, *stderr };
 
@@ -45,8 +47,10 @@ string determineNoteType(float noteDuration, int bpm) {
     return closest->first; // Return the note name
 }
 
-vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels, int bpm) {
+vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels) {
     vector<Note> notes;
+    int bpm = getBufferBPM(buf, sample_rate);
+    cout << "Calculated BPM: " << bpm << endl;
 
     // Initialize Aubio pitch detection
     aubio_pitch_t* pitch = new_aubio_pitch("default", 2048, 512, sample_rate);
