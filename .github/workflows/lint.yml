@@ -1,5 +1,5 @@
 ---
-name: lint
+name: Lint
 
 on:
     pull_request:
@@ -10,7 +10,7 @@ permissions:
     contents: read
 
 jobs:
-    build:
+    lint:
         name: lint
         runs-on: ubuntu-latest
 
@@ -20,13 +20,13 @@ jobs:
             statuses: write
 
         steps:
-            - name: checkout code
+            - name: Checkout code
               uses: actions/checkout@v4
               with:
                   fetch-depth: 0
 
-            - name: run super-linter on changed files
+            - name: Run super-linter
               uses: super-linter/super-linter@v7.2.1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  VALIDATE_ALL_CODEBASE: false
+                  SAVE_SUPER_LINTER_OUTPUT: true
