@@ -55,6 +55,8 @@
 \midrule
 11/10/2024 & 0 & Initial Revision\\
 30/01/2025 & 0.1 & \href{https://github.com/emilyperica/ScoreGen/issues/96}{Issue 96}\\
+30/01/2025 & 0.2 & \href{https://github.com/emilyperica/ScoreGen/issues/92}{Issue 92}\\
+30/01/2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue 128}\\
 \bottomrule
 \end{tabularx}
 
@@ -170,19 +172,13 @@ Users will receive product support directly from the customer support team, and 
 \subsubsection*{Music Notation Software}
 \textbf{Description}: The app shall collaborate with music notation software that uses MusicXML formats to export sheet music. These can be seen as ‘partner’ applications since they fit very well with a use case for the application.\\
 \textbf{Rationale}: Many composers rely on professional notation software to finalize and edit their sheet music, so it’s essential that the app exports accurate, compatible sheet music files.\\
-\textbf{Fit Criterion}: The app must support MusicXML files.
+\textbf{Fit Criterion}: The app must support MusicXML files, for version support see section 3.4: Off-the-Shelf Software - Backward Compatability.
 
 \subsection{Off-the-Shelf Software}
-Note that there are off-the-shelf software options for generating sheet music, however for the purpose of this capstone project, the team will not be using any of these options. 
-The reason for this is to learn how to do these tasks ourselves wthout relying on external libraries for everything.
 \subsubsection*{MusicXML Format for Sheet Music}
 \textbf{Description}: The app shall use MusicXML as the primary format for storing and exporting sheet music data.\\
-\textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability and limits the scope of this project's development.\\
+\textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability.\\
 \textbf{Fit Criterion}: The app must successfully export sheet music in MusicXML format, ensuring compatibility with the latest versions of major music notation software, without requiring manual adjustments by the user.
-\subsubsection*{MIDI Format}
-\textbf{Description}: The app shall support MIDI file formats for audio playback\\
-\textbf{Rationale}: MIDI format is popular for music playback and editing, and its support will enhance the app’s usability and are easily interfaced with libraries such as \href{https://www.midijs.net/}{MIDIjs}.\\
-\textbf{Fit Criterion}: The app must successfully play audio for sheet music from MIDI files.
 \subsubsection*{Backward Compatibility}
 \textbf{Description}: The app shall support both current and older versions of the MusicXML format to ensure maximum compatibility with various notation tools.\\
 \textbf{Rationale}: As different users may be using different versions of music notation software, supporting older MusicXML formats ensures accessibility and broader usability.\\
@@ -872,7 +868,7 @@ such as text alternatives, text readability, etc.
 \textbf{Fit Criterion:} The user successfully accesses the system without performing any authentication activities.
 
 \subsection{Integrity Requirements}
-N/A: This system does not deal with storage of PII or output files (i.e., generated sheet music). It is the user's responsibility to maintain long-term storage of output files.
+N/A: This system does not deal with storage of PII, session logs, usage logs, or output files (i.e., generated sheet music). It is the user's responsibility to maintain long-term storage of output files.
 
 \subsection{Privacy Requirements}
 \subsubsection*{S-P1 Data Storage}
