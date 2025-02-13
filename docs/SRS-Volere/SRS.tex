@@ -54,6 +54,7 @@
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
 11/10/2024 & 0 & Initial Revision\\
+30/01/2025 & 0.1 & \href{https://github.com/emilyperica/ScoreGen/issues/96}{Issue 96}\\
 \bottomrule
 \end{tabularx}
 
@@ -172,10 +173,16 @@ Users will receive product support directly from the customer support team, and 
 \textbf{Fit Criterion}: The app must support MusicXML files.
 
 \subsection{Off-the-Shelf Software}
+Note that there are off-the-shelf software options for generating sheet music, however for the purpose of this capstone project, the team will not be using any of these options. 
+The reason for this is to learn how to do these tasks ourselves wthout relying on external libraries for everything.
 \subsubsection*{MusicXML Format for Sheet Music}
 \textbf{Description}: The app shall use MusicXML as the primary format for storing and exporting sheet music data.\\
-\textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability.\\
+\textbf{Rationale}: MusicXML is the industry-standard format for sheet music interchange between different music notation software, ensuring compatibility with tools like Sibelius, Finale, MuseScore, and other DAWs. Its widespread adoption makes it the best choice for interoperability and limits the scope of this project's development.\\
 \textbf{Fit Criterion}: The app must successfully export sheet music in MusicXML format, ensuring compatibility with the latest versions of major music notation software, without requiring manual adjustments by the user.
+\subsubsection*{MIDI Format}
+\textbf{Description}: The app shall support MIDI file formats for audio playback\\
+\textbf{Rationale}: MIDI format is popular for music playback and editing, and its support will enhance the app’s usability and are easily interfaced with libraries such as \href{https://www.midijs.net/}{MIDIjs}.\\
+\textbf{Fit Criterion}: The app must successfully play audio for sheet music from MIDI files.
 \subsubsection*{Backward Compatibility}
 \textbf{Description}: The app shall support both current and older versions of the MusicXML format to ensure maximum compatibility with various notation tools.\\
 \textbf{Rationale}: As different users may be using different versions of music notation software, supporting older MusicXML formats ensures accessibility and broader usability.\\

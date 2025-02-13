@@ -13,28 +13,53 @@ project("ScoreGen")
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
+# Locate dependencies
+find_package(Aubio CONFIG REQUIRED)
+find_package(portaudio CONFIG REQUIRED)
+find_package(SndFile REQUIRED)
 
-add_compile_definitions(PA_ENABLE_DEBUG_OUTPUT=0)
-
-# Add source to this project's executable.
+# Create the project's executable
 file(GLOB SOURCES "src/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
+# Link non-vcpkg dependencies
+set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
+if(APPLE)
+    set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.a")
+    set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.dylib")
+    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/libmusicxml.dylib")
+else()
+    set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.lib")
+    set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.dll")
+    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/libmusicxml.dll")
+endif()
+
+add_library(libmusicxml SHARED IMPORTED)
+set_target_properties(libmusicxml PROPERTIES
+    IMPORTED_IMPLIB ${LIBMUSICXML_STATIC_PATH}
+    IMPORTED_LOCATION ${LIBMUSICXML_SHARED_PATH}
+)
+
+# Copy libmusicxml library to same directory as executable
+add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${LIBMUSICXML_SHARED_PATH}
+    ${LIBMUSICXML_DEST}
+)
+
 # Include headers
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE "${CMAKE_HOME_DIRECTORY}/include")
+target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE 
+    ${CMAKE_HOME_DIRECTORY}/include
+    ${LIBMUSICXML_ROOT}/include
+)
 
-# Link libraries
-find_package(SndFile REQUIRED)
-find_package(FFTW3 REQUIRED)
-find_package(portaudio CONFIG REQUIRED)
-find_path(FFTWPP_INCLUDE_DIRS "fftwpp/Array.cc")
-
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE SndFile::sndfile)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE FFTW3::fftw3)
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE portaudio)
-
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE ${FFTWPP_INCLUDE_DIRS})
+# Link imported targets
+target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE 
+    Aubio::aubio
+    SndFile::sndfile
+    portaudio
+    libmusicxml
+)
 
 # Additional platform-specific settings
 if (APPLE)

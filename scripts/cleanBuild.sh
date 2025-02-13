@@ -2,11 +2,12 @@
 
 cd "$(git rev-parse --show-toplevel)"
 
-rm -r build
 mkdir build
 cd build
-cmake ..
+cmake .. --fresh
 cmake --build .
 
-echo "Press 'Enter' to close this window."
-read
+if [[ "$OSTYPE" == "msys"* || "$OSTYPE" == "cygwin"* ]]; then
+  echo "Press 'Enter' to close this window."
+  read
+fi
