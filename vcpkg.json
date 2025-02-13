@@ -1,7 +1,0 @@
-{
-  "dependencies": [
-    "fftwpp",
-    "sndfile",
-    "portaudio"
-  ]
-}
