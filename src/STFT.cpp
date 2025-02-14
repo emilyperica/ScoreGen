@@ -1,7 +1,7 @@
 #include "STFT.h"
 #include "hammingFunction.h"
 
-void STFT(const std::vector<double>& data, int windowLength, int hopSize){
+std::vector<std::vector<double>> STFT(const std::vector<double>& data, int windowSize, int hopSize){
 
     fftw_complex* in;
     fftw_complex* out;
@@ -12,15 +12,15 @@ void STFT(const std::vector<double>& data, int windowLength, int hopSize){
     spectrogram.reserve(data.size() / hopSize);
 
     // Allocate memory for FFT in and out
-    in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * windowLength);
-    out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * windowLength);
+    in = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * windowSize);
+    out = (fftw_complex*)fftw_malloc(sizeof(fftw_complex) * windowSize);
 
     // Create a plan
-    planForward = fftw_plan_dft_1d(windowLength, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+    planForward = fftw_plan_dft_1d(windowSize, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 
     // Create a hamming window
-    std::vector<double> hammingWindow(windowLength);
-    hammingFunction(windowLength, hammingWindow.data());    
+    std::vector<double> hammingWindow(windowSize);
+    hammingFunction(windowSize, hammingWindow.data());    
 
     // Perform STFT
     int chunkPosition = 0;
@@ -28,7 +28,7 @@ void STFT(const std::vector<double>& data, int windowLength, int hopSize){
     int readIndex;
 
     while(chunkPosition < data.size() && !bStop){
-        for(int i = 0; i < windowLength; i++){
+        for(int i = 0; i < windowSize; i++){
             readIndex = chunkPosition + i;
             if (readIndex < data.size()){
                 in[i][0] = data[readIndex] * hammingWindow[i];
@@ -48,9 +48,9 @@ void STFT(const std::vector<double>& data, int windowLength, int hopSize){
         // Frequency information at a specific time frame : std::vector<double> spectrogram[timeIndex]
         // To analyze a single frequency over a time : double magnitude = spectrogram[frameIndex][freqIndex];
         std::vector<double> freqMagnitudes;
-        freqMagnitudes.reserve(windowLength / 2 + 1);
+        freqMagnitudes.reserve(windowSize / 2 + 1);
 
-        for(int i = 0; i < windowLength / 2 + 1; i++){
+        for(int i = 0; i < windowSize / 2 + 1; i++){
             freqMagnitudes.push_back(sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]));
         }
 
@@ -62,4 +62,6 @@ void STFT(const std::vector<double>& data, int windowLength, int hopSize){
     fftw_destroy_plan(planForward);
     fftw_free(in);
     fftw_free(out);
+
+    return spectrogram;
 }

@@ -6,6 +6,6 @@
 #include <fftw3.h>
 #include <vector>
 
-void STFT(const std::vector<double>& data, int windowLength, int hopSize);
+std::vector<std::vector<double>> STFT(const std::vector<double>& data, int windowLength, int hopSize);
 
 #endif // STFT_H
