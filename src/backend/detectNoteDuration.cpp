@@ -151,4 +151,3 @@ vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels
 
     return notes;
 }
-
