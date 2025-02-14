@@ -1,0 +1,14 @@
+#include <string>
+#include <vector>
+
+#ifndef AUDIOPROCESSOR_H
+#define AUDIOPROCESSOR_H
+
+class AudioProcessor{
+public:
+    virtual ~AudioProcessor() = 0;
+
+    virtual std::vector<double> process() = 0;
+};
+
+#endif // AUDIOPROCESSOR_H
