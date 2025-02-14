@@ -1,7 +1,7 @@
 {
-    "name": "testverovio",
+    "name": "ScoreGen",
     "version": "1.0.0",
-    "main": "main.js",
+    "main": "src/frontend/main.js",
     "scripts": {
         "start": "electron --trace-warnings ."
     },

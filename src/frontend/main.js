@@ -1,6 +1,6 @@
 const { app, BrowserWindow, ipcMain, Menu } = require('electron');
 const path = require('path');
-const addon = require('./build/Release/addon.node');
+const { spawn } = require('child_process');
 
 let mainWindow;
 
@@ -20,7 +20,7 @@ function createWindow() {
         ...(process.platform !== 'darwin' ? { titleBarOverlay: { color: '#2f3241', symbolColor: '#ffffff', height: 60 } } : {})
     });
 
-    mainWindow.loadFile('index.html'); // Load the home screen initially
+    mainWindow.loadFile('src/frontend/index.html'); // Load the home screen initially
 
     // Open DevTools
     mainWindow.webContents.openDevTools();
@@ -30,17 +30,17 @@ function createWindow() {
 
     // Handle navigation from home to Upload
     ipcMain.on('navigate-to-upload', () => {
-        mainWindow.loadFile('upload.html'); // Ensure upload.html exists
+        mainWindow.loadFile('src/frontend/upload.html'); // Ensure upload.html exists
     });
 
     // Handle navigation from home to Record
     ipcMain.on('navigate-to-record', () => {
-        mainWindow.loadFile('record.html'); // Ensure record.html exists
+        mainWindow.loadFile('src/frontend/record.html'); // Ensure record.html exists
     });
 
     // Handle navigation to Home
     ipcMain.on('navigate-to-home', () => {
-        mainWindow.loadFile('index.html');
+        mainWindow.loadFile('src/frontend/index.html');
     });
 
     // Optional: Emit events when window is maximized/unmaximized
@@ -53,18 +53,32 @@ function createWindow() {
     });
 }
 
-app.whenReady().then(createWindow);
-
-// Expose a function via IPC
-ipcMain.handle('process-audio', async (event, filePath) => {
-    try {
-      // Call your C++ backend function through the addon.
-      const result = addon.processAudio(filePath);
-      return result;  // Return the result (e.g., a status message).
-    } catch (error) {
-      console.error("Error processing audio:", error);
-      throw error;
-    }
+app.whenReady().then(() => {
+    // Adjust the path to your built C++ executable as needed.
+    const executablePath = path.join('build/Debug/ScoreGen.exe');
+    console.log(`Spawning C++ backend at: ${executablePath}`);
+  
+    // Spawn the C++ process with a pipe for stdin.
+    childProc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
+  
+    // Listen to stdout and stderr from the C++ process.
+    childProc.stdout.on('data', (data) => {
+      console.log(`Backend stdout: ${data.toString()}`);
+    });
+    childProc.stderr.on('data', (data) => {
+      console.error(`Backend stderr: ${data.toString()}`);
+    });
+  
+    // Listen for the "process-audio" IPC message from the renderer.
+    ipcMain.on('process-audio', (event) => {
+      console.log('Received "process-audio" event');
+      if (childProc && childProc.stdin.writable) {
+        // Write the command followed by a newline so that the C++ process reads it.
+        childProc.stdin.write('processAudio\n');
+      }
+    });
+  
+    createWindow();
   });
 
 app.on('window-all-closed', () => {

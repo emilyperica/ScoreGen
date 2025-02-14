@@ -16,7 +16,5 @@ contextBridge.exposeInMainWorld('electron', {
 });
 
 contextBridge.exposeInMainWorld('api', {
-    processAudio: async (filePath) => {
-      return await ipcRenderer.invoke('process-audio', filePath);
-    }
+    processAudio: () => ipcRenderer.send('process-audio')
 });

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function() {
   const stopRecordingBtn = document.getElementById('stop-recording');
   const exportMusicxmlBtn = document.getElementById('export-musicxml');
   const saveRecordingBtn = document.getElementById('save-recording');
-  const processButton = document.getElementById('processButton')
   
   /* === Playback Variables & Elements === */
   const audio = document.getElementById('audio');
@@ -306,17 +305,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 
-  processButton.addEventListener('click', async () => {
-    // Replace with an actual file path or use a file dialog.
-    const filePath = "C:\\path\\to\\your\\audio.wav";
-    try {
-      const result = await window.api.processAudio(filePath);
-      console.log("Processing result:", result);
-    } catch (err) {
-      console.error("Error:", err);
-    }
-  });
-  
   /* --- Export to MusicXML --- */
   exportMusicxmlBtn.addEventListener('click', () => {
     if (!recordedAudioBlob) {
@@ -406,6 +394,11 @@ document.addEventListener('DOMContentLoaded', function() {
       }, 1000); // Simulated delay.
     });
   }
+
+  document.getElementById('processButton').addEventListener('click', () => {
+    // This will send an IPC message to the main process.
+    window.api.processAudio();
+  });
   
   /* --- Playback Event Listeners --- */
   playPauseButton.addEventListener('click', () => {

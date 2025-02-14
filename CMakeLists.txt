@@ -19,7 +19,7 @@ find_package(portaudio CONFIG REQUIRED)
 find_package(SndFile REQUIRED)
 
 # Create the project's executable
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/backend/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
 # Link non-vcpkg dependencies
