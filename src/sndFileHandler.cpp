@@ -18,14 +18,12 @@ std::tuple<SF_INFO, std::vector<double>> SndFileHandler::readSndFile(){
         return std::make_tuple(sfInfo, std::vector<double>());
     }
 
-    printf("Opened file: %s, now reading...\n", sndInputPath_.c_str());
     std::vector<double> data;
     while ((readCount = sf_readf_double(inputFile, buffer, FRAME_SIZE))){
         for (int i = 0; i < readCount; i++){
             data.push_back(buffer[i]);
         }
         }
-        printf("Finished reading file. Total frames read: %zu\n", data.size());
 
     sf_close(inputFile);
     
