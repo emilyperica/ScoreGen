@@ -1,8 +1,10 @@
 #include "hammingFunction.h"
+#include <iostream>
 
-void hammingFunction(int windowLength, float* buffer){
-
-    for (int i = 0; i < windowLength; i++){
-        buffer[i] *= 0.54 - 0.46 * cos(2 * PI * i / (windowLength - 1));
+std::vector<double> hammingFunction(int windowSize) {
+    std::vector<double> window(windowSize);
+    for (int i = 0; i < windowSize; i++) {
+        window[i] = 0.54 - 0.46 * cos((2 * M_PI * i) / (windowSize - 1));
     }
+    return window;
 }

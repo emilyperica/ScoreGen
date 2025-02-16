@@ -8,6 +8,6 @@
 
 #define PI 3.14159265358979323846
 
-void hammingFunction(int windowLength, double* buffer);
+std::vector<double> hammingFunction(int windowLength);
 
 #endif // HAMMINGFUNCTION_H

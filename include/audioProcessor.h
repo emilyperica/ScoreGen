@@ -6,7 +6,7 @@
 
 class AudioProcessor{
 public:
-    virtual ~AudioProcessor() = 0;
+    virtual ~AudioProcessor() = default;
 
     virtual std::vector<double> process() = 0;
 };

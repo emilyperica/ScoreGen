@@ -6,7 +6,7 @@
 class ChannelConverter : public AudioProcessor{
     public:
         ChannelConverter(const int& channels, const std::vector<double>& data);
-        ~ChannelConverter() override;
+        ~ChannelConverter();
 
         std::vector<double> process() override;
 

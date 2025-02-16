@@ -1,5 +1,6 @@
 #include "STFT.h"
 #include "hammingFunction.h"
+#include <iostream>
 
 std::vector<std::vector<double>> STFT(const std::vector<double>& data, int windowSize, int hopSize){
 
@@ -19,8 +20,12 @@ std::vector<std::vector<double>> STFT(const std::vector<double>& data, int windo
     planForward = fftw_plan_dft_1d(windowSize, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 
     // Create a hamming window
-    std::vector<double> hammingWindow(windowSize);
-    hammingFunction(windowSize, hammingWindow.data());    
+    std::vector<double> hammingWindow = hammingFunction(windowSize);
+    std::cout << "First few values of hammingWindow:\n";
+    for (int i = 0; i < std::min(windowSize, 10); i++) {
+        std::cout << hammingWindow[i] << " ";
+    }
+    std::cout << std::endl; 
 
     // Perform STFT
     int chunkPosition = 0;
@@ -43,6 +48,19 @@ std::vector<std::vector<double>> STFT(const std::vector<double>& data, int windo
         // Perform FFT on frame
         fftw_execute(planForward);
 
+        if (chunkPosition == 0) {
+            std::cout << "First FFT input frame:\n";
+            for (int i = 0; i < std::min(windowSize, 10); i++) {
+                std::cout << "(" << in[i][0] << ", " << in[i][1] << ") ";
+            }
+            std::cout << std::endl;
+
+            std::cout << "First FFT output:\n";
+            for (int i = 0; i < std::min(windowSize / 2 + 1, 10); i++) {
+                std::cout << "(" << out[i][0] << ", " << out[i][1] << ") ";
+            }
+            std::cout << std::endl;
+        } 
         // Add to spectrogram data structure
         // A 2D vector where each row is a time frame and each column is a frequency bin
         // Frequency information at a specific time frame : std::vector<double> spectrogram[timeIndex]
