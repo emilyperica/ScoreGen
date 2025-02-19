@@ -7,7 +7,7 @@ on:
             - main
 
 permissions:
-    contents: write
+    contents: read
 
 jobs:
     lint:
@@ -32,9 +32,18 @@ jobs:
                   # Set language specific flags
                   VALIDATE_CHECKOV: false
                   VALIDATE_JSCPD: false
-                  # Set flags that default as false to true
+                  # Set ONLY formatting auto-fix flags to true
                   FIX_CLANG_FORMAT: true
+                  FIX_CSS_PRETTIER: true
+                  FIX_HTML_PRETTIER: true
                   FIX_JAVASCRIPT_PRETTIER: true
+                  FIX_JSON_PRETTIER: true
+                  FIX_JSONC_PRETTIER: true
+                  FIX_JSX_PRETTIER: true
+                  FIX_MARKDOWN_PRETTIER: true
+                  FIX_TYPESCRIPT_PRETTIER: true
+                  FIX_VUE_PRETTIER: true
+                  FIX_YAML_PRETTIER: true
 
             - name: Commit and push linting fixes
               if: >
@@ -43,6 +52,6 @@ jobs:
               uses: stefanzweifel/git-auto-commit-action@v5
               with:
                   branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
-                  commit_message: "Chore: Fixed linting issues"
+                  commit_message: "Chore: Auto-fixed formatting issues"
                   commit_user_name: super-linter
                   commit_user_email: super-linter@super-linter.dev
