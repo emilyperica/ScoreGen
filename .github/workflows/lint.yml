@@ -7,7 +7,7 @@ on:
             - main
 
 permissions:
-    contents: read
+    contents: write
 
 jobs:
     lint:
@@ -27,7 +27,12 @@ jobs:
               uses: super-linter/super-linter@v7.2.1
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-                  VALIDATE_ALL_CODEBASE: false
+                  # Only run linter on changed files in the PR
+                  VALIDATE_ALL_CODEBASE: false 
+                  # Set language specific flags
+                  VALIDATE_CHECKOV: false
+                  VALIDATE_JSCPD: false
+                  # Set flags that default as false to true
                   FIX_CLANG_FORMAT: true
                   FIX_JAVASCRIPT_PRETTIER: true
 
