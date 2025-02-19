@@ -1,5 +1,6 @@
 #include <string>
 #include <vector>
+#include <tuple>
 #include <sndfile.h>
 
 #ifndef SNDFILEHANDLER_H

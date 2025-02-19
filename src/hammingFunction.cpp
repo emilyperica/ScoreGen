@@ -1,5 +1,6 @@
 #include "hammingFunction.h"
-#include <iostream>
+#include <cmath>
+#define _USE_MATH_DEFINES
 
 std::vector<double> hammingFunction(int windowSize) {
     std::vector<double> window(windowSize);
