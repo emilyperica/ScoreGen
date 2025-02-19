@@ -54,7 +54,6 @@ jobs:
               uses: stefanzweifel/git-auto-commit-action@v5
               with:
                   branch: ${{ github.event.pull_request.head.ref || github.head_ref || github.ref }}
-                  file_pattern: "!(.github/workflows/*)"
                   commit_message: "Chore: Auto-fixed formatting issues"
                   commit_user_name: super-linter
                   commit_user_email: super-linter@super-linter.dev
