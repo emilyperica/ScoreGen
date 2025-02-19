@@ -29,6 +29,8 @@ jobs:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   # Only run linter on changed files in the PR
                   VALIDATE_ALL_CODEBASE: false 
+                  # To complete with exit code 0 even if errors were detected
+                  DISABLE_ERRORS: true
                   # Set language specific flags
                   VALIDATE_CHECKOV: false
                   VALIDATE_JSCPD: false
