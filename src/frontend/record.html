@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width">
+  <title>MIDI Playback & Recording</title>
+  <!-- Verovio -->
+  <script src="https://www.verovio.org/javascript/develop/verovio-toolkit-wasm.js" defer></script>
+  <!-- A JavaScript MIDI player -->
+  <script src="https://www.midijs.net/lib/midi.js"></script>
+  <!-- External CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
+        integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw" 
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <!-- Custom Title Bar -->
+  <div class="title-bar">
+    <button id="home-nav-btn" class="btn-nav-logo" aria-label="Navigate to Home">
+      <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
+    </button>
+    <div class="nav-buttons">
+      <button id="upload-nav-btn" class="btn-nav">Upload</button>
+      <button id="record-nav-btn" class="btn-nav">Record</button>
+    </div>
+  </div>
+
+  <div class="app-container">   
+    <main>
+        <div class="device-selection">
+            <label for="input-device-select">Input Device:</label>
+            <select id="input-device-select"></select>
+        </div>
+        <div class="button-group">
+            <!-- Recording Controls -->
+            <div class="recording-controls">
+                <!-- (Optional: Add a display element for recording length if desired) -->
+                <div class="recording-timer">
+                    <span id="recording-length">0:00</span>
+                </div>
+                <button id="start-recording" class="btn btn-record" aria-label="Start Recording">
+                    <i class="fas fa-circle"></i>
+                </button>
+                <button id="pause-recording" class="btn btn-pause" aria-label="Pause Recording" disabled>
+                    <i class="fas fa-pause"></i>
+                </button>
+                <button id="stop-recording" class="btn btn-stop" aria-label="Stop Recording" disabled>
+                    <i class="fas fa-stop"></i>
+                </button>
+                <div class="upload-controls">
+                    <button id="upload-file-button" class="btn btn-upload">
+                        <i class="fas fa-upload"></i>
+                    </button>
+                    <input type="file" id="upload-file" accept=".wav" style="display:none;">
+                </div>
+                <button id="save-recording" class="btn btn-save" aria-label="Save Recording" disabled>
+                    <i class="fas fa-save"></i>
+                </button>
+                <button id="export-musicxml" class="btn btn-export" aria-label="Export to MusicXML" disabled>
+                    <i class="fas fa-file-export"></i>
+                </button>
+                <button id="processButton">Process Audio</button>
+            </div>
+        </div>
+        
+        <!-- Frequency canvas (if needed for visualization) -->
+        <canvas id="frequencyCanvas" width="800" height="400"></canvas>
+        
+        <!-- Playback Section -->
+        <section id="playback-section">
+            <!-- The audio element will receive the recorded audio URL -->
+            <audio id="audio" src=""></audio>
+            <div class="audio-player">
+            <div class="controls">
+                <button id="prev-button" class="control-button" title="Previous">
+                <i class="fas fa-backward"></i>
+                </button>
+                <button id="play-pause-button" class="control-button" title="Play" disabled>
+                <i class="fas fa-play"></i>
+                </button>
+                <button id="next-button" class="control-button" title="Next">
+                <i class="fas fa-forward"></i>
+                </button>
+            </div>
+            <div class="progress-container">
+                <span id="current-time">0:00</span>
+                <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1">
+                <span id="total-duration">0:00</span>
+            </div>
+            </div>
+      </section>
+    </main>
+    </div>
+    <!-- <script src="renderer.js"></script> -->
+    <script src="record.js"></script>
+    <script src="nav.js"></script>
+    <script src="frequency.js"></script>
+</body>
+</html>

@@ -20,7 +20,7 @@ find_package(SndFile REQUIRED)
 find_package(FFTW3 REQUIRED)
 
 # Create the project's executable
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/backend/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
 # Link non-vcpkg dependencies
