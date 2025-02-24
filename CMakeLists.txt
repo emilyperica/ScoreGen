@@ -17,9 +17,10 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 find_package(Aubio CONFIG REQUIRED)
 find_package(portaudio CONFIG REQUIRED)
 find_package(SndFile REQUIRED)
+find_package(FFTW3 REQUIRED)
 
 # Create the project's executable
-file(GLOB SOURCES "src/*.cpp")
+file(GLOB SOURCES "src/backend/*.cpp")
 add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
 
 # Link non-vcpkg dependencies
@@ -59,6 +60,7 @@ target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE
     SndFile::sndfile
     portaudio
     libmusicxml
+    FFTW3::fftw3
 )
 
 # Additional platform-specific settings

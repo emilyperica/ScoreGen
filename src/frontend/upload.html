@@ -1,0 +1,60 @@
+<!DOCTYPE html> 
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>MIDI Playback</title>
+    <!-- Verovio -->
+    <script src="https://www.verovio.org/javascript/develop/verovio-toolkit-wasm.js" defer></script>
+    <!-- A JavaScript MIDI player -->
+    <script src="https://www.midijs.net/lib/midi.js"></script>
+    <!-- Link to External CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    <!-- Custom Title Bar -->
+    <div class="title-bar">
+        <button id="home-nav-btn" class="btn-nav-logo" aria-label="Navigate to Home">
+            <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
+        </button>
+        <div class="nav-buttons">
+            <button id="upload-nav-btn" class="btn-nav">Upload</button>
+            <button id="record-nav-btn" class="btn-nav">Record</button>
+        </div>
+    </div>
+
+    <div class="app-container">
+        <main>
+            <div class="button-group">
+                <label for="musicxmlFile" class="btn btn-upload">
+                    <i class="fas fa-upload"></i>
+                    <input type="file" id="musicxmlFile" accept=".musicxml" hidden>
+                </label>
+                <button id="toggle-btn" class="btn btn-enter">
+                    <i class="fas fa-play"></i>
+                </button>
+            </div>
+            <div class="notation-container">
+                <div class="zoom-controls">
+                    <button id="zoomIn" class="btn btn-zoom"><i class="fas fa-search-plus"></i>+</button>
+                    <button id="zoomOut" class="btn btn-zoom"><i class="fas fa-search-minus"></i>-</button>
+                </div>
+                <div id="notation"></div>
+                <!-- Navigation Arrows and Page Indicator -->
+                <div class="page-navigation">
+                    <button id="prevPage" class="btn btn-nav-page" aria-label="Previous Page">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <span id="pageIndicator" class="page-indicator">Page 0 of 0</span>
+                    <button id="nextPage" class="btn btn-nav-page" aria-label="Next Page">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="renderer.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>

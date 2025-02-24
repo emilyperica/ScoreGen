@@ -1,3 +1,3 @@
 #!/bin/bash
 
-vcpkg install aubio portaudio libsndfile
+vcpkg install aubio portaudio libsndfile fftw3
