@@ -1,0 +1,20 @@
+{
+    "name": "ScoreGen",
+    "version": "1.0.0",
+    "main": "src/frontend/main.js",
+    "scripts": {
+        "start": "electron --trace-warnings ."
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "type": "commonjs",
+    "description": "",
+    "devDependencies": {
+        "electron": "^33.3.1"
+    },
+    "dependencies": {
+        "node-addon-api": "^8.3.0",
+        "node-gyp": "^11.0.0"
+    }
+}
