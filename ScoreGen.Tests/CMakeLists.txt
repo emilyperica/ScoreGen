@@ -1,3 +1,7 @@
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # Add Google Test using FetchContent
 include(FetchContent)
 FetchContent_Declare(
@@ -7,11 +11,13 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(googletest)
 
-# Create a test executable
-add_executable(ScoreGen.Tests
-    ScoreGen.Test.cpp
-    DetermineBPM.Test.cpp
+file(GLOB TEST_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
+
+
+# Create a test executable
+add_executable(ScoreGen.Tests ${TEST_SOURCES})
 
 # Ensure ScoreGenLib propagates all necessary include directories
 target_include_directories(ScoreGen.Tests PRIVATE
@@ -26,6 +32,15 @@ target_link_libraries(ScoreGen.Tests PRIVATE
     ScoreGenLib  # Link against the library
 )
 
+add_test(NAME ScoreGen.Tests COMMAND ScoreGen.Tests)
+
+message(STATUS "Setting test working directory to: ${CMAKE_SOURCE_DIR}/test/TestingDatasets")
+
+
+set_tests_properties(ScoreGen.Tests PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/TestingDatasets)
+
 # Add the test to CTest
 include(GoogleTest)
-gtest_discover_tests(ScoreGen.Tests)
+gtest_discover_tests(ScoreGen.Tests
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/TestingDatasets
+)

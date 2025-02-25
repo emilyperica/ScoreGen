@@ -26,19 +26,8 @@ find_package(FFTW3 REQUIRED)
 # Set up libmusicxml before using it
 set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
 
-# Explicitly list all source files instead of using GLOB
-set(SOURCES
-    src/backend/channelConverter.cpp
-    src/backend/detectNoteDuration.cpp
-    src/backend/determineBPM.cpp
-    src/backend/dsp.cpp
-    src/backend/findKey.cpp
-    src/backend/generateMusicXML.cpp
-    src/backend/hammingFunction.cpp
-    src/backend/recordAudio.cpp
-    src/backend/ScoreGen.cpp
-    src/backend/sndFileHandler.cpp
-    src/backend/STFT.cpp
+file(GLOB SOURCES
+    "${CMAKE_SOURCE_DIR}/src/backend/*.cpp"
 )
 
 # Create a library for the main code
