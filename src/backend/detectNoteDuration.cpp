@@ -151,3 +151,137 @@ vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels
 
     return notes;
 }
+
+// onset detection based on https://github.com/CPJKU/onset_detection/blob/master/onset_program.py and https://archives.ismir.net/ismir2012/paper/000049.pdf 
+Filter::Filter(int ffts, double fs, int bands, double fmin, double fmax, bool equal)
+        : ffts(ffts), fs(fs), bands(bands), fmin(fmin), fmax(fmax), equal(equal) 
+{
+    // Reduce fmax if necessary
+    if (fmax > fs / 2) {
+        fmax = fs / 2;
+    }
+
+    std::vector<double> frequencies = Filter::frequencies(bands, fmin, fmax);
+    double factor = (fs / 2.0) / ffts;
+    std::vector<int> freq_bins;
+    for (double f : frequencies) {
+        int bin = static_cast<int>(std::round(f / factor));
+        if (bin < ffts) {
+            freq_bins.push_back(bin);
+        }
+    }
+
+    // remove duplicates
+    std::sort(freq_bins.begin(), freq_bins.end());
+    freq_bins.erase(std::unique(freq_bins.begin(), freq_bins.end()), freq_bins.end());
+
+    bands = freq_bins.size() - 2;
+    filterbank.assign(ffts, std::vector<double>(bands, 0.0));
+    // create triangular filters
+    for (int i = 0; i < bands; i++) {
+        int start = freq_bins[i];
+        int mid = freq_bins[i+1];
+        int stop = freq_bins[i+2];
+
+        std::vector<double> triangle = this->triang(start, mid, stop, equal);
+        for (int j = start; j < stop; j++) {
+            filterbank[j][i] = triangle[j-start];
+        }
+    }
+}
+
+std::vector<double> Filter::frequencies(int bands, double fmin, double fmax) {
+    // factor 2 frequencies are apart
+    double factor = pow(2.0, (1.0/bands));
+    double freq = 440;
+    std::vector<double> frequencies = {freq};
+
+    // generate frequencies upwards from A0 to fmax
+    while (freq <= fmax) {
+        freq *= factor;
+        frequencies.push_back(freq);
+    }
+
+    // generate frequencies downwards from A0 to fmin
+    freq = 440;
+    while (freq >= fmin) {
+        freq /= factor;
+        frequencies.push_back(freq);
+    }
+
+    std::sort(frequencies.begin(), frequencies.end());
+    return frequencies;
+}
+
+std::vector<double> Filter::triang(int start, int mid, int stop, bool equal) {
+    std::vector<double> triangle(stop - start, 0.0);
+    double height = 1.0;
+
+    // Normalize height if needed
+    if (equal) {
+        height = 2.0 / (stop - start);
+    }
+
+    // Rising edge
+    for (int i = 0; i < mid-start; i++) {
+        triangle[i] = i * height/(mid-start);
+    }
+
+    // Falling edge
+    for (int i = mid-start; i < triangle.size(); i++) {
+        triangle[i] = height - (i - (mid - start))*height/(stop - mid);
+    }
+
+    return triangle;
+}
+
+void Filter::printFilterBank() const {
+    for (size_t i = 0; i < filterbank.size(); i++) {
+        bool hasNonZero = false;
+        for (size_t j = 0; j < filterbank[i].size(); j++) {
+            if (filterbank[i][j] > 0.0) {
+                std::cout << "Bin " << i << ", Band " << j << ": " << filterbank[i][j] << "\n";
+                hasNonZero = true;
+            }
+        }
+        if (hasNonZero) std::cout << "\n";  // Add spacing between nonzero sections
+    }
+}   
+
+
+std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::vector<double>> spectrogram) { // lambda is chosen to be between 0.01 and 20
+    // Constant-Q
+    int ffts = 2048;
+    double fs = 44100.0;
+    int bands = 12;
+    double fmin = 27.5;
+    double fmax = 16000.0;
+    bool equal = false;
+
+    Filter filter(ffts, fs, bands, fmin, fmax, equal);
+    std::vector<std::vector<double>> filterBank = filter.filterbank;
+
+    int numTimeFrames = spectrogram.size();
+    int numFreqBins = spectrogram[0].size();
+    int numFilterBands = filterBank[0].size();
+    std::vector<std::vector<double>> filteredSpec(numTimeFrames, std::vector<double>(numFilterBands, 0.0));
+
+    // multiply the spectrogram by the filter bank
+    for (int i = 0; i < numTimeFrames; i++) {
+        for (int j = 0; j < numFilterBands; j++) {
+            for (int k = 0; k < numFreqBins; k++) {
+                filteredSpec[i][j] += spectrogram[i][k] * filterBank[k][j];
+            }
+        }
+    }
+
+    // logarithmic filter of spectrogram
+    std::vector<std::vector<double>> logs(numTimeFrames, std::vector<double>(numFilterBands, 0.0));
+    for (int i = 0; i < filteredSpec.size(); i++) {
+        for (int j = 0; j < filteredSpec[i].size(); j++) {
+            logs[i][j] = log10(lambda * filteredSpec[i][j] + 1);
+        }
+    }
+
+    return logs;
+}
