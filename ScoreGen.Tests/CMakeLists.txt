@@ -1,3 +1,7 @@
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
 # Add Google Test using FetchContent
 include(FetchContent)
 FetchContent_Declare(
@@ -26,6 +30,15 @@ target_link_libraries(ScoreGen.Tests PRIVATE
     ScoreGenLib  # Link against the library
 )
 
+add_test(NAME ScoreGen.Tests COMMAND ScoreGen.Tests)
+
+message(STATUS "Setting test working directory to: ${CMAKE_SOURCE_DIR}/test/TestingDatasets")
+
+
+set_tests_properties(ScoreGen.Tests PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/TestingDatasets)
+
 # Add the test to CTest
 include(GoogleTest)
-gtest_discover_tests(ScoreGen.Tests)
+gtest_discover_tests(ScoreGen.Tests
+    WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/TestingDatasets
+)
