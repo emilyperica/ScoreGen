@@ -22,29 +22,17 @@ jobs:
       with:
         submodules: recursive
 
-    - name: Cache vcpkg dependencies
-      uses: actions/cache@v3
-      with:
-        path: ${{ github.workspace }}/vcpkg
-        key: vcpkg-${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
-        restore-keys: |
-          vcpkg-${{ runner.os }}-
-
     - name: Clone and bootstrap vcpkg
       shell: cmd
       run: |
-        if not exist "%VCPKG_DIR%" (
-          git clone https://github.com/microsoft/vcpkg.git "%VCPKG_DIR%"
-          cd "%VCPKG_DIR%"
-          bootstrap-vcpkg.bat
-        )
+        git clone https://github.com/microsoft/vcpkg.git "%VCPKG_DIR%"
+        cd "%VCPKG_DIR%"
+        bootstrap-vcpkg.bat
 
     - name: Install dependencies
       shell: cmd
       run: |
-        if not exist "%VCPKG_DIR%\installed\x64-windows" (
-          %VCPKG_DIR%\vcpkg.exe install gtest aubio portaudio libsndfile fftw3
-        )
+        %VCPKG_DIR%\vcpkg.exe install gtest aubio portaudio libsndfile fftw3
 
     - name: Configure CMake
       shell: cmd
