@@ -1,0 +1,61 @@
+name: C++ Unit Tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  VCPKG_DIR: ${{ github.workspace }}/vcpkg
+  VCPKG_DEFAULT_TRIPLET: x64-windows
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout code (with submodules)
+      uses: actions/checkout@v4
+      with:
+        submodules: recursive
+
+    - name: Cache vcpkg dependencies
+      uses: actions/cache@v3
+      with:
+        path: ${{ github.workspace }}/vcpkg
+        key: vcpkg-${{ runner.os }}-${{ hashFiles('**/vcpkg.json') }}
+        restore-keys: |
+          vcpkg-${{ runner.os }}-
+
+    - name: Clone and bootstrap vcpkg
+      shell: cmd
+      run: |
+        if not exist "%VCPKG_DIR%" (
+          git clone https://github.com/microsoft/vcpkg.git "%VCPKG_DIR%"
+          cd "%VCPKG_DIR%"
+          bootstrap-vcpkg.bat
+        )
+
+    - name: Install dependencies
+      shell: cmd
+      run: |
+        if not exist "%VCPKG_DIR%\installed\x64-windows" (
+          %VCPKG_DIR%\vcpkg.exe install gtest aubio portaudio libsndfile fftw3
+        )
+
+    - name: Configure CMake
+      shell: cmd
+      run: >
+        cmake -B build -S . -G "Visual Studio 17 2022" 
+        -DCMAKE_TOOLCHAIN_FILE="%VCPKG_DIR%\\scripts\\buildsystems\\vcpkg.cmake"
+
+    - name: Build project
+      shell: cmd
+      run: cmake --build build --config Debug
+
+    - name: Run tests
+      shell: cmd
+      run: ctest --test-dir build --output-on-failure -C Debug
