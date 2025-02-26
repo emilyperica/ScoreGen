@@ -47,7 +47,7 @@ string determineNoteType(float noteDuration, int bpm) {
     return closest->first; // Return the note name
 }
 
-vector<Note> detectNotes(const vector<float>& buf, int sample_rate, int channels) {
+vector<Note> detectNotes(const vector<double>& buf, int sample_rate, int channels) {
     vector<Note> notes;
     int bpm = getBufferBPM(buf, sample_rate);
     cout << "Calculated BPM: " << bpm << endl;
@@ -235,20 +235,6 @@ std::vector<double> Filter::triang(int start, int mid, int stop, bool equal) {
     return triangle;
 }
 
-void Filter::printFilterBank() const {
-    for (size_t i = 0; i < filterbank.size(); i++) {
-        bool hasNonZero = false;
-        for (size_t j = 0; j < filterbank[i].size(); j++) {
-            if (filterbank[i][j] > 0.0) {
-                std::cout << "Bin " << i << ", Band " << j << ": " << filterbank[i][j] << "\n";
-                hasNonZero = true;
-            }
-        }
-        if (hasNonZero) std::cout << "\n";  // Add spacing between nonzero sections
-    }
-}   
-
-
 std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::vector<double>> spectrogram) { // lambda is chosen to be between 0.01 and 20
     // Constant-Q
     int ffts = 2048;
@@ -284,4 +270,127 @@ std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::v
     }
 
     return logs;
+}
+
+
+// onset detection function
+std::vector<double> spectralFlux(std::vector<std::vector<double>> spectrogram) {
+    std::vector<std::vector<double>> processedSpec = preProcessing(10, spectrogram);
+    std::vector<double> diffs(processedSpec.size(), 0.0);
+
+    for (int i = 1; i < processedSpec.size(); i++) {
+        double flux = 0.0;
+        for (int j = 0; j < processedSpec[i].size(); j++) {
+            // applying the half-wave rectifier function
+            double x = abs(processedSpec[i][j]) - abs(processedSpec[i-1][j]);
+            flux += (x+abs(x))/2;
+        }
+
+        diffs[i] = flux;
+    }
+
+    return diffs;
+}
+
+std::vector<double> peakPicker(std::vector<double> onsets, double fps) {
+    
+    std::vector<double> peaks;
+    std::vector<double> means(onsets.size());
+    std::vector<double> maximums(onsets.size());
+    
+    // parameter values (calibrate as necessary)
+    double delta = 20; // must be determined empirically 
+    //double delta = 0.2 * *std::max_element(onsets.begin(), onsets.end());
+    int w1 = 3;
+    int w2 = 3;
+    int w3 = 8; // optimal value is between 4 and 12
+    int w4 = 1;
+    int w5 = static_cast<int>(30.0 / 1000.0 * fps);
+
+    // step 1: get the list of means and maximums
+    double movingMean = 0;
+    double movingMax = 0;
+    int front = 0;
+    int end = 0;
+    int meansWinSize = w3 + w4 + 1;
+    for (int i=0; i < w4; i++) {
+        movingMean += onsets[i];
+    }
+
+    movingMean /= w4;
+    
+    for (int n = 0; n < onsets.size(); n++) {
+        // calculating means of each window
+        if (n - w3 <= 0) {
+            movingMean = (movingMean * (n+w4) + onsets[n+w4]) / (n+w4+1);
+        } else if (n + w4 >= onsets.size()) {
+            meansWinSize = onsets.size() - n + w3;
+            movingMean = (movingMean * (meansWinSize + 1) - onsets[n-w3-1]) / meansWinSize;
+        } else {
+            movingMean = (movingMean * (meansWinSize) - onsets[n-w3-1] + onsets[n+w4]) / meansWinSize;
+        }
+
+        // calculate maximums of each window
+        if (n - w1 < 0) {
+            front = 0;
+        } else if (n + w2 >= onsets.size()) {
+            end = onsets.size() - 1;
+        } else {
+            front = n - w1;
+            end = n + w2;
+        }
+
+        movingMax = 0;
+        for (int i = front; i <= end; i++) {
+            if (onsets[i] > movingMax) {
+                movingMax = onsets[i];
+            }
+        }
+
+        means[n] = movingMean;
+        maximums[n] = movingMax;
+    }
+
+    // step 2: get the peaks
+    int lastOnsetIndex = -1;
+    for (int i=0; i < onsets.size(); i++) {
+        if ((onsets[i] >= means[i] + delta) && (onsets[i] == maximums[i]) && ((i-lastOnsetIndex > w5) || lastOnsetIndex < 0)) {
+            peaks.push_back(i);
+            lastOnsetIndex = i;
+        }
+    }
+
+    return peaks;
+}
+
+
+std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate) {
+    int ffts = 2048; // window size
+    double fs = 44100.0; // sample rate
+    int hopSize = 441;
+    int fps = fs/hopSize;
+    string name;
+
+    std::vector<std::vector<double>> ft = STFT(buf, ffts, hopSize);
+    std::vector<double> onsets = spectralFlux(ft);
+    std::vector<double> peaks = peakPicker(onsets, fps);
+
+    std::vector<Note> notes(peaks.size());
+    
+    notes[0].startTime = peaks[0] / static_cast<double>(fps);
+    for (size_t i = 1; i < peaks.size(); i++) {
+        Note note;
+        notes[i-1].endTime = peaks[i] / static_cast<double>(fps);
+        note.startTime = peaks[i] / static_cast<double>(fps);
+
+        notes[i] = note;        
+    }
+
+    notes.back().endTime = static_cast<double>(onsets.size() - 1) / static_cast<double>(fps);
+    for (int i = 0; i < peaks.size()-1; i++) {
+        notes[i].pitch = name;
+    }
+
+
+    return notes;
 }

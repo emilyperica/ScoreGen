@@ -4,8 +4,8 @@
 #define SILENCE_LENGTH 512
 #define PPQ 480 // Pulses per quarter note, default for MusicXML
 
-std::vector<float> prependSilence(const std::vector<float>& buf, size_t silenceLength) {
-    std::vector<float> paddedBuffer(silenceLength, 0.0f); // Add silence
+std::vector<double> prependSilence(const std::vector<float>& buf, size_t silenceLength) {
+    std::vector<double> paddedBuffer(silenceLength, 0.0f); // Add silence
     paddedBuffer.insert(paddedBuffer.end(), buf.begin(), buf.end());
     return paddedBuffer;
 }
@@ -118,7 +118,8 @@ DSPResult dsp(const char* infilename) {
         buf = move(tempBuffer);
     }
 
-    std::vector<float> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
+    std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
+    //std::vector<Note> notes = onsetDetection(paddedBuf, sfinfo.samplerate);
 
     // Extract notes
     std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);

@@ -17,5 +17,5 @@
 #include <aubio/aubio.h>
 
 float calculateMedian(const std::vector<float>& values);
-float getBufferBPM(const std::vector<float>& buf, int sample_rate, const std::map<std::string, std::string>& params = {});
+float getBufferBPM(const std::vector<double>& buf, int sample_rate, const std::map<std::string, std::string>& params = {});
 #endif // DETERMINE_BPM_H
