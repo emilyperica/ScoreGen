@@ -35,7 +35,7 @@ float beatsToBPM(const std::vector<float>& beats) {
 }
 
 // Function to calculate beats per minute (BPM) from a loaded buffer
-float getBufferBPM(const std::vector<float>& buf, int sample_rate, const std::map<std::string, std::string>& params) {
+float getBufferBPM(const std::vector<double>& buf, int sample_rate, const std::map<std::string, std::string>& params) {
     // Default settings
     int win_s = WIN_S, hop_s = HOP_S;
 
