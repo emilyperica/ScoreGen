@@ -118,7 +118,7 @@ DSPResult dsp(const char* infilename) {
         buf = move(tempBuffer);
     }
 
-    std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
+    const std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
     //std::vector<Note> notes = onsetDetection(paddedBuf, sfinfo.samplerate);
 
     // Extract notes
