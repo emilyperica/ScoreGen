@@ -388,9 +388,41 @@ std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate
 
     notes.back().endTime = static_cast<double>(onsets.size() - 1) / static_cast<double>(fps);
     for (int i = 0; i < peaks.size()-1; i++) {
+        name = detectPitch(ft, peaks[i], peaks[i+1], fs, ffts);
         notes[i].pitch = name;
     }
 
+    name = detectPitch(ft, peaks.back(), ft.size(), fs, ffts);
+    notes.back().pitch = name;
+
+    for (Note note : notes) {
+        cout << note.startTime << " - " << note.endTime << "\t" << note.pitch << "\n";
+    }
 
     return notes;
+}
+
+string detectPitch(std::vector<std::vector<double>> spec, int startFrame, int endFrame, int sample_rate, int ffts) {
+    std::vector<std::vector<double>> noteSpec(spec.begin() + startFrame, spec.begin() + endFrame);
+    string curr_note = "";
+    double dominant_freq = 0.0;
+    double binRes = sample_rate / ffts;
+
+    int numFrames = noteSpec.size();
+    int numFreqBins = noteSpec[0].size();
+
+    std::vector<double> avgSpectrum(numFreqBins, 0.0);
+    for (const auto& frame : noteSpec) {
+        for (int i = 0; i < numFreqBins; i++) {
+            avgSpectrum[i] += frame[i] / numFrames;
+        }
+    }
+
+    auto maxIter = std::max_element(avgSpectrum.begin(), avgSpectrum.end());
+    int peakIndex = std::distance(avgSpectrum.begin(), maxIter);
+    dominant_freq = static_cast<double>(peakIndex) * binRes;
+
+    curr_note = getNoteName(dominant_freq);
+
+    return curr_note;
 }
