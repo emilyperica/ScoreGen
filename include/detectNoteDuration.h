@@ -24,8 +24,8 @@ struct Note {
 // Function declarations
 std::string getNoteName(double freq);
 std::string determineNoteType(float noteDuration, int bpm);
-std::vector<Note> detectNotes(const std::vector<float>& buf, int sample_rate, int channels);
-std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::vector<double>> spectrogram)
+std::vector<Note> detectNotes(const std::vector<double>& buf, int sample_rate, int channels);
+std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::vector<double>> spectrogram);
 std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate);
 
 class Filter {
