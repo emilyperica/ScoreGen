@@ -1,12 +1,16 @@
 ﻿cmake_minimum_required(VERSION 3.15)
 
+# Set up vcpkg
 set(VCPKG_DIR $ENV{VCPKG_DIR})
 set(CMAKE_TOOLCHAIN_FILE "${VCPKG_DIR}/scripts/buildsystems/vcpkg.cmake")
 
+# MSVC-specific settings
 if(MSVC)
     set(VCPKG_CRT_LINKAGE static)
     set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 endif()
+
+# Project name
 project("ScoreGen")
 
 # Set the C++ standard
@@ -19,20 +23,44 @@ find_package(portaudio CONFIG REQUIRED)
 find_package(SndFile REQUIRED)
 find_package(FFTW3 REQUIRED)
 
-# Create the project's executable
-file(GLOB SOURCES "src/backend/*.cpp")
-add_executable(${CMAKE_PROJECT_NAME} ${SOURCES})
-
-# Link non-vcpkg dependencies
+# Set up libmusicxml before using it
 set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
+
+file(GLOB SOURCES
+    "${CMAKE_SOURCE_DIR}/src/backend/*.cpp"
+)
+
+# Create a library for the main code
+add_library(ScoreGenLib STATIC ${SOURCES})
+
+# Include headers for the library
+target_include_directories(ScoreGenLib PUBLIC
+    ${CMAKE_SOURCE_DIR}/include
+    ${LIBMUSICXML_ROOT}/include  # Make sure this is correctly set
+)
+
+# Link dependencies to the library
+target_link_libraries(ScoreGenLib PUBLIC
+    Aubio::aubio
+    SndFile::sndfile
+    portaudio
+    libmusicxml
+    FFTW3::fftw3
+)
+
+# Create the executable and link it to the library
+add_executable(ScoreGen src/backend/ScoreGen.cpp)
+target_link_libraries(ScoreGen PRIVATE ScoreGenLib)
+
+# Set up libmusicxml
 if(APPLE)
     set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.a")
     set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.dylib")
-    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/libmusicxml.dylib")
+    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:ScoreGen>/libmusicxml.dylib")
 else()
     set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.lib")
     set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/win64/libmusicxml.dll")
-    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:${CMAKE_PROJECT_NAME}>/libmusicxml.dll")
+    set(LIBMUSICXML_DEST "$<TARGET_FILE_DIR:ScoreGen>/libmusicxml.dll")
 endif()
 
 add_library(libmusicxml SHARED IMPORTED)
@@ -41,29 +69,18 @@ set_target_properties(libmusicxml PROPERTIES
     IMPORTED_LOCATION ${LIBMUSICXML_SHARED_PATH}
 )
 
-# Copy libmusicxml library to same directory as executable
-add_custom_command(TARGET ${CMAKE_PROJECT_NAME} POST_BUILD
+# Copy libmusicxml library to the same directory as the executable
+add_custom_command(TARGET ScoreGen POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy
     ${LIBMUSICXML_SHARED_PATH}
     ${LIBMUSICXML_DEST}
-)
-
-# Include headers
-target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE 
-    ${CMAKE_HOME_DIRECTORY}/include
-    ${LIBMUSICXML_ROOT}/include
-)
-
-# Link imported targets
-target_link_libraries(${CMAKE_PROJECT_NAME} PRIVATE 
-    Aubio::aubio
-    SndFile::sndfile
-    portaudio
-    libmusicxml
-    FFTW3::fftw3
 )
 
 # Additional platform-specific settings
 if (APPLE)
     target_link_libraries(ScoreGen PRIVATE "-framework CoreAudio" "-framework CoreFoundation")
 endif()
+
+# Enable testing and add the tests directory
+enable_testing()
+add_subdirectory(ScoreGen.Tests)
