@@ -1,3 +1,4 @@
+#include <stdexcept>
 #include "hanningFunction.h"
 
 std::vector<double> hanningFunction(int windowSize) {
