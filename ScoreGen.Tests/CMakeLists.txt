@@ -15,6 +15,10 @@ file(GLOB TEST_SOURCES
     "${CMAKE_CURRENT_SOURCE_DIR}/*.cpp"
 )
 
+# Add test-helpers/test-helpers.cpp explicitly
+list(APPEND TEST_SOURCES
+    "${CMAKE_CURRENT_SOURCE_DIR}/test-helpers/test-helpers.cpp"
+)
 
 # Create a test executable
 add_executable(ScoreGen.Tests ${TEST_SOURCES})
