@@ -1,9 +1,13 @@
+#define _USE_MATH_DEFINES
+#define FP_TOL 1e-4 // slightly reduced bc of sndfile 16 bit PCM which is used elsewhere
+
+
 #include <gtest/gtest.h>
 #include <filesystem>
+#include <cmath>
 #include "sndFileHandler.h"
 #include "test-helpers/test-helpers.h"
 
-#define FP_TOL 1e-4 // slightly reduced bc of sndfile 16 bit PCM which is used elsewhere
 
 TEST(SndFileHandlerTest, ReadValidFile) {
     std::filesystem::create_directory("test-data");

@@ -1,7 +1,11 @@
+#define FP_TOL 1e-6
+#define _USE_MATH_DEFINES
+
 #include <gtest/gtest.h>
 #include "hammingFunction.h"
+#include <cmath>
 
-#define FP_TOL 1e-6
+
 
 TEST(HammingFunctionTest, BroadWindowCheck) {
     int windowSize = 10;
