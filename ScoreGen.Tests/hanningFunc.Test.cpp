@@ -1,4 +1,6 @@
+#define _USE_MATH_DEFINES
 #include <gtest/gtest.h>
+#include <cmath>
 #include "hanningFunction.h"
 
 #define FP_TOL 1e-6
