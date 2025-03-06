@@ -25,6 +25,7 @@ struct Note {
 std::string getNoteName(double freq);
 std::string determineNoteType(float noteDuration, int bpm);
 std::vector<Note> detectNotes(const std::vector<double>& buf, int sample_rate, int channels);
+std::string detectPitch(std::vector<std::vector<double>> spec, int startFrame, int endFrame, int sample_rate, int ffts);
 std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::vector<double>> spectrogram);
 std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate);
 
