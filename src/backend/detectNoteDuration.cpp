@@ -364,21 +364,35 @@ std::vector<double> peakPicker(std::vector<double> onsets, double fps) {
 }
 
 
-std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate) {
+std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate, int bpm) {
     int ffts = 2048; // window size
     double fs = 44100.0; // sample rate
     int hopSize = 441;
     int fps = fs/hopSize;
     string name;
+    string type;
 
     std::vector<std::vector<double>> ft = STFT(buf, ffts, hopSize);
     std::vector<double> onsets = spectralFlux(ft);
     std::vector<double> peaks = peakPicker(onsets, fps);
 
+    std::vector<double> silentOnsets = silenceDetection(ft, peaks, fps); // peaks vector contains index of each note onset
+    // discard silences detected before the first note onset
+    for (int i = 0; i < silentOnsets.size(); i++) {
+        if (silentOnsets[i] < peaks[0]) {
+            silentOnsets.erase(silentOnsets.begin() + i);
+        } else {
+            break;
+        }
+    }
+    
+    peaks.insert(peaks.end(), silentOnsets.begin(), silentOnsets.end());
+    std::sort(peaks.begin(), peaks.end());
     std::vector<Note> notes(peaks.size());
     
+    // get start and end time of each note
     notes[0].startTime = peaks[0] / static_cast<double>(fps);
-    for (size_t i = 1; i < peaks.size(); i++) {
+    for (int i = 1; i < peaks.size(); i++) {
         Note note;
         notes[i-1].endTime = peaks[i] / static_cast<double>(fps);
         note.startTime = peaks[i] / static_cast<double>(fps);
@@ -386,17 +400,19 @@ std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate
         notes[i] = note;        
     }
 
+    // get pitch and rhythm of each note
     notes.back().endTime = static_cast<double>(onsets.size() - 1) / static_cast<double>(fps);
     for (int i = 0; i < peaks.size()-1; i++) {
         name = detectPitch(ft, peaks[i], peaks[i+1], fs, ffts);
         notes[i].pitch = name;
+        notes[i].type = determineNoteType((notes[i].endTime - notes[i].startTime), bpm);
     }
 
-    name = detectPitch(ft, peaks.back(), ft.size(), fs, ffts);
-    notes.back().pitch = name;
+    notes.back().pitch = detectPitch(ft, peaks.back(), ft.size(), fs, ffts);
+    notes.back().type = determineNoteType((notes.back().endTime - notes.back().startTime), bpm);
 
     for (Note note : notes) {
-        cout << note.startTime << " - " << note.endTime << "\t" << note.pitch << "\n";
+        cout << note.startTime << " - " << note.endTime << "\t" << note.type << "\t" << note.pitch << "\n";
     }
 
     return notes;
@@ -404,9 +420,8 @@ std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate
 
 string detectPitch(std::vector<std::vector<double>> spec, int startFrame, int endFrame, int sample_rate, int ffts) {
     std::vector<std::vector<double>> noteSpec(spec.begin() + startFrame, spec.begin() + endFrame);
-    string curr_note = "";
     double dominant_freq = 0.0;
-    double binRes = sample_rate / ffts;
+    int restThreshold = 120; // empirically determined
 
     int numFrames = noteSpec.size();
     int numFreqBins = noteSpec[0].size();
@@ -420,9 +435,54 @@ string detectPitch(std::vector<std::vector<double>> spec, int startFrame, int en
 
     auto maxIter = std::max_element(avgSpectrum.begin(), avgSpectrum.end());
     int peakIndex = std::distance(avgSpectrum.begin(), maxIter);
-    dominant_freq = static_cast<double>(peakIndex) * binRes;
+    if (peakIndex <= 0 || peakIndex >= avgSpectrum.size() - 1) {
+        dominant_freq = static_cast<double>(peakIndex) * sample_rate / ffts;
+    } else {
+         // perform peak interpolation
+        double alpha = avgSpectrum[peakIndex - 1];
+        double beta = avgSpectrum[peakIndex];
+        double gamma = avgSpectrum[peakIndex + 1];
+        double den = alpha - 2*beta + gamma;
+        double correction = 0.5 * (alpha - gamma) / den;
+        
+        dominant_freq = static_cast<double>(peakIndex + correction) * sample_rate / ffts;
+    }
+    
+    dominant_freq *= (dominant_freq > 125);
 
-    curr_note = getNoteName(dominant_freq);
+    return getNoteName(dominant_freq);
+}
 
-    return curr_note;
+std::vector<double> silenceDetection(std::vector<std::vector<double>> spec, std::vector<double> peaks, double fps) {
+    double silenceThreshold = 10;
+    int minSilenceFrames = 5;
+    std::vector<double> energies;
+    std::vector<double> silenceOnsets;
+
+    for (const auto& frame : spec) {
+        double sum = 0.0;
+        for (double magnitude : frame) {
+            sum += magnitude;
+        }
+
+        energies.push_back(sum);
+    }
+
+    // TODO: only detect silence after a note has already been played
+    int silentFrames = 0;
+    bool silencePeriod = false;
+    for (int i = 0; i < energies.size(); i++) {
+        if (energies[i] < silenceThreshold) {
+            silentFrames++;
+            if (silentFrames >= minSilenceFrames && !silencePeriod) {
+                silencePeriod = true;
+                silenceOnsets.push_back(i);
+            } 
+        } else {
+            silentFrames = 0;
+            silencePeriod = false;
+        }
+    }
+
+    return silenceOnsets;
 }
