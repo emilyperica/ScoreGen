@@ -9,15 +9,15 @@ protected:
     MusicXMLGenerator generator;
 
     MusicXMLGeneratorTest() : generator(
-        "WN001", 
+        "W001", 
         "Test Composition", 
-        "MN001", 
+        "M001", 
         "Test Movement", 
-        "Test Creator", 
-        "composer", 
-        "© 2024", 
+        "GTest", 
+        "TestingSoftware", 
         "rights", 
-        "TestSoftware"
+        "rights type", 
+        "Testing"
     ) {}
 
     TElement testCreateScorePart(
@@ -139,6 +139,9 @@ TEST_F(MusicXMLGeneratorTest, ScorePartCreation) {
     TElement scorePart = testCreateScorePart();
     EXPECT_NE(scorePart, nullptr);
 }
+
+// TODO: Add tests for proper generation of all note types (e.g., dotted notes, rests, etc.)
+TEST_F(MusicXMLGeneratorTest, AllNoteTypes) {}
 
 TEST_F(MusicXMLGeneratorTest, FullGeneration) {
     vector<XMLNote> noteSequence = {
