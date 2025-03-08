@@ -2,6 +2,7 @@
 #include <string>
 #include "dsp.h"
 #include "generateMusicXML.h"
+#include "recordAudio.h"
 
 // Default parameters
 #define DEFAULT_TEST_DATA "test/TestingDatasets/Computer-Generated-Samples/D4_to_E5_1_second_per_note.wav"
@@ -14,7 +15,8 @@
 
 // This function encapsulates the audio processing functionality.
 void processAudio() {
-    DSPResult res = dsp(DEFAULT_TEST_DATA);
+    //recordAudio();
+    DSPResult res = dsp("recorded.wav");
     MusicXMLGenerator xmlGenerator;
     
     bool success = xmlGenerator.generate(
@@ -36,15 +38,16 @@ void processAudio() {
 
 int main() {
     std::string command;
+    processAudio();
     
     // Continuously check for input on std::cin.
-    while (std::getline(std::cin, command)) {
-        if (command == "processAudio") {
-            processAudio();
-        } else {
-            std::cerr << "Unknown command: " << command << std::endl;
-        }
-    }
+    // while (std::getline(std::cin, command)) {
+    //     if (command == "processAudio") {
+    //         processAudio();
+    //     } else {
+    //         std::cerr << "Unknown command: " << command << std::endl;
+    //     }
+    // }
     
     return 0;
 }

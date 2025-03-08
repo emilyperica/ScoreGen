@@ -16,6 +16,11 @@ XMLNote convertToXMLNote(const Note& note, int bpm) {
     int alter = 0;
     std::string noteName;
 
+    // Convert note duration in s to duration in divisions
+    float noteDurationInSeconds = note.endTime - note.startTime;
+    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (bpm / 60.0) * PPQ) / PPQ) * PPQ);
+    xmlNote.type = note.type;
+
     // Extract note name and octave
     if (note.pitch == "Rest") {
         xmlNote.isRest = true;
@@ -34,14 +39,10 @@ XMLNote convertToXMLNote(const Note& note, int bpm) {
         }
     }
 
-    // Convert note duration in s to duration in divisions
-    float noteDurationInSeconds = note.endTime - note.startTime;
-    xmlNote.duration = static_cast<int>(std::round((noteDurationInSeconds * (bpm / 60.0) * PPQ) / PPQ) * PPQ);
-
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
     xmlNote.alter = alter;
-    xmlNote.type = note.type;
+    
     xmlNote.isRest = false;
 
     return xmlNote;
@@ -119,11 +120,12 @@ DSPResult dsp(const char* infilename) {
     }
 
     const std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
-    //std::vector<Note> notes = onsetDetection(paddedBuf, sfinfo.samplerate);
-
-    // Extract notes
-    std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
     int bpm = getBufferBPM(paddedBuf, sfinfo.samplerate);
+    std::vector<Note> notes = onsetDetection(paddedBuf, sfinfo.samplerate, bpm);
+
+    // // Extract notes
+    //std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
+    
     for (const Note& note : notes) {
         result.XMLNotes.push_back(convertToXMLNote(note, bpm));
     }
