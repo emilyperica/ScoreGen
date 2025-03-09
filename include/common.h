@@ -12,4 +12,11 @@ struct XMLNote {
     bool isRest = false; // Rest note flag
 };
 
+struct Note {
+    float startTime;   // Note start time in seconds.
+    float endTime;     // Note end time in seconds.
+    std::string pitch; // Note pitch (e.g., "A4", "C#3", or "Rest").
+    std::string type;  // Note type (e.g., "quarter", "eighth", etc.)
+};
+
 #endif

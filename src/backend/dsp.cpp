@@ -1,5 +1,8 @@
+
 #include "dsp.h"
 #include "determineBPM.h"
+#include "common.h"
+#include "detectNoteDuration.h"
 
 #define SILENCE_LENGTH 512
 #define PPQ 480 // Pulses per quarter note, default for MusicXML
@@ -42,8 +45,6 @@ XMLNote convertToXMLNote(const Note& note, int bpm) {
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
     xmlNote.alter = alter;
-    
-    xmlNote.isRest = false;
 
     return xmlNote;
 }
@@ -121,16 +122,15 @@ DSPResult dsp(const char* infilename) {
 
     const std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
     int bpm = getBufferBPM(paddedBuf, sfinfo.samplerate);
+    
+    //onset implementation
     std::vector<Note> notes = onsetDetection(paddedBuf, sfinfo.samplerate, bpm);
 
-    // // Extract notes
-    //std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
-    
     for (const Note& note : notes) {
         result.XMLNotes.push_back(convertToXMLNote(note, bpm));
     }
 
-    // Extract key signature
+    //Extract key signature
     std::vector<int> durations = calculatePitchDurations(result.XMLNotes);
     std::string detectedKey = findKey(durations);
     result.keySignature = convertToKeySignature(detectedKey);
