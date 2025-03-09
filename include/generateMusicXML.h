@@ -88,4 +88,8 @@ class MusicXMLGenerator {
     };
 
     
+<<<<<<< HEAD
     #endif // MUSICXML_GENERATOR_H
+=======
+    #endif // MUSICXML_GENERATOR_H
+>>>>>>> 2fed5ede5fb3c7ca47cdc2364573a6dead4eb021
