@@ -83,6 +83,9 @@ class MusicXMLGenerator {
     
         // Helper to determine note type string based on duration and divisions.
         std::string getNoteTypeFromDuration(int duration, int divisions);
+
+        friend class MusicXMLGeneratorTest;
     };
+
     
     #endif // MUSICXML_GENERATOR_H
