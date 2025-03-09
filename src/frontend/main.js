@@ -14,6 +14,7 @@ function createWindow() {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
+            sandbox:false,
             
         },
         titleBarStyle: 'hidden',
@@ -54,32 +55,68 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-    // Adjust the path to your built C++ executable as needed.
+    // 1) Spawn the C++ executable
     const executablePath = path.join('build/Debug/ScoreGen.exe');
-    console.log(`Spawning C++ backend at: ${executablePath}`);
-  
-    // Spawn the C++ process with a pipe for stdin.
+    console.log(`Spawning C++ backend`);
     childProc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
   
-    // Listen to stdout and stderr from the C++ process.
+    // 2) Debug logs from the C++ process
     childProc.stdout.on('data', (data) => {
       console.log(`Backend stdout: ${data.toString()}`);
     });
     childProc.stderr.on('data', (data) => {
       console.error(`Backend stderr: ${data.toString()}`);
     });
+    childProc.on('error', (err) => {
+      console.error('Failed to start subprocess:', err);
+    });
+    childProc.on('close', (code) => {
+      console.log(`Child process exited with code ${code}`);
+    });
   
-    // Listen for the "process-audio" IPC message from the renderer.
-    ipcMain.on('process-audio', (event) => {
-      console.log('Received "process-audio" event');
-      if (childProc && childProc.stdin.writable) {
-        // Write the command followed by a newline so that the C++ process reads it.
-        childProc.stdin.write('processAudio\n');
-      }
+    // 3) Handle "process-audio" via a Promise (so the renderer can await it)
+    ipcMain.handle('process-audio', async () => {
+        console.log('[Main] ipcMain.handle("process-audio") triggered');
+      
+        return new Promise((resolve, reject) => {
+          if (!childProc || !childProc.stdin.writable) {
+            return reject(new Error('C++ process is not available.'));
+          }
+          let resolved = false;
+      
+          const timeout = setTimeout(() => {
+            if (!resolved) {
+              resolved = true;
+              childProc.stdout.off('data', onData);
+              reject(new Error('Timed out waiting for backend response.'));
+            }
+          }, 30000);
+      
+          const onData = (data) => {
+            const text = data.toString();
+            console.log(`[Main] Child stdout: ${text}`);
+      
+            if (text.includes('MusicXML file generated successfully.')) {
+              clearTimeout(timeout);
+              childProc.stdout.off('data', onData);
+              resolved = true;
+              resolve();
+            } else if (text.includes('Failed to generate MusicXML file.')) {
+              clearTimeout(timeout);
+              childProc.stdout.off('data', onData);
+              resolved = true;
+              reject(new Error('C++ process reported failure.'));
+            }
+          };
+      
+          // Attach the listener before sending the command
+          childProc.stdout.on('data', onData);
+          childProc.stdin.write('processAudio\n');
+        });
     });
   
     createWindow();
-  });
+});
 
 app.on('window-all-closed', () => {
     // On macOS, it's common for applications to stay open until the user explicitly quits
