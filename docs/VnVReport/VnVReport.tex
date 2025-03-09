@@ -127,14 +127,8 @@ functions within the system's modules are correct. The tests were created using 
 \end{longtable}
 
 \subsection{UI Module}
-Rather than testing the UI module directly, the UI module was tested manually by the developers.
-\begin{longtable}{|L{3cm}|L{2cm}|L{2cm}|L{2cm}|l|}
-  \hline
-  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
-  \hline
-  TBD & TBD & TBD & TBD & \textcolor{green}{Pass} \\
-  \hline
-\end{longtable}
+Manual testing by the developers (e.g. visual inspection, etc.) was deemed more efficient and effective for this module. Consequently, unit testing tables for the UI 
+module are not included in this report.\\
 
 \subsection{Score Generation Module}
 \subsubsection{MusicXML Generation}
@@ -417,14 +411,68 @@ The following tests use a common SF\_INFO configuration (1 channel, 44100 Hz, WA
   \hline
 \end{longtable}
 
-% \subsubsection{Onset Detection}
+\subsubsection{Onset Detection}
 
-% \subsection{Audio Feature Extraction Module}
-% \subsubsection{Key Detection}
-% \subsection{Pitch Detection}
 
-% \subsection{Audio Recording and Playback Module}
+\subsection{Audio Feature Extraction Module}
+\subsubsection{Key Detection}
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Correlation of Identical Sequences &
+    Data: \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}; \newline
+    Data: \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}; &
+    Correlation: 1.0 &
+    Correlation: 1.0 &
+    \textcolor{green}{Pass} \\
+  \hline
+  Correlation of Opposite Sequences &
+    Data: \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}; \newline
+    Data: \{12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1\}; &
+    Correlation: -1.0 &
+    Correlation: -1.0 &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract C Major Key &
+    Durations: \{6, 2, 3, 2, 4, 4, 2, 5, 2, 3, 2, 3\} &
+    Key: "C" &
+    Key: "C" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract C Minor Key &
+    Durations: \{6, 2, 3, 5, 2, 3, 2, 4, 3, 2, 3, 3\} &
+    Key: "c" &
+    Key: "c" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract A Major Key &
+    Durations: \{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10\} &
+    Key: "A" &
+    Key: "A" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract F\# Major Key &
+    Durations: \{2, 5, 2, 3, 2, 3, 6, 2, 3, 2, 4, 4\} &
+    Key: "F\#" &
+    Key: "F\#" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract Key of Uniform Durations &
+    Durations: \{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\} &
+    Key: "C" &
+    Key: "C" &
+    \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
 
+\subsubsection{Pitch Detection}
+\textcolor{yellow}{Active WIP...} \\
+
+\subsection{Audio Recording and Playback Module}
+Given the inherent complexity and hardware dependencies associated with this module, it 
+was tested manually by the developers. As manual testing provided a more effective and contextually 
+relevant validation process given each developer's unique configuration/environment.
 
 \section{Changes Due to Testing}
 FAILURES:
