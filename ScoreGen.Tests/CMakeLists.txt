@@ -40,6 +40,19 @@ add_test(NAME ScoreGen.Tests COMMAND ScoreGen.Tests)
 
 message(STATUS "Setting test working directory to: ${CMAKE_SOURCE_DIR}/test/TestingDatasets")
 
+if(APPLE)
+    set(LIBMUSICXML_DEST_2 "$<TARGET_FILE_DIR:ScoreGen.Tests>/libmusicxml.dylib")
+else()
+    set(LIBMUSICXML_DEST_2 "$<TARGET_FILE_DIR:ScoreGen.Tests>/libmusicxml.dll")
+endif()
+
+# Copy libmusicxml library to the same directory as the executable
+add_custom_command(TARGET ScoreGen.Tests POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${LIBMUSICXML_SHARED_PATH}
+    ${LIBMUSICXML_DEST_2}
+)
+
 
 set_tests_properties(ScoreGen.Tests PROPERTIES WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}/test/TestingDatasets)
 
