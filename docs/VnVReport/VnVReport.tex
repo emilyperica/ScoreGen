@@ -212,7 +212,8 @@ The following tests use a common SF\_INFO configuration (1 channel, 44100 Hz, WA
     SF\_INFO and data of original and output files are identical; \newline
     Data vectors equal element-wise within floating-point tolerance & 
     SF\_INFO and data match between original and output; \newline
-    Verification within floating-point tolerance succeeds & \textcolor{green}{Pass} \\
+    Data elements are not the same within floating-point tolerence & 
+    \textcolor{red}{Fail} \\
   \hline
   Write Invalid Location & 
     SF\_INFO; \newline
@@ -467,7 +468,7 @@ The following tests use a common SF\_INFO configuration (1 channel, 44100 Hz, WA
 \end{longtable}
 
 \subsubsection{Pitch Detection}
-\textcolor{yellow}{Active WIP...} \\
+\textcolor{yellow}{Active WIP...}
 
 \subsection{Audio Recording and Playback Module}
 Given the inherent complexity and hardware dependencies associated with this module, it 
@@ -475,13 +476,27 @@ was tested manually by the developers. As manual testing provided a more effecti
 relevant validation process given each developer's unique configuration/environment.
 
 \section{Changes Due to Testing}
-FAILURES:
-- mention hanning and hamming window functions input Validation
-- mention channel conversion for >2 channels
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+Unit testing identified the following issues, which were addressed upon discovery:
+\begin{enumerate}
+  \item Multi-Channel Conversion Limitations: The system's capability to handle channel conversions was 
+  initially limited to two channels. This constraint was insufficient for applications requiring support 
+  for more than two channels. Recognizing this limitation, we extended the functionality to accommodate 
+  conversions involving more than two channels.
+  \item Window Function Input Validation: The initial implementation lacked proper validation for inputs 
+  to the Hanning and Hamming window functions. This oversight could lead to incorrect calculations during 
+  the short time Fourier transform.
+  \item .WAV File Read/Write Cycle: The mismatch between data vectors of the original and output files, and consequent 
+  test failure stemmed from differences in data representation: libsndfile uses 16-bit PCM format, while our tests expected 
+  double-precision floating-point numbers. The normalization process performed by libsndfile resulted in precision loss beyond
+  expected floating-point tolerence values. This issue was resolved by adjusting the test expectations to account for the
+  normalization process.
+\end{enumerate}
+
+
+% \wss{This section should highlight how feedback from the users and from 
+% the supervisor (when one exists) shaped the final product.  In particular 
+% the feedback from the Rev 0 demo to the supervisor (or to potential users) 
+% should be highlighted.}
 
 \section{Automated Testing}
 - two sections:\\
