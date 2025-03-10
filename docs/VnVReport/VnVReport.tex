@@ -86,9 +86,391 @@
 
 \pagenumbering{arabic}
 
-This document ...
+This document outlines the results of the 
+\href{https://github.com/emilyperica/ScoreGen/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV plan}
+executed for the development of an audio-to-sheet music generator. 
+Functional and Nonfunctional Requirements Evaluations assess ScoreGen's 
+adherence to system requirements as set out in the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document. 
+Unit Testing verifies the correctness of individual components, while Changes 
+Due to Testing describes any modifications made in response to detected issues. 
+The Automated Testing section details the integration of test suites to ensure 
+consistent, continuous verification. Trace to Requirements and Trace to Modules 
+ensure comphrensive validation by establishing clear connctions between test 
+cases, software requirements, and system components. Finally, Code Coverage Metrics 
+provide a quantitative analysis of test coverage.
 
 \section{Functional Requirements Evaluation}
+\label{fr}
+Tests for the functional requirements of the application naturally follow the division of the major types of functional requirements
+in section 9 of the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. Thus, tests for each major 
+type are grouped similarly, resulting in five subcategories.
+
+  \subsection{Input Handling}
+  \begin{enumerate}
+    \item \textbf{Test for Correct Audio File Formats} \\
+      \newline
+      \textbf{Test ID:} FR-AR1-3-1 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio file upload from the user. \\
+      \textbf{Input:} Audio file (e.g., \texttt{.WAV}, \texttt{.MP3}) \\
+      \textbf{Expected Output:} File acceptance without errors, entrance into file processing state. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} This test case ensures the application only accepts supported file formats and only begins processing 
+      these formats. This test case acts as a preventative measure against further error progogation through the file processing stage.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Select a prepared audio sample file.
+          \item Upload the audio file for transcription.
+          \item Confirm the application accepts the file through success message or by entrance into the file processing state.
+      \end{enumerate}
+      \textbf{Result:}
+  
+  \item \textbf{Test for Incorrect File Formats} \\
+    \newline
+    \textbf{Test ID:} FR-AR1-3-2 \\
+    \textbf{Control:} Automatic \\
+    \textbf{Initial State:} Application is open and idle, awaiting audio file upload from the user. \\
+    \textbf{Input:} Non-audio file (e.g., \texttt{.PDF}, \texttt{.MP4}, \texttt{.JPEG}, etc.) \\
+    \textbf{Expectd Output:} Denial of upload attempt with error message. \\
+    \textbf{Actual Output:} \\
+    \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+    \textbf{Justification:} Complements test case FR-AR1-3-1. It will ensure that various, unsupported file formats are 
+    not accepted by the application. \\
+    \textbf{How Test Was Performed:}
+    \begin{enumerate}
+        \item Select a prepared file of an unsupported format (i.e. non-audio file format).
+        \item Upload the file for transcription.
+        \item Confirm the application denies the file and provides an error message that specifies the unsupported file format.
+    \end{enumerate}
+    \textbf{Result:}
+  
+  \item \textbf{Test User Device Microphone} \\
+  \newline
+  \textbf{Test ID:} FR-AR2 \\
+  \textbf{Control:} Manual \\
+  \textbf{Initial State:} Application is open and idle, user has navigated to the audio recording interface and microphone 
+  permissions have been granted. \\
+  \textbf{Input:} Audio recorded by the user device’s microphone. \\
+  \textbf{Expected Output:} The application captures the correct audio and saves it in a format processable by the application 
+  (e.g., \texttt{.WAV}). \\
+  \textbf{Actual Output:} \\
+  \textbf{Test Case Derivation:} For validation of functional requirement FR-AR2 in section 9.1 of the 
+  \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. Guarentees that in addition to file uploads, 
+  the user is able to capture raw, custom audio with their device hardware. \\
+  \textbf{Justification:} It also validates that the audio is saved in a compatitble format for processing.\\
+  \textbf{How Test Was Performed:}
+  \begin{enumerate}
+      \item Navigate to the application’s audio recording interface.
+      \item Start a recording using the application’s “Record” element.
+      \item Wait for 10 seconds and stop the recording.
+      \item Confirm that the audio was recorded through:
+      \begin{itemize}
+          \item Playback using an audio player on the device.
+          \item File metadata analysis (duration, file size, etc.).
+          \item Waveform inspection using an external tool (e.g., Audacity).
+      \end{itemize}
+      \item Confirm that the captured audio matches the expected input via playback, metadata, and/or waveform inspection.
+  \end{enumerate}
+  \textbf{Result:}
+  
+  \item \textbf{Test Generated Score Alignment with Selected Instrument} \\
+    \newline
+    \textbf{Test ID:} FR-AR4 \\
+    \textbf{Control:} Automatic \\
+    \textbf{Initial State:} Application is running and idle, pre-transcription state awaiting input. \\
+    \textbf{Input:} Sample audio file or user-recorded audio and selected instrument type. \\
+    \textbf{Expected Output:} A generated sheet music file in MusicXML format that aligns with the selected instrument’s key signature 
+    and note pitches. \\
+    \textbf{Actual Output:} \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-AR4 in section 9.1 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}.\\
+    \textbf{Justification:} Matching an instrument's specific key and pitch requirements is essential for sheet music accuracy. \\
+    \textbf{How Test Was Performed:}
+    \begin{enumerate}
+        \item Select and submit an instrument type within the application.
+        \item Upload an audio input for the selected instrument.
+        \item Upon transcription completion, parse the generated score.
+        \item Verify that the key signature and note pitches match the expected result for the selected instrument.
+    \end{enumerate}
+  \end{enumerate}
+  \textbf{Result:}
+
+  \subsection{Signal Processing and Element Identification}
+  \begin{enumerate}
+    \item \textbf{Test Effect of Increased Noise in Audio Input} \\
+      \newline
+      \textbf{Test ID:} FR-SP1 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting file upload from the user. \\
+      \textbf{Input:} Two sample audio files—one unedited, the other with ~10\% noise interference. \\
+      \textbf{Expected Output:} Two identical sheet music files in MusicXML format. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP1 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Confirms that the application can handle expected levels of background noise in input 
+      audio, and that it can maintain accuracy despite the noise.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Upload the unedited audio file to the application and generate a sheet music file.
+          \item Upload the noisy audio file and generate another sheet music file.
+          \item Parse both files and identify discrepancies, if any.
+      \end{enumerate}
+      \textbf{Result:}
+    
+    \item \textbf{Test for Pitch and Rhythm Identification} \\
+      \newline
+      \textbf{Test ID:} FR-SP2 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} Sample audio file or user-recorded audio with a known sheet music equivalent. \\
+      \textbf{Expected Output:} Sheet music correctly identifying all notes in the input audio. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP2 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Verfies the transcription stage as well as the pitch and rhythm identification algorithms employed
+      by the applications implementation.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Prepare an audio file containing an ascending and descending C major scale.
+          \item Upload the audio input to the application.
+          \item Generate and save the sheet music in a viewable file format.
+          \item Compare the generated sheet music visually with the sample sheet music for note discrepancies.
+      \end{enumerate}
+      \textbf{Result:}
+
+    \item \textbf{Test for Key Signature and Time Signature Identification} \\
+      \newline
+      \textbf{Test ID:} FR-SP3 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} Sample or user-recorded audio file that has a known key signature and time signature. \\
+      \textbf{Expectd Output:} Sheet music that has the same key signature and time signature as the input’s sheet music. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP3 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Further verifies the transcription stage and accuracy of other sheet music elements.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Upload the sample file or recorded audio file to the application.
+          \item Save the generated sheet music in MusicXML file format.
+          \item Parse the generated file and extract the key signature and time signature.
+          \item Compare the extracted signatures to the known input’s signatures.
+      \end{enumerate}
+      \textbf{Result:}
+
+    \item \textbf{Test for Polyphonic Audio Identification} \\
+      \newline
+      \textbf{Test ID:} FR-SP5 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} Sample file or user-recorded audio that contains known chords. \\
+      \textbf{Expected Output:} Sheet music file in MusicXML format that matches the input file’s chords. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SP5 in section 9.2 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Tests the application's ability to decipher and transcribe multiple simultaneous notes
+      in the audio input. \\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Upload the sample audio file to the application.
+          \item Ensure the sample audio file includes at least two distinct chords; single notes may or may not be interleaved.
+          \item Save the generated sheet music in MusicXML file format.
+          \item Parse the generated file.
+          \item Compare the processed and identified chords to the known input audio chords and notes.
+      \end{enumerate}
+      \textbf{Result:}
+  \end{enumerate}
+  
+
+  \subsection{Sheet Music Generation}
+  \begin{enumerate}
+  \item \textbf{Test General Notation and Layout} \\
+    \newline
+    \textbf{Test ID:} FR-SMG1 \\
+    \textbf{Control:} Automatic with manual inspection \\
+    \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+    \textbf{Input:} Sample or user-recorded audio file with equivalent sheet music available. \\
+    \textbf{Expected Output:} Sheet music using the same layout and notation as the input. \\
+    \textbf{Actual Output:} \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG1 in section 9.3 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+    \textbf{Justification:} Ensures readability and usability, using improper notation and layout defeats the purpose of 
+    generating sheet music. \\
+    \textbf{How Test Was Performed:}
+    \begin{enumerate}
+        \item Upload the sample or user-recorded audio file for transcription.
+        \item Save the generated sheet music in MusicXML format and a viewable document format.
+        \item Check for discrepancies:
+        \begin{itemize}
+            \item Parse the MusicXML file and compare it to the input file.
+            \item View the document formatted file (e.g., \texttt{.PDF}) and compare it to the input’s sheet music.
+        \end{itemize}
+    \end{enumerate}
+    \textbf{Result:}
+  
+  \item \textbf{Test Instrument Specific Concert Pitch} \\
+    \newline
+    \textbf{Test ID:} FR-SMG2 \\
+    \textbf{Control:} Manual \\
+    \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+    \textbf{Input:} Two audio files—one from a non-transposing instrument and another from a transposing instrument. \\
+    \textbf{Expected Output:} Two sets of sheet music that structurally and visually match their corresponding instrument’s concert pitch. \\
+    \textbf{Actual Output:} \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG2 in section 9.3 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+    \textbf{Justification:} Some instruments are transposing while others are non-transposing, this test case confirms the application's 
+    ability to support a broad range of instruments.\\
+    \textbf{How Test Was Performed:}
+    \begin{enumerate}
+        \item Upload a non-transposing instrument’s audio file for transcription and save the generated sheet music in a 
+        viewable file format.
+        \item Upload a transposing instrument’s audio file for transcription and save the generated sheet music in a viewable 
+        file format.
+        \item Compare the two sets of sheet music to ensure appropriate notes are in concert pitch relative to the input sheet music.
+    \end{enumerate}
+    \textbf{Result:}
+  
+  \item \textbf{Test Post-Processing Edit and View Functionalities} \\
+    \newline
+    \textbf{Test ID:} FR-SMG3 \\
+    \textbf{Control:} Manual \\
+    \textbf{Initial State:} Application has just finished processing and transcribing audio input. \\
+    \textbf{Input:} Edit requests, save requests, open requests. \\
+    \textbf{Expected Output:} Viewable file containing sheet music that reflects the requested edits. \\
+    \textbf{Actual Output:} \\
+    \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG3 in section 9.3 of the 
+    \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+    \textbf{Justification:} Ensures that users can change any elements of the sheet music and that these 
+    changes are reflected properly by the application.\\ 
+    \textbf{How Test Was Performed:}
+    \begin{enumerate}
+        \item View the generated sheet music in the application.
+        \item Perform three edit operations:
+        \begin{itemize}
+            \item Note deletion.
+            \item Note addition.
+            \item Note pitch and/or duration change.
+        \end{itemize}
+        \item Save the edited sheet music in a viewable file format.
+        \item Open and view the edited sheet music file to confirm that changes are present and correct.
+    \end{enumerate}
+    \textbf{Result:}
+  \end{enumerate}
+  
+
+  \subsection{User Interface (UI)}
+  \begin{enumerate}
+    \item \textbf{Test Application Feedback After Audio File is Uploaded} \\
+      \newline
+      \textbf{Test ID:} FR-UI1 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
+      \textbf{Input:} A sample audio file. \\
+      \textbf{Expected Output:} Visual cue(s) on the GUI in 2 seconds or less. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI1 in section 9.4 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Validates the funcationality that contributes to the non-functional requirement of
+      human-centered design principles (see Section 4.2.2.1). One of the four fundamental principles is feedback, without 
+      the proper creation and display of visual feedback cues, the application does not fulfill this principle to the 
+      best of its ability.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Upload a sample audio file to the application.
+          \item Start a timer and detect visual element changes on the GUI using a testing framework (e.g., Jest).
+          \item Confirm the following conditions are met:
+          \begin{itemize}
+              \item The appropriate visual cue is detected.
+              \item The elapsed time from upload start to display of visual feedback is at most 2 seconds.
+          \end{itemize}
+      \end{enumerate}
+      \textbf{Result:}
+    
+    \item \textbf{Test Availability of System Documentation} \\
+      \newline
+      \textbf{Test ID:} FR-UI2 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Application is running and idle. \\
+      \textbf{Input:} Text-search queries. \\
+      \textbf{Expected Output:} Navigation to appropriate documentation/user guide sections. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For use during user testing to meet fit criteria for functional requirement FR-UI2 in section 
+      9.4 of the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Further supports usability and humanity testing (see Section 4.2.2). Without documentation, 
+      users may find navigating and using the appliation difficult.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Navigate to the location of user documentation in the application.
+          \item Perform a broad text search for major application features or for anything the user requires clarification on.
+      \end{enumerate}
+      \textbf{Result:}
+    
+    \item \textbf{Test User Feedback Report Mechanism} \\
+      \newline
+      \textbf{Test ID:} FR-UI3 \\
+      \textbf{Control:} Automatic \\
+      \textbf{Initial State:} Application is running and idle, prepared to receive input through the feedback mechanism. \\
+      \textbf{Input:} Plain text. \\
+      \textbf{Expected Output:} GUI submission success cue and message, return of the input text. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-UI3 in section 9.4 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Ensures users are able to submit basic feedback or issues and that the application provides adequate
+      feedback in the form of confirmation of a successful submission.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Submit a plain text report via the user feedback mechanism to the development team (e.g., through email).
+          \item Parse through inbox messages for user feedback reports and confirm the reception of the submitted report and 
+          entire plain text input.
+      \end{enumerate}
+  \end{enumerate}
+  \textbf{Result:}
+
+  \subsection{Save/Load}
+  \begin{enumerate}
+    \item \textbf{Test Application Save Function} \\
+      \newline
+      \textbf{Test ID:} FR-SL1 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Post-audio processing state with generated sheet music file(s) and original audio files accessible 
+      for download. \\
+      \textbf{Input:} Request to save file(s) to local drive. \\
+      \textbf{Expected Output:} Non-corrupt file(s) in destination directories. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL1 in section 9.5 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Confirms that users are able to track their progress and save sheet music and audio files to their local 
+      storage without data corruption.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Transcribe a sample audio file using the application.
+          \item Request to download both the original audio and the generated sheet music to a directory on the local drive.
+          \item Compare the contents of the downloaded files to their original copies to check for consistency.
+      \end{enumerate}
+      \textbf{Result:}
+    
+    \item \textbf{Test Application’s Ability to Load Existing Files} \\
+      \newline
+      \textbf{Test ID:} FR-SL2 \\
+      \textbf{Control:} Manual \\
+      \textbf{Initial State:} Application running and idle, waiting for user input to modify and/or view. \\
+      \textbf{Input:} An existing audio file or existing file containing previously generated sheet music. \\
+      \textbf{Expected Output:} Successful loading of files without errors. \\
+      \textbf{Actual Output:} \\
+      \textbf{Test Case Derivation:} For validation of functional requirement FR-SL2 in section 9.5 of the 
+      \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
+      \textbf{Justification:} Complements test case FR-SL1. Ensures users can load previously saved sheet music or 
+      audio files into the application without errors.\\
+      \textbf{How Test Was Performed:}
+      \begin{enumerate}
+          \item Request to load an existing file on the local drive.
+          \item Manually inspect the opened file in the editor to ensure the files appear as they were saved.
+      \end{enumerate}
+  \end{enumerate}
+  \textbf{Result:}
 
 \section{Nonfunctional Requirements Evaluation}
 
@@ -97,6 +479,8 @@ This document ...
 \subsection{Performance}
 
 \subsection{etc.}
+
+\section{Useability Survey Results}
 
 \section{Unit Testing}
 
@@ -514,8 +898,10 @@ The GHA workflow for automated testing is available in the ScoreGen repository a
 \href{https://github.com/emilyperica/ScoreGen/blob/main/.github/workflows/run-tests.yml}{\texttt{.github/workflows/run-tests.yml}}.
 
 \section{Trace to Requirements}
+See traceability tables between Test Cases and Requirements in the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
 		
 \section{Trace to Modules}		
+See traceability tables between Test Cases and Modules in the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
 
 \section{Code Coverage Metrics}
 
@@ -531,9 +917,25 @@ graduate attribute of Reflection.
 \input{../Reflection.tex}
 
 \begin{enumerate}
-  \item What went well while writing this deliverable? 
+  \item What went well while writing this deliverable? \\
+  \textbf{Mark:}
+
+  \textbf{Emily:}
+
+  \textbf{Ian:}
+
+  \textbf{Jackson:}
+
   \item What pain points did you experience during this deliverable, and how
-    did you resolve them?
+    did you resolve them?\\
+  \textbf{Mark:}
+
+  \textbf{Emily:}
+
+  \textbf{Ian:}
+
+  \textbf{Jackson:}
+
   \item Which parts of this document stemmed from speaking to your client(s) or
   a proxy (e.g. your peers)? Which ones were not, and why?
   \item In what ways was the Verification and Validation (VnV) Plan different
@@ -544,6 +946,7 @@ graduate attribute of Reflection.
   predict a feasible amount of effort and the right tasks needed to build the
   evidence that demonstrates the required quality?  (It is expected that most
   teams will have had to deviate from their original VnV Plan.)
+  
 \end{enumerate}
 
 \end{document}
