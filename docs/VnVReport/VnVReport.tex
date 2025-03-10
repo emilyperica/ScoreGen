@@ -51,16 +51,29 @@
 \section{Symbols, Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
-
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
-
+\begin{table}[h!]
+  \vspace{5pt}
+  \begin{tabular}{l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Description} \\
+    \midrule 
+    CI & Continuous Integration. \\
+    CMake & The build system used for configuring the project. \\
+    ctest& CMake testing tool to execute unit tests. \\
+    GHA & GitHub Actions. \\
+    GTest & Google Test, a C++ unit testing framework. \\
+    I/O & Input/Output. \\
+    mXML & MusicXML. \\
+    PDF & Portable Document Format. \\
+    PCM\_16 & 16-bit Pulse-Code Modulation. \\
+    SF\_INFO & A structure (from libsndfile) that holds data for file I/O. \\
+    SRS & Software Requirements Specification. \\
+    UI & User Interface. \\
+    vcpkg & C++ dependency manager. \\
+    WAV & Waveform Audio File Format. \\
+    \bottomrule
+  \end{tabular}\\
+\end{table}
 \newpage
 
 \tableofcontents
@@ -503,7 +516,7 @@ A GitHub Actions (GHA) workflow triggers the unit tests described in section 5 o
 Through the use of vcpkg for dependency management, CMake for configuration, and ctest for execution the project's unit tests are 
 automated. This is vital for the project's CI goals as the unit tests verify the expected behaviour of important components of the 
 system including signal processing, MusicXML score generation, and file format conversion. \\
-The GitHub Actions workflow for automated testing is available in the ScoreGen repository at: 
+The GHA workflow for automated testing is available in the ScoreGen repository at: 
 \href{https://github.com/emilyperica/ScoreGen/blob/main/.github/workflows/run-tests.yml}{\texttt{.github/workflows/run-tests.yml}}.
 
 \section{Trace to Requirements}
