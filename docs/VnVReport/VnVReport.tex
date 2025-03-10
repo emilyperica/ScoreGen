@@ -867,27 +867,37 @@ was tested manually by the developers. As manual testing provided a more effecti
 relevant validation process given each developer's unique configuration/environment.
 
 \section{Changes Due to Testing}
+\subsection{Unit Testing Results}
 Unit testing identified the following issues, which were addressed upon discovery:
 \begin{enumerate}
-  \item Multi-Channel Conversion Limitations: The system's capability to handle channel conversions was 
+  \item \textbf{Multi-Channel Conversion Limitations:} The system's capability to handle channel conversions was 
   initially limited to two channels. This constraint was insufficient for applications requiring support 
   for more than two channels. Recognizing this limitation, we extended the functionality to accommodate 
   conversions involving more than two channels.
-  \item Window Function Input Validation: The initial implementation lacked proper validation for inputs 
+  \item \textbf{Window Function Input Validation:} The initial implementation lacked proper validation for inputs 
   to the Hanning and Hamming window functions. This oversight could lead to incorrect calculations during 
   the short time Fourier transform.
-  \item .WAV File Read/Write Cycle: The mismatch between data vectors of the original and output files, and consequent 
+  \item \textbf{.WAV File Read/Write Cycle:} The mismatch between data vectors of the original and output files, and consequent 
   test failure stemmed from differences in data representation: libsndfile uses 16-bit PCM format, while our tests expected 
   double-precision floating-point numbers. The normalization process performed by libsndfile resulted in precision loss beyond
   expected floating-point tolerence values. This issue was resolved by adjusting the test expectations to account for the
   normalization process.
 \end{enumerate}
 
-
-% \wss{This section should highlight how feedback from the users and from 
-% the supervisor (when one exists) shaped the final product.  In particular 
-% the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-% should be highlighted.}
+\subsection{Supervisor and Proxy Feedback}
+Feedback collected during the Revision 0 demonstration led to the following changes:
+\begin{enumerate}
+    \item \textbf{Reduction of External Library Dependencies:} To decrease reliance on external libraries that obscure DSP functionality, 
+    we reverted some implementations and developed a custom core library. This library now handles DSP functionalities such as Fourier transforms, windowing, 
+    peak-picking, spectral flux analysis, and filtering. This change made the project more self-contained and introduced additional opportunities for testing.
+    \item \textbf{Enhanced Audio Preprocessing Techniques:} Discussion with the supervisor on topics such as band-pass filtering and related signal processing methods 
+    guided the decision to use additional audio preprocessing techniques. Specifically, a triangular filter bank was implemented which improved representations of 
+    spectral characteristics of the input signal, thus, enhancing the system's audio feature extraction.
+    \item \textbf{Refined Product Scope:} Based on suggestions from other proxies, we narrowed and refined the product's scope to ensure thoroughly processsed
+    monophonic audio rather than more complex and therefore difficult forms of audio.
+    \item \textbf{Improved Repository Traceability:} Administrative feedback emphasized the importance of granular pull requests and commits to increase 
+    traceability in the repository.
+\end{enumerate}
 
 \section{Automated Testing}
 A GitHub Actions (GHA) workflow triggers the unit tests described in section 5 on every push and pull request to the main branch. 
