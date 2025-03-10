@@ -11,6 +11,18 @@
     urlcolor=blue
 }
 \usepackage[round]{natbib}
+\usepackage{graphicx}
+\usepackage[T1]{fontenc}
+\usepackage{ragged2e}
+\usepackage{float}
+\usepackage{longtable}
+\usepackage{makecell}
+\usepackage{seqsplit}
+
+\newcolumntype{L}[1]{>{\RaggedRight\arraybackslash}p{#1}}
+\newcolumntype{C}{>{\centering\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\AtBeginEnvironment{longtable}{\small}
 
 \input{../Comments}
 \input{../Common}
@@ -30,7 +42,7 @@
 \begin{tabularx}{\textwidth}{p{3cm}p{2cm}X}
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
-2025-03-09 & 1.0 & Initial revision\\
+2025-03-10 & 1.0 & Initial version.\\
 \bottomrule
 \end{tabularx}
 
@@ -39,16 +51,29 @@
 \section{Symbols, Abbreviations and Acronyms}
 
 \renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l} 
-  \toprule		
-  \textbf{symbol} & \textbf{description}\\
-  \midrule 
-  T & Test\\
-  \bottomrule
-\end{tabular}\\
-
-\wss{symbols, abbreviations or acronyms -- you can reference the SRS tables if needed}
-
+\begin{table}[h!]
+  \vspace{5pt}
+  \begin{tabular}{l l} 
+    \toprule		
+    \textbf{Symbol} & \textbf{Description} \\
+    \midrule 
+    CI & Continuous Integration. \\
+    CMake & The build system used for configuring the project. \\
+    ctest& CMake testing tool to execute unit tests. \\
+    GHA & GitHub Actions. \\
+    GTest & Google Test, a C++ unit testing framework. \\
+    I/O & Input/Output. \\
+    mXML & MusicXML. \\
+    PDF & Portable Document Format. \\
+    PCM\_16 & 16-bit Pulse-Code Modulation. \\
+    SF\_INFO & A structure (from libsndfile) that holds data for file I/O. \\
+    SRS & Software Requirements Specification. \\
+    UI & User Interface. \\
+    vcpkg & C++ dependency manager. \\
+    WAV & Waveform Audio File Format. \\
+    \bottomrule
+  \end{tabular}\\
+\end{table}
 \newpage
 
 \tableofcontents
@@ -459,15 +484,419 @@ type are grouped similarly, resulting in five subcategories.
 
 \section{Unit Testing}
 
-\section{Changes Due to Testing}
+This section describes the low-level tests that were conducted to verify that the behaviour of 
+functions within the system's modules are correct. The tests were created using the GTest framework.
 
-\wss{This section should highlight how feedback from the users and from 
-the supervisor (when one exists) shaped the final product.  In particular 
-the feedback from the Rev 0 demo to the supervisor (or to potential users) 
-should be highlighted.}
+\subsection{Helper Functions}
+
+\texttt{std::vector<double> generateSineWave(double frequency, double sampleRate, double duration);}
+\begin{longtable}{|L{3cm}|L{2cm}|L{2cm}|L{2cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Signal Size & 440.0, 44100.0, 1.0 & Vector size of 44100 & Vector size of 44100 & \textcolor{green}{Pass} \\
+  \hline
+  Amplitude Consistency & 440.0, 44100.0, 1.0 & All samples between -1 and 1.0 & Vector size of 44100 & \textcolor{green}{Pass} \\
+  \hline
+  Phase Continuity & 440.0, 44100.0, 1.0 & All samples approximately 0 within tolerance & All samples approximately 0 within tolerance & \textcolor{green}{Pass} \\
+  \hline
+  Zero Duration & 440.0, 44100.0, 0.0 & Empty vector & Vector size of 44100 & \textcolor{green}{Pass} \\
+  \hline
+  High Frequency & 22050.0, 44100.0, 1.0 & All samples approximately 0 within tolerance & All samples approximately 0 within tolerance & \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+
+\noindent\texttt{float extractFundamentalFrequency(const std::vector<std::vector<double>>\& spectrogram, double sampleRate);}
+
+\begin{longtable}{|L{3cm}|L{2cm}|L{2cm}|L{2cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Single Frame Peak & \{\{0.0, ..., 1.0, ..., 0.0\}\}, 44100.0 & 100.0 & 100.0 & \textcolor{green}{Pass} \\
+  \hline
+  Multi-frame Competing Peaks & \{\{0.0, ..., 1.0, ..., 0.0\}, \{0.0, ..., 2.0, ..., 0.0\}\}, 44100.0 & 75.0 & 75.0 & \textcolor{green}{Pass} \\
+  \hline
+  Empty Spectrogram & \{\}, 44100.0 & 0.0 & 0.0 & \textcolor{green}{Pass} \\
+  \hline
+  Different Sample Rate & \{\{0.0, ..., 1.0, ..., 0.0\}\}, 16000.0 & 100.0 & 100.0 & \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+\subsection{UI Module}
+Manual testing by the developers (e.g. visual inspection, etc.) was deemed more efficient and effective for this module. Consequently, unit testing tables for the UI 
+module are not included in this report.\\
+
+\subsection{Score Generation Module}
+\subsubsection{MusicXML Generation}
+\begin{longtable}{|L{3cm}|L{2cm}|L{2cm}|L{2cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Note Element Creation & 
+      Regular: \{"C", 0, 4, 4, "quarter", false\}
+      Rest: \{"", 0, 0, 4, "quarter", true\}
+      Accidental: \{"C", 1, 4, 4, "quarter", false\} &
+    Valid XML note elements (non-null) & Non-null pointers & \textcolor{green}{Pass} \\
+  \hline
+  Measure Creation & 
+      Single note: \{"C", 0, 4, 4, "quarter", false\} 
+      Multi-note: \{"C", 0, 4, 4, "quarter", false\}, \{"D", 0, 4, 4, "quarter", false\},
+        \{"E", 0, 4, 4, "quarter", false\}, \{"F", 0, 4, 4, "quarter", false\} 
+        Mixed: \{"C", 0, 4, 4, "quarter", false\}, \{"", 0, 0, 4, "quarter", true\},
+        \{"D", 0, 4, 4, "quarter", false\}, \{"", 0, 0, 8, "half", true\}
+    &
+    Valid XML measure elements (non-null) & Non-null pointers & \textcolor{green}{Pass} \\
+  \hline
+  Part Creation & 
+    \{"C", 0, 4, 4, "quarter", false; "D", 0, 4, 4, "quarter", false; 
+    "E", 0, 4, 4, "quarter", false; "F", 0, 4, 4, "quarter", false; 
+    "G", 1, 4, 4, "quarter", false; "", 0, 0, 8, "half", true; 
+    "A", 0, 4, 4, "quarter", false; "B", -1, 4, 4, "quarter", false\} &
+    Valid XML part element (non-null) & Non-null pointer & \textcolor{green}{Pass} \\
+  \hline
+  Score Part Creation & 
+    N/A & 
+    Valid XML score part element (non-null) & Non-null pointer & \textcolor{green}{Pass} \\
+  \hline
+  All Note Types & 
+    -- & 
+    Generation of all note types (e.g., dotted notes, rests) & -- & \textcolor{yellow}{Pending} \\
+  \hline
+  Full Generation & 
+      Multiple measures with standard notes, accidentals, rests,
+      missing note type, and extreme octaves
+    &
+      Success code; File generated and non-empty
+    &
+    True; file non-empty & \textcolor{green}{Pass} \\
+  \hline
+  Empty Sequence Generation & 
+    Empty note sequence & 
+    Failure code; No file generated & False; No file & \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+\subsection{File Format Conversion Module}
+Some submodules of this module were tested manually by the developers visually (e.g. mXML to SVG/PDF). \\ \\
+The following tests use a common SF\_INFO configuration (1 channel, 44100 Hz, WAV/PCM\_16) and generate a 440 Hz sine wave of 1-second duration for file I/O operations.
+
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Read Valid File & 
+    Create directory "test-data"; \newline
+    SF\_INFO; \newline
+    Write sine wave (440 Hz, 1 s) to "test-data/sine.wav" & 
+    SF\_INFO fields match; \newline
+    Data size = 44100; \newline
+    Sine samples (at indices 0, 100, 1234) within floating-point tolerance & 
+    SF\_INFO and data verified; \newline
+    Data size = 44100; \newline
+    Sine sample checks pass & \textcolor{green}{Pass} \\
+  \hline
+  Read Non-Existent File & 
+    File: "fakefile.wav" & 
+    Data vector size = 0 & 
+    Data vector size = 0 & \textcolor{green}{Pass} \\
+  \hline
+  Read Write Read Cycle & 
+    Create directory "test-data"; \newline
+    Write sine wave (440 Hz, 1 s) with SF\_INFO to "test-data/sine.wav"; \newline
+    Read file, then write output to "test-data/output.wav"; \newline
+    Read output file & 
+    SF\_INFO and data of original and output files are identical; \newline
+    Data vectors equal element-wise within floating-point tolerance & 
+    SF\_INFO and data match between original and output; \newline
+    Data elements are not the same within floating-point tolerence & 
+    \textcolor{red}{Fail} \\
+  \hline
+  Write Invalid Location & 
+    SF\_INFO; \newline
+    Data vector: 1000 samples (each 0.5); \newline
+    Invalid directory: "/DNE/" & 
+    No fatal failure during write operation & 
+    No fatal failure encountered & \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+\subsection{Raw Signal Processing Module}
+\subsubsection{Pre-processing}
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Single Channel Test &
+    Data: \{0.5, 1.5, -2.0, 3.0\}; \newline
+    Channels: 1 &
+    Processed data matches input data &
+    Processed data matches input data &
+    \textcolor{green}{Pass} \\
+  \hline
+  Two Channel to Mono Conversion &
+    Data: \{1.0, 2.0, 1.1, 2.1, 1.2, 2.2\}; \newline
+    Channels: 2 &
+    Averaged data: \{1.5, 1.6, 1.7\} &
+    Averaged data: \{1.5, 1.6, 1.7\} &
+    \textcolor{green}{Pass} \\
+  \hline
+  Three Channel to Mono Conversion &
+    Data: \{1.0, 2.0, 3.0, 1.1, 2.1, 3.1\}; \newline
+    Channels: 3 &
+    Averaged data: \{2.0, 2.1\} &
+    Fatal failure &
+    \textcolor{red}{Fail} \\
+  \hline
+  Empty Data &
+    Data: \{\}; \newline
+    Channels: 2 &
+    Processed data is empty &
+    Processed data is empty &
+    \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+\subsubsection{Fourier Transform and Spectrogram Creation}
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Extract Sine Wave Frequency &
+    Frequency: 440.0 Hz (A4); \newline
+    Duration: 1.0 s; \newline
+    Sample rate: 44100.0 Hz; \newline
+    Window size: 2048; \newline
+    Hop size: 441 &
+    Detected frequency approximately 440.0 Hz within a tolerance of 10.0 Hz &
+    Detected frequency matches expected value within tolerance &
+    \textcolor{green}{Pass} \\
+  \hline
+
+  Spectrogram Dimensions &
+    Constant signal value: 123.0; \newline
+    Duration: 0.5 s; \newline
+    Sample rate: 44100.0 Hz; \newline
+    Window size: 2048; \newline
+    Hop size: 441 &
+    Spectrogram size matches expected number of frames; \newline
+    Each frame has (window size / 2 + 1) frequency bins &
+    Spectrogram dimensions match expected values &
+    \textcolor{green}{Pass} \\
+  \hline
+
+  Constant Signal &
+    Constant signal value: 1.0; \newline
+    Duration: 0.5 s; \newline
+    Sample rate: 44100.0 Hz; \newline
+    Window size: 2048; \newline
+    Hop size: 441; \newline
+    Floating-point tolerance: 1e-6 &
+    Magnitude of each spectrogram bin matches the FFT of the windowed constant signal within tolerance &
+    Spectrogram magnitudes match expected FFT values within tolerance &
+    \textcolor{green}{Pass} \\
+  \hline
+
+  Empty Signal &
+    Empty signal vector; \newline
+    Window size: 2048; \newline
+    Hop size: 441 &
+    Empty spectrogram &
+    Empty spectrogram &
+    \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+\subsubsection{Window Functions}
+\texttt{std::vector<double> generateHammingWindow(int windowSize);}\\
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Broad Window Check &
+    Window size: 10 &
+    Window values match expected Hamming values: \{0.08, 0.187619556165, 
+    0.460121838273, 0.77, 0.972258605561, 0.972258605561, 
+    0.77, 0.460121838273, 0.187619556165, 0.08\};&
+    Window values match expected values within tolerance &
+    \textcolor{green}{Pass} \\
+  \hline
+  Window Size &
+    Window size: 5 &
+    Window size equals 5 &
+    Window size equals 5 &
+    \textcolor{green}{Pass} \\
+  \hline
+  Window Taper Values &
+    Window size: 10 &
+    First and last window values match calculated Hamming values within tolerance &
+    First and last window values match expected values within tolerance &
+    \textcolor{green}{Pass} \\
+  \hline
+  Even Window Symmetry &
+    Window size: 10 &
+    Window is symmetric around its center &
+    Window is symmetric around its center &
+    \textcolor{green}{Pass} \\
+  \hline
+  Odd Window Symmetry &
+    Window size: 11 &
+    Window is symmetric around its center with a distinct middle value &
+    Window is symmetric around its center with a distinct middle value &
+    \textcolor{green}{Pass} \\
+  \hline
+  Unique Window &
+    Window size: 10 &
+    Two generated windows with the same size are identical &
+    Two generated windows are identical &
+    \textcolor{green}{Pass} \\
+  \hline
+  Invalid Window Size &
+    Window size: 0 &
+    Function throws invalid argument exception &
+    Segmentation fault &
+    \textcolor{red}{Fail} \\
+  \hline
+\end{longtable}
+
+\noindent\texttt{std::vector<double> generateHanningWindow(int windowSize);}\\
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Broad Window Check &
+    Window size: 10 &
+    Window values match expected Hamming values: \{0.0, 0.11697777845, 0.413176, 0.75, 0.9698463, 
+    0.9698463, 0.75, 0.413176, 0.11697778, 0.0\}; &
+    Window values match expected values within tolerance &
+    \textcolor{green}{Pass} \\
+  \hline
+  Window Size &
+    Window size: 5 &
+    Window size equals 5 &
+    Window size equals 5 &
+    \textcolor{green}{Pass} \\
+  \hline
+  Window Taper Values &
+    Window size: 10 &
+    First and last window values match calculated Hanning values within tolerance &
+    First and last window values match expected values within tolerance &
+    \textcolor{green}{Pass} \\
+  \hline
+  Even Window Symmetry &
+    Window size: 10 &
+    Window is symmetric around its center &
+    Window is symmetric around its center &
+    \textcolor{green}{Pass} \\
+  \hline
+  Odd Window Symmetry &
+    Window size: 11 &
+    Window is symmetric around its center with a distinct middle value &
+    Window is symmetric around its center with a distinct middle value &
+    \textcolor{green}{Pass} \\
+  \hline
+  Unique Window &
+    Window size: 10 &
+    Two generated windows with the same size are identical &
+    Two generated windows are identical &
+    \textcolor{green}{Pass} \\
+  \hline
+  Invalid Window Size &
+    Window size: 0 &
+    Function throws invalid argument exception &
+    Segmentation fault &
+    \textcolor{red}{Fail} \\
+  \hline
+\end{longtable}
+
+\subsection{Audio Feature Extraction Module}
+\subsubsection{Key Detection}
+\begin{longtable}{|L{3cm}|L{3cm}|L{2.5cm}|L{2.5cm}|l|}
+  \hline
+  \textbf{Test} & \textbf{Inputs} & \textbf{Expected Output} & \textbf{Actual Output} & \textbf{Result} \\
+  \hline
+  Correlation of Identical Sequences &
+    Data: \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}; \newline
+    Data: \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}; &
+    Correlation: 1.0 &
+    Correlation: 1.0 &
+    \textcolor{green}{Pass} \\
+  \hline
+  Correlation of Opposite Sequences &
+    Data: \{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12\}; \newline
+    Data: \{12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1\}; &
+    Correlation: -1.0 &
+    Correlation: -1.0 &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract C Major Key &
+    Durations: \{6, 2, 3, 2, 4, 4, 2, 5, 2, 3, 2, 3\} &
+    Key: "C" &
+    Key: "C" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract C Minor Key &
+    Durations: \{6, 2, 3, 5, 2, 3, 2, 4, 3, 2, 3, 3\} &
+    Key: "c" &
+    Key: "c" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract A Major Key &
+    Durations: \{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 10\} &
+    Key: "A" &
+    Key: "A" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract F\# Major Key &
+    Durations: \{2, 5, 2, 3, 2, 3, 6, 2, 3, 2, 4, 4\} &
+    Key: "F\#" &
+    Key: "F\#" &
+    \textcolor{green}{Pass} \\
+  \hline
+  Extract Key of Uniform Durations &
+    Durations: \{1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1\} &
+    Key: "C" &
+    Key: "C" &
+    \textcolor{green}{Pass} \\
+  \hline
+\end{longtable}
+
+\subsection{Audio Recording and Playback Module}
+Given the inherent complexity and hardware dependencies associated with this module, it 
+was tested manually by the developers. As manual testing provided a more effective and contextually 
+relevant validation process given each developer's unique configuration/environment.
+
+\section{Changes Due to Testing}
+Unit testing identified the following issues, which were addressed upon discovery:
+\begin{enumerate}
+  \item Multi-Channel Conversion Limitations: The system's capability to handle channel conversions was 
+  initially limited to two channels. This constraint was insufficient for applications requiring support 
+  for more than two channels. Recognizing this limitation, we extended the functionality to accommodate 
+  conversions involving more than two channels.
+  \item Window Function Input Validation: The initial implementation lacked proper validation for inputs 
+  to the Hanning and Hamming window functions. This oversight could lead to incorrect calculations during 
+  the short time Fourier transform.
+  \item .WAV File Read/Write Cycle: The mismatch between data vectors of the original and output files, and consequent 
+  test failure stemmed from differences in data representation: libsndfile uses 16-bit PCM format, while our tests expected 
+  double-precision floating-point numbers. The normalization process performed by libsndfile resulted in precision loss beyond
+  expected floating-point tolerence values. This issue was resolved by adjusting the test expectations to account for the
+  normalization process.
+\end{enumerate}
+
+
+% \wss{This section should highlight how feedback from the users and from 
+% the supervisor (when one exists) shaped the final product.  In particular 
+% the feedback from the Rev 0 demo to the supervisor (or to potential users) 
+% should be highlighted.}
 
 \section{Automated Testing}
-		
+A GitHub Actions (GHA) workflow triggers the unit tests described in section 5 on every push and pull request to the main branch. 
+Through the use of vcpkg for dependency management, CMake for configuration, and ctest for execution the project's unit tests are 
+automated. This is vital for the project's CI goals as the unit tests verify the expected behaviour of important components of the 
+system including signal processing, MusicXML score generation, and file format conversion. \\
+The GHA workflow for automated testing is available in the ScoreGen repository at: 
+\href{https://github.com/emilyperica/ScoreGen/blob/main/.github/workflows/run-tests.yml}{\texttt{.github/workflows/run-tests.yml}}.
+
 \section{Trace to Requirements}
 See traceability tables between Test Cases and Requirements in the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
 		
