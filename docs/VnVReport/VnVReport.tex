@@ -499,10 +499,13 @@ Unit testing identified the following issues, which were addressed upon discover
 % should be highlighted.}
 
 \section{Automated Testing}
-- two sections:\\
-1. Unit Testing GHA workflow in CI \\
-2. CI workflow(s) for system testing
-		
+A GitHub Actions (GHA) workflow triggers the unit tests described in section 5 on every push and pull request to the main branch. 
+Through the use of vcpkg for dependency management, CMake for configuration, and ctest for execution the project's unit tests are 
+automated. This is vital for the project's CI goals as the unit tests verify the expected behaviour of important components of the 
+system including signal processing, MusicXML score generation, and file format conversion. \\
+The GitHub Actions workflow for automated testing is available in the ScoreGen repository at: 
+\href{https://github.com/emilyperica/ScoreGen/blob/main/.github/workflows/run-tests.yml}{\texttt{.github/workflows/run-tests.yml}}.
+
 \section{Trace to Requirements}
 		
 \section{Trace to Modules}		
