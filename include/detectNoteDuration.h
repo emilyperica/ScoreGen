@@ -10,14 +10,21 @@
 #include <iostream>
 #include "aubio/aubio.h"
 #include <fftw3.h>
-#include "common.h"
+
 #include "STFT.h"
 
+// Struct to represent a detected note
+struct Note {
+    float startTime;
+    float endTime;
+    std::string pitch;
+    std::string type;   // Note type (e.g., "quarter", "eighth")
+};
 
 // Function declarations
 std::string getNoteName(double freq);
 std::string determineNoteType(float noteDuration, int bpm);
-// std::vector<Note> detectNotes(const std::vector<double>& buf, int sample_rate, int channels);
+std::vector<Note> detectNotes(const std::vector<double>& buf, int sample_rate, int channels);
 std::string detectPitch(std::vector<std::vector<double>> spec, int startFrame, int endFrame, int sample_rate, int ffts);
 std::vector<std::vector<double>> preProcessing(double lambda, std::vector<std::vector<double>> spectrogram);
 std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate, int bpm);
