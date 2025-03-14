@@ -362,3 +362,6 @@ build/
 node_modules/
 .vscode/
 package-lock.json
+output.xml
+temp.wav
+output.musicxml
