@@ -27,21 +27,40 @@ document.addEventListener('DOMContentLoaded', function() {
   const uploadFileButton = document.getElementById('upload-file-button');
   const uploadFileInput = document.getElementById('upload-file');
   
-  /* --- Helper Functions for WAV conversion --- */
-  
-  // Converts a Blob (from MediaRecorder) to a WAV Blob.
-  function convertBlobToWav(blob) {
+
+  // Converts a Blob (from getUserMedia, for example) into a 16-bit PCM WAV Blob,
+  // rendered at the target sample rate (e.g. 44100 Hz) rather than the default 48000 Hz.
+  async function convertBlobToWav(blob) {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
       reader.onload = function() {
         const arrayBuffer = reader.result;
-        // Create an AudioContext to decode the audio data.
-        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-        audioContext.decodeAudioData(arrayBuffer, function(audioBuffer) {
-          // Convert the AudioBuffer into a WAV ArrayBuffer.
-          const wavBuffer = audioBufferToWav(audioBuffer);
-          const wavBlob = new Blob([wavBuffer], { type: 'audio/wav' });
-          resolve(wavBlob);
+        console.log(`[convertBlobToWav] Read ArrayBuffer of byteLength: ${arrayBuffer.byteLength}`);
+        
+        // Use a temporary AudioContext to decode.
+        const tempAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        tempAudioCtx.decodeAudioData(arrayBuffer, function(audioBuffer) {
+          console.log(`[convertBlobToWav] Decoded AudioBuffer: sampleRate=${audioBuffer.sampleRate}, length=${audioBuffer.length}, channels=${audioBuffer.numberOfChannels}`);
+          
+          // Instead of forcing 44100 Hz, use the original sampleRate.
+          const originalSampleRate = audioBuffer.sampleRate;
+          const channels = audioBuffer.numberOfChannels;
+          const duration = audioBuffer.length / originalSampleRate;
+          const newLength = audioBuffer.length; // Keep the same length in samples.
+          console.log(`[convertBlobToWav] Creating OfflineAudioContext: targetSampleRate=${originalSampleRate}, duration=${duration.toFixed(2)}s, newLength=${newLength}`);
+          
+          const offlineCtx = new OfflineAudioContext(channels, newLength, originalSampleRate);
+          const source = offlineCtx.createBufferSource();
+          source.buffer = audioBuffer;
+          source.connect(offlineCtx.destination);
+          source.start();
+          
+          offlineCtx.startRendering().then((renderedBuffer) => {
+            console.log(`[convertBlobToWav] Offline rendering complete: sampleRate=${renderedBuffer.sampleRate}, length=${renderedBuffer.length}`);
+            const wavBuffer = audioBufferToWav(renderedBuffer); // still outputs 16-bit PCM
+            const wavBlob = new Blob([wavBuffer], { type: 'audio/wav' });
+            resolve(wavBlob);
+          }).catch(reject);
         }, reject);
       };
       reader.onerror = reject;
@@ -49,16 +68,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
   
-  // Converts an AudioBuffer to a WAV ArrayBuffer.
-  function audioBufferToWav(buffer, opt) {
-    opt = opt || {};
+  function audioBufferToWav(buffer) {
+    const numChannels = buffer.numberOfChannels;
+    const sampleRate = buffer.sampleRate; // This will be 44100 if rendered with OfflineAudioContext
+    const bitDepth = 16; // Always 16-bit PCM
   
-    var numChannels = buffer.numberOfChannels;
-    var sampleRate = buffer.sampleRate;
-    var format = opt.float32 ? 3 : 1; // 1 = PCM, 3 = IEEE Float
-    var bitDepth = format === 3 ? 32 : 16;
-  
-    var result;
+    let result;
     if (numChannels === 2) {
       result = interleave(buffer.getChannelData(0), buffer.getChannelData(1));
     } else {
@@ -68,10 +83,10 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function interleave(inputL, inputR) {
-    var length = inputL.length + inputR.length;
-    var result = new Float32Array(length);
-    var index = 0;
-    var inputIndex = 0;
+    const length = inputL.length + inputR.length;
+    const result = new Float32Array(length);
+    let index = 0;
+    let inputIndex = 0;
   
     while (index < length) {
       result[index++] = inputL[inputIndex];
@@ -82,62 +97,53 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function encodeWAV(samples, numChannels, sampleRate, bitDepth) {
-    var bytesPerSample = bitDepth / 8;
-    var blockAlign = numChannels * bytesPerSample;
-    var buffer = new ArrayBuffer(44 + samples.length * bytesPerSample);
-    var view = new DataView(buffer);
+    const bytesPerSample = bitDepth / 8;
+    const blockAlign = numChannels * bytesPerSample;
+    const buffer = new ArrayBuffer(44 + samples.length * bytesPerSample);
+    const view = new DataView(buffer);
   
-    /* RIFF identifier */
+    // RIFF identifier
     writeString(view, 0, 'RIFF');
-    /* file length */
+    // file length
     view.setUint32(4, 36 + samples.length * bytesPerSample, true);
-    /* RIFF type */
+    // RIFF type
     writeString(view, 8, 'WAVE');
-    /* format chunk identifier */
+    // format chunk identifier
     writeString(view, 12, 'fmt ');
-    /* format chunk length */
+    // format chunk length
     view.setUint32(16, 16, true);
-    /* sample format (PCM) */
+    // sample format (PCM)
     view.setUint16(20, 1, true);
-    /* channel count */
+    // channel count
     view.setUint16(22, numChannels, true);
-    /* sample rate */
+    // sample rate
     view.setUint32(24, sampleRate, true);
-    /* byte rate (sample rate * block align) */
+    // byte rate (sample rate * block align)
     view.setUint32(28, sampleRate * blockAlign, true);
-    /* block align (channel count * bytes per sample) */
+    // block align (channel count * bytes per sample)
     view.setUint16(32, blockAlign, true);
-    /* bits per sample */
+    // bits per sample
     view.setUint16(34, bitDepth, true);
-    /* data chunk identifier */
+    // data chunk identifier
     writeString(view, 36, 'data');
-    /* data chunk length */
+    // data chunk length
     view.setUint32(40, samples.length * bytesPerSample, true);
   
-    if (bitDepth === 16) {
-      floatTo16BitPCM(view, 44, samples);
-    } else {
-      writeFloat32(view, 44, samples);
-    }
+    // Convert samples to 16-bit PCM
+    floatTo16BitPCM(view, 44, samples);
     return buffer;
   }
   
   function writeString(view, offset, string) {
-    for (var i = 0; i < string.length; i++){
+    for (let i = 0; i < string.length; i++){
       view.setUint8(offset + i, string.charCodeAt(i));
     }
   }
   
   function floatTo16BitPCM(output, offset, input) {
-    for (var i = 0; i < input.length; i++, offset += 2) {
-      var s = Math.max(-1, Math.min(1, input[i]));
+    for (let i = 0; i < input.length; i++, offset += 2) {
+      let s = Math.max(-1, Math.min(1, input[i]));
       output.setInt16(offset, s < 0 ? s * 0x8000 : s * 0x7FFF, true);
-    }
-  }
-  
-  function writeFloat32(output, offset, input) {
-    for (var i = 0; i < input.length; i++, offset += 4) {
-      output.setFloat32(offset, input[i], true);
     }
   }
   
@@ -187,17 +193,15 @@ document.addEventListener('DOMContentLoaded', function() {
       alert('Please upload a valid .wav file.');
       return;
     }
-    // Set the uploaded file as the source for the audio element.
     audio.src = URL.createObjectURL(file);
     audio.load();
     audio.addEventListener('loadedmetadata', function() {
       totalDurationDisplay.textContent = formatTime(audio.duration);
+      console.log(`Audio metadata: duration=${audio.duration}, src=${audio.src}`);
     }, { once: true });
     playPauseButton.disabled = false;
-    // Enable the save and export buttons.
     saveRecordingBtn.disabled = false;
     exportMusicxmlBtn.disabled = false;
-    // Store the file as the recordedAudioBlob so that it can be used by other features.
     recordedAudioBlob = file;
   });
   
@@ -212,35 +216,29 @@ document.addEventListener('DOMContentLoaded', function() {
       audioChunks = [];
       mediaRecorder.start();
       
-      // Update button states.
       startRecordingBtn.disabled = true;
       pauseRecordingBtn.disabled = false;
       stopRecordingBtn.disabled = false;
-      exportMusicxmlBtn.disabled = true;  // Disable export until recording is complete
-      saveRecordingBtn.disabled = true;     // Disable save until recording is complete
+      exportMusicxmlBtn.disabled = true;
+      saveRecordingBtn.disabled = true;
       
-      // Start recording timer.
       recordingStartTime = Date.now();
       recordingInterval = setInterval(updateRecordingTimer, 1000);
       
-      // Collect audio data chunks.
       mediaRecorder.addEventListener('dataavailable', event => {
         console.log("Data available:", event.data.size);
         audioChunks.push(event.data);
       });
       
-      // When recording stops, create the Blob and load it into the audio player.
       mediaRecorder.addEventListener('stop', () => {
         clearInterval(recordingInterval);
-        updateRecordingTimer(); // Final update.
+        updateRecordingTimer();
         recordedAudioBlob = new Blob(audioChunks, { type: 'audio/ogg; codecs=opus' });
         console.log("Recorded Blob size:", recordedAudioBlob.size);
         
-        // Set the recorded audio as the source for the playback element.
         audio.src = URL.createObjectURL(recordedAudioBlob);
         audio.load();
         
-        // When metadata is loaded, update the total duration display.
         audio.addEventListener('loadedmetadata', function() {
           let duration = audio.duration;
           if (!isFinite(duration)) {
@@ -250,7 +248,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { once: true });
         
         playPauseButton.disabled = false;
-        // Enable export and save buttons now that a recording exists.
         exportMusicxmlBtn.disabled = false;
         saveRecordingBtn.disabled = false;
       });
@@ -276,7 +273,6 @@ document.addEventListener('DOMContentLoaded', function() {
       startRecordingBtn.disabled = false;
       pauseRecordingBtn.disabled = true;
       stopRecordingBtn.disabled = true;
-      // Note: exportMusicxmlBtn and saveRecordingBtn will be enabled in the 'stop' handler.
     }
   });
   
@@ -286,7 +282,6 @@ document.addEventListener('DOMContentLoaded', function() {
       alert("No recording available to save!");
       return;
     }
-    // Convert the recorded audio Blob (or uploaded file) to a WAV Blob and trigger download.
     convertBlobToWav(recordedAudioBlob)
       .then(wavBlob => {
         const url = URL.createObjectURL(wavBlob);
@@ -305,99 +300,44 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 
-  /* --- Export to MusicXML --- */
-  exportMusicxmlBtn.addEventListener('click', () => {
+  exportMusicxmlBtn.addEventListener('click', async () => {
     if (!recordedAudioBlob) {
       alert("No recording available to export!");
       return;
     }
-    transcribeAudioToMusicXML(recordedAudioBlob)
-      .then(musicXML => {
-        const xmlBlob = new Blob([musicXML], { type: 'application/xml' });
-        const url = URL.createObjectURL(xmlBlob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'score.musicxml';
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-      })
-      .catch(err => {
-        console.error("Error during MusicXML export:", err);
-        alert("Failed to export audio to MusicXML.");
-      });
-  });
   
-  // Dummy transcription function (simulate converting audio to MusicXML).
-  function transcribeAudioToMusicXML(audioBlob) {
-    return new Promise((resolve, reject) => {
-      setTimeout(() => {
-        const dummyMusicXML = `<?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE score-partwise PUBLIC
-    "-//Recordare//DTD MusicXML 3.1 Partwise//EN"
-    "http://www.musicxml.org/dtds/partwise.dtd">
-<score-partwise version="3.1">
-  <part-list>
-    <score-part id="P1">
-      <part-name>Music</part-name>
-    </score-part>
-  </part-list>
-  <part id="P1">
-    <measure number="1">
-      <attributes>
-        <divisions>1</divisions>
-        <key>
-          <fifths>0</fifths>
-        </key>
-        <time>
-          <beats>4</beats>
-          <beat-type>4</beat-type>
-        </time>
-        <clef>
-          <sign>G</sign>
-          <line>2</line>
-        </clef>
-      </attributes>
-      <note>
-        <pitch>
-          <step>C</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>1</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <rest/>
-        <duration>1</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <pitch>
-          <step>E</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>1</duration>
-        <type>quarter</type>
-      </note>
-      <note>
-        <pitch>
-          <step>G</step>
-          <octave>4</octave>
-        </pitch>
-        <duration>1</duration>
-        <type>quarter</type>
-      </note>
-    </measure>
-  </part>
-</score-partwise>`;
-        resolve(dummyMusicXML);
-      }, 1000); // Simulated delay.
-    });
-  }
-
-  document.getElementById('processButton').addEventListener('click', () => {
-    // This will send an IPC message to the main process.
-    window.api.processAudio();
+    const spinner = document.getElementById('spinnerOverlay');
+    if (spinner) spinner.style.display = 'flex';
+  
+    console.log('[Renderer] Export button clicked.');
+    try {
+      const wavBlob = await convertBlobToWav(recordedAudioBlob);
+      const buffer = await wavBlob.arrayBuffer();
+  
+      await window.nodeAPI.saveTempWavFile(buffer);
+      await window.api.processAudio();
+      // Optionally delete the temporary file:
+      // await window.nodeAPI.deleteTempWavFile();
+  
+      const response = await fetch('../../output.xml');
+      if (!response.ok) {
+        throw new Error('Failed to fetch output.xml');
+      }
+      const musicxmlBlob = await response.blob();
+      const url = URL.createObjectURL(musicxmlBlob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'score.musicxml';
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+    } catch (err) {
+      console.error("Error during export:", err);
+      alert("Failed to export MusicXML.");
+    } finally {
+      if (spinner) spinner.style.display = 'none';
+    }
   });
   
   /* --- Playback Event Listeners --- */

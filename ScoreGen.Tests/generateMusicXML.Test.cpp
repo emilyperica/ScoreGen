@@ -20,18 +20,23 @@ protected:
         "Testing"
     ) {}
 
+    // Updated default parameters to match generate() logic
     TElement testCreateScorePart(
         const string& partId = "P1", 
-        const string& partName = "Test Part", 
-        const string& partAbbrev = "TestPart"
+        const string& partName = "INSTRUMENT", 
+        const string& partAbbrev = ""
     ) {
         return generator.createScorePart(partId, partName, partAbbrev);
     }
 
-    TElement testCreateNoteElement(const XMLNote& note, int divisions) {
-        return generator.createNoteElement(note, divisions);
+    // Updated wrapper to include the duration override parameter
+    TElement testCreateNoteElement(const XMLNote& note, int durationOverride, int divisions) {
+        return generator.createNoteElement(note, durationOverride, divisions);
     }
 
+    /*
+    // Removed direct measure creation tests because measure creation is now handled
+    // internally in createPart() and generate()
     TElement testCreateMeasure(
         const vector<XMLNote>& measureNotes, 
         int measureNumber,
@@ -51,6 +56,7 @@ protected:
             divisions
         );
     }
+    */
 
     TElement testCreatePart(
         const vector<XMLNote>& noteSequence,
@@ -60,63 +66,33 @@ protected:
         int keySignature = 0, 
         int divisions = 4
     ) {
-        return generator.createPart(
-            noteSequence, 
-            clef, 
-            clefLine, 
-            timeSignature, 
-            keySignature, 
-            divisions
-        );
+        return generator.createPart(noteSequence, clef, clefLine, timeSignature, keySignature, divisions);
     }
 };
 
 TEST_F(MusicXMLGeneratorTest, NoteElementCreation) {
-    // Quater note at C, not flat/sharp, octave 4, duration 4 divisions, not a rest
+    // Quarter note at C, not flat/sharp, octave 4, duration 4 divisions, not a rest
     XMLNote regularNote = {"C", 0, 4, 4, "quarter", false};
-    TElement regularNoteElement = testCreateNoteElement(regularNote, 4);
+    TElement regularNoteElement = testCreateNoteElement(regularNote, 4, 4);
     EXPECT_NE(regularNoteElement, nullptr);
 
-    // Rest note w/ all fields
+    // Rest note with all fields
     XMLNote restNote = {"", 0, 0, 4, "quarter", true};
-    TElement restNoteElement = testCreateNoteElement(restNote, 4);
+    TElement restNoteElement = testCreateNoteElement(restNote, 4, 4);
     EXPECT_NE(restNoteElement, nullptr);
 
-    // Note with acccidental
-    XMLNote accidentalNote = {"C", 1, 4, 4, "quarter", false};  // C-sharp
-    TElement accidentalNoteElement = testCreateNoteElement(accidentalNote, 4);
+    // Note with accidental (C-sharp)
+    XMLNote accidentalNote = {"C", 1, 4, 4, "quarter", false};
+    TElement accidentalNoteElement = testCreateNoteElement(accidentalNote, 4, 4);
     EXPECT_NE(accidentalNoteElement, nullptr);
 }
 
-// Measure creation tests
+/*
+// Removed Measure creation tests because measures are created internally in createPart()
 TEST_F(MusicXMLGeneratorTest, MeasureCreation) {
-    // Single note measure
-    vector<XMLNote> singleNoteMeasure = {
-        {"C", 0, 4, 4, "quarter", false}
-    };
-    TElement singleNoteMeasureElement = testCreateMeasure(singleNoteMeasure, 1);
-    EXPECT_NE(singleNoteMeasureElement, nullptr);
-
-    // Multiple notes measure
-    vector<XMLNote> multiNoteMeasure = {
-        {"C", 0, 4, 4, "quarter", false},
-        {"D", 0, 4, 4, "quarter", false},
-        {"E", 0, 4, 4, "quarter", false},
-        {"F", 0, 4, 4, "quarter", false}
-    };
-    TElement multiNoteMeasureElement = testCreateMeasure(multiNoteMeasure, 1);
-    EXPECT_NE(multiNoteMeasureElement, nullptr);
-
-    // Mixed notes and rests
-    vector<XMLNote> mixedNoteMeasure = {
-        {"C", 0, 4, 4, "quarter", false},
-        {"", 0, 0, 4, "quarter", true},
-        {"D", 0, 4, 4, "quarter", false},
-        {"", 0, 0, 8, "half", true}
-    };
-    TElement mixedNoteMeasureElement = testCreateMeasure(mixedNoteMeasure, 1);
-    EXPECT_NE(mixedNoteMeasureElement, nullptr);
+    // (Old tests for measure creation have been removed.)
 }
+*/
 
 TEST_F(MusicXMLGeneratorTest, PartCreation) {
     // Multiple measures with various notes
@@ -149,32 +125,31 @@ TEST_F(MusicXMLGeneratorTest, FullGeneration) {
         {"C", 0, 4, 4, "quarter", false},
         {"D", 1, 4, 4, "quarter", false},   // D-sharp
         {"E", 0, 4, 4, "quarter", false},
-        {"F", 2, 4, 4, "quarter", false},   // F double-sharp
-    
+        {"F", 2, 4, 4, "quarter", false},     // F double-sharp
+
         // Measure 2: Double-flat and missing type for a non-rest note
-        {"G", -2, 4, 4, "quarter", false},  // G double-flat
-        {"A", 0, 4, 4, "", false},          // A note with missing type
-        {"B", -1, 4, 4, "quarter", false},  // B-flat
-        {"C", 0, 5, 4, "quarter", false},   // C in octave 5
-    
+        {"G", -2, 4, 4, "quarter", false},    // G double-flat
+        {"A", 0, 4, 4, "", false},            // A note with missing type
+        {"B", -1, 4, 4, "quarter", false},    // B-flat
+        {"C", 0, 5, 4, "quarter", false},     // C in octave 5
+
         // Measure 3: Different durations and accidentals
-        {"D", 0, 5, 8, "half", false},      // Half note
-        {"E", -1, 5, 2, "eighth", false},   // E-flat eighth note
+        {"D", 0, 5, 8, "half", false},        // Half note
+        {"E", -1, 5, 2, "eighth", false},     // E-flat eighth note
         {"F", 0, 5, 4, "quarter", false},
         {"G", 0, 5, 4, "quarter", false},
-    
+
         // Measure 4: Rests with and without note type
-        {"", 0, 0, 4, "quarter", true},     // Quarter rest with type specified
-        {"", 0, 0, 8, "", true},            // Half rest without type
-        {"A", 0, 5, 4, "quarter", false},   // Normal note after rests
+        {"", 0, 0, 4, "quarter", true},       // Quarter rest with type specified
+        {"", 0, 0, 8, "", true},              // Half rest without type
+        {"A", 0, 5, 4, "quarter", false},     // Normal note after rests
         {"B", 0, 5, 4, "quarter", false},
-    
+
         // Measure 5: Extreme octave values
-        {"C", 0, 2, 4, "quarter", false},   // Lower octave note
-        {"D", 1, 7, 4, "quarter", false}    // Higher octave with sharp
+        {"C", 0, 2, 4, "quarter", false},     // Lower octave note
+        {"D", 1, 7, 4, "quarter", false}      // Higher octave with sharp
     };
     
-
     EXPECT_TRUE(generator.generate(
         "full_generation_test.xml", 
         noteSequence, 
