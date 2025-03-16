@@ -23,6 +23,19 @@ find_package(portaudio CONFIG REQUIRED)
 find_package(SndFile REQUIRED)
 find_package(FFTW3 REQUIRED)
 
+# Define LilyPond paths
+set(LILYPOND_DIR "${CMAKE_SOURCE_DIR}/libs/lilypond/lilypond-2.24.4")
+set(LILYPOND_EXE "${LILYPOND_DIR}/bin/lilypond.exe")
+set(MUSICXML2LY "${LILYPOND_DIR}/bin/musicxml2ly.py")
+
+# Ensure the executables exist
+if(NOT EXISTS "${LILYPOND_EXE}")
+    message(FATAL_ERROR "LilyPond executable not found at ${LILYPOND_EXE}")
+endif()
+if(NOT EXISTS "${MUSICXML2LY}")
+    message(FATAL_ERROR "musicxml2ly.py not found at ${MUSICXML2LY}")
+endif()
+
 # Set up libmusicxml before using it
 set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
 

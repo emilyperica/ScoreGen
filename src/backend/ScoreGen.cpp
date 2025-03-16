@@ -4,6 +4,7 @@
 #include "generateMusicXML.h"
 #include "recordAudio.h"
 #include "postprocess.h"
+#include "xmlToPDF.h"
 
 #define DEFAULT_OUT "output.xml"
 #define DEFAULT_TEST "test/TestingDatasets/Computer-Generated-Samples/D4_to_E5_1_second_per_note.wav"
@@ -25,6 +26,8 @@ void processAudio() {
         DEFAULT_DIVISIONS
     );
     postProcessMusicXML(DEFAULT_OUT, DEFAULT_OUT);
+    convertMusicXMLToPDF(DEFAULT_OUT, "output.pdf");
+    std::cout << "MusicXML file generated successfully." << std::endl;
     
     if (success) {
         // Print this exact line for Node to detect:
