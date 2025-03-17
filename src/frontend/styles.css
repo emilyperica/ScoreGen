@@ -765,27 +765,18 @@ body {
     background: white;
 }
 
-.return-buttons {
-    padding: 15px;
-    display: flex;
-    gap: 10px;
-}
 
 .return-buttons button {
     -webkit-app-region: no-drag;
     pointer-events: auto;
     padding: 8px 16px;
-    background-color: #f5f5f5;
+    background-color: transparent;
     color: #333;
-    border: 1px solid #ddd;
-    border-radius: 4px;
     cursor: pointer;
     transition: background-color 0.2s;
+    border: none;
 }
 
-.return-buttons button:hover {
-    background-color: #e0e0e0;
-}
 
 .content {
     position: relative;

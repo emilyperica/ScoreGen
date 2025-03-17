@@ -1,11 +1,4 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    document.getElementById('home-button').addEventListener('click', () => {
-        window.electronAPI.navigateToHome();
-    });
-    
-    document.getElementById('back-button').addEventListener('click', () => {
-        window.history.back();
-    });
     // Load PDFs when page loads
     const pdfList = document.getElementById('pdf-list');
     try {

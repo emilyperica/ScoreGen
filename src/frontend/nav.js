@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const uploadBtn = document.getElementById('upload-btn');
     const recordBtn = document.getElementById('record-btn');
     document.getElementById('sheet-music-button').addEventListener('click', () => {
-        window.electronAPI.navigateToSheetMusic();
-    });
+    window.electronAPI.navigateToSheetMusic();
+});
 
     // Function to remove 'active' class from all nav buttons
     function resetActiveNav() {
