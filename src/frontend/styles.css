@@ -37,11 +37,6 @@ body {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Optional: Adds a subtle shadow */
 }
 
-.return-buttons button, .window-controls button {
-    -webkit-app-region: no-drag;
-    pointer-events: auto;
-}
-
 
 .title-bar-logo {
     height: 60px; /* Adjust as needed */
@@ -335,6 +330,20 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 15px;
+}
+
+.control-button {
+    background: none;
+    border: none;
+    color: #333;
+    font-size: 28px;
+    margin: 0 15px;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.control-button:hover {
+    color: #007BFF;
 }
 
 .progress-container {
@@ -710,7 +719,10 @@ body {
     gap: 10px;
 }
 
-.control-button {
+#close-viewer {
+    position: absolute;
+    right: 113px;
+    top: 14px;
     border: none;
     width: 30px;
     height: 30px;
@@ -747,14 +759,8 @@ body {
     cursor: pointer;
 }
 
-.control-button:hover {
+#close-viewer:hover {
     background: rgba(255, 255, 255, 0.2);
-}
-
-#close-viewer {
-    position: absolute;
-    right: 118px;
-    top: 14px;
 }
 
 
