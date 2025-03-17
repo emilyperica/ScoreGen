@@ -14,7 +14,7 @@
 #define DEFAULT_DIVISIONS 480
 
 void processAudio() {
-	DSPResult res = dsp("temp.wav");
+	DSPResult res = dsp(DEFAULT_TEST);
     MusicXMLGenerator xmlGenerator;
     bool success = xmlGenerator.generate(
         DEFAULT_OUT, 

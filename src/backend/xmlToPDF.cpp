@@ -2,6 +2,7 @@
 #include <fstream>
 #include <cstdlib>
 #include <string>
+#include <direct.h>
 #include "xmlToPDF.h"
 
 // LilyPond paths from CMake
@@ -20,11 +21,21 @@ std::string getUniqueOutputPath(const std::string& baseName) {
     int counter = 1;
     std::string outputPath;
     std::string outputFile;
+    
+    // Create directory if it doesn't exist (Windows-specific)
+    std::string outputDir = "src\\frontend\\PDF_Outputs";
+    if (_mkdir(outputDir.c_str()) == 0 || errno == EEXIST) {
+        // Directory created or already exists
+    } else {
+        std::cerr << "Error creating directory: " << outputDir << std::endl;
+    }
+
     do {
         outputFile = baseName + "_" + std::to_string(counter);
-			outputPath = "src\\frontend\\PDF_Outputs\\" + outputFile;
+        outputPath = outputDir + "\\" + outputFile;
         counter++;
     } while (fileExists(outputPath + ".pdf"));
+    
     return outputFile;
 }
 
