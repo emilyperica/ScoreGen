@@ -23,20 +23,64 @@ find_package(portaudio CONFIG REQUIRED)
 find_package(SndFile REQUIRED)
 find_package(FFTW3 REQUIRED)
 
-# Define LilyPond paths
-set(LILYPOND_DIR "${CMAKE_SOURCE_DIR}/libs/lilypond/lilypond-2.24.4")
-set(LILYPOND_EXE "${LILYPOND_DIR}/bin/lilypond.exe")
-set(MUSICXML2LY "${LILYPOND_DIR}/bin/musicxml2ly.py")
+# LilyPond setup
+set(LILYPOND_VERSION "2.24.4")
 
-# Ensure the executables exist
-if(NOT EXISTS "${LILYPOND_EXE}")
-    message(FATAL_ERROR "LilyPond executable not found at ${LILYPOND_EXE}")
-endif()
-if(NOT EXISTS "${MUSICXML2LY}")
-    message(FATAL_ERROR "musicxml2ly.py not found at ${MUSICXML2LY}")
+# First try to find system-wide LilyPond
+find_program(SYSTEM_LILYPOND_EXE lilypond)
+find_program(SYSTEM_MUSICXML2LY musicxml2ly.py)
+
+if(SYSTEM_LILYPOND_EXE AND SYSTEM_MUSICXML2LY)
+    # Use system-installed LilyPond
+    message(STATUS "Using system LilyPond: ${SYSTEM_LILYPOND_EXE}")
+    set(LILYPOND_EXE ${SYSTEM_LILYPOND_EXE})
+    set(MUSICXML2LY ${SYSTEM_MUSICXML2LY})
+    set(LILYPOND_PYTHON python)  # Assume system Python
+else()
+    # Download LilyPond binaries
+    message(STATUS "Downloading LilyPond ${LILYPOND_VERSION}")
+    
+    if(WIN32)
+        set(LILYPOND_URL "https://gitlab.com/lilypond/lilypond/-/releases/v${LILYPOND_VERSION}/downloads/lilypond-${LILYPOND_VERSION}-mingw-x86_64.zip")
+        set(LILYPOND_BIN_DIR "${CMAKE_BINARY_DIR}/lilypond/src/lilypond/bin")
+        set(LILYPOND_EXE "${LILYPOND_BIN_DIR}/lilypond.exe")
+        set(MUSICXML2LY "${LILYPOND_BIN_DIR}/musicxml2ly.py")
+        set(LILYPOND_PYTHON "${LILYPOND_BIN_DIR}/python.exe")
+    elseif(APPLE)
+        set(LILYPOND_URL "https://gitlab.com/lilypond/lilypond/-/releases/v${LILYPOND_VERSION}/downloads/lilypond-${LILYPOND_VERSION}-darwin-x86_64.tar.gz")
+        set(LILYPOND_BIN_DIR "${CMAKE_BINARY_DIR}/lilypond/usr/local/bin")
+        set(LILYPOND_EXE "${LILYPOND_BIN_DIR}/lilypond")
+        set(MUSICXML2LY "${LILYPOND_BIN_DIR}/musicxml2ly.py")
+        set(LILYPOND_PYTHON "${LILYPOND_BIN_DIR}/python3")
+    else()  # Linux
+        set(LILYPOND_URL "https://gitlab.com/lilypond/lilypond/-/releases/v${LILYPOND_VERSION}/downloads/lilypond-${LILYPOND_VERSION}-linux-x86_64.tar.gz")
+        set(LILYPOND_BIN_DIR "${CMAKE_BINARY_DIR}/lilypond/usr/local/bin")
+        set(LILYPOND_EXE "${LILYPOND_BIN_DIR}/lilypond")
+        set(MUSICXML2LY "${LILYPOND_BIN_DIR}/musicxml2ly.py")
+        set(LILYPOND_PYTHON "${LILYPOND_BIN_DIR}/python3")
+    endif()
+
+
+
+    
+    include(ExternalProject)
+    ExternalProject_Add(
+        lilypond
+        URL ${LILYPOND_URL}
+        PREFIX ${CMAKE_BINARY_DIR}/lilypond
+        CONFIGURE_COMMAND ""
+        BUILD_COMMAND ""
+        INSTALL_COMMAND ""
+        EXCLUDE_FROM_ALL TRUE
+    )
+    # Create header file with paths
+    configure_file(
+        ${CMAKE_CURRENT_SOURCE_DIR}/lilypond_paths.h.in
+        ${CMAKE_CURRENT_BINARY_DIR}/lilypond_paths.h
+    )
 endif()
 
-# Set up libmusicxml before using it
+# Set up libmusicxml ##########################################################
 set(LIBMUSICXML_ROOT "${CMAKE_SOURCE_DIR}/libs/libmusicxml")
 
 file(GLOB SOURCES
@@ -49,7 +93,8 @@ add_library(ScoreGenLib STATIC ${SOURCES})
 # Include headers for the library
 target_include_directories(ScoreGenLib PUBLIC
     ${CMAKE_SOURCE_DIR}/include
-    ${LIBMUSICXML_ROOT}/include  # Make sure this is correctly set
+    ${LIBMUSICXML_ROOT}/include
+    ${CMAKE_CURRENT_BINARY_DIR}  # For generated lilypond_paths.h
 )
 
 # Link dependencies to the library
@@ -65,7 +110,12 @@ target_link_libraries(ScoreGenLib PUBLIC
 add_executable(ScoreGen src/backend/ScoreGen.cpp)
 target_link_libraries(ScoreGen PRIVATE ScoreGenLib)
 
-# Set up libmusicxml
+if(NOT (SYSTEM_LILYPOND_EXE AND SYSTEM_MUSICXML2LY))
+    # Ensure LilyPond is downloaded before building
+    add_dependencies(ScoreGenLib lilypond)
+endif()
+
+# Rest of libmusicxml setup ###################################################
 if(APPLE)
     set(LIBMUSICXML_STATIC_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.a")
     set(LIBMUSICXML_SHARED_PATH "${LIBMUSICXML_ROOT}/lib/macos/libmusicxml2.dylib")
