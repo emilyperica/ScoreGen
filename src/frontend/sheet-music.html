@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sheet Music Viewer</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="title-bar">
+        <button id="home-nav-btn" class="btn-nav-logo" aria-label="Navigate to Home">
+            <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
+        </button>
+        <div class="nav-buttons">
+            <button id="upload-nav-btn" class="btn-nav">Upload</button>
+            <button id="record-nav-btn" class="btn-nav">Record</button>
+            <button id="sheet-music-button" class="btn-nav">View Sheet Music</button>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="pdf-list" class="pdf-grid"></div>
+    </div>
+    
+    <div id="pdf-viewer" class="pdf-viewer" style="display: none;">
+        <div class="viewer-overlay"></div>
+        <div class="viewer-container">
+            <div class="viewer-controls">
+                <button id="close-viewer">×</button>
+            </div>
+            <iframe id="pdf-frame"></iframe>
+        </div>
+    </div>
+    <script src="sheet-music.js"></script>
+    <script src="nav.js"></script>
+</body>
+</html>

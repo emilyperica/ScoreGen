@@ -4,6 +4,7 @@
 #include "generateMusicXML.h"
 #include "recordAudio.h"
 #include "postprocess.h"
+#include "xmlToPDF.h"
 
 #define DEFAULT_OUT "output.xml"
 #define DEFAULT_TEST "test/TestingDatasets/Computer-Generated-Samples/D4_to_E5_1_second_per_note.wav"
@@ -16,20 +17,23 @@ void processAudio() {
     DSPResult res = dsp("temp.wav");
     MusicXMLGenerator xmlGenerator;
     bool success = xmlGenerator.generate(
-        DEFAULT_OUT, 
-        res.XMLNotes, 
-        DEFAULT_CLEF, 
-        DEFAULT_CLEF_LINE, 
-        DEFAULT_TIME_SIG, 
-        res.keySignature, 
+        DEFAULT_OUT,
+        res.XMLNotes,
+        DEFAULT_CLEF,
+        DEFAULT_CLEF_LINE,
+        DEFAULT_TIME_SIG,
+        res.keySignature,
         DEFAULT_DIVISIONS
     );
     postProcessMusicXML(DEFAULT_OUT, DEFAULT_OUT);
-    
+    convertMusicXMLToPDF(DEFAULT_OUT, "output.pdf");
+    std::cout << "MusicXML file generated successfully." << std::endl;
+
     if (success) {
         // Print this exact line for Node to detect:
         std::cout << "MusicXML file generated successfully." << std::endl;
-    } else {
+    }
+    else {
         std::cout << "Failed to generate MusicXML file." << std::endl;
     }
 }
@@ -39,7 +43,8 @@ int main() {
     while (std::getline(std::cin, command)) {
         if (command == "processAudio") {
             processAudio();
-        } else {
+        }
+        else {
             std::cerr << "Unknown command: " << command << std::endl;
         }
     }

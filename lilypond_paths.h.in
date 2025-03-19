@@ -1,0 +1,9 @@
+// lilypond_paths.h.in
+#pragma once
+#include <string>
+
+// Auto-generated LilyPond paths
+const std::string LILYPOND_BIN = "@LILYPOND_BIN_DIR@";
+const std::string LILYPOND_EXE = "@LILYPOND_EXE@";
+const std::string MUSICXML2LY = "@MUSICXML2LY@";
+const std::string LILYPOND_PYTHON = "@LILYPOND_PYTHON@";
