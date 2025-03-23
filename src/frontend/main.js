@@ -90,7 +90,7 @@ app.whenReady().then(() => {
               childProc.stdout.off('data', onData);
               reject(new Error('Timed out waiting for backend response.'));
             }
-          }, 30000);
+          }, 100000);
       
           const onData = (data) => {
             const text = data.toString();

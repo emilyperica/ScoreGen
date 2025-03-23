@@ -12,4 +12,19 @@ struct XMLNote {
     bool isRest = false; // Rest note flag
 };
 
+struct DSPResult {
+    std::vector<XMLNote> XMLNotes;
+    std::string timeSignature;
+    int keySignature;
+    int bpm;
+    int divisions;
+};
+
+struct Note {
+    float startTime;
+    float endTime;
+    std::string pitch;
+    std::string type;   // Note type (e.g., "quarter", "eighth")
+};
+
 #endif

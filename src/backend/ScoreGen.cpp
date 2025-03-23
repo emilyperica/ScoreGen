@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include "dsp.h"
+#include "dsp2.h"
 #include "generateMusicXML.h"
 #include "recordAudio.h"
 #include "postprocess.h"
@@ -13,7 +14,8 @@
 #define DEFAULT_DIVISIONS 480
 
 void processAudio() {
-    DSPResult res = dsp("temp.wav");
+    // DSPResult res = dsp("temp.wav");
+    DSPResult res = dsp2("temp.wav");
     MusicXMLGenerator xmlGenerator;
     bool success = xmlGenerator.generate(
         DEFAULT_OUT, 
