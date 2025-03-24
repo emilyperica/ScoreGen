@@ -139,7 +139,14 @@ ipcMain.handle('get-pdf-list', async () => {
   const pdfDir = path.join(__dirname, 'PDF_Outputs');
   
   try {
-      await fs.promises.access(pdfDir);
+    const exists = await fs.promises.access(pdfDir)
+      .then(() => true)
+      .catch(() => false);
+    
+
+    if (!exists) {
+      return []
+    }
       const files = await fs.promises.readdir(pdfDir);
       return files
           .filter(file => file.endsWith('.pdf'))
