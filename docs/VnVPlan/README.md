@@ -1,5 +1,7 @@
-# Verification and Validation Plan
+# ScoreGen Verification and Validation Plan
 
-The folders and files for this folder are as follows:
+The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── VnVPlan 
+        ├── VnVPlan.pdf  \\ Verification and Validation plan
+        ├── VnVPlan.tex  \\ LaTeX source file
