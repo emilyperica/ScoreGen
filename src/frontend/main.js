@@ -61,6 +61,15 @@ app.whenReady().then(() => {
     childProc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
   
     // 2) Debug logs from the C++ process
+    childProc.stdout.on("data", (data) => {
+      const message = data.toString().trim();
+      console.log(`Backend stdout: ${message}`);
+  
+      if (message.includes("No peaks detectable in audio")) {
+        const dialog = require("dialog");
+        dialog.info(message, "Alert");
+      }
+  });
     childProc.stdout.on('data', (data) => {
       console.log(`Backend stdout: ${data.toString()}`);
     });

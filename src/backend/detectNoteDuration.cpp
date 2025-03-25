@@ -389,6 +389,13 @@ std::vector<Note> onsetDetection(const std::vector<double>& buf, int sample_rate
     peaks.insert(peaks.end(), silentOnsets.begin(), silentOnsets.end());
     std::sort(peaks.begin(), peaks.end());
     std::vector<Note> notes(peaks.size());
+
+	if (notes.size() == 0) 
+    {
+        std::cout << "ERROR: No peaks detectable in audio\n";
+        std::cout.flush();
+		return notes;
+	}
     
     // get start and end time of each note
     notes[0].startTime = peaks[0] / static_cast<double>(fps);
