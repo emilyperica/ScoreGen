@@ -57,6 +57,7 @@ urlcolor=cyan       % color of external links
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 2025-01-17 & 1.0 & Initial version\\
+2025-03-24 & 1.1 & \href{https://github.com/emilyperica/ScoreGen/issues/208}{Updated contents of module Uses sections}  \\
 \bottomrule
 \end{tabularx}
 
@@ -174,7 +175,7 @@ The following table is taken directly from the
 Hardware-Hiding Module  
 
 \subsection{Uses}  
-Provides abstraction for hardware (microphone and speakers), simplifying access for other modules.  
+N/A (Hardware-Hiding Module Does not use any other modules.)
 
 \subsection{Syntax}  
 
@@ -245,7 +246,10 @@ sendToAudioOutput & audioData & None & PlaybackError \\
 User Interface Module  
 
 \subsection{Uses}  
-Defines the interaction mechanisms for uploading audio, recording, playback, and accessing generated PDFs.  
+Hardware-Hiding Module (M1): For accessing microphone and audio output devices. \\
+Score Generation Module (M3): For displaying generated scores, and managine score customization settings. \\
+File Format Conversions Module (M6): For importing and exporting files, and displaying PDFs. \\
+Audio Recording and Playback Module (M7): For managing recoring sessions. \\
 
 \subsection{Syntax}  
 
@@ -312,9 +316,8 @@ triggerPlayback & audioData & None & PlaybackError \\
 Score Generation Module  
 
 \subsection{Uses}  
-Generates musical scores in compressed musicXML format (.mxl) from note 
-sequences processed by previous modules.  
-
+Raw Signal Processing Module (M4): For receiving cleand audio data. \\
+Audio Feature Extraction Module (M5): For extracting musical features from audio data. (Note, Tempo, Key Signature) \\
 \subsection{Syntax}  
 
 \subsubsection{Exported Constants}  
@@ -379,7 +382,7 @@ customizeScoreSettings & settings & None & ValidationError \\
 Raw Signal Processing Module  
 
 \subsection{Uses}  
-Processes raw audio signals to prepare them for feature extraction.  
+Hardware-Hiding Module (M1): For accessing microphone and audio output devices. 
 
 \subsection{Syntax}  
 
@@ -445,8 +448,10 @@ adjustSamplingRate & audioData, rate & resampledAudioData & ResamplingError \\
 \subsection{Module}  
 Audio Feature Extraction Module  
 
-\subsection{Uses}  
-Extracts meaningful features from processed audio for use in score generation.  
+\subsection{Uses}
+Hardware-Hiding Module (M1): For accessing microphone and audio output devices. \\
+Raw Signal Processing Module (M4): For receiving filtered audio data. \\
+Score Generation Module (M3): To format extracted features properly \\
 
 \subsection{Syntax}  
 
@@ -508,8 +513,9 @@ configureFeatureSettings & settings & None & ValidationError \\
 
 \subsection{Module}  
 File Format Conversions Module
-\subsection{Uses}  
-Handles conversion of input and output files between supported formats  (.mxl $\Rightarrow$ PDF).  
+\subsection{Uses} 
+Hardware-Hiding Module (M1): For accessing microphone and audio output devices. \\
+Score Generation Module (M3): For saving generated scores as musicXML files. \\
 
 \subsection{Syntax}  
 
@@ -575,8 +581,9 @@ exportFile & data, format, filePath & None & ExportError \\
 Audio Recording and Playback Module  
 
 \subsection{Uses}  
-Provides functionalities for recording audio through the microphone and playing 
-back recorded or imported audio.
+Hardware-Hiding Module (M1): For accessing microphone and audio output devices. \\
+Raw Signal Processing Module (M4): For filtered recorded audio, and noise reduction. \\
+Audio Feature Extraction Module (M5): For extracting musical features from recorded audio. \\
 
 \subsection{Syntax}  
 
