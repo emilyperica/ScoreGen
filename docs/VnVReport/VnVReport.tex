@@ -44,6 +44,10 @@
 \toprule {\bf Date} & {\bf Version} & {\bf Notes}\\
 \midrule
 2025-03-10 & 1.0 & Initial version.\\
+2025-03-18 & 1.0 & Addressing peer review issues 
+  \href{https://github.com/emilyperica/ScoreGen/issues/289}{\#289}, 
+  \href{https://github.com/emilyperica/ScoreGen/issues/290}{\#290}, and 
+  \href{https://github.com/emilyperica/ScoreGen/issues/292}{\#292}. \\
 \bottomrule
 \end{tabularx}
 
@@ -111,7 +115,7 @@ type are grouped similarly, resulting in five subcategories.
       \textbf{Test ID:} FR-AR1-3-1 \\
       \textbf{Control:} Automatic \\
       \textbf{Initial State:} Application is running and idle, awaiting audio file upload from the user. \\
-      \textbf{Input:} Audio file (e.g., \texttt{.WAV}, \texttt{.MP3}) \\
+      \textbf{Input:} Audio file (i.e., \texttt{.WAV}) \\
       \textbf{Expected Output:} File acceptance without errors, entrance into file processing state. \\
       \textbf{Actual Output:} File acceptance without errors, entrance into file processing state. \\
       \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the 
@@ -154,8 +158,8 @@ type are grouped similarly, resulting in five subcategories.
   permissions have been granted. \\
   \textbf{Input:} Audio recorded by the user device’s microphone. \\
   \textbf{Expected Output:} The application captures the correct audio and saves it in a format processable by the application 
-  (e.g., \texttt{.WAV}). \\
-  \textbf{Actual Output:} The application captures the correct audio and saves it as a .wav file. \\
+  (i.e., \texttt{.WAV}). \\
+  \textbf{Actual Output:} The application captures the correct audio and saves it as a \texttt{.WAV} file. \\
   \textbf{Test Case Derivation:} For validation of functional requirement FR-AR2 in section 9.1 of the 
   \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. Guarentees that in addition to file uploads, 
   the user is able to capture raw, custom audio with their device hardware. \\
@@ -1041,16 +1045,16 @@ They will be referred to as testers 1, 2, 3, and 4 in this section.
       \textbf{Test ID:} OE-IA2 \\
       \textbf{Type:} Functional, Dynamic \\
       \textbf{Initial State:} The app is running and ready to import and export audio files. \\
-      \textbf{Input/Condition:} Use sample audio files in WAV (PCM) and MP3 (MPEG-1 Layer III) formats for import and export. \\
-      \textbf{Output/Result:} The app should successfully import and export audio files in WAV and MP3 formats. \\
+      \textbf{Input/Condition:} Use sample audio files in \texttt{.WAV} (PCM) format for import and export. \\
+      \textbf{Output/Result:} The app should successfully import and export audio files in \texttt{.WAV} format. \\
       \textbf{How Test Was Performed:}
       \begin{enumerate}
-          \item Import WAV and MP3 files into the app and verify playback or analysis accuracy.
-          \item Export audio files in WAV and MP3 formats, ensuring they are playable in standard audio players.
+          \item Import \texttt{.WAV} files into the app and verify playback or analysis accuracy.
+          \item Export audio file in \texttt{.WAV} format, ensuring it is playable in standard audio players.
           \item Confirm that imported and exported files retain their quality and format specifications.
       \end{enumerate}
-      \textbf{Success Criterion:} The test is passed if the app successfully imports and exports audio files in WAV and MP3 formats.\\
-      \textbf{Results:} Pass. The scope of the app has been limited to WAV format only, with MP3 format support preserved for future development.\\
+      \textbf{Success Criterion:} The test is passed if the app successfully imports and exports audio files in \texttt{.WAV} format.\\
+      \textbf{Results:} Pass. \texttt{.WAV} files are succefully imported and exported. \\
 
     \item \textbf{Test for OE-IA3 Music Notation Software Integration} \\
       \newline
@@ -1063,10 +1067,10 @@ They will be referred to as testers 1, 2, 3, and 4 in this section.
       \begin{enumerate}
           \item Convert an \href{https://github.com/emilyperica/ScoreGen/tree/main/test/TestingDatasets/piano-samples/sample-songs}{audio sample} to sheet music within the app.
           \item Export the generated sheet music as a MusicXML file.
-          \item Test the exported files in another music notation software (TBD) to ensure compatibility and accuracy.
+          \item Test the exported files in another music notation software to ensure compatibility and accuracy.
       \end{enumerate}
       \textbf{Success Criterion:} The test is passed if the exported files are compatible with popular music notation software.\\
-      \textbf{Results:} Pass. The exported musicxml files are compatible with popular music notation software.\\
+      \textbf{Results:} Pass. The exported MusicXML files are compatible with \href{https://www.soundslice.com/}{Soundslice}, a popular music notation web app.\\
 
     \item \textbf{Test for OE-P1 Distribution} \\
       \newline
@@ -1388,7 +1392,7 @@ They will be referred to as testers 1, 2, 3, and 4 in this section.
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
           \item Generate a sheet music file within the app and export it in MusicXML format.
-          \item Open the exported file in compatible notation software (TBD) to confirm it is error-free and follows the 
+          \item Open the exported file in compatible notation software (i.e., Soundslice) to confirm it is error-free and follows the 
           MusicXML standard.
           \item Review the app’s documentation to verify that all third-party libraries are listed with their licensing 
           terms for compliance purposes.
@@ -1397,8 +1401,6 @@ They will be referred to as testers 1, 2, 3, and 4 in this section.
       \textbf{Results:} Pass. Generated sheet music is compliant and all third party libraries have been verified.\\
 \end{enumerate}
 	
-\section{Comparison to Existing Implementation}	
-
 \section{Unit Testing}
 
 This section describes the low-level tests that were conducted to verify that the behaviour of 
@@ -1803,7 +1805,7 @@ Unit testing identified the following issues, which were addressed upon discover
   \item \textbf{Window Function Input Validation:} The initial implementation lacked proper validation for inputs 
   to the Hanning and Hamming window functions. This oversight could lead to incorrect calculations during 
   the short time Fourier transform.
-  \item \textbf{.WAV File Read/Write Cycle:} The mismatch between data vectors of the original and output files, and consequent 
+  \item \textbf{\texttt{.WAV} File Read/Write Cycle:} The mismatch between data vectors of the original and output files, and consequent 
   test failure stemmed from differences in data representation: libsndfile uses 16-bit PCM format, while our tests expected 
   double-precision floating-point numbers. The normalization process performed by libsndfile resulted in precision loss beyond
   expected floating-point tolerence values. This issue was resolved by adjusting the test expectations to account for the
@@ -1839,7 +1841,6 @@ See traceability tables between Test Cases and Requirements in the \href{https:/
 \section{Trace to Modules}		
 See traceability tables between Test Cases and Modules in the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/VnVPlan/VnVPlan.pdf}{VnV Plan}.
 
-\section{Code Coverage Metrics}
 
 \bibliographystyle{plainnat}
 \bibliography{../../refs/References}
