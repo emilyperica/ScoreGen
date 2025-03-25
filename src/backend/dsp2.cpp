@@ -122,7 +122,8 @@ DSPResult dsp2(const char* infilename) {
     const std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
     int bpm = getBufferBPM(paddedBuf, sfinfo.samplerate);
     std::cout << "Detected BPM: " << bpm << std::endl;
-    std::vector<Note> notes = onsetDetection(infilename, sfinfo.samplerate, bpm);
+    // std::vector<Note> notes = onsetDetection(infilename, sfinfo.samplerate, bpm);
+    std::vector<Note> notes = extract_note_durations(infilename, bpm);
 
     for (const Note& note : notes) {
         result.XMLNotes.push_back(convertToXMLNote(note, bpm));
