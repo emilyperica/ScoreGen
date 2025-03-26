@@ -1,8 +1,10 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const { spawn } = require('child_process');
 
 let mainWindow;
+let childProc;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -22,9 +24,6 @@ function createWindow() {
     });
 
     mainWindow.loadFile('src/frontend/index.html'); // Load the home screen initially
-
-    // Open DevTools
-    mainWindow.webContents.openDevTools();
     
     // Remove the default menu
     Menu.setApplicationMenu(null);
@@ -73,6 +72,20 @@ app.whenReady().then(() => {
     childProc.on('close', (code) => {
       console.log(`Child process exited with code ${code}`);
     });
+    childProc.stderr.on("data", (data) => {
+      const message = data.toString().trim();
+      console.log(`Backend stderr: ${message}`);
+      
+      if (message.includes("LilyPond PDF generation failed") || message.includes("musicxml2ly conversion failed")) { 
+          dialog.showMessageBox(mainWindow, {
+              type: 'error',
+              title: 'Alert',
+              message: 'PDF Generation was unsuccessful',
+              buttons: ['OK']
+          });
+      }
+  });
+    
   
     // 3) Handle "process-audio" via a Promise (so the renderer can await it)
     ipcMain.handle('process-audio', async () => {
@@ -130,4 +143,86 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
+});
+
+ipcMain.on('navigate-to-sheet-music', () => {
+  mainWindow.loadFile('src/frontend/sheet-music.html');
+});
+
+ipcMain.handle('get-pdf-list', async () => {
+  const pdfDir = path.join(__dirname, 'PDF_Outputs');
+  
+  try {
+    const exists = await fs.promises.access(pdfDir)
+      .then(() => true)
+      .catch(() => false);
+    
+
+    if (!exists) {
+      return []
+    }
+      const files = await fs.promises.readdir(pdfDir);
+      return files
+          .filter(file => file.endsWith('.pdf'))
+          .map(file => ({
+              name: file,
+              path: path.join(pdfDir, file)
+          }));
+  } catch (error) {
+      console.error('Error accessing PDF directory:', error);
+      return [];
+  }
+});
+
+ipcMain.handle('download-pdf', async (event, pdfPath) => {
+  try {
+      const { filePath } = await dialog.showSaveDialog({
+          defaultPath: path.basename(pdfPath),
+          filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
+      });
+      
+      if (filePath) {
+          await fs.promises.copyFile(pdfPath, filePath);
+          return true;
+      }
+      return false;
+  } catch (error) {
+      console.error('Error downloading PDF:', error);
+      return false;
+  }
+});
+
+function viewPDF(pdfPath) {
+  const viewer = document.getElementById('pdf-viewer');
+  const iframe = document.getElementById('pdf-frame');
+  
+  // Convert local path to URL format for iframe
+  const pdfUrl = `file://${pdfPath}`;
+  iframe.src = pdfUrl;
+  iframe.setAttribute('data-path', pdfPath);
+  viewer.style.display = 'flex';
+}
+
+// Window control handlers
+ipcMain.on('minimize-window', () => {
+  mainWindow.minimize();
+});
+
+ipcMain.on('maximize-window', () => {
+  if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+  } else {
+      mainWindow.maximize();
+  }
+});
+
+ipcMain.on('close-window', () => {
+  mainWindow.close();
+});
+
+// Cleanup on exit
+app.on('before-quit', () => {
+  if (childProc) {
+      childProc.kill();
+  }
 });
