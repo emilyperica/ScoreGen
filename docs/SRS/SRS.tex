@@ -14,6 +14,9 @@
 \usepackage{enumitem}
 \usepackage{longtable}
 \usepackage{array} % Optional: For better column formatting
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{framed}
 
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
@@ -54,9 +57,10 @@
 \toprule {\textbf{Date}} & {\textbf{Version}} & {\textbf{Notes}}\\
 \midrule
 11/10/2024 & 0 & Initial Revision\\
-30/01/2025 & 0.1 & \href{https://github.com/emilyperica/ScoreGen/issues/96}{Issue 96}\\
-30/01/2025 & 0.2 & \href{https://github.com/emilyperica/ScoreGen/issues/92}{Issue 92}\\
-30/01/2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue 128}\\
+30/01/2025 & 0.1 & \href{https://github.com/emilyperica/ScoreGen/issues/96}{Issue \#96}\\
+30/01/2025 & 0.2 & \href{https://github.com/emilyperica/ScoreGen/issues/92}{Issue \#92}\\
+30/01/2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue \#128}\\
+26/03/2025 & 0.4 & \href{https://github.com/emilyperica/ScoreGen/issues/309}{Issue \#309}\\
 \bottomrule
 \end{tabularx}
 
@@ -954,8 +958,62 @@ N/A: This system does not store data and thus will not be susceptible to maleveo
     \textbf{Applicability}: Melody Scanner aligns closely with our goal of audio-to-sheet-music transcription. However, its focus is primarily on melodic transcription rather than handling complex polyphonic music or real-time input. Despite this, it offers a straightforward user interface and backend processes that could provide useful insights for our project, particularly in terms of simplicity and user experience.\\
     \textbf{Conclusion}: While Melody Scanner is not a comprehensive solution for our capstone project’s real-time transcription needs, it offers valuable lessons in streamlining the user interface and simplifying the transcription process for ease of use.
 \end{itemize}
+
 \subsection{Reusable Components}
-The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components which could be extremely useful listed below.\\
+The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components and methods, which could be extremely useful, listed below.
+
+\subsubsection*{Core Signal Processing Algorithms/Mathematical Framework}
+\textbf{Description}: Signal processing algorithms are essential for analyzing audio input and extracting meaningful data for transcription. A mathematical framework for handling audio signals, such as Fourier transforms, spectral analysis, and pitch detection, is crucial for accurate transcription.\\
+\textbf{Rationale for Limited Use}: Developing our signal processing algorithms will provide valuable learning opportunities and insights into the complexities of audio analysis. While existing libraries and tools offer robust signal processing capabilities, building these algorithms from scratch will deepen our understanding of the underlying principles.\\
+\newline
+The following equations define the three major parts of the standard signal processing algorithms that will likely be used in the project:
+\begin{enumerate}
+  \item \textbf{The Input Signal:}
+  Below is a generic definition of a signal to provide an example. 
+  \begin{framed}
+    \noindent Let the following define an input signal $x$ as a function: 
+    \begin{equation}
+      x : \mathbb{Z} \to \mathbb{R}
+    \end{equation}
+    where the signal has finite energy, i.e.,
+    \begin{equation}
+      E = \sum_{n=-\infty}^{\infty} |x[n]|^2 < \infty
+    \end{equation}
+  \end{framed}
+  \item \textbf{The Window Function}: A function that is zero-valued outside of a specific interval, to be used for the reduction of spectral leakage. The windowing
+  function $w(n)$ localizes the effect of the Fourier transform to a finite segment/frame. It allows the capturing of the evolution of frequency content over a specfic time range ~\cite{windows-harmonic-analysis}.
+  \begin{framed}
+    \noindent For a window length $N\in\mathbb{Z}^{+}$ and $N\geq1$, the Hanning window is defined over: 
+    \begin{equation}
+      w : \{0, 1, ..., N-1\} \to \mathbb{R}
+    \end{equation}
+    where the window function is defined as:
+    \[ w(n) = \begin{cases} 
+          0.5 - 0.5\cos\left(\frac{2\pi n}{N-1}\right) & 0 \leq n \leq N-1 \\
+          0.0 & $else$
+       \end{cases}
+    \]
+  \end{framed}
+  \item \textbf{The Short-Time Fourier Transform}: A mathematical transformation that decomposes a function of time into its constituent frequencies.
+  The use of the window function lends itself to processing the signal in overlapping segments/frames ~\cite{onset-detection, ZhouRiess}.\\
+  \begin{framed}
+    Let the hop size be $H\in\mathbb{Z}^{+}$. For each frame at index $m$, we can get a frame of the signal:
+    \begin{equation}
+      \{x [ mH + n ] : n = 0, 1, ..., N-1\}
+    \end{equation}
+    The Fourier transform of the windowed frame is defined as:
+    \begin{equation}
+      STFT\{ x \} : \mathbb{Z} \times \{n = 0, 1, ..., N-1\} \to \mathbb{C}
+    \end{equation}
+    and is given by:
+    \begin{equation}
+      X(m, k) = \sum_{n=0}^{N-1} x[mH + n]w[n]e^{-j\frac{2\pi}{N}kn}
+    \end{equation}
+    where \\
+    $m \in \mathbb{Z}$ is the index of a frame and,\\
+    $k \in \{0, 1, ..., N-1\}$ is the index of a particular frequency bin.
+  \end{framed}
+\end{enumerate}
 
 \subsubsection*{PortAudio (for Audio Input/Output)~\cite{portaudio}}
 \textbf{Description}: PortAudio is a widely used open-source library for handling audio input and output across multiple platforms.\\
