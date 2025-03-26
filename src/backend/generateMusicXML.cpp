@@ -35,16 +35,17 @@ MusicXMLGenerator::MusicXMLGenerator(
     const string& movementNumber,
     const string& movementTitle,
     const string& creatorName,
-    const string& creatorType,
-    const string& rightsString,
-    const string& rightsType,
-    const string& encodingSoftware)
+    const string& instrument,
+    const string& timeSignature)
+    :
+    instrument_(instrument),
+    timeSignature_(timeSignature)
 {
     factory = factoryOpen();
     factoryHeader(factory, workNumber.c_str(), workTitle.c_str(), movementNumber.c_str(), movementTitle.c_str());
-    factoryCreator(factory, creatorName.c_str(), creatorType.c_str());
-    factoryRights(factory, rightsString.c_str(), rightsType.c_str());
-    factoryEncoding(factory, encodingSoftware.c_str());
+    factoryCreator(factory, creatorName.c_str(), nullptr);
+    factoryRights(factory, nullptr, nullptr);
+    factoryEncoding(factory, "ScoreGen");
 }
 
 //------------------------------------------------------------------------------
@@ -63,16 +64,15 @@ bool MusicXMLGenerator::generate(const string& outputPath,
                                  const vector<XMLNote>& noteSequence,
                                  const string& clef,
                                  const int& clefLine,
-                                 const string& timeSignature,
                                  const int& keySignature,
                                  int divisions)
 {
     if (noteSequence.empty()) return false;
 
-    TElement scorePart = createScorePart("P1", "INSTRUMENT", "");
+    TElement scorePart = createScorePart("P1", instrument_, "");
     factoryAddPart(factory, scorePart);
 
-    TElement part = createPart(noteSequence, clef, clefLine, timeSignature, keySignature, divisions);
+    TElement part = createPart(noteSequence, clef, clefLine, timeSignature_, keySignature, divisions);
     factoryAddPart(factory, part);
 
     fstream outFile(outputPath, ios::out);

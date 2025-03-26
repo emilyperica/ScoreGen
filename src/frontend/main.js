@@ -75,13 +75,16 @@ app.whenReady().then(() => {
     });
   
     // 3) Handle "process-audio" via a Promise (so the renderer can await it)
-    ipcMain.handle('process-audio', async () => {
-        console.log('[Main] ipcMain.handle("process-audio") triggered');
-      
+    ipcMain.handle('process-audio', async (event, command) => {
+        console.log('[Main] ipcMain.handle("process-audio") triggered'); 
+        
         return new Promise((resolve, reject) => {
           if (!childProc || !childProc.stdin.writable) {
             return reject(new Error('C++ process is not available.'));
-          }
+            }
+
+          console.log(`[Main] Sending command to backend: ${command}`);
+
           let resolved = false;
       
           const timeout = setTimeout(() => {
@@ -111,7 +114,7 @@ app.whenReady().then(() => {
       
           // Attach the listener before sending the command
           childProc.stdout.on('data', onData);
-          childProc.stdin.write('processAudio\n');
+          childProc.stdin.write(command + '\n');
         });
     });
   

@@ -43,91 +43,148 @@
   </style>
 </head>
 <body>
-  <!-- Custom Title Bar -->
-  <div class="title-bar">
-    <button id="home-nav-btn" class="btn-nav-logo" aria-label="Navigate to Home">
-      <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
-    </button>
-    <div class="nav-buttons">
-      <button id="upload-nav-btn" class="btn-nav">Upload</button>
-      <button id="record-nav-btn" class="btn-nav">Record</button>
+    <!-- Custom Title Bar -->
+    <div class="title-bar">
+        <button id="home-nav-btn" class="btn-nav-logo" aria-label="Navigate to Home">
+            <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
+        </button>
+        <div class="nav-buttons">
+            <button id="upload-nav-btn" class="btn-nav">Upload</button>
+            <button id="record-nav-btn" class="btn-nav">Record</button>
+        </div>
     </div>
-  </div>
 
-  <div class="app-container">   
-    <main>
-      <div class="device-selection">
-        <label for="input-device-select">Input Device:</label>
-        <select id="input-device-select"></select>
-      </div>
-      <div class="button-group">
-        <!-- Recording Controls -->
-        <div class="recording-controls">
-          <!-- (Optional: Add a display element for recording length if desired) -->
-          <div class="recording-timer">
-            <span id="recording-length">0:00</span>
-          </div>
-          <button id="start-recording" class="btn btn-record" aria-label="Start Recording">
-            <i class="fas fa-circle"></i>
-          </button>
-          <button id="pause-recording" class="btn btn-pause" aria-label="Pause Recording" disabled>
-            <i class="fas fa-pause"></i>
-          </button>
-          <button id="stop-recording" class="btn btn-stop" aria-label="Stop Recording" disabled>
-            <i class="fas fa-stop"></i>
-          </button>
-          <div class="upload-controls">
-            <button id="upload-file-button" class="btn btn-upload">
-              <i class="fas fa-upload"></i>
-            </button>
-            <input type="file" id="upload-file" accept=".wav" style="display:none;">
-          </div>
-          <button id="save-recording" class="btn btn-save" aria-label="Save Recording" disabled>
-            <i class="fas fa-save"></i>
-          </button>
-          <button id="export-musicxml" class="btn btn-export" aria-label="Export to MusicXML" disabled>
-            <i class="fas fa-file-export"></i>
-          </button>
-        </div>
-      </div>
-      
-      <!-- Frequency canvas (if needed for visualization) -->
-      <canvas id="frequencyCanvas" width="800" height="400"></canvas>
-      
-      <!-- Playback Section -->
-      <section id="playback-section">
-        <!-- The audio element will receive the recorded audio URL -->
-        <audio id="audio" src=""></audio>
-        <div class="audio-player">
-          <div class="controls">
-            <button id="prev-button" class="control-button" title="Previous">
-              <i class="fas fa-backward"></i>
-            </button>
-            <button id="play-pause-button" class="control-button" title="Play" disabled>
-              <i class="fas fa-play"></i>
-            </button>
-            <button id="next-button" class="control-button" title="Next">
-              <i class="fas fa-forward"></i>
-            </button>
-          </div>
-          <div class="progress-container">
-            <span id="current-time">0:00</span>
-            <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1">
-            <span id="total-duration">0:00</span>
-          </div>
-        </div>
-      </section>
-    </main>
-  </div>
+    <div class="app-container">
+        <main>
+            <div class="device-selection">
+                <label for="input-device-select">Input Device:</label>
+                <select id="input-device-select"></select>
+            </div>
+            <div class="button-group">
+                <!-- Recording Controls -->
+                <div class="recording-controls">
+                    <!-- (Optional: Add a display element for recording length if desired) -->
+                    <div class="recording-timer">
+                        <span id="recording-length">0:00</span>
+                    </div>
+                    <button id="start-recording" class="btn btn-record" aria-label="Start Recording">
+                        <i class="fas fa-circle"></i>
+                    </button>
+                    <button id="pause-recording" class="btn btn-pause" aria-label="Pause Recording" disabled>
+                        <i class="fas fa-pause"></i>
+                    </button>
+                    <button id="stop-recording" class="btn btn-stop" aria-label="Stop Recording" disabled>
+                        <i class="fas fa-stop"></i>
+                    </button>
+                    <div class="upload-controls">
+                        <button id="upload-file-button" class="btn btn-upload">
+                            <i class="fas fa-upload"></i>
+                        </button>
+                        <input type="file" id="upload-file" accept=".wav" style="display:none;">
+                    </div>
+                    <button id="save-recording" class="btn btn-save" aria-label="Save Recording" disabled>
+                        <i class="fas fa-save"></i>
+                    </button>
+                    <button id="export-musicxml" class="btn btn-export" aria-label="Export to MusicXML" disabled>
+                        <i class="fas fa-file-export"></i>
+                    </button>
+                </div>
+            </div>
 
-  <!-- Spinner overlay -->
-  <div id="spinnerOverlay">
-    <div class="spinner"></div>
-  </div>
-  
-  <!-- Scripts -->
-  <script src="record.js"></script>
-  <script src="nav.js"></script>
-  <script src="frequency.js"></script>
+            <!-- Frequency canvas (if needed for visualization) -->
+            <canvas id="frequencyCanvas" width="800" height="400"></canvas>
+
+            <!-- Playback Section -->
+            <section id="playback-section">
+                <!-- The audio element will receive the recorded audio URL -->
+                <audio id="audio" src=""></audio>
+                <div class="audio-player">
+                    <div class="controls">
+                        <button id="prev-button" class="control-button" title="Previous">
+                            <i class="fas fa-backward"></i>
+                        </button>
+                        <button id="play-pause-button" class="control-button" title="Play" disabled>
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <button id="next-button" class="control-button" title="Next">
+                            <i class="fas fa-forward"></i>
+                        </button>
+                    </div>
+                    <div class="progress-container">
+                        <span id="current-time">0:00</span>
+                        <input type="range" id="progress-bar" min="0" max="100" value="0" step="0.1">
+                        <span id="total-duration">0:00</span>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Spinner overlay -->
+    <div id="spinnerOverlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="record.js"></script>
+    <script src="nav.js"></script>
+    <script src="frequency.js"></script>
+
+    <div class="modal" id="musicxmlModal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 id="musicxmlModalLabel">Configure Score Sheet</h2>
+            <button id="modalClose" class="modal-close-btn">&times;</button>
+          </div>
+          <form id="musicxmlForm">
+            <div class="modal-body">
+            <!-- Creator Information -->
+            <fieldset class="modal-fieldset">
+                <legend>Creator Information</legend>
+                <div class="form-group">
+                <label for="creatorName">Creator Name</label>
+                <input type="text" id="creatorName" name="creatorName" placeholder="Enter your name" required>
+                </div>
+            </fieldset>
+            <!-- Score Details -->
+            <fieldset class="modal-fieldset">
+                <legend>Score Details</legend>
+                <div class="form-group">
+                <label for="instrumentInput">Instrument</label>
+                <input type="text" id="instrumentInput" name="instrument" placeholder="Enter instrument name (e.g., Piano, Violin)" required>
+                </div>
+                <div class="form-group">
+                <label for="timeSignatureInput">Time Signature</label>
+                <input type="text" id="timeSignatureInput" name="timeSignature" placeholder="Enter a time signature (e.g., 4/4, 3/4)" required pattern="^\d+\/\d+$" title="Please enter a valid time signature (e.g., 4/4)">
+                </div>
+            </fieldset>
+             <!-- Score Metadata -->
+            <fieldset class="modal-fieldset">
+                <legend>Score Metadata</legend>
+                <div class="form-group">
+                <label for="workNumber">Work Number</label>
+                <input type="text" id="workNumber" name="workNumber" placeholder="Enter work number" required>
+                </div>
+                <div class="form-group">
+                <label for="workTitle">Work Title</label>
+                <input type="text" id="workTitle" name="workTitle" placeholder="Enter work title" required>
+                </div>
+                <div class="form-group">
+                <label for="movementNumber">Movement Number</label>
+                <input type="text" id="movementNumber" name="movementNumber" placeholder="Enter movement number" required>
+                </div>
+                <div class="form-group">
+                <label for="movementTitle">Movement Title</label>
+                <input type="text" id="movementTitle" name="movementTitle" placeholder="Enter movement title" required>
+                </div>
+            </fieldset>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-cancel" id="modalCancel">Cancel</button>
+              <button type="submit" class="btn btn-enter">Generate Score Sheet</button>
+            </div>
+          </form>
+        </div>
+      </div>      
 </body>
 </html>

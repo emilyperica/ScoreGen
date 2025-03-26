@@ -18,7 +18,7 @@ contextBridge.exposeInMainWorld('electron', {
 });
 
 contextBridge.exposeInMainWorld('api', {
-    processAudio: () => ipcRenderer.invoke('process-audio')
+    processAudio: (command) => ipcRenderer.invoke('process-audio', command)
   });
   
 contextBridge.exposeInMainWorld('nodeAPI', {
