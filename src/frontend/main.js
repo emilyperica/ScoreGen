@@ -72,6 +72,20 @@ app.whenReady().then(() => {
     childProc.on('close', (code) => {
       console.log(`Child process exited with code ${code}`);
     });
+    childProc.stderr.on("data", (data) => {
+      const message = data.toString().trim();
+      console.log(`Backend stderr: ${message}`);
+      
+      if (message.includes("LilyPond PDF generation failed") || message.includes("musicxml2ly conversion failed")) { 
+          dialog.showMessageBox(mainWindow, {
+              type: 'error',
+              title: 'Alert',
+              message: 'PDF Generation was unsuccessful',
+              buttons: ['OK']
+          });
+      }
+  });
+    
   
     // 3) Handle "process-audio" via a Promise (so the renderer can await it)
     ipcMain.handle('process-audio', async () => {

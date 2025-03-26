@@ -10,7 +10,7 @@ std::string getUniqueOutputPath(const std::string& baseName) {
     int counter = 1;
     std::string outputPath;
     std::string outputFile;
-    
+
     std::string outputDir = "src\\frontend\\PDF_Outputs";
     if (_mkdir(outputDir.c_str()) == 0 || errno == EEXIST) {
     } else {
@@ -22,7 +22,7 @@ std::string getUniqueOutputPath(const std::string& baseName) {
         outputPath = outputDir + "\\" + outputFile;
         counter++;
     } while (fileExists(outputPath + ".pdf"));
-    
+
     return outputFile;
 }
 
@@ -30,21 +30,16 @@ void convertMusicXMLToPDF(const std::string& musicxmlPath, const std::string& ou
     std::string baseName = outputPath.substr(0, outputPath.find_last_of('.'));
     std::string uniqueFileName = getUniqueOutputPath(baseName);
 
-    std::string command1 = LILYPOND_PYTHON + " " + MUSICXML2LY + " "
-        + musicxmlPath + " -o " + baseName + ".ly";
-
-    std::cout << "Executing: " << command1 << std::endl;
-    int result = system(command1.c_str());
-    std::cout << "Exit Code: " << result << std::endl;
+    std::string command1 = "\" \"" + LILYPOND_PYTHON + "\" \"" + MUSICXML2LY + "\" \"" 
+                      + musicxmlPath + "\" -o \"" + baseName + ".ly\" \"";
 
     if (std::system(command1.c_str()) != 0) {
         std::cerr << "Error: musicxml2ly conversion failed\n";
         return;
     }
-
-    std::string command2 = 
-        LILYPOND_EXE +" --output=src\\frontend\\PDF_Outputs\\" 
-        + uniqueFileName + " output.ly";
+    std::string command2 = "\" \"" + LILYPOND_EXE + "\" --output=\"src\\frontend\\PDF_Outputs\\" 
+                      + uniqueFileName + "\" \"output.ly\" \"";
+    
     if (std::system(command2.c_str()) != 0) {
         std::cerr << "Error: LilyPond PDF generation failed\n";
         return;
