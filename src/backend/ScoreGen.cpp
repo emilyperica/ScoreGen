@@ -14,28 +14,29 @@
 #define DEFAULT_DIVISIONS 480
 
 void processAudio() {
-    DSPResult res = dsp("temp.wav");
-    MusicXMLGenerator xmlGenerator;
-    bool success = xmlGenerator.generate(
-        DEFAULT_OUT,
-        res.XMLNotes,
-        DEFAULT_CLEF,
-        DEFAULT_CLEF_LINE,
-        DEFAULT_TIME_SIG,
-        res.keySignature,
-        DEFAULT_DIVISIONS
-    );
-    postProcessMusicXML(DEFAULT_OUT, DEFAULT_OUT);
-    convertMusicXMLToPDF(DEFAULT_OUT, "output.pdf");
-    std::cout << "MusicXML file generated successfully." << std::endl;
-
-    if (success) {
-        // Print this exact line for Node to detect:
-        std::cout << "MusicXML file generated successfully." << std::endl;
-    }
-    else {
+    try{
+        DSPResult res = dsp("temp.wav");
+        MusicXMLGenerator xmlGenerator;
+        bool success = xmlGenerator.generate(
+            DEFAULT_OUT, 
+            res.XMLNotes, 
+            DEFAULT_CLEF, 
+            DEFAULT_CLEF_LINE, 
+            DEFAULT_TIME_SIG, 
+            res.keySignature, 
+            DEFAULT_DIVISIONS
+        );
+        postProcessMusicXML(DEFAULT_OUT, DEFAULT_OUT);
+        if (success) {
+            // Print this exact line for Node to detect:
+            std::cout << "MusicXML file generated successfully." << std::endl;
+        } else {
+            std::cout << "Failed to generate MusicXML file." << std::endl;
+        }
+    } catch (const std::exception& e) {
         std::cout << "Failed to generate MusicXML file." << std::endl;
     }
+    
 }
 
 int main() {

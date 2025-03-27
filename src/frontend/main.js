@@ -53,82 +53,92 @@ function createWindow() {
     });
 }
 
-app.whenReady().then(() => {
-    // 1) Spawn the C++ executable
-    const executablePath = path.join('build/Debug/ScoreGen.exe');
-    console.log(`Spawning C++ backend`);
-    childProc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
-  
-    // 2) Debug logs from the C++ process
-    childProc.stdout.on('data', (data) => {
-      console.log(`Backend stdout: ${data.toString()}`);
-    });
-    childProc.stderr.on('data', (data) => {
-      console.error(`Backend stderr: ${data.toString()}`);
-    });
-    childProc.on('error', (err) => {
-      console.error('Failed to start subprocess:', err);
-    });
-    childProc.on('close', (code) => {
-      console.log(`Child process exited with code ${code}`);
-    });
-    childProc.stderr.on("data", (data) => {
-      const message = data.toString().trim();
-      console.log(`Backend stderr: ${message}`);
-      
-      if (message.includes("LilyPond PDF generation failed") || message.includes("musicxml2ly conversion failed")) { 
-          dialog.showMessageBox(mainWindow, {
-              type: 'error',
-              title: 'Alert',
-              message: 'PDF Generation was unsuccessful',
-              buttons: ['OK']
-          });
-      }
+let childProc = null;
+
+function spawnChildProcess() {
+  const executablePath = path.join('build/Debug/ScoreGen.exe');
+  console.log('Spawning C++ backend');
+  const proc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
+
+  // Log standard output from the backend.
+  proc.stdout.on('data', (data) => {
+    console.log(`Backend stdout: ${data.toString()}`);
   });
-    
-  
-    // 3) Handle "process-audio" via a Promise (so the renderer can await it)
-    ipcMain.handle('process-audio', async () => {
-        console.log('[Main] ipcMain.handle("process-audio") triggered');
-      
-        return new Promise((resolve, reject) => {
-          if (!childProc || !childProc.stdin.writable) {
-            return reject(new Error('C++ process is not available.'));
-          }
-          let resolved = false;
-      
-          const timeout = setTimeout(() => {
-            if (!resolved) {
-              resolved = true;
-              childProc.stdout.off('data', onData);
-              reject(new Error('Timed out waiting for backend response.'));
-            }
-          }, 30000);
-      
-          const onData = (data) => {
-            const text = data.toString();
-            console.log(`[Main] Child stdout: ${text}`);
-      
-            if (text.includes('MusicXML file generated successfully.')) {
-              clearTimeout(timeout);
-              childProc.stdout.off('data', onData);
-              resolved = true;
-              resolve();
-            } else if (text.includes('Failed to generate MusicXML file.')) {
-              clearTimeout(timeout);
-              childProc.stdout.off('data', onData);
-              resolved = true;
-              reject(new Error('C++ process reported failure.'));
-            }
-          };
-      
-          // Attach the listener before sending the command
-          childProc.stdout.on('data', onData);
-          childProc.stdin.write('processAudio\n');
-        });
+
+  // Log errors from the backend.
+  proc.stderr.on('data', (data) => {
+    console.error(`Backend stderr: ${data.toString()}`);
+  });
+
+  // Log errors when attempting to spawn the process.
+  proc.on('error', (err) => {
+    console.error('Failed to start subprocess:', err);
+  });
+
+  // If the process closes, attempt to respawn it after a short delay.
+  proc.on('close', (code) => {
+    console.log(`Child process exited with code ${code}`);
+    setTimeout(() => {
+      console.log('Respawning child process...');
+      childProc = spawnChildProcess();
+    }, 1000); // adjust the delay as needed
+  });
+
+  return proc;
+}
+
+app.whenReady().then(() => {
+    // Spawn the child process when the app is ready.
+  childProc = spawnChildProcess();
+
+  // IPC handler for "process-audio"
+  ipcMain.handle('process-audio', async () => {
+    console.log('[Main] ipcMain.handle("process-audio") triggered');
+
+    // Check if the process is available; if not, respawn it.
+    if (!childProc || !childProc.stdin.writable) {
+      console.log('Child process not available. Respawning...');
+      childProc = spawnChildProcess();
+    }
+
+    return new Promise((resolve, reject) => {
+      let resolved = false;
+
+      // Set up a timeout to handle the case when the backend does not respond.
+      const timeout = setTimeout(() => {
+        if (!resolved) {
+          resolved = true;
+          childProc.stdout.off('data', onData);
+          reject(new Error('Timed out waiting for backend response.'));
+        }
+      }, 30000);
+
+      // Listener to process stdout data from the backend.
+      const onData = (data) => {
+        const text = data.toString();
+        console.log(`[Main] Child stdout: ${text}`);
+
+        if (text.includes('MusicXML file generated successfully.')) {
+          clearTimeout(timeout);
+          childProc.stdout.off('data', onData);
+          resolved = true;
+          resolve();
+        } else if (text.includes('Failed to generate MusicXML file.')) {
+          clearTimeout(timeout);
+          childProc.stdout.off('data', onData);
+          resolved = true;
+          reject(new Error('C++ process reported failure.'));
+        }
+      };
+
+      // Attach the listener and send the command to process the audio.
+      childProc.stdout.on('data', onData);
+      childProc.stdin.write('processAudio\n');
+
     });
-  
-    createWindow();
+  });
+
+  createWindow();
 });
 
 app.on('window-all-closed', () => {
