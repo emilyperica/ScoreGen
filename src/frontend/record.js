@@ -9,9 +9,14 @@ document.addEventListener('DOMContentLoaded', function() {
   const inputDeviceSelect = document.getElementById('input-device-select');
   const recordingLengthDisplay = document.getElementById('recording-length');
   const startRecordingBtn = document.getElementById('start-recording');
+  const chooseExportBtn = document.getElementById('choose-export');
+  const exportDropdown = document.getElementById('export-dropdown');
   const pauseRecordingBtn = document.getElementById('pause-recording');
+  const exportMusicXMLBtn = document.getElementById('export-to-musicxml');
+  const exportPDFBtn = document.getElementById('export-to-pdf');
+
+
   const stopRecordingBtn = document.getElementById('stop-recording');
-  const exportMusicxmlBtn = document.getElementById('export-musicxml');
   const saveRecordingBtn = document.getElementById('save-recording');
   
   /* === Playback Variables & Elements === */
@@ -201,7 +206,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { once: true });
     playPauseButton.disabled = false;
     saveRecordingBtn.disabled = false;
-    exportMusicxmlBtn.disabled = false;
+    chooseExportBtn.disabled = false;
     recordedAudioBlob = file;
   });
   
@@ -219,7 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
       startRecordingBtn.disabled = true;
       pauseRecordingBtn.disabled = false;
       stopRecordingBtn.disabled = false;
-      exportMusicxmlBtn.disabled = true;
+      chooseExportBtn.disabled = true;
       saveRecordingBtn.disabled = true;
       
       recordingStartTime = Date.now();
@@ -248,7 +253,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { once: true });
         
         playPauseButton.disabled = false;
-        exportMusicxmlBtn.disabled = false;
+        chooseExportBtn.disabled = false;
         saveRecordingBtn.disabled = false;
       });
       
@@ -300,7 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 
-  exportMusicxmlBtn.addEventListener('click', async () => {
+  exportMusicXMLBtn.addEventListener('click', async () => {
     if (!recordedAudioBlob) {
       alert("No recording available to export!");
       return;
@@ -315,7 +320,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const buffer = await wavBlob.arrayBuffer();
   
       await window.nodeAPI.saveTempWavFile(buffer);
-      await window.api.processAudio();
+      await window.electronAPI.processAudio();
       // Optionally delete the temporary file:
       // await window.nodeAPI.deleteTempWavFile();
   
@@ -385,5 +390,41 @@ document.addEventListener('DOMContentLoaded', function() {
     audio.play();
     playPauseButton.innerHTML = '<i class="fas fa-pause"></i>';
     playPauseButton.title = "Pause";
+  });
+
+  // Toggle dropdown
+  chooseExportBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      exportDropdown.style.display = exportDropdown.style.display === 'block' ? 'none' : 'block';
+  });
+
+  // Close dropdown when clicking outside
+  document.addEventListener('click', () => {
+      exportDropdown.style.display = 'none';
+  });
+
+  // Prevent dropdown from closing when clicking inside it
+  exportDropdown.addEventListener('click', (e) => {
+      e.stopPropagation();
+  });
+
+  // Handle PDF export
+  exportPDFBtn.addEventListener('click', async () => {
+      const spinner = document.getElementById('spinnerOverlay');
+      spinner.style.display = 'flex';
+      
+      try {
+          const wavBlob = await convertBlobToWav(recordedAudioBlob);
+          const buffer = await wavBlob.arrayBuffer();
+          await window.nodeAPI.saveTempWavFile(buffer);
+          await window.electronAPI.generatePDF();
+          alert('PDF generated successfully!');
+      } catch (err) {
+          console.error('Error generating PDF:', err);
+          alert('Failed to generate PDF');
+      } finally {
+          spinner.style.display = 'none';
+          exportDropdown.style.display = 'none';
+      }
   });
 });

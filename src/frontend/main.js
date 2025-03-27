@@ -4,7 +4,6 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 
 let mainWindow;
-let childProc;
 
 function createWindow() {
     mainWindow = new BrowserWindow({
@@ -87,15 +86,11 @@ function spawnChildProcess() {
   return proc;
 }
 
-app.whenReady().then(() => {
-    // Spawn the child process when the app is ready.
-  childProc = spawnChildProcess();
+// Create a generic handler function
+function createBackendCommandHandler(command, successMessage, failureMessage) {
+  return async () => {
+    console.log(`[Main] Handling ${command} command`);
 
-  // IPC handler for "process-audio"
-  ipcMain.handle('process-audio', async () => {
-    console.log('[Main] ipcMain.handle("process-audio") triggered');
-
-    // Check if the process is available; if not, respawn it.
     if (!childProc || !childProc.stdin.writable) {
       console.log('Child process not available. Respawning...');
       childProc = spawnChildProcess();
@@ -104,7 +99,6 @@ app.whenReady().then(() => {
     return new Promise((resolve, reject) => {
       let resolved = false;
 
-      // Set up a timeout to handle the case when the backend does not respond.
       const timeout = setTimeout(() => {
         if (!resolved) {
           resolved = true;
@@ -113,17 +107,16 @@ app.whenReady().then(() => {
         }
       }, 30000);
 
-      // Listener to process stdout data from the backend.
       const onData = (data) => {
         const text = data.toString();
         console.log(`[Main] Child stdout: ${text}`);
 
-        if (text.includes('MusicXML file generated successfully.')) {
+        if (text.includes(successMessage)) {
           clearTimeout(timeout);
           childProc.stdout.off('data', onData);
           resolved = true;
           resolve();
-        } else if (text.includes('Failed to generate MusicXML file.')) {
+        } else if (text.includes(failureMessage)) {
           clearTimeout(timeout);
           childProc.stdout.off('data', onData);
           resolved = true;
@@ -131,12 +124,31 @@ app.whenReady().then(() => {
         }
       };
 
-      // Attach the listener and send the command to process the audio.
       childProc.stdout.on('data', onData);
-      childProc.stdin.write('processAudio\n');
-
+      childProc.stdin.write(`${command}\n`);
     });
-  });
+  };
+}
+
+app.whenReady().then(() => {
+  childProc = spawnChildProcess();
+
+  // Use the generic handler for both operations
+  ipcMain.handle('process-audio', 
+    createBackendCommandHandler(
+      'processAudio',
+      'MusicXML file generated successfully.',
+      'Failed to generate MusicXML file.'
+    )
+  );
+
+  ipcMain.handle('generate-pdf',
+    createBackendCommandHandler(
+      'generatePDF',
+      'PDF successfully generated',
+      'LilyPond PDF generation failed'
+    )
+  );
 
   createWindow();
 });

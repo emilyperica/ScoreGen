@@ -28,6 +28,7 @@ contextBridge.exposeInMainWorld('electronAPI', {
     
     // Existing APIs
     processAudio: () => ipcRenderer.invoke('process-audio'),
+    generatePDF: () => ipcRenderer.invoke('generate-pdf'),
     
     // Window control APIs
     minimizeWindow: () => ipcRenderer.send('minimize-window'),
@@ -35,10 +36,6 @@ contextBridge.exposeInMainWorld('electronAPI', {
     closeWindow: () => ipcRenderer.send('close-window')
 });
 
-contextBridge.exposeInMainWorld('api', {
-    processAudio: () => ipcRenderer.invoke('process-audio')
-  });
-  
 contextBridge.exposeInMainWorld('nodeAPI', {
     saveTempWavFile: async (buffer) => {
       const tempFilePath = path.join(__dirname, '..', '..', 'temp.wav');
