@@ -254,6 +254,7 @@ std::string determineNoteType(float noteDuration, int bpm) {
     );
     return closest->first;
 }
+
 //
 // Function: extract_note_durations
 // --------------------------------
@@ -271,8 +272,8 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
         return notes;
     }
     
-    // Analysis parameters.
-    int frameSize = 1024;  // frame length in samples
+    // Analysis parameters for pitch detection.
+    int frameSize = 2048;  // larger window for robust pitch detection
     int hopSize   = 512;   // hop size in samples
     
     int totalSamples = static_cast<int>(audio.size());
@@ -280,9 +281,9 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
     
     std::vector<double> window = hannWindow(frameSize);
     std::vector<double> pitchEstimates(numFrames, 0.0);
-    std::vector<double> frameRMS(numFrames, 0.0); // store RMS energy per frame
+    std::vector<double> frameRMS(numFrames, 0.0); // RMS energy per pitch frame
     
-    // Compute pitch estimates and RMS for each frame.
+    // Compute pitch estimates and RMS using the larger window.
     for (int frame = 0; frame < numFrames; frame++) {
         int start = frame * hopSize;
         std::vector<double> frameBuffer(frameSize);
@@ -302,30 +303,26 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
     }
         
     // Segment frames into note and rest segments.
-    double tolerance = 0.02;         // allow ~3% pitch variation within a note
-    double minNoteDuration = 0.1;     // ignore segments shorter than 50 ms
+    double tolerance = 0.04;         // allow ~4% pitch variation within a note
+    double minNoteDuration = 60.0 / (bpm * 4); // minimum segment duration in seconds
     bool inSegment = false;
     bool isNoteSegment = false;      // true if current segment is a note, false if a rest
-    double currentPitch = 0.0;       // only used if in a note segment
+    double currentPitch = 0.0;       // used if in a note segment
     int segmentStartFrame = 0;
-
     std::vector<NoteSegment> segments;
+    
     for (int i = 0; i < numFrames; i++) {
         double pitch = pitchEstimates[i];
         bool isRest = (pitch == 0);
-
         if (!inSegment) {
-            // Start a new segment.
             inSegment = true;
             segmentStartFrame = i;
             isNoteSegment = !isRest;
-            if (isNoteSegment) {
+            if (isNoteSegment)
                 currentPitch = pitch;
-            }
         } else {
             if (isNoteSegment) {
-                // Currently in a note segment.
-                // End the segment if we hit a rest or the pitch deviates too much.
+                // End the note segment if a rest occurs or pitch deviates too much.
                 if (isRest || std::abs(pitch - currentPitch) / currentPitch > tolerance) {
                     int segmentEndFrame = i - 1;
                     double startTime = segmentStartFrame * hopSize / static_cast<double>(sampleRate);
@@ -335,18 +332,15 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
                         std::string noteName = frequencyToNoteString(currentPitch);
                         segments.push_back({noteName, segmentStartFrame, segmentEndFrame});
                     }
-                    // Start a new segment with the current frame.
+                    // Start a new segment.
                     inSegment = true;
                     segmentStartFrame = i;
                     isNoteSegment = !isRest;
-                    if (isNoteSegment) {
+                    if (isNoteSegment)
                         currentPitch = pitch;
-                    }
                 }
-                // Else, continue the current note segment.
             } else {
-                // Currently in a rest segment.
-                // If we encounter a non-rest (i.e. a note), end the rest segment.
+                // In a rest segment, if a note is encountered, end the rest segment.
                 if (!isRest) {
                     int segmentEndFrame = i - 1;
                     double startTime = segmentStartFrame * hopSize / static_cast<double>(sampleRate);
@@ -355,18 +349,14 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
                     if (duration >= minNoteDuration) {
                         segments.push_back({"Rest", segmentStartFrame, segmentEndFrame});
                     }
-                    // Start a new note segment.
                     inSegment = true;
                     segmentStartFrame = i;
                     isNoteSegment = true;
                     currentPitch = pitch;
                 }
-                // Else, remain in the rest segment.
             }
         }
     }
-
-    // End the last segment if still active.
     if (inSegment) {
         int segmentEndFrame = numFrames - 1;
         double startTime = segmentStartFrame * hopSize / static_cast<double>(sampleRate);
@@ -383,7 +373,7 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
     }
 
     // Merge adjacent segments with the same note if the gap is small.
-    double mergeThreshold = 0.05; // seconds.
+    double mergeThreshold = 0.05; // seconds
     std::vector<NoteSegment> mergedSegments;
     if (!segments.empty()) {
         mergedSegments.push_back(segments[0]);
@@ -400,54 +390,67 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
         }
     }
     
-    // --- Onset Detection ---
-    // A simple energy-based onset detector: if the RMS energy increases by more than
-    // a threshold between successive frames, mark that frame as an onset.
-    std::vector<bool> onsetFlags(numFrames, false);
-    double onsetThreshold = 0.03;  // adjust this threshold as needed
-    for (int i = 1; i < numFrames; i++) {
-        if ((frameRMS[i] - frameRMS[i - 1]) > onsetThreshold) {
-            onsetFlags[i] = true;
+    // --- Onset Detection with a Smaller Window ---
+    int onsetFrameSize = 512;  // smaller window for onset detection
+    int onsetHopSize = 256;    // higher time resolution
+    int numOnsetFrames = (totalSamples >= onsetFrameSize) ?
+                         ((totalSamples - onsetFrameSize) / onsetHopSize + 1) : 0;
+    std::vector<double> onsetRMS(numOnsetFrames, 0.0);
+    for (int i = 0; i < numOnsetFrames; i++) {
+        int start = i * onsetHopSize;
+        double sumSq = 0.0;
+        for (int n = 0; n < onsetFrameSize; n++) {
+            sumSq += audio[start + n] * audio[start + n];
+        }
+        onsetRMS[i] = std::sqrt(sumSq / onsetFrameSize);
+    }
+    // Collect onset times (in seconds) when the RMS difference exceeds a threshold.
+    std::vector<double> onsetTimes;
+    double onsetThresholdSmall = 0.02;  // adjust as needed
+    for (int i = 1; i < numOnsetFrames; i++) {
+        if ((onsetRMS[i] - onsetRMS[i - 1]) > onsetThresholdSmall) {
+            double T = (i * onsetHopSize) / static_cast<double>(sampleRate);
+            onsetTimes.push_back(T);
         }
     }
     
     // --- Split Note Segments at Onsets ---
-    // For each merged note segment (ignoring rests), check if an onset occurs within it.
-    // If so, split the segment at each onset.
+    // For each merged note segment (ignoring rests), check if any onset (from the small-window analysis)
+    // occurs within its time boundaries. If so, split the segment at the corresponding pitch-frame indices.
     std::vector<NoteSegment> finalSegments;
     for (const auto &seg : mergedSegments) {
         if (seg.note != "Rest") {
+            double segStartTime = seg.startFrame * hopSize / static_cast<double>(sampleRate);
+            double segEndTime = (seg.endFrame * hopSize + frameSize) / static_cast<double>(sampleRate);
             std::vector<int> splitPoints;
-            // Look for onsets strictly inside the segment (not at its very start)
-            for (int i = seg.startFrame + 1; i <= seg.endFrame; i++) {
-                if (onsetFlags[i]) {
-                    splitPoints.push_back(i);
+            // For each detected onset time, if it falls inside the segment, map it to a pitch-frame index.
+            for (double T : onsetTimes) {
+                if (T > segStartTime && T < segEndTime) {
+                    int pitchFrameIndex = static_cast<int>(std::round(T * sampleRate / hopSize));
+                    if (pitchFrameIndex > seg.startFrame && pitchFrameIndex <= seg.endFrame)
+                        splitPoints.push_back(pitchFrameIndex);
                 }
             }
             if (splitPoints.empty()) {
                 finalSegments.push_back(seg);
             } else {
                 int currentStart = seg.startFrame;
-                for (int onsetFrame : splitPoints) {
-                    int segmentEnd = onsetFrame - 1;
+                for (int pf : splitPoints) {
+                    int segmentEnd = pf - 1;
                     double startTime = currentStart * hopSize / static_cast<double>(sampleRate);
                     double endTime = (segmentEnd * hopSize + frameSize) / static_cast<double>(sampleRate);
                     double duration = endTime - startTime;
-                    if (duration >= minNoteDuration) {
+                    if (duration >= minNoteDuration)
                         finalSegments.push_back({seg.note, currentStart, segmentEnd});
-                    }
-                    currentStart = onsetFrame; // new segment starts at the onset
+                    currentStart = pf;
                 }
-                // Add the final segment from the last onset to seg.endFrame.
-                double startTime = currentStart * hopSize / static_cast<double>(sampleRate);
-                double endTime = (seg.endFrame * hopSize + frameSize) / static_cast<double>(sampleRate);
-                double duration = endTime - startTime;
-                if (duration >= minNoteDuration) {
+                double startTimeFinal = currentStart * hopSize / static_cast<double>(sampleRate);
+                double endTimeFinal = (seg.endFrame * hopSize + frameSize) / static_cast<double>(sampleRate);
+                double durationFinal = endTimeFinal - startTimeFinal;
+                if (durationFinal >= minNoteDuration)
                     finalSegments.push_back({seg.note, currentStart, seg.endFrame});
-                }
             }
         } else {
-            // Keep rest segments as they are.
             finalSegments.push_back(seg);
         }
     }
@@ -457,9 +460,9 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
         double startTime = seg.startFrame * hopSize / static_cast<double>(sampleRate);
         double endTime = (seg.endFrame * hopSize + frameSize) / static_cast<double>(sampleRate);
         std::string noteType = determineNoteType((endTime - startTime), bpm);
-        // Here the note type is set to "unknown"; adjust if you implement rhythmic analysis.
         notes.push_back({static_cast<float>(startTime), static_cast<float>(endTime), seg.note, noteType});
-        std::cout << "Note: " << seg.note << " " << endTime - startTime << " Type: " << noteType << "\n";
+        std::cout << "Note: " << seg.note << " | Start Time: " << startTime 
+                  << " s | End Time: " << endTime << " s | Type: " << noteType << "\n";
     }
     return notes;
 }
