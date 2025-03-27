@@ -4,6 +4,7 @@
 #include "generateMusicXML.h"
 #include "recordAudio.h"
 #include "postprocess.h"
+#include "xmlToPDF.h"
 
 #define DEFAULT_OUT "output.xml"
 #define DEFAULT_TEST "test/TestingDatasets/Computer-Generated-Samples/D4_to_E5_1_second_per_note.wav"
@@ -43,7 +44,8 @@ int main() {
     while (std::getline(std::cin, command)) {
         if (command == "processAudio") {
             processAudio();
-        } else {
+        }
+        else {
             std::cerr << "Unknown command: " << command << std::endl;
         }
     }

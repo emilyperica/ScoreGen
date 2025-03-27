@@ -1,21 +1,63 @@
-# ScoreGen
+<img src="src/frontend/assets/SG.png" 
+        alt="ScoreGen logo" 
+        width="200" 
+        height="200" 
+        style="display: block; margin: 0 auto" />
 
-Developer Names: Emily Perica, Ian Algenio, Jackson Lippert, Mark Kogan
+> An audio-to-sheet music generator. 
 
-Date of project start: Sept 16/2024
+## About
+\<blurb here\>
 
-This project is an audio to sheet music generator. More information to come!
+**Developer Names**: Emily Perica, Ian Algenio, Jackson Lippert, Mark Kogan  
+**Date of project start**: Sept 16/2024 
 
-The folders and files for this project are as follows:
 
-docs - Documentation for the project  
-include - C++ headers  
-refs - Reference material used for the project, including papers  
-scripts - Run and build scripts  
-src - Source code  
-test - Test cases  
+
+## Folder structure
+The subfolders and files of this project are structured as follows:
+
+    ├── .github      // DevOps and project management.
+    ├── docs         // Project documentation.
+    ├── include      // C++ project headers.
+    ├── libs         // External project dependencies.
+    ├── refs         // Reference material used for the project, including papers. 
+    ├── scripts      // Run and build scripts.
+    ├── src          // Source code.
+        ├── backend  // C++ backend logic source code.
+        ├── frontend // JavaScript frontend.
+    ├── test         // Test cases
+
 
 ## Development
+Windows 11 is the suggested development environment; a non-Windows environment may be used but may require slightly different setup than is documented here.
 
-1. Install the [vcpkg](https://learn.microsoft.com/en-us/vcpkg/get_started/overview) package manager.
-2. Run and build using CMake - if using the build scripts, note that ```cleanBuild.sh``` will entirely remove and rebuild dependencies from source which is usually only necessary if you've edited ```CMakeLists.txt```.
+### Preqrequisites
+ScoreGen uses [vcpkg](https://learn.microsoft.com/en-us/vcpkg/get_started/overview), [CMake](https://cmake.org/download/), and npm for managing dependencies. Ensure these are installed before getting started.
+
+To install dependencies:
+
+```
+# backend dependencies
+.\scripts\installDependencies.sh
+
+# frontend dependencies
+npm install
+```
+
+### Build and Run
+```
+# compile and build backend dependencies using CMake
+.\scripts\cleanBuild.sh 
+# start up the desktop app
+npm run start
+
+# alternatively: package the desktop app and generate a distributable
+npm run make 
+```
+
+## Contribute
+See the contribution guide.
+
+## License
+This project is distributed under the MIT license.

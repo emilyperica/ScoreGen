@@ -1,5 +1,7 @@
 # Hazard Analysis
 
-The folders and files for this folder are as follows:
+The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── HazardAnalysis
+        ├── HazardAnalysis.pdf  \\ Hazard Analysis document
+        ├── HazardAnalysis.tex  \\ LaTeX source file

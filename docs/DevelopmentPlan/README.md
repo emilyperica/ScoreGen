@@ -1,5 +1,7 @@
 # Development Plan
 
-The folders and files for this folder are as follows:
+The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── DevelopmentPlan          
+        ├── DevelopmentPlan.pdf  \\ Development Plan document 
+        ├── DevelopmentPlan.tex  \\ LaTeX source file
