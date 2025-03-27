@@ -28,27 +28,27 @@
     <div class="app-container">
         <main>
             <div class="button-group">
-                <label for="musicxmlFile" class="btn btn-upload">
+                <label for="musicxmlFile" class="btn btn-upload" title="Upload MusicXML" alt="Upload MusicXML">
                     <i class="fas fa-upload"></i>
                     <input type="file" id="musicxmlFile" accept=".musicxml" hidden>
                 </label>
-                <button id="toggle-btn" class="btn btn-enter">
+                <button id="toggle-btn" class="btn btn-enter" title="Play" alt="Play">
                     <i class="fas fa-play"></i>
                 </button>
             </div>
             <div class="notation-container">
                 <div class="zoom-controls">
-                    <button id="zoomIn" class="btn btn-zoom"><i class="fas fa-search-plus"></i>+</button>
-                    <button id="zoomOut" class="btn btn-zoom"><i class="fas fa-search-minus"></i>-</button>
+                    <button id="zoomIn" class="btn btn-zoom" title="Zoom In" alt="Zoom In"><i class="fas fa-search-plus"></i>+</button>
+                    <button id="zoomOut" class="btn btn-zoom" title="Zoom Out" alt="Zoom Out"><i class="fas fa-search-minus"></i>-</button>
                 </div>
                 <div id="notation"></div>
                 <!-- Navigation Arrows and Page Indicator -->
                 <div class="page-navigation">
-                    <button id="prevPage" class="btn btn-nav-page" aria-label="Previous Page">
+                    <button id="prevPage" class="btn btn-nav-page" aria-label="Previous Page" title="Previous Page" alt="Previous Page">
                         <i class="fas fa-arrow-left"></i>
                     </button>
                     <span id="pageIndicator" class="page-indicator">Page 0 of 0</span>
-                    <button id="nextPage" class="btn btn-nav-page" aria-label="Next Page">
+                    <button id="nextPage" class="btn btn-nav-page" aria-label="Next Page" title="Next Page" alt="Next Page">
                         <i class="fas fa-arrow-right"></i>
                     </button>
                 </div>
