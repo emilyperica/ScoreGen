@@ -5,6 +5,8 @@
 #include <algorithm>
 #include <cctype>
 #include <unordered_map>
+#include <shlobj.h>
+#include <filesystem>
 #include "dsp.h"
 #include "generateMusicXML.h"
 #include "recordAudio.h"
@@ -81,7 +83,11 @@ void processAudio(const std::map<std::string, std::string>& payload) {
             return;
         }
 
-        DSPResult res = dsp("temp.wav");
+        TCHAR appdata[MAX_PATH] = {0};
+    SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+    std::string fileName = std::string(appdata) + "\\ScoreGen\\temp.wav";
+
+    DSPResult res = dsp(fileName.c_str());
 
         std::string workNumber = (payload.find("workNumber") != payload.end() && !payload.at("workNumber").empty()) ? payload.at("workNumber") : "Unnumbered Work";
         std::string workTitle = (payload.find("workTitle") != payload.end() && !payload.at("workTitle").empty()) ? payload.at("workTitle") : "Untitled Work";

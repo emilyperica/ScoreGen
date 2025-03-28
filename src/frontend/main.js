@@ -2,6 +2,8 @@ const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
+const remoteMain = require('@electron/remote/main');
+remoteMain.initialize();
 
 let mainWindow;
 
@@ -12,6 +14,7 @@ function createWindow() {
         frame: false, // Removes the default frame
         transparent: false,
         webPreferences: {
+            enableRemoteModule: true,
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: true,
             nodeIntegration: false,
@@ -22,6 +25,7 @@ function createWindow() {
         ...(process.platform !== 'darwin' ? { titleBarOverlay: { color: '#2f3241', symbolColor: '#ffffff', height: 60 } } : {})
     });
 
+    remoteMain.enable(mainWindow.webContents);
     mainWindow.loadFile('src/frontend/index.html'); // Load the home screen initially
     
     // Remove the default menu
@@ -52,7 +56,10 @@ function createWindow() {
     });
 }
 function spawnChildProcess() {
-  const executablePath = path.join('build/Debug/ScoreGen.exe');
+    const isDev = process.env.NODE_ENV === 'development';
+  const executablePath = isDev 
+      ? path.join('build/Debug/ScoreGen.exe') 
+      : path.join(process.resourcesPath, 'Debug/ScoreGen.exe');
   console.log('Spawning C++ backend');
   const proc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
 
