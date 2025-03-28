@@ -88,46 +88,61 @@ function spawnChildProcess() {
 
 // Create a generic handler function
 function createBackendCommandHandler(command, successMessage, failureMessage) {
-  return async () => {
-    console.log(`[Main] Handling ${command} command`);
+    return async (event, payload) => {
+        // Log the full payload for debugging
+        console.log(`[DEBUG] Full payload for ${command}:`, JSON.stringify(payload, null, 2));
 
-    if (!childProc || !childProc.stdin.writable) {
-      console.log('Child process not available. Respawning...');
-      childProc = spawnChildProcess();
-    }
-
-    return new Promise((resolve, reject) => {
-      let resolved = false;
-
-      const timeout = setTimeout(() => {
-        if (!resolved) {
-          resolved = true;
-          childProc.stdout.off('data', onData);
-          reject(new Error('Timed out waiting for backend response.'));
+        // Ensure payload is an object or array
+        if (payload === null || payload === undefined) {
+            throw new Error(`Payload for ${command} cannot be null or undefined`);
         }
-      }, 30000);
 
-      const onData = (data) => {
-        const text = data.toString();
-        console.log(`[Main] Child stdout: ${text}`);
+        console.log(`[Main] Handling ${command} command w/ payload:`, payload);
 
-        if (text.includes(successMessage)) {
-          clearTimeout(timeout);
-          childProc.stdout.off('data', onData);
-          resolved = true;
-          resolve();
-        } else if (text.includes(failureMessage)) {
-          clearTimeout(timeout);
-          childProc.stdout.off('data', onData);
-          resolved = true;
-          reject(new Error('C++ process reported failure.'));
+        if (!childProc || !childProc.stdin.writable) {
+            console.log('Child process not available. Respawning...');
+            childProc = spawnChildProcess();
         }
-      };
 
-      childProc.stdout.on('data', onData);
-      childProc.stdin.write(`${command}\n`);
-    });
-  };
+        return new Promise((resolve, reject) => {
+            let resolved = false;
+            let accumulatedOutput = '';
+
+            const timeout = setTimeout(() => {
+                if (!resolved) {
+                    resolved = true;
+                    childProc.stdout.off('data', onData);
+                    reject(new Error('Timed out waiting for backend response.'));
+                }
+            }, 30000);
+
+            const onData = (data) => {
+                const text = data.toString();
+                accumulatedOutput += text;
+                console.log(`[Main] Child stdout accumulating: ${text}`);
+
+                if (text.includes(successMessage)) {
+                    clearTimeout(timeout);
+                    childProc.stdout.off('data', onData);
+                    resolved = true;
+                    resolve(accumulatedOutput);
+                } else if (text.includes(failureMessage)) {
+                    clearTimeout(timeout);
+                    childProc.stdout.off('data', onData);
+                    resolved = true;
+                    reject(new Error(`C++ process reported failure. Output: ${accumulatedOutput}`));
+                }
+            };
+
+            childProc.stdout.on('data', onData);
+
+            // Ensure JSON is being passed correctly
+            const jsonPayload = JSON.stringify(payload);
+            console.log(`[DEBUG] Sending to backend: ${command} ${jsonPayload}`);
+
+            childProc.stdin.write(`${command} ${jsonPayload}\n`);
+        });
+    };
 }
 
 app.whenReady().then(() => {

@@ -27,8 +27,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     downloadPDF: (pdfPath) => ipcRenderer.invoke('download-pdf', pdfPath),
     
     // Existing APIs
-    processAudio: () => ipcRenderer.invoke('process-audio'),
-    generatePDF: () => ipcRenderer.invoke('generate-pdf'),
+    processAudio: (payload) => ipcRenderer.invoke('process-audio', payload),
+    generatePDF: (payload) => ipcRenderer.invoke('generate-pdf', payload),
     
     // Window control APIs
     minimizeWindow: () => ipcRenderer.send('minimize-window'),

@@ -213,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { once: true });
     playPauseButton.disabled = false;
     saveRecordingBtn.disabled = false;
-    chooseExportBtn.disabled = false;
+    modalOpenBtn.disabled = false;
     recordedAudioBlob = file;
   });
   
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
       startRecordingBtn.disabled = true;
       pauseRecordingBtn.disabled = false;
       stopRecordingBtn.disabled = false;
-      chooseExportBtn.disabled = true;
+      modalOpenBtn.disabled = true;
       saveRecordingBtn.disabled = true;
       
       recordingStartTime = Date.now();
@@ -260,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { once: true });
         
         playPauseButton.disabled = false;
-        chooseExportBtn.disabled = false;
+        modalOpenBtn.disabled = false;
         saveRecordingBtn.disabled = false;
       });
       
@@ -317,13 +317,14 @@ document.addEventListener('DOMContentLoaded', function() {
       alert("No recording available to export!");
       return;
       }
-      if (!musicxmlData) {
-          alert("Please fill out and submit the form first.");
-          return;
-      }
+    if (!musicxmlData) {
+        alert("Please fill out and submit the form first.");
+        return;
+    }
        
     const formData = Object.fromEntries(musicxmlData.entries());
     const spinner = document.getElementById('spinnerOverlay');
+    modal.style.display = 'none';
     if (spinner) spinner.style.display = 'flex';
   
     console.log('[Renderer] Export button clicked.');
@@ -428,6 +429,7 @@ document.addEventListener('DOMContentLoaded', function() {
       }
       const spinner = document.getElementById('spinnerOverlay');
       const formData = Object.fromEntries(musicxmlData.entries());
+      modal.style.display = 'none';
       spinner.style.display = 'flex';
       
       try {
@@ -465,7 +467,6 @@ document.addEventListener('DOMContentLoaded', function() {
       e.preventDefault();
       musicxmlData = new FormData(musicxmlForm);
       console.log('[Renderer] MusicXML form submitted. Data captured.');
-      modal.style.display = 'none';
       exportDropdown.style.display = 'block';
   });
 });
