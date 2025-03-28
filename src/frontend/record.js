@@ -405,12 +405,6 @@ document.addEventListener('DOMContentLoaded', function() {
     playPauseButton.title = "Pause";
   });
 
-  //// Toggle dropdown
-  //chooseExportBtn.addEventListener('click', (e) => {
-  //    e.stopPropagation();
-  //    exportDropdown.style.display = exportDropdown.style.display === 'block' ? 'none' : 'block';
-  //});
-
   // Close dropdown when clicking outside
   document.addEventListener('click', () => {
       exportDropdown.style.display = 'none';
@@ -466,7 +460,7 @@ document.addEventListener('DOMContentLoaded', function() {
   musicxmlForm.addEventListener('submit', (e) => {
       e.preventDefault();
       musicxmlData = new FormData(musicxmlForm);
-      console.log('[Renderer] MusicXML form submitted. Data captured.');
+      console.log('[Renderer] MusicXML form submitted. Data recieved.');
       exportDropdown.style.display = 'block';
   });
 });

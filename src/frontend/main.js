@@ -89,9 +89,6 @@ function spawnChildProcess() {
 // Create a generic handler function
 function createBackendCommandHandler(command, successMessage, failureMessage) {
     return async (event, payload) => {
-        // Log the full payload for debugging
-        console.log(`[DEBUG] Full payload for ${command}:`, JSON.stringify(payload, null, 2));
-
         // Ensure payload is an object or array
         if (payload === null || payload === undefined) {
             throw new Error(`Payload for ${command} cannot be null or undefined`);
@@ -135,11 +132,8 @@ function createBackendCommandHandler(command, successMessage, failureMessage) {
             };
 
             childProc.stdout.on('data', onData);
-
-            // Ensure JSON is being passed correctly
             const jsonPayload = JSON.stringify(payload);
             console.log(`[DEBUG] Sending to backend: ${command} ${jsonPayload}`);
-
             childProc.stdin.write(`${command} ${jsonPayload}\n`);
         });
     };

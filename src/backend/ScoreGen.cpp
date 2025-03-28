@@ -20,10 +20,7 @@
 std::map<std::string, std::string> parsePayload(const std::string& payload) {
     std::map<std::string, std::string> result;
 
-    // Debugging: output full payload
     std::cout << "Received Payload: " << payload << std::endl;
-
-    // Find the first '{' and the last '}' to isolate the body.
     size_t start = payload.find('{');
     size_t end = payload.rfind('}');
 
@@ -33,7 +30,6 @@ std::map<std::string, std::string> parsePayload(const std::string& payload) {
     }
 
     std::string body = payload.substr(start + 1, end - start - 1);
-
     std::istringstream iss(body);
     std::string token;
     while (std::getline(iss, token, ',')) {
@@ -42,9 +38,7 @@ std::map<std::string, std::string> parsePayload(const std::string& payload) {
             std::string key = token.substr(0, colonPos);
             std::string value = token.substr(colonPos + 1);
 
-            // Trim whitespace and quotes
             auto trim = [](std::string s) {
-                // remove leading/trailing spaces
                 s.erase(s.begin(), std::find_if(s.begin(), s.end(), [](unsigned char ch) {
                     return !std::isspace(ch);
                     }));
@@ -52,7 +46,6 @@ std::map<std::string, std::string> parsePayload(const std::string& payload) {
                     return !std::isspace(ch);
                     }).base(), s.end());
 
-                // remove surrounding quotes if any
                 if (!s.empty() && (s.front() == '\"' || s.front() == '\''))
                     s.erase(0, 1);
                 if (!s.empty() && (s.back() == '\"' || s.back() == '\''))
@@ -64,8 +57,7 @@ std::map<std::string, std::string> parsePayload(const std::string& payload) {
             key = trim(key);
             value = trim(value);
 
-            // Debugging: output each parsed key-value pair
-            std::cout << "Parsed: Key='" << key << "', Value='" << value << "'" << std::endl;
+            //std::cout << "Parsed: Key='" << key << "', Value='" << value << "'" << std::endl;
 
             result[key] = value;
         }
@@ -76,7 +68,6 @@ std::map<std::string, std::string> parsePayload(const std::string& payload) {
 
 void processAudio(const std::map<std::string, std::string>& payload) {
     try {
-        // Check if temp.wav exists
         std::ifstream tempWav("temp.wav");
         if (!tempWav.good()) {
             std::cout << "Failed to generate MusicXML file. Temp WAV file not found." << std::endl;
@@ -85,24 +76,13 @@ void processAudio(const std::map<std::string, std::string>& payload) {
 
         DSPResult res = dsp("temp.wav");
 
-        // Use default values if keys are missing
-        std::string workNumber = payload.count("workNumber") ? payload.at("workNumber") : "Untitled Work";
-        std::string workTitle = payload.count("workTitle") ? payload.at("workTitle") : "Untitled";
-        std::string movementNumber = payload.count("movementNumber") ? payload.at("movementNumber") : "1";
-        std::string movementTitle = payload.count("movementTitle") ? payload.at("movementTitle") : "Movement";
-        std::string creatorName = payload.count("creatorName") ? payload.at("creatorName") : "Anonymous";
+        std::string workNumber = payload.count("workNumber") ? payload.at("workNumber") : "Unnumbered Work";
+        std::string workTitle = payload.count("workTitle") ? payload.at("workTitle") : "Untitled Work";
+        std::string movementNumber = payload.count("movementNumber") ? payload.at("movementNumber") : "Unnumbered Mvmt";
+        std::string movementTitle = payload.count("movementTitle") ? payload.at("movementTitle") : "Untitled Mvmt";
+        std::string creatorName = payload.count("creatorName") ? payload.at("creatorName") : "Anon.";
         std::string instrument = payload.count("instrumentInput") ? payload.at("instrumentInput") : "Piano";
         std::string timeSignature = payload.count("timeSignatureInput") ? payload.at("timeSignatureInput") : DEFAULT_TIME_SIG;
-
-        // Log the values being used
-        std::cout << "Processing Audio with following parameters:" << std::endl;
-        std::cout << "Work Number: " << workNumber << std::endl;
-        std::cout << "Work Title: " << workTitle << std::endl;
-        std::cout << "Movement Number: " << movementNumber << std::endl;
-        std::cout << "Movement Title: " << movementTitle << std::endl;
-        std::cout << "Creator: " << creatorName << std::endl;
-        std::cout << "Instrument: " << instrument << std::endl;
-        std::cout << "Time Signature: " << timeSignature << std::endl;
 
         MusicXMLGenerator xmlGenerator(workNumber, workTitle, movementNumber, movementTitle, creatorName, instrument, timeSignature);
         bool success = xmlGenerator.generate(
@@ -140,9 +120,8 @@ int main() {
         std::string command;
         iss >> command;
         std::string payloadStr;
-        std::getline(iss, payloadStr); // Get the rest of the line as the payload string
+        std::getline(iss, payloadStr);
 
-        // Use our simple parser
         std::map<std::string, std::string> payload = parsePayload(payloadStr);
 
         if (command == "processAudio") {

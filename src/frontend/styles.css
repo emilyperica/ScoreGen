@@ -923,37 +923,37 @@ body {
     position: relative;
 }
 
-    .modal-fieldset legend {
-        display: block;
-        font-size: 18px;
-        color: #2f3241;
-        font-weight: bold;
-        position: absolute;
-        top: -25px;
-        left: 0;
-        background-color: transparent;
-        padding: 0;
-        margin: 0;
-    }
+.modal-fieldset legend {
+    display: block;
+    font-size: 18px;
+    color: #2f3241;
+    font-weight: bold;
+    position: absolute;
+    top: -25px;
+    left: 0;
+    background-color: transparent;
+    padding: 0;
+    margin: 0;
+}
 
-    /* Fieldset Form Groups */
-    .modal-fieldset .form-group {
-        margin-bottom: 15px;
-    }
+/* Fieldset Form Groups */
+.modal-fieldset .form-group {
+    margin-bottom: 15px;
+}
 
-        .modal-fieldset .form-group label {
-            display: block;
-            font-size: 16px;
-            color: #2f3241;
-            margin-bottom: 5px;
-        }
+.modal-fieldset .form-group label {
+    display: block;
+    font-size: 16px;
+    color: #2f3241;
+    margin-bottom: 5px;
+}
 
-        /* Input Fields */
-        .modal-fieldset .form-group input {
-            width: 100%;
-            padding: 8px;
-            border: 1px solid #2f3241;
-            border-radius: 4px;
-            background-color: #ffffff;
-            color: #333;
-        }
+/* Input Fields */
+.modal-fieldset .form-group input {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #2f3241;
+    border-radius: 4px;
+    background-color: #ffffff;
+    color: #333;
+}
