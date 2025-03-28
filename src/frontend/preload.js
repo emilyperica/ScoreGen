@@ -25,6 +25,8 @@ contextBridge.exposeInMainWorld('electronAPI', {
     // PDF Management APIs
     getPDFList: () => ipcRenderer.invoke('get-pdf-list'),
     downloadPDF: (pdfPath) => ipcRenderer.invoke('download-pdf', pdfPath),
+    deletePDF: (pdfPath) => ipcRenderer.invoke('delete-pdf', pdfPath),
+
     
     // Existing APIs
     processAudio: () => ipcRenderer.invoke('process-audio'),
