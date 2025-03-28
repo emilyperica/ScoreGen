@@ -149,9 +149,11 @@ TEST_F(MusicXMLGeneratorTest, FullGeneration) {
         {"C", 0, 2, 4, "quarter", false},     // Lower octave note
         {"D", 1, 7, 4, "quarter", false}      // Higher octave with sharp
     };
+
+    const char *filename = "full_generation_test.musicxml";
     
     EXPECT_TRUE(generator.generate(
-        "full_generation_test.xml", 
+        filename, 
         noteSequence, 
         "G", 
         2,
@@ -160,11 +162,13 @@ TEST_F(MusicXMLGeneratorTest, FullGeneration) {
         4
     ));
 
-    std::ifstream outputFile("full_generation_test.xml");
+    std::ifstream outputFile(filename);
     EXPECT_TRUE(outputFile.good());
     outputFile.seekg(0, std::ios::end);
     EXPECT_GT(outputFile.tellg(), 0);
     outputFile.close();
+    std::remove(filename);
+
 }
 
 TEST_F(MusicXMLGeneratorTest, EmptySequenceGeneration) {

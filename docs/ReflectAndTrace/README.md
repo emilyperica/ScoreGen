@@ -1,5 +1,7 @@
-# Development Plan
+# ScoreGen Project Reflections
 
-The folders and files for this folder are as follows:
+The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── ReflectAndTrace 
+        ├── ReflectAndTrace.pdf  \\ Reflection and Traceability report
+        ├── ReflectAndTrace.tex  \\ LaTeX source file

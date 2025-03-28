@@ -1,5 +1,6 @@
-const { app, BrowserWindow, ipcMain, Menu } = require('electron');
+const { app, BrowserWindow, ipcMain, Menu, dialog } = require('electron');
 const path = require('path');
+const fs = require('fs');
 const { spawn } = require('child_process');
 
 let mainWindow;
@@ -22,9 +23,6 @@ function createWindow() {
     });
 
     mainWindow.loadFile('src/frontend/index.html'); // Load the home screen initially
-
-    // Open DevTools
-    mainWindow.webContents.openDevTools();
     
     // Remove the default menu
     Menu.setApplicationMenu(null);
@@ -53,69 +51,103 @@ function createWindow() {
         mainWindow.webContents.send('window-unmaximized');
     });
 }
+function spawnChildProcess() {
+  const executablePath = path.join('build/Debug/ScoreGen.exe');
+  console.log('Spawning C++ backend');
+  const proc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
+
+  // Log standard output from the backend.
+  proc.stdout.on('data', (data) => {
+    console.log(`Backend stdout: ${data.toString()}`);
+  });
+
+  // Log errors from the backend.
+  proc.stderr.on('data', (data) => {
+    console.error(`Backend stderr: ${data.toString()}`);
+  });
+
+  // Log errors when attempting to spawn the process.
+  proc.on('error', (err) => {
+    console.error('Failed to start subprocess:', err);
+  });
+
+  // If the process closes, attempt to respawn it after a short delay.
+  proc.on('close', (code) => {
+    console.log(`Child process exited with code ${code}`);
+    setTimeout(() => {
+      console.log('Respawning child process...');
+      childProc = spawnChildProcess();
+    }, 1000); // adjust the delay as needed
+  });
+
+  return proc;
+}
+
+// Create a generic handler function
+function createBackendCommandHandler(command, successMessage, failureMessage) {
+  return async () => {
+    console.log(`[Main] Handling ${command} command`);
+
+    if (!childProc || !childProc.stdin.writable) {
+      console.log('Child process not available. Respawning...');
+      childProc = spawnChildProcess();
+    }
+
+    return new Promise((resolve, reject) => {
+      let resolved = false;
+
+      const timeout = setTimeout(() => {
+        if (!resolved) {
+          resolved = true;
+          childProc.stdout.off('data', onData);
+          reject(new Error('Timed out waiting for backend response.'));
+        }
+      }, 30000);
+
+      const onData = (data) => {
+        const text = data.toString();
+        console.log(`[Main] Child stdout: ${text}`);
+
+        if (text.includes(successMessage)) {
+          clearTimeout(timeout);
+          childProc.stdout.off('data', onData);
+          resolved = true;
+          resolve();
+        } else if (text.includes(failureMessage)) {
+          clearTimeout(timeout);
+          childProc.stdout.off('data', onData);
+          resolved = true;
+          reject(new Error('C++ process reported failure.'));
+        }
+      };
+
+      childProc.stdout.on('data', onData);
+      childProc.stdin.write(`${command}\n`);
+    });
+  };
+}
 
 app.whenReady().then(() => {
-    // 1) Spawn the C++ executable
-    const executablePath = path.join('build/Debug/ScoreGen.exe');
-    console.log(`Spawning C++ backend`);
-    childProc = spawn(executablePath, [], { stdio: ['pipe', 'pipe', 'pipe'] });
-  
-    // 2) Debug logs from the C++ process
-    childProc.stdout.on('data', (data) => {
-      console.log(`Backend stdout: ${data.toString()}`);
-    });
-    childProc.stderr.on('data', (data) => {
-      console.error(`Backend stderr: ${data.toString()}`);
-    });
-    childProc.on('error', (err) => {
-      console.error('Failed to start subprocess:', err);
-    });
-    childProc.on('close', (code) => {
-      console.log(`Child process exited with code ${code}`);
-    });
-  
-    // 3) Handle "process-audio" via a Promise (so the renderer can await it)
-    ipcMain.handle('process-audio', async () => {
-        console.log('[Main] ipcMain.handle("process-audio") triggered');
-      
-        return new Promise((resolve, reject) => {
-          if (!childProc || !childProc.stdin.writable) {
-            return reject(new Error('C++ process is not available.'));
-          }
-          let resolved = false;
-      
-          const timeout = setTimeout(() => {
-            if (!resolved) {
-              resolved = true;
-              childProc.stdout.off('data', onData);
-              reject(new Error('Timed out waiting for backend response.'));
-            }
-          }, 100000);
-      
-          const onData = (data) => {
-            const text = data.toString();
-            console.log(`[Main] Child stdout: ${text}`);
-      
-            if (text.includes('MusicXML file generated successfully.')) {
-              clearTimeout(timeout);
-              childProc.stdout.off('data', onData);
-              resolved = true;
-              resolve();
-            } else if (text.includes('Failed to generate MusicXML file.')) {
-              clearTimeout(timeout);
-              childProc.stdout.off('data', onData);
-              resolved = true;
-              reject(new Error('C++ process reported failure.'));
-            }
-          };
-      
-          // Attach the listener before sending the command
-          childProc.stdout.on('data', onData);
-          childProc.stdin.write('processAudio\n');
-        });
-    });
-  
-    createWindow();
+  childProc = spawnChildProcess();
+
+  // Use the generic handler for both operations
+  ipcMain.handle('process-audio', 
+    createBackendCommandHandler(
+      'processAudio',
+      'MusicXML file generated successfully.',
+      'Failed to generate MusicXML file.'
+    )
+  );
+
+  ipcMain.handle('generate-pdf',
+    createBackendCommandHandler(
+      'generatePDF',
+      'PDF successfully generated',
+      'LilyPond PDF generation failed'
+    )
+  );
+
+  createWindow();
 });
 
 app.on('window-all-closed', () => {
@@ -130,4 +162,96 @@ app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) {
         createWindow();
     }
+});
+
+ipcMain.on('navigate-to-sheet-music', () => {
+  mainWindow.loadFile('src/frontend/sheet-music.html');
+});
+
+ipcMain.handle('get-pdf-list', async () => {
+  const pdfDir = path.join(__dirname, 'PDF_Outputs');
+  
+  try {
+    const exists = await fs.promises.access(pdfDir)
+      .then(() => true)
+      .catch(() => false);
+    
+
+    if (!exists) {
+      return []
+    }
+      const files = await fs.promises.readdir(pdfDir);
+      return files
+          .filter(file => file.endsWith('.pdf'))
+          .map(file => ({
+              name: file,
+              path: path.join(pdfDir, file)
+          }));
+  } catch (error) {
+      console.error('Error accessing PDF directory:', error);
+      return [];
+  }
+});
+
+ipcMain.handle('download-pdf', async (event, pdfPath) => {
+  try {
+      const { filePath } = await dialog.showSaveDialog({
+          defaultPath: path.basename(pdfPath),
+          filters: [{ name: 'PDF Files', extensions: ['pdf'] }]
+      });
+      
+      if (filePath) {
+          await fs.promises.copyFile(pdfPath, filePath);
+          return true;
+      }
+      return false;
+  } catch (error) {
+      console.error('Error downloading PDF:', error);
+      return false;
+  }
+});
+
+ipcMain.handle('delete-pdf', async (event, pdfPath) => {
+  try {
+      await fs.promises.unlink(pdfPath);
+      return true;
+  } catch (error) {
+      console.error('Error deleting PDF:', error);
+      return false;
+  }
+});
+
+function viewPDF(pdfPath) {
+  const viewer = document.getElementById('pdf-viewer');
+  const iframe = document.getElementById('pdf-frame');
+  
+  // Convert local path to URL format for iframe
+  const pdfUrl = `file://${pdfPath}`;
+  iframe.src = pdfUrl;
+  iframe.setAttribute('data-path', pdfPath);
+  viewer.style.display = 'flex';
+}
+
+// Window control handlers
+ipcMain.on('minimize-window', () => {
+  mainWindow.minimize();
+});
+
+ipcMain.on('maximize-window', () => {
+  if (mainWindow.isMaximized()) {
+      mainWindow.unmaximize();
+  } else {
+      mainWindow.maximize();
+  }
+});
+
+ipcMain.on('close-window', () => {
+  mainWindow.close();
+});
+
+// Cleanup on exit
+app.on('before-quit', () => {
+  if (childProc) {
+      childProc.kill();
+  }
 });

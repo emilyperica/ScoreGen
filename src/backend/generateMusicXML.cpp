@@ -41,8 +41,8 @@ MusicXMLGenerator::MusicXMLGenerator(
     const string& encodingSoftware)
 {
     factory = factoryOpen();
-    factoryHeader(factory, workNumber.c_str(), workTitle.c_str(), movementNumber.c_str(), movementTitle.c_str());
-    factoryCreator(factory, creatorName.c_str(), creatorType.c_str());
+    factoryHeader(factory, "", "User Generated Sheet Music", "", "");
+    factoryCreator(factory, "", "");
     factoryRights(factory, rightsString.c_str(), rightsType.c_str());
     factoryEncoding(factory, encodingSoftware.c_str());
 }
@@ -69,7 +69,7 @@ bool MusicXMLGenerator::generate(const string& outputPath,
 {
     if (noteSequence.empty()) return false;
 
-    TElement scorePart = createScorePart("P1", "INSTRUMENT", "");
+    TElement scorePart = createScorePart("P1", "", "");
     factoryAddPart(factory, scorePart);
 
     TElement part = createPart(noteSequence, clef, clefLine, timeSignature, keySignature, divisions);

@@ -1,5 +1,6 @@
-# Design Documentation
+# ScoreGen Design Documentation
 
-The folders and files for this folder are as follows:
+The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── SoftArchitecture    \\ Software Module Guide document
+    ├── SoftDetailedDes     \\ Software Module Interface Specification document

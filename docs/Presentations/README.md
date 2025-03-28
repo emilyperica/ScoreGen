@@ -1,4 +1,4 @@
-# Presentations/demonstrations about your software
+# ScoreGen Presentations/demonstrations
 
 The folders and files for this folder are as follows:
 

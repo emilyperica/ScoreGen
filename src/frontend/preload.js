@@ -17,10 +17,27 @@ contextBridge.exposeInMainWorld('electron', {
     }
 });
 
-contextBridge.exposeInMainWorld('api', {
-    processAudio: () => ipcRenderer.invoke('process-audio')
-  });
-  
+contextBridge.exposeInMainWorld('electronAPI', {
+    // Navigation APIs
+    navigateToHome: () => ipcRenderer.send('navigate-to-home'),
+    navigateToSheetMusic: () => ipcRenderer.send('navigate-to-sheet-music'),
+    
+    // PDF Management APIs
+    getPDFList: () => ipcRenderer.invoke('get-pdf-list'),
+    downloadPDF: (pdfPath) => ipcRenderer.invoke('download-pdf', pdfPath),
+    deletePDF: (pdfPath) => ipcRenderer.invoke('delete-pdf', pdfPath),
+
+    
+    // Existing APIs
+    processAudio: () => ipcRenderer.invoke('process-audio'),
+    generatePDF: () => ipcRenderer.invoke('generate-pdf'),
+    
+    // Window control APIs
+    minimizeWindow: () => ipcRenderer.send('minimize-window'),
+    maximizeWindow: () => ipcRenderer.send('maximize-window'),
+    closeWindow: () => ipcRenderer.send('close-window')
+});
+
 contextBridge.exposeInMainWorld('nodeAPI', {
     saveTempWavFile: async (buffer) => {
       const tempFilePath = path.join(__dirname, '..', '..', 'temp.wav');

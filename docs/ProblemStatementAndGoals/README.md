@@ -1,5 +1,7 @@
 # Problem Statement
 
-The folders and files for this folder are as follows:
+The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── ProblemStatementAndGoals 
+        ├── ProblemStatement.pdf  \\ Problem Statement document
+        ├── ProblemStatement.tex  \\ LaTeX source file

@@ -1,5 +1,7 @@
-# Test Report
+# ScoreGen Verification and Validation Report
 
-The folders and files for this folder are as follows:
+The VnV Report is a compiled document of the results of all unit and system tests described in the VnV Plan. The files and subfolders for this folder are as follows:
 
-Describe ...
+    ├── VnVReport 
+        ├── VnVReport.pdf  \\ Verification and Validation report
+        ├── VnVReport.tex  \\ LaTeX source file

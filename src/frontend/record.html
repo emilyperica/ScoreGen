@@ -46,13 +46,14 @@
   <!-- Custom Title Bar -->
   <div class="title-bar">
     <button id="home-nav-btn" class="btn-nav-logo" aria-label="Navigate to Home">
-      <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
+        <img src="assets/scoregen.png" alt="Logo" class="title-bar-logo">
     </button>
     <div class="nav-buttons">
-      <button id="upload-nav-btn" class="btn-nav">Upload</button>
-      <button id="record-nav-btn" class="btn-nav">Record</button>
+        <button id="upload-nav-btn" class="btn-nav">Upload</button>
+        <button id="record-nav-btn" class="btn-nav">Record</button>
+        <button id="sheet-music-button" class="btn-nav">View Sheet Music</button>
     </div>
-  </div>
+</div>
 
   <div class="app-container">   
     <main>
@@ -67,27 +68,39 @@
           <div class="recording-timer">
             <span id="recording-length">0:00</span>
           </div>
-          <button id="start-recording" class="btn btn-record" aria-label="Start Recording">
+          <button id="start-recording" class="btn btn-record" aria-label="Start Recording" title="Start Recording" alt="Start Recording">
             <i class="fas fa-circle"></i>
           </button>
-          <button id="pause-recording" class="btn btn-pause" aria-label="Pause Recording" disabled>
+          <button id="pause-recording" class="btn btn-pause" aria-label="Pause Recording" disabled title="Pause Recording" alt="Pause Recording">
             <i class="fas fa-pause"></i>
           </button>
-          <button id="stop-recording" class="btn btn-stop" aria-label="Stop Recording" disabled>
+          <button id="stop-recording" class="btn btn-stop" aria-label="Stop Recording" disabled title="Stop Recording" alt="Stop Recording">
             <i class="fas fa-stop"></i>
           </button>
           <div class="upload-controls">
-            <button id="upload-file-button" class="btn btn-upload">
+            <button id="upload-file-button" class="btn btn-upload" aria-label="Upload Recording" title="Upload Recording" alt="Upload Recording">
               <i class="fas fa-upload"></i>
             </button>
             <input type="file" id="upload-file" accept=".wav" style="display:none;">
           </div>
-          <button id="save-recording" class="btn btn-save" aria-label="Save Recording" disabled>
+          <button id="save-recording" class="btn btn-save" aria-label="Save Recording" disabled title="Save Recording" alt="Save Recording">
             <i class="fas fa-save"></i>
           </button>
-          <button id="export-musicxml" class="btn btn-export" aria-label="Export to MusicXML" disabled>
-            <i class="fas fa-file-export"></i>
-          </button>
+          <div class="export-container">
+            <button id="choose-export" class="btn btn-export" aria-label="Export Options" disabled title="Export Options">
+                <i class="fas fa-file-export"></i>
+            </button>
+            <div id="export-dropdown" class="dropdown-content">
+                <button id="export-to-musicxml" class="dropdown-item">
+                    <i class="fas fa-file-code"></i>
+                    Export as MusicXML
+                </button>
+                <button id="export-to-pdf" class="dropdown-item">
+                    <i class="fas fa-file-pdf"></i>
+                    Export as PDF
+                </button>
+            </div>
+          </div>
         </div>
       </div>
       
@@ -100,13 +113,13 @@
         <audio id="audio" src=""></audio>
         <div class="audio-player">
           <div class="controls">
-            <button id="prev-button" class="control-button" title="Previous">
+            <button id="prev-button" class="control-button" title="Previous" alt="Previous">
               <i class="fas fa-backward"></i>
             </button>
-            <button id="play-pause-button" class="control-button" title="Play" disabled>
+            <button id="play-pause-button" class="control-button" title="Play" disabled alt="Play">
               <i class="fas fa-play"></i>
             </button>
-            <button id="next-button" class="control-button" title="Next">
+            <button id="next-button" class="control-button" title="Next" alt="Next">
               <i class="fas fa-forward"></i>
             </button>
           </div>

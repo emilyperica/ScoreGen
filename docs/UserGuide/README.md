@@ -1,4 +1,4 @@
-# User Guide
+# ScoreGen User Guide
 
 The user guide could also include video introductions and tutorials.
 
