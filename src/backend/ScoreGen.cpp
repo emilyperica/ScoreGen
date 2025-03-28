@@ -39,11 +39,20 @@ void processAudio() {
     
 }
 
+void generatePDF()
+{
+    processAudio();
+    convertMusicXMLToPDF(DEFAULT_OUT, "output.pdf");
+}
+
 int main() {
     std::string command;
     while (std::getline(std::cin, command)) {
         if (command == "processAudio") {
             processAudio();
+        }
+        else if (command == "generatePDF") {
+            generatePDF();
         }
         else {
             std::cerr << "Unknown command: " << command << std::endl;
