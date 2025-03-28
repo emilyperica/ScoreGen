@@ -18,6 +18,9 @@ document.addEventListener('DOMContentLoaded', async () => {
                        width="100%" 
                        height="150px">
                        <div class="click-overlay"></div>
+                       <button class="delete-btn">
+                           <i class="fas fa-trash"></i>
+                       </button>
             `;
             
             // Add PDF name
@@ -31,6 +34,15 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Add click handler
             pdfItem.addEventListener('click', () => viewPDF(pdf.path));
             pdfList.appendChild(pdfItem);
+
+            const deleteBtn = preview.querySelector('.delete-btn');
+            deleteBtn.addEventListener('click', (e) => {
+                e.stopPropagation(); // Prevent PDF viewer from opening
+                if (confirm('Are you sure you want to delete this PDF?')) {
+                    window.electronAPI.deletePDF(pdf.path);
+                    pdfItem.remove();
+                }
+            });
         });
     } catch (error) {
         console.error('Failed to load PDFs:', error);

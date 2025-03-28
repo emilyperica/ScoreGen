@@ -51,9 +51,6 @@ function createWindow() {
         mainWindow.webContents.send('window-unmaximized');
     });
 }
-
-let childProc = null;
-
 function spawnChildProcess() {
   const executablePath = path.join('build/Debug/ScoreGen.exe');
   console.log('Spawning C++ backend');
@@ -219,6 +216,16 @@ ipcMain.handle('download-pdf', async (event, pdfPath) => {
       return false;
   } catch (error) {
       console.error('Error downloading PDF:', error);
+      return false;
+  }
+});
+
+ipcMain.handle('delete-pdf', async (event, pdfPath) => {
+  try {
+      await fs.promises.unlink(pdfPath);
+      return true;
+  } catch (error) {
+      console.error('Error deleting PDF:', error);
       return false;
   }
 });
