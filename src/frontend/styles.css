@@ -837,10 +837,10 @@ body {
     color: white;
 }
 
-    .btn-cancel:hover {
-        background-color: #aaa;
-        transform: translateY(-2px);
-    }
+.btn-cancel:hover {
+    background-color: #aaa;
+    transform: translateY(-2px);
+}
 
 /* Modal Container */
 .modal {
@@ -879,11 +879,11 @@ body {
     border-top-right-radius: 8px;
 }
 
-    .modal-header h2 {
-        margin: 0;
-        font-size: 24px;
-        color: #ddd;
-    }
+.modal-header h2 {
+    margin: 0;
+    font-size: 24px;
+    color: #ddd;
+}
 
 /* Modal Close Button */
 .modal-close-btn {
@@ -895,9 +895,9 @@ body {
     transition: color 0.3s;
 }
 
-    .modal-close-btn:hover {
-        color: #aaa;
-    }
+.modal-close-btn:hover {
+    color: #aaa;
+}
 
 /* Modal Body */
 .modal-body {
@@ -957,7 +957,6 @@ body {
     border-radius: 4px;
     background-color: #ffffff;
     color: #333;
-}
 }
 
 .delete-btn {
