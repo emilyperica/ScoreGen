@@ -4,7 +4,8 @@
 #include <iostream>
 #include <vector>
 #include <sndfile.h>
-#include "detectNoteDuration.h"
+#include "note_duration_extractor.h"
+#include "determineBPM.h"
 #include "common.h"
 #include "findKey.h"
 
