@@ -1,5 +1,7 @@
 #include <iostream>
 #include <string>
+#include <shlobj.h>
+#include <filesystem>
 #include "dsp.h"
 #include "generateMusicXML.h"
 #include "recordAudio.h"
@@ -15,7 +17,11 @@
 
 void processAudio() {
     try{
-        DSPResult res = dsp("temp.wav");
+        TCHAR appdata[MAX_PATH] = {0};
+    SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+    std::string fileName = std::string(appdata) + "\\ScoreGen\\temp.wav";
+
+    DSPResult res = dsp(fileName.c_str());
         MusicXMLGenerator xmlGenerator;
         bool success = xmlGenerator.generate(
             DEFAULT_OUT, 

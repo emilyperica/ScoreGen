@@ -365,3 +365,7 @@ package-lock.json
 output.xml
 temp.wav
 output.musicxml
+
+# Electron
+out/
+dist/
