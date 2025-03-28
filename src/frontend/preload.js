@@ -1,4 +1,5 @@
 const { contextBridge, ipcRenderer } = require('electron');
+const { app } = require('@electron/remote');
 const fs = require('fs');
 const path = require('path');
 
@@ -40,12 +41,12 @@ contextBridge.exposeInMainWorld('electronAPI', {
 
 contextBridge.exposeInMainWorld('nodeAPI', {
     saveTempWavFile: async (buffer) => {
-      const tempFilePath = path.join(__dirname, '..', '..', 'temp.wav');
+      const tempFilePath = path.join(app.getPath('userData'), 'temp.wav');
       await fs.promises.writeFile(tempFilePath, Buffer.from(buffer));
       return tempFilePath;
     },
     deleteTempWavFile: async () => {
-      const tempFilePath = path.join(__dirname, '..', '..', 'temp.wav');
+      const tempFilePath = path.join(app.getPath('userData'), 'temp.wav');
       await fs.promises.unlink(tempFilePath);
     }
 });

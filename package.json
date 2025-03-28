@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "main": "src/frontend/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "cross-env NODE_ENV=development electron-forge start",
     "package": "electron-forge package",
     "make": "electron-forge make"
   },
@@ -24,6 +24,8 @@
     "electron": "^35.0.0"
   },
   "dependencies": {
+    "@electron/remote": "^2.1.2",
+    "cross-env": "^7.0.3",
     "electron-squirrel-startup": "^1.0.1",
     "node-addon-api": "^8.3.0",
     "node-gyp": "^11.0.0"
