@@ -7,7 +7,15 @@
 > An audio-to-sheet music generator. 
 
 ## About
-\<blurb here\>
+ScoreGen is an innovative desktop application that converts live monophonic audio recordings into professional sheet music. Built as a capstone project, it features:
+
+- Real-time monophonic audio processing
+- Natively developed signal processing engine for accurate note detection
+- Intuitive user interface for recording and editing
+- Multiple export formats (WAV, MusicXML, PDF)
+- Built-in sheet music viewer and library management
+
+The application handles the complete pipeline from audio capture through signal processing to final sheet music rendering, making music transcription accessible to musicians of all levels.
 
 **Developer Names**: Emily Perica, Ian Algenio, Jackson Lippert, Mark Kogan  
 **Date of project start**: Sept 16/2024 
