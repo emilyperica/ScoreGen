@@ -1,6 +1,4 @@
-#include <iostream>
-#include <fstream>
-#include <vector>
+#include "readWav.h"
 
 // Helper function to read little-endian values.
 template <typename T>
