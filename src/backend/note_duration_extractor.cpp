@@ -24,7 +24,7 @@ double detectPitch(const std::vector<double>& frame, int sampleRate) {
     
     double bestCorr = 0.0;
     int bestLag = 0;
-    for (int lag = minLag; lag <= maxLag; lag+=2) {
+    for (int lag = minLag; lag <= maxLag; lag++) {
         double sum = 0.0;
         for (int i = 0; i < N - lag; i++) {
             sum += frame[i] * frame[i + lag];
@@ -109,7 +109,7 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
     
     // Analysis parameters for pitch detection.
     int frameSize = 2048;  // larger window for robust pitch detection
-    int hopSize   = 1024;   // hop size in samples
+    int hopSize   = 512;   // hop size in samples
     
     int totalSamples = static_cast<int>(audio.size());
     int numFrames = (totalSamples >= frameSize) ? ((totalSamples - frameSize) / hopSize + 1) : 0;
@@ -138,7 +138,7 @@ std::vector<Note> extract_note_durations(const char* infilename, int bpm) {
     }
         
     // Segment frames into note and rest segments.
-    double tolerance = 0.04;         // allow ~4% pitch variation within a note
+    double tolerance = 0.05;         // allow ~4% pitch variation within a note
     double minNoteDuration = 60.0 / (bpm * 4); // minimum segment duration in seconds
     bool inSegment = false;
     bool isNoteSegment = false;      // true if current segment is a note, false if a rest
