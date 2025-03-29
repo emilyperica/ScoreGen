@@ -139,39 +139,47 @@
                         <legend>Creator Information</legend>
                         <div class="form-group">
                             <label for="creatorName">Creator Name</label>
-                            <input type="text" id="creatorName" name="creatorName" placeholder="Enter your name" required>
+                            <input type="text" id="creatorName" name="creatorName" placeholder="Enter your name" required
+                                   title="Your full name. This will appear on the score sheet.">
                         </div>
                     </fieldset>
+
                     <!-- Score Details -->
                     <fieldset class="modal-fieldset">
                         <legend>Score Details</legend>
                         <div class="form-group">
                             <label for="instrumentInput">Instrument</label>
-                            <input type="text" id="instrumentInput" name="instrumentInput" placeholder="Enter instrument name (e.g., Piano, Violin)" required>
+                            <input type="text" id="instrumentInput" name="instrumentInput" placeholder="Enter instrument name (e.g., Piano, Violin)" required
+                                   title="The instrument used for this piece (e.g., Piano, Violin).">
                         </div>
                         <div class="form-group">
                             <label for="timeSignatureInput">Time Signature</label>
-                            <input type="text" id="timeSignatureInput" name="timeSignatureInput" placeholder="Enter a time signature (e.g., 4/4, 3/4)" required pattern="^\d+\/\d+$" title="Please enter a valid time signature (e.g., 4/4)">
+                            <input type="text" id="timeSignatureInput" name="timeSignatureInput" placeholder="Enter a time signature (e.g., 4/4, 3/4)" required pattern="^\\d+/\\d+$" title="Indicates the number of beats per measure (e.g., 4/4 means 4 beats per measure).">
                         </div>
                     </fieldset>
+
                     <!-- Score Metadata -->
                     <fieldset class="modal-fieldset">
                         <legend>Score Metadata</legend>
                         <div class="form-group">
                             <label for="workNumber">Work Number</label>
-                            <input type="text" id="workNumber" name="workNumber" placeholder="Enter work number" required>
+                            <input type="text" id="workNumber" name="workNumber" placeholder="Enter work number" required
+                                   title="A reference number for this piece.">
                         </div>
                         <div class="form-group">
                             <label for="workTitle">Work Title</label>
-                            <input type="text" id="workTitle" name="workTitle" placeholder="Enter work title" required>
+                            <input type="text" id="workTitle" name="workTitle" placeholder="Enter work title" required
+                                   title="The main title of your musical work.">
                         </div>
                         <div class="form-group">
                             <label for="movementNumber">Movement Number</label>
-                            <input type="text" id="movementNumber" name="movementNumber" placeholder="Enter movement number" required>
+                            <input type="text" id="movementNumber" name="movementNumber" placeholder="Enter movement number" required
+                                   title="If the work has multiple parts, this is the part number.">
                         </div>
                         <div class="form-group">
                             <label for="movementTitle">Movement Title</label>
-                            <input type="text" id="movementTitle" name="movementTitle" placeholder="Enter movement title" required>
+                            <input type="text" id="movementTitle" name="movementTitle" placeholder="Enter movement title" required
+                                   title="The title of this section of the work.">
                         </div>
                     </fieldset>
                 </div>
