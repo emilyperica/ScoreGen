@@ -4,6 +4,7 @@
 #include <map>
 #include <algorithm>
 #include <cctype>
+#include <unordered_map>
 #include "dsp.h"
 #include "generateMusicXML.h"
 #include "recordAudio.h"
@@ -16,6 +17,11 @@
 #define DEFAULT_CLEF_LINE 2
 #define DEFAULT_TIME_SIG "4/4"
 #define DEFAULT_DIVISIONS 480
+
+bool has_valid_value(const std::unordered_map<std::string, std::string>& map, const std::string& key) {
+    auto it = map.find(key);
+    return it != map.end() && !it->second.empty();
+}
 
 std::map<std::string, std::string> parsePayload(const std::string& payload) {
     std::map<std::string, std::string> result;
@@ -76,13 +82,22 @@ void processAudio(const std::map<std::string, std::string>& payload) {
 
         DSPResult res = dsp("temp.wav");
 
-        std::string workNumber = payload.count("workNumber") ? payload.at("workNumber") : "Unnumbered Work";
-        std::string workTitle = payload.count("workTitle") ? payload.at("workTitle") : "Untitled Work";
-        std::string movementNumber = payload.count("movementNumber") ? payload.at("movementNumber") : "Unnumbered Mvmt";
-        std::string movementTitle = payload.count("movementTitle") ? payload.at("movementTitle") : "Untitled Mvmt";
-        std::string creatorName = payload.count("creatorName") ? payload.at("creatorName") : "Anon.";
-        std::string instrument = payload.count("instrumentInput") ? payload.at("instrumentInput") : "Piano";
-        std::string timeSignature = payload.count("timeSignatureInput") ? payload.at("timeSignatureInput") : DEFAULT_TIME_SIG;
+        std::string workNumber = (payload.find("workNumber") != payload.end() && !payload.at("workNumber").empty()) ? payload.at("workNumber") : "Unnumbered Work";
+        std::string workTitle = (payload.find("workTitle") != payload.end() && !payload.at("workTitle").empty()) ? payload.at("workTitle") : "Untitled Work";
+        std::string movementNumber = (payload.find("movementNumber") != payload.end() && !payload.at("movementNumber").empty()) ? payload.at("movementNumber") : "Unnumbered Mvmt";
+        std::string movementTitle = (payload.find("movementTitle") != payload.end() && !payload.at("movementTitle").empty()) ? payload.at("movementTitle") : "Untitled Mvmt";
+        std::string creatorName = (payload.find("creatorName") != payload.end() && !payload.at("creatorName").empty()) ? payload.at("creatorName") : "Anon.";
+        std::string instrument = (payload.find("instrumentInput") != payload.end() && !payload.at("instrumentInput").empty()) ? payload.at("instrumentInput") : "Piano";
+        std::string timeSignature = (payload.find("timeSignatureInput") != payload.end() && !payload.at("timeSignatureInput").empty()) ? payload.at("timeSignatureInput") : DEFAULT_TIME_SIG;
+
+
+        std::cout << "workNumber: " << workNumber << std::endl;
+        std::cout << "workTitle: " << workTitle << std::endl;
+        std::cout << "movementNumber: " << movementNumber << std::endl;
+        std::cout << "movementTitle: " << movementTitle << std::endl;
+        std::cout << "creatorName: " << creatorName << std::endl;
+        std::cout << "instrument: " << instrument << std::endl;
+        std::cout << "timeSignature: " << timeSignature << std::endl;
 
         MusicXMLGenerator xmlGenerator(workNumber, workTitle, movementNumber, movementTitle, creatorName, instrument, timeSignature);
         bool success = xmlGenerator.generate(
