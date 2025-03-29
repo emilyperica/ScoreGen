@@ -1,5 +1,6 @@
 #include <vector>
 #include <cmath>
+#include <stdexcept>
 
 #ifndef HAMMINGFUNCTION_H
 #define HAMMINGFUNCTION_H

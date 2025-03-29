@@ -4,6 +4,7 @@
 #include "generateMusicXML.h"
 #include "recordAudio.h"
 #include "postprocess.h"
+#include "common.h"
 #include "xmlToPDF.h"
 
 #define DEFAULT_OUT "output.xml"

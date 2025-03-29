@@ -1,5 +1,4 @@
 #include "dsp.h"
-#include "determineBPM.h"
 
 #define SILENCE_LENGTH 512
 #define PPQ 480 // Pulses per quarter note, default for MusicXML
@@ -15,6 +14,7 @@ XMLNote convertToXMLNote(const Note& note, int bpm) {
     int octave = 0;
     int alter = 0;
     std::string noteName;
+    xmlNote.isRest = false;
 
     // Convert note duration in s to duration in divisions
     float noteDurationInSeconds = note.endTime - note.startTime;
@@ -42,8 +42,6 @@ XMLNote convertToXMLNote(const Note& note, int bpm) {
     xmlNote.pitch = noteName;
     xmlNote.octave = octave;
     xmlNote.alter = alter;
-    
-    xmlNote.isRest = false;
 
     return xmlNote;
 }
@@ -121,11 +119,9 @@ DSPResult dsp(const char* infilename) {
 
     const std::vector<double> paddedBuf = prependSilence(buf, SILENCE_LENGTH);
     int bpm = getBufferBPM(paddedBuf, sfinfo.samplerate);
-    std::vector<Note> notes = onsetDetection(paddedBuf, sfinfo.samplerate, bpm);
+    std::cout << "Detected BPM: " << bpm << std::endl;
+    std::vector<Note> notes = extract_note_durations(infilename, bpm);
 
-    // // Extract notes
-    //std::vector<Note> notes = detectNotes(paddedBuf, sfinfo.samplerate, sfinfo.channels);
-    
     for (const Note& note : notes) {
         result.XMLNotes.push_back(convertToXMLNote(note, bpm));
     }
