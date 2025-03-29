@@ -984,3 +984,12 @@ body {
 .delete-btn:hover {
     background: rgba(47, 50, 65, 1);
 }
+
+.required::after {
+    content: ' *';
+    color: red;
+}
+
+input:invalid {
+    border-color: red;
+}
