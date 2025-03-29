@@ -5,15 +5,22 @@ document.addEventListener('DOMContentLoaded', function() {
   let recordedAudioBlob = null;
   let recordingStartTime = null;
   let recordingInterval = null;
+  let musicxmlData = null;
+
 
   const inputDeviceSelect = document.getElementById('input-device-select');
   const recordingLengthDisplay = document.getElementById('recording-length');
   const startRecordingBtn = document.getElementById('start-recording');
+  const modalOpenBtn = document.getElementById('modal-open');
   const chooseExportBtn = document.getElementById('choose-export');
   const exportDropdown = document.getElementById('export-dropdown');
   const pauseRecordingBtn = document.getElementById('pause-recording');
   const exportMusicXMLBtn = document.getElementById('export-to-musicxml');
   const exportPDFBtn = document.getElementById('export-to-pdf');
+  const modal = document.getElementById('musicxml-modal');
+  const modalCloseBtn = document.getElementById('modal-close');
+  const modalCancelBtn = document.getElementById('modal-cancel');
+  const musicxmlForm = document.getElementById('musicxml-form');
 
 
   const stopRecordingBtn = document.getElementById('stop-recording');
@@ -184,7 +191,7 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(err => {
       console.error("Error enumerating devices:", err);
-    });
+  });
   
   /* --- Upload File Handling --- */
   uploadFileButton.addEventListener('click', () => {
@@ -206,7 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }, { once: true });
     playPauseButton.disabled = false;
     saveRecordingBtn.disabled = false;
-    chooseExportBtn.disabled = false;
+    modalOpenBtn.disabled = false;
     recordedAudioBlob = file;
   });
   
@@ -224,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
       startRecordingBtn.disabled = true;
       pauseRecordingBtn.disabled = false;
       stopRecordingBtn.disabled = false;
-      chooseExportBtn.disabled = true;
+      modalOpenBtn.disabled = true;
       saveRecordingBtn.disabled = true;
       
       recordingStartTime = Date.now();
@@ -253,7 +260,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }, { once: true });
         
         playPauseButton.disabled = false;
-        chooseExportBtn.disabled = false;
+        modalOpenBtn.disabled = false;
         saveRecordingBtn.disabled = false;
       });
       
@@ -309,9 +316,15 @@ document.addEventListener('DOMContentLoaded', function() {
     if (!recordedAudioBlob) {
       alert("No recording available to export!");
       return;
+      }
+    if (!musicxmlData) {
+        alert("Please fill out and submit the form first.");
+        return;
     }
-  
+       
+    const formData = Object.fromEntries(musicxmlData.entries());
     const spinner = document.getElementById('spinnerOverlay');
+    modal.style.display = 'none';
     if (spinner) spinner.style.display = 'flex';
   
     console.log('[Renderer] Export button clicked.');
@@ -320,7 +333,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const buffer = await wavBlob.arrayBuffer();
   
       await window.nodeAPI.saveTempWavFile(buffer);
-      await window.electronAPI.processAudio();
+      await window.electronAPI.processAudio(formData);
       // Optionally delete the temporary file:
       // await window.nodeAPI.deleteTempWavFile();
   
@@ -392,12 +405,6 @@ document.addEventListener('DOMContentLoaded', function() {
     playPauseButton.title = "Pause";
   });
 
-  // Toggle dropdown
-  chooseExportBtn.addEventListener('click', (e) => {
-      e.stopPropagation();
-      exportDropdown.style.display = exportDropdown.style.display === 'block' ? 'none' : 'block';
-  });
-
   // Close dropdown when clicking outside
   document.addEventListener('click', () => {
       exportDropdown.style.display = 'none';
@@ -410,14 +417,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Handle PDF export
   exportPDFBtn.addEventListener('click', async () => {
+      if (!musicxmlData) {
+          alert("Please fill out and submit the form first.");
+          return;
+      }
       const spinner = document.getElementById('spinnerOverlay');
+      const formData = Object.fromEntries(musicxmlData.entries());
+      modal.style.display = 'none';
       spinner.style.display = 'flex';
       
       try {
           const wavBlob = await convertBlobToWav(recordedAudioBlob);
           const buffer = await wavBlob.arrayBuffer();
           await window.nodeAPI.saveTempWavFile(buffer);
-          await window.electronAPI.generatePDF();
+          await window.electronAPI.generatePDF(formData);
           alert('PDF generated successfully!');
       } catch (err) {
           console.error('Error generating PDF:', err);
@@ -426,5 +439,28 @@ document.addEventListener('DOMContentLoaded', function() {
           spinner.style.display = 'none';
           exportDropdown.style.display = 'none';
       }
+  });
+
+  /* --- Input Modal --- */
+  modalOpenBtn.addEventListener('click', () => {
+      console.log('[Renderer] Export button clicked, modal opened.');
+      modal.style.display = 'block';
+  });
+
+  modalCloseBtn.addEventListener('click', () => {
+      console.log('[Renderer] Modal close button clicked.');
+      modal.style.display = 'none';
+  });
+
+  modalCancelBtn.addEventListener('click', () => {
+      console.log('[Renderer] Modal cancel button clicked.');
+      modal.style.display = 'none';
+  });
+
+  musicxmlForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      musicxmlData = new FormData(musicxmlForm);
+      console.log('[Renderer] MusicXML form submitted. Data recieved.');
+      exportDropdown.style.display = 'block';
   });
 });

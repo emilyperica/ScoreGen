@@ -14,10 +14,7 @@ protected:
         "M001", 
         "Test Movement", 
         "GTest", 
-        "TestingSoftware", 
-        "rights", 
-        "rights type", 
-        "Testing"
+        "TestingSoftware"
     ) {}
 
     // Updated default parameters to match generate() logic
@@ -157,7 +154,6 @@ TEST_F(MusicXMLGeneratorTest, FullGeneration) {
         noteSequence, 
         "G", 
         2,
-        "4/4", 
         0,
         4
     ));
@@ -178,7 +174,6 @@ TEST_F(MusicXMLGeneratorTest, EmptySequenceGeneration) {
         emptySequence, 
         "G", 
         2, 
-        "4/4", 
         0, 
         4
     ));
