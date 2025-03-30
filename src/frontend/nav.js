@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const recordNavBtn = document.getElementById('record-nav-btn');
     const uploadBtn = document.getElementById('upload-btn');
     const recordBtn = document.getElementById('record-btn');
+    const pdfBtn = document.getElementById('pdf-btn');
     document.getElementById('sheet-music-button').addEventListener('click', () => {
     window.electronAPI.navigateToSheetMusic();
 });
@@ -57,6 +58,14 @@ document.addEventListener('DOMContentLoaded', () => {
             resetActiveNav();
             recordNavBtn.classList.add('active');
             window.electron.send('navigate-to-record');
+        });
+    }
+
+    if (pdfBtn) {
+        pdfBtn.addEventListener('click', () => {
+            resetActiveNav();
+            pdfBtn.classList.add('active');
+            window.electronAPI.navigateToSheetMusic();
         });
     }
 

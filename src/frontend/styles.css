@@ -70,6 +70,7 @@ body {
     font-size: 16px;
     cursor: pointer;
     transition: background-color 0.3s, color 0.3s;
+    min-width: 175px; /* Ensures buttons have a minimum width */
 }
 
 .btn-nav:hover {
@@ -153,7 +154,7 @@ body {
     border: 1px solid #ddd;
     border-radius: 10px;
     padding: 30px;
-    margin: 20px auto;
+    margin: 10px auto;
     max-width: 400px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
@@ -298,6 +299,20 @@ body {
 
 #record-btn:active {
     background-color: #3e8e41;
+    transform: translateY(0);
+}
+
+#pdf-btn {
+    background-color: #138496;
+}
+
+#pdf-btn:hover {
+    background-color: #117a8b;
+    transform: translateY(-2px);
+}
+
+#pdf-btn:active {
+    background-color: #117a8b;
     transform: translateY(0);
 }
 
