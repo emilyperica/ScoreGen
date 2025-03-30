@@ -78,16 +78,16 @@ std::map<std::string, std::string> parsePayload(const std::string& payload) {
 void processAudio(const std::map<std::string, std::string>& payload) {
     try {
         std::ifstream tempWav("temp.wav");
-        if (!tempWav.good()) {
-            std::cout << "Failed to generate MusicXML file. Temp WAV file not found." << std::endl;
-            return;
-        }
+        // if (!tempWav.good()) {
+        //     std::cout << "Failed to generate MusicXML file. Temp WAV file not found." << std::endl;
+        //     return;
+        // }
 
         TCHAR appdata[MAX_PATH] = {0};
-    SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
-    std::string fileName = std::string(appdata) + "\\ScoreGen\\temp.wav";
+        SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+        std::string fileName = std::string(appdata) + "\\ScoreGen\\temp.wav";
 
-    DSPResult res = dsp(fileName.c_str());
+        DSPResult res = dsp(fileName.c_str());
 
         std::string workNumber = (payload.find("workNumber") != payload.end() && !payload.at("workNumber").empty()) ? payload.at("workNumber") : "Unnumbered Work";
         std::string workTitle = (payload.find("workTitle") != payload.end() && !payload.at("workTitle").empty()) ? payload.at("workTitle") : "Untitled Work";
