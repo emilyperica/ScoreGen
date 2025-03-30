@@ -3,6 +3,23 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 
+const commandConfig = {
+    'processAudio': {
+        successMessage: 'MusicXML file generated successfully.',
+        failureMessage: 'Failed to generate MusicXML file.',
+        fileType: 'MusicXML',
+        destinationPage: 'src/frontend/upload.html',
+        pageName: 'View MusicXML'
+    },
+    'generatePDF': {
+        successMessage: 'PDF successfully generated',
+        failureMessage: 'LilyPond PDF generation failed',
+        fileType: 'PDF',
+        destinationPage: 'src/frontend/sheet-music.html',
+        pageName: 'View PDF'
+    }
+};
+
 let mainWindow;
 
 function createWindow() {
@@ -84,7 +101,8 @@ function spawnChildProcess() {
 }
 
 // Create a generic handler function
-function createBackendCommandHandler(command, successMessage, failureMessage) {
+function createBackendCommandHandler(command) {
+    const config = commandConfig[command];
     return async (event, payload) => {
         // Ensure payload is an object or array
         if (payload === null || payload === undefined) {
@@ -111,16 +129,25 @@ function createBackendCommandHandler(command, successMessage, failureMessage) {
             }, 30000);
 
             const onData = (data) => {
-                const text = data.toString();
-                accumulatedOutput += text;
-                console.log(`[Main] Child stdout accumulating: ${text}`);
+            const text = data.toString();
+            accumulatedOutput += text;
+            console.log(`[Main] Child stdout accumulating: ${text}`);
 
-                if (text.includes(successMessage)) {
-                    clearTimeout(timeout);
-                    childProc.stdout.off('data', onData);
-                    resolved = true;
-                    resolve(accumulatedOutput);
-                } else if (text.includes(failureMessage)) {
+            if (text.includes(config.successMessage)) {
+                clearTimeout(timeout);
+                childProc.stdout.off('data', onData);
+                resolved = true;
+                const res = dialog.showMessageBoxSync(mainWindow, {
+                    type: 'question',
+                    buttons: ['Yes', 'No'],
+                    title: 'View Generated File',
+                    message: `${config.fileType} generated successfully! Would you like to go to the ${config.pageName} tab to view it now?`
+                });
+                if (res === 0) {
+                    mainWindow.loadFile(config.destinationPage);
+                }
+                resolve(accumulatedOutput);
+                } else if (text.includes(config.failureMessage)) {
                     clearTimeout(timeout);
                     childProc.stdout.off('data', onData);
                     resolved = true;
@@ -139,22 +166,8 @@ function createBackendCommandHandler(command, successMessage, failureMessage) {
 app.whenReady().then(() => {
   childProc = spawnChildProcess();
 
-  // Use the generic handler for both operations
-  ipcMain.handle('process-audio', 
-    createBackendCommandHandler(
-      'processAudio',
-      'MusicXML file generated successfully.',
-      'Failed to generate MusicXML file.'
-    )
-  );
-
-  ipcMain.handle('generate-pdf',
-    createBackendCommandHandler(
-      'generatePDF',
-      'PDF successfully generated',
-      'LilyPond PDF generation failed'
-    )
-  );
+  ipcMain.handle('process-audio', createBackendCommandHandler('processAudio'));
+  ipcMain.handle('generate-pdf', createBackendCommandHandler('generatePDF'));
 
   createWindow();
 });

@@ -431,7 +431,7 @@ document.addEventListener('DOMContentLoaded', function() {
           const buffer = await wavBlob.arrayBuffer();
           await window.nodeAPI.saveTempWavFile(buffer);
           await window.electronAPI.generatePDF(formData);
-          alert('PDF generated successfully!');
+          //alert('PDF generated successfully!');
       } catch (err) {
           console.error('Error generating PDF:', err);
           alert('Failed to generate PDF');
