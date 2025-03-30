@@ -312,6 +312,17 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
 
+  function updateSpinnerText(messages, index = 0) {
+    const textElement = document.getElementById('spinner-text');
+    if (!textElement || textElement.dataset.stopped === 'true') return;
+    
+    textElement.textContent = messages[index];
+    
+    if (index < messages.length - 1) {
+        setTimeout(() => updateSpinnerText(messages, index + 1), 8000);
+    }
+}
+
   exportMusicXMLBtn.addEventListener('click', async () => {
     if (!recordedAudioBlob) {
       alert("No recording available to export!");
@@ -324,8 +335,19 @@ document.addEventListener('DOMContentLoaded', function() {
        
     const formData = Object.fromEntries(musicxmlData.entries());
     const spinner = document.getElementById('spinnerOverlay');
+    const spinnerText = document.getElementById('spinner-text');
+    spinnerText.dataset.stopped = 'false';
     modal.style.display = 'none';
+
     if (spinner) spinner.style.display = 'flex';
+
+    const messages = [
+      "Converting audio input to MusicXML...",
+      "Generating output file...",
+      "Crunching final numbers..."
+  ];
+  
+  updateSpinnerText(messages);
   
     console.log('[Renderer] Export button clicked.');
     try {
@@ -415,6 +437,7 @@ document.addEventListener('DOMContentLoaded', function() {
       e.stopPropagation();
   });
 
+
   // Handle PDF export
   exportPDFBtn.addEventListener('click', async () => {
       if (!musicxmlData) {
@@ -422,9 +445,19 @@ document.addEventListener('DOMContentLoaded', function() {
           return;
       }
       const spinner = document.getElementById('spinnerOverlay');
+      const spinnerText = document.getElementById('spinner-text');
+      spinnerText.dataset.stopped = 'false';
       const formData = Object.fromEntries(musicxmlData.entries());
       modal.style.display = 'none';
       spinner.style.display = 'flex';
+
+      const messages = [
+        "Converting audio input to MusicXML...",
+        "Generating output file...",
+        "Crunching final numbers..."
+    ];
+    updateSpinnerText(messages);
+
       
       try {
           const wavBlob = await convertBlobToWav(recordedAudioBlob);

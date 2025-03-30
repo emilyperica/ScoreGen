@@ -108,7 +108,7 @@ function createBackendCommandHandler(command, successMessage, failureMessage) {
                     childProc.stdout.off('data', onData);
                     reject(new Error('Timed out waiting for backend response.'));
                 }
-            }, 30000);
+            }, 50000);
 
             const onData = (data) => {
                 const text = data.toString();
