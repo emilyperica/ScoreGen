@@ -13,34 +13,6 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" 
         integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw" 
         crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <style>
-    /* Spinner Overlay Styles */
-    #spinnerOverlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0, 0, 0, 0.5);
-      display: none; /* Hidden by default */
-      align-items: center;
-      justify-content: center;
-      z-index: 2000;
-    }
-    /* Spinner animation */
-    .spinner {
-      border: 8px solid #f3f3f3;
-      border-top: 8px solid #3498db;
-      border-radius: 50%;
-      width: 60px;
-      height: 60px;
-      animation: spin 1s linear infinite;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-  </style>
 </head>
 <body>
     <!-- Custom Title Bar -->
@@ -122,8 +94,9 @@
     </div>
 
     <!-- Spinner overlay -->
-    <div id="spinnerOverlay">
+    <div id="spinnerOverlay" class="spinner-overlay">
         <div class="spinner"></div>
+        <div id="spinner-text" class="spinner-text"></div>
     </div>
 
     <div class="modal" id="musicxml-modal">
