@@ -1,5 +1,7 @@
 #include "xmlToPDF.h"
 #include "lilypond_paths.h"
+#include <shlobj.h>
+#include <filesystem>
 
 bool fileExists(const std::string& filePath) {
     std::ifstream file(filePath);
@@ -11,7 +13,9 @@ std::string getUniqueOutputPath(const std::string& baseName) {
     std::string outputPath;
     std::string outputFile;
 
-    std::string outputDir = "src\\frontend\\PDF_Outputs";
+    TCHAR appdata[MAX_PATH] = {0};
+    SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+    std::string outputDir = std::string(appdata) + "\\ScoreGen\\PDF_Outputs";
     if (_mkdir(outputDir.c_str()) == 0 || errno == EEXIST) {
     } else {
         std::cerr << "Error creating directory: " << outputDir << std::endl;
@@ -30,16 +34,21 @@ void convertMusicXMLToPDF(const std::string& musicxmlPath, const std::string& ou
     std::string baseName = outputPath.substr(0, outputPath.find_last_of('.'));
     std::string uniqueFileName = getUniqueOutputPath(baseName);
 
+    TCHAR appdata[MAX_PATH] = {0};
+    SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
+    std::string basePath = std::string(appdata) + "\\ScoreGen\\PDF_Outputs";
+
     std::string command1 = "\" \"" + LILYPOND_PYTHON + "\" \"" + MUSICXML2LY + "\" \"" 
                       + musicxmlPath + "\" -o \"" + baseName + ".ly\" \"";
+    std::cout << command1 << std::endl;
 
     if (std::system(command1.c_str()) != 0) {
         std::cerr << "Error: musicxml2ly conversion failed\n";
         return;
     }
-    std::string command2 = "\" \"" + LILYPOND_EXE + "\" --output=\"src\\frontend\\PDF_Outputs\\" 
-                      + uniqueFileName + "\" \"output.ly\" \"";
-    
+    std::string command2 = "\" \"" + LILYPOND_EXE + "\" --output=\"" + basePath 
+                      + "\\" + uniqueFileName + "\" \"output.ly\" \"";
+                      std::cout << command2 << std::endl;
     if (std::system(command2.c_str()) != 0) {
         std::cerr << "Error: LilyPond PDF generation failed\n";
         return;
