@@ -15,7 +15,7 @@ std::string getUniqueOutputPath(const std::string& baseName) {
 
     TCHAR appdata[MAX_PATH] = {0};
     SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
-    std::string outputDir = std::string(appdata) + "\\ScoreGen";
+    std::string outputDir = std::string(appdata) + "\\ScoreGen\\PDF_Outputs";
     if (_mkdir(outputDir.c_str()) == 0 || errno == EEXIST) {
     } else {
         std::cerr << "Error creating directory: " << outputDir << std::endl;
@@ -36,7 +36,7 @@ void convertMusicXMLToPDF(const std::string& musicxmlPath, const std::string& ou
 
     TCHAR appdata[MAX_PATH] = {0};
     SHGetFolderPath(NULL, CSIDL_APPDATA, NULL, 0, appdata);
-    std::string basePath = std::string(appdata) + "\\ScoreGen";
+    std::string basePath = std::string(appdata) + "\\ScoreGen\\PDF_Outputs";
 
     std::string command1 = "\" \"" + LILYPOND_PYTHON + "\" \"" + MUSICXML2LY + "\" \"" 
                       + musicxmlPath + "\" -o \"" + baseName + ".ly\" \"";

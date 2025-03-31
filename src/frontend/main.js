@@ -185,7 +185,7 @@ ipcMain.on('navigate-to-sheet-music', () => {
 });
 
 ipcMain.handle('get-pdf-list', async () => {
-  const pdfDir = path.join(__dirname, 'PDF_Outputs');
+  const pdfDir = path.join(app.getPath('userData'), 'PDF_Outputs');
   
   try {
     const exists = await fs.promises.access(pdfDir)
