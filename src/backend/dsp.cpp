@@ -57,7 +57,18 @@ std::vector<int> calculatePitchDurations(const std::vector<XMLNote>& xmlNotes) {
     
     for (const auto& xmlNote : xmlNotes) 
     {
-        int pitchClass = pitchClasses[xmlNote.pitch];
+        if (xmlNote.isRest) {
+            continue;
+        }
+
+        std::string pitchFullName = xmlNote.pitch;
+        if (xmlNote.alter == 1) {
+            pitchFullName = pitchFullName + "#";
+        } else if (xmlNote.alter == -1) {
+            pitchFullName = pitchFullName + "b";
+        }
+
+        int pitchClass = pitchClasses[pitchFullName];
         durations[pitchClass] += xmlNote.duration;
     }
     
@@ -129,6 +140,7 @@ DSPResult dsp(const char* infilename) {
     // Extract key signature
     std::vector<int> durations = calculatePitchDurations(result.XMLNotes);
     std::string detectedKey = findKey(durations);
+    std::cout << "Detected Key: " << detectedKey << std::endl;
     result.keySignature = convertToKeySignature(detectedKey);
 
     return result;
