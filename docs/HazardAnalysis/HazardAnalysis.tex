@@ -42,6 +42,7 @@
 28-10-2024 & Jackson & Issue 123: peer review\\
 30-01-2025 & Jackson & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue 128}\\
 30-01-2025 & Jackson & \href{https://github.com/emilyperica/ScoreGen/issues/124}{Issue 124}\\
+01-04-2025 & Emily & \href{https://github.com/emilyperica/ScoreGen/issues/310}{Issue 310}\\
 \bottomrule
 \end{tabularx}
 \end{table}
@@ -139,23 +140,23 @@ Users have access to compatible devices and equipment necessary for the applicat
   \hline
     \textbf{Design Function} & \textbf{Failure Modes} & \textbf{Effects of \newline Failure} & \textbf{Causes of \newline Failure} & \textbf{Recommended Action} & \textbf{SR} & \textbf{Ref.} \\
   \hline
-    Generate sheet music & Sheet music flashes on the screen & Potential trigger for users with epilepsy. & Incorrect rendering or scrolling through the sheet music & Limit screen effects that could potentially flicker & PR-SC1 & \\
+    Generate sheet music & Sheet music flashes on the screen & Potential trigger for users with epilepsy. & Incorrect rendering or scrolling through the sheet music & Limit screen effects that could potentially flicker & \hyperref[PR-SC1]{PR-SC1} & \\
   \cline{2-7}
     & A bad microphone causes notes to be off due to pitch drift & Embarassment for the user & The user microphone has pitch drift (mechanical issue) & Point to troubleshooting steps or suggest that the User should acquire a new/higher quality microphone & N/A & \\
   \hline
     Process \newline audio & Audio improperly recorded & Loss of musical performance & Microphone error & Notify the user that there is a microphone issue & N/A & \\
   \cline{4-7}
-    & & & Signal processing error & Notify the user that a signal processing error that has occurred & FR-SP4 & \\
+    & & & Signal processing error & Notify the user that a signal processing error that has occurred & \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS/SRS.pdf}{FR-SP4} & \\
   \hline
-    File \newline functions & Files outside scope of the application are deleted & Hardware failure if BIOS and system critical files are deleted & Improper file I/O actions & Limit system access & S-P1 & \\
+    File \newline functions & Files outside scope of the application are deleted & Hardware failure if BIOS and system critical files are deleted & Improper file I/O actions & Limit system access & \hyperref[S-P1]{S-P1} & \\
   \cline{2-7}
-    & Files outside scope of the application are modified & Hardware failure if BIOS and system critical files are modified & Improper file I/O actions & Limit system access & S-P1 & \\
+    & Files outside scope of the application are modified & Hardware failure if BIOS and system critical files are modified & Improper file I/O actions & Limit system access & \hyperref[S-P1]{S-P1} & \\
   \hline
     Output \newline audio & Overly loud audio emitted & Hearing damage & Volume settings improperly calibrated & Advise user to check their device's volume settings & N/A & \\
   \cline{3-7}
     & & User is surprised and has a heart attack & Volume settings improperly calibrated & Advise user to check their device's volume settings & N/A & \\ 
   \hline
-    Application runtime & App crashes unexpectedly & User loses progress & Power outage, OOM error, device overheats, malware & Regular automated saving, if allowed by user & PR-RFT3 & \\
+    Application runtime & App crashes unexpectedly & User loses progress & Power outage, OOM error, device overheats, malware & Regular automated saving, if allowed by user & \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS/SRS.pdf}{PR-RFT3} & \\
   \hline
 \end{longtable}
 
@@ -170,15 +171,15 @@ We will aim to fulfill every one of the security and safety-critical requirement
 
 \subsection{Safety-Critical Requirements}
 \begin{itemize}
-    \item \textbf{PR-SC1 Epilepsy Safety}: \textit{High priority}, as it ensures the app’s visual safety for users from the start. Compliance with WCAG 2.1 should be confirmed early on to prevent any risks during development.
-    \item \textbf{PR-SC2 Instrument Input Setup}: \textit{High priority} for both user safety and accurate functionality, ensuring users can set up their instruments without misconfiguration. This interactive guide can be iteratively refined through user testing early in development.
+    \item \textbf{PR-SC1 Epilepsy Safety}: \textit{High priority}, as it ensures the app’s visual safety for users from the start. Compliance with WCAG 2.1 should be confirmed early on to prevent any risks during development. \label{PR-SC1}
+    \item \textbf{PR-SC2 Instrument Input Setup}: \textit{High priority} for both user safety and accurate functionality, ensuring users can set up their instruments without misconfiguration. This interactive guide can be iteratively refined through user testing early in development. \label{PR-SC2}
 \end{itemize}
 
 \subsection{Privacy Requirements}
 \begin{itemize}
     \item \textbf{S-P2 PII}: \textit{High priority}, as ensuring the app does not collect any Personal Identifiable Information aligns with the app’s privacy-first design. This requirement should be validated as soon as any data processing is introduced.
     \item \textbf{S-P3 Input Data}: \textit{Low priority}, focusing on ensuring that temporary files are properly cleared after processing is complete. Implementing this is less critical since we will not be storing any data outside of the user’s system.
-    \item \textbf{S-P1 Data Storage}: \textit{Medium priority}, ensuring that user-generated data is stored in local, user-chosen locations. This feature should be verified once output functions are introduced.
+    \item \textbf{S-P1 Data Storage}: \textit{Medium priority}, ensuring that user-generated data is stored in local, user-chosen locations. This feature should be verified once output functions are introduced. \label{S-P1}
 \end{itemize}
 
 \subsection{Access Requirements}
