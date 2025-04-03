@@ -961,60 +961,6 @@ N/A: This system does not store data and thus will not be susceptible to maleveo
 
 \subsection{Reusable Components}
 The primary motivation for this capstone project is to enhance our technical skills by building key components ourselves, rather than relying heavily on pre-existing solutions. By developing our own algorithms for real-time transcription, signal processing, and music notation, we will gain a deeper understanding of the challenges and intricacies of these areas. However, there are some components and methods, which could be extremely useful, listed below.
-
-\subsubsection*{Core Signal Processing Algorithms/Mathematical Framework}
-\textbf{Description}: Signal processing algorithms are essential for analyzing audio input and extracting meaningful data for transcription. A mathematical framework for handling audio signals, such as Fourier transforms, spectral analysis, and pitch detection, is crucial for accurate transcription.\\
-\textbf{Rationale for Limited Use}: Developing our signal processing algorithms will provide valuable learning opportunities and insights into the complexities of audio analysis. While existing libraries and tools offer robust signal processing capabilities, building these algorithms from scratch will deepen our understanding of the underlying principles.\\
-\newline
-The following equations define the three major parts of the standard signal processing algorithms that will likely be used in the project:
-\begin{enumerate}
-  \item \textbf{The Input Signal:}
-  Below is a generic definition of a signal to provide an example. 
-  \begin{framed}
-    \noindent Let the following define an input signal $x$ as a function: 
-    \begin{equation}
-      x : \mathbb{Z} \to \mathbb{R}
-    \end{equation}
-    where the signal has finite energy, i.e.,
-    \begin{equation}
-      E = \sum_{n=-\infty}^{\infty} |x[n]|^2 < \infty
-    \end{equation}
-  \end{framed}
-  \item \textbf{The Window Function}: A function that is zero-valued outside of a specific interval, to be used for the reduction of spectral leakage. The windowing
-  function $w(n)$ localizes the effect of the Fourier transform to a finite segment/frame. It allows the capturing of the evolution of frequency content over a specfic time range ~\cite{windows-harmonic-analysis}.
-  \begin{framed}
-    \noindent For a window length $N\in\mathbb{Z}^{+}$ and $N\geq1$, the Hanning window is defined over: 
-    \begin{equation}
-      w : \{0, 1, ..., N-1\} \to \mathbb{R}
-    \end{equation}
-    where the window function is defined as:
-    \[ w(n) = \begin{cases} 
-          0.5 - 0.5\cos\left(\frac{2\pi n}{N-1}\right) & 0 \leq n \leq N-1 \\
-          0.0 & $else$
-       \end{cases}
-    \]
-  \end{framed}
-  \item \textbf{The Short-Time Fourier Transform}: A mathematical transformation that decomposes a function of time into its constituent frequencies.
-  The use of the window function lends itself to processing the signal in overlapping segments/frames ~\cite{onset-detection, ZhouRiess}.\\
-  \begin{framed}
-    Let the hop size be $H\in\mathbb{Z}^{+}$. For each frame at index $m$, we can get a frame of the signal:
-    \begin{equation}
-      \{x [ mH + n ] : n = 0, 1, ..., N-1\}
-    \end{equation}
-    The Fourier transform of the windowed frame is defined as:
-    \begin{equation}
-      STFT\{ x \} : \mathbb{Z} \times \{n = 0, 1, ..., N-1\} \to \mathbb{C}
-    \end{equation}
-    and is given by:
-    \begin{equation}
-      X(m, k) = \sum_{n=0}^{N-1} x[mH + n]w[n]e^{-j\frac{2\pi}{N}kn}
-    \end{equation}
-    where \\
-    $m \in \mathbb{Z}$ is the index of a frame and,\\
-    $k \in \{0, 1, ..., N-1\}$ is the index of a particular frequency bin.
-  \end{framed}
-\end{enumerate}
-
 \subsubsection*{PortAudio (for Audio Input/Output)~\cite{portaudio}}
 \textbf{Description}: PortAudio is a widely used open-source library for handling audio input and output across multiple platforms.\\
 \textbf{Rationale for Limited Use}: While audio capture and output are critical components, reinventing this from scratch would require extensive low-level work that would detract from our focus on learning signal processing and transcription. Therefore, we plan to use PortAudio for audio input/output while building the higher-level processing systems ourselves.\\
@@ -1267,7 +1213,69 @@ To ensure sufficient resources for product use, the development team will provid
 \bibliography{references}
 
 \newpage{}
-\section*{Appendix --- Reflection}
+\section*{Appendix A --- Formal Math Specifications}
+This appendix provides detailed mathematical formulations for two pitch detection 
+methodologies that may be employed for this project's signal processing: autocorrelation-based and Fourier-based techniques. These specifications are general
+and intended to be used as a simplified overview of the algorithms. The actual implementation may vary based on emprical performance.
+\subsection*{A.1 Autocorrelation-based Pitch Detection}
+\textbf{Description:} The autocorrelation method is a time-domain approach that analyzes the periodicity of a signal to determine 
+its fundamental frequency. It does so by computing the correlation between the signal and time-shifted versions of itself over a 
+range of lags. The lag corresponding to the highest normalized correlation is identified as the pitch period, from which the 
+fundamental frequency is derived.\\
+The formulation below is based on the autocorrelation technique for pitch detection as detailed in \cite{Rabiner-use} and further discussed in \cite{Rabiner-digital}.\\
+\newline
+\textbf{Mathematical Formulation:}  
+Let \( x[n] \) be a discrete-time signal defined for \( n = 0, 1, \dots, N-1\). The total energy of the signal is computed as:
+\[r_0 = \sum_{n=0}^{N-1} x[n]^2\]
+For a given lag \( \ell \), the autocorrelation function is defined as:
+\[r(\ell) = \sum_{n=0}^{N-\ell-1} x[n]\,x[n+\ell]\]
+The normalized autocorrelation is then given by:
+\[R(\ell) = \frac{r(\ell)}{r_0}\]
+The algorithm searches for the lag \( \ell^* \) within a predefined range \([\ell_{\min}, \ell_{\max}]\) that maximizes \( R(\ell) \):
+\[\ell^* = \operatorname*{arg\,max}_{\ell \in [\ell_{\min}, \ell_{\max}]} R(\ell)\]
+If the maximum normalized autocorrelation \( R(\ell^*) \) exceeds a threshold (e.g., 0.5), the fundamental frequency \( f_0 \) is estimated by:
+\[f_0 = \frac{f_s}{\ell^*}\]
+where \( f_s \) is the sampling rate. If \( R(\ell^*) < 0.5 \), no clear pitch is detected (i.e., \( f_0 = 0 \)).\\
+\newline
+\textbf{Parameter Constraints:}  
+The search range for \(\ell\) is derived from the desired frequency bounds:
+\[\ell_{\max} = \min\left( N-1,\; \left\lfloor \frac{f_s}{f_{\min}} \right\rfloor \right), \quad
+\ell_{\min} = \max\left( 1,\; \left\lfloor \frac{f_s}{f_{\max}} \right\rfloor \right)\]
+with typical values \( f_{\min} = 100\,\text{Hz} \) and \( f_{\max} = 2000\,\text{Hz} \).\\
+\newline
+\textbf{Relevant Details:}  
+To reduce computational load, the lag \( \ell \) may be incremented in steps (e.g., by 2 samples). The procedure returns the fundamental frequency \( f_0 \) if a valid peak is found; otherwise, it indicates the absence of a clear pitch by returning 0.
+
+\subsection*{A.2 Fourier-based Pitch Detection}
+\textbf{Description:} The Fourier-based method analyzes the frequency content of a signal using the Fast Fourier Transform (FFT).
+It computes the frequency spectrum of the signal, identifying the peak frequency as the pitch.\\
+\newline
+\textbf{Mathematical Formulation:} The following describes the three major mathematical components that are considered for this project's signal processing framework:
+\begin{enumerate}
+  \item \textit{The Input Signal:}  
+  Let \( x: \mathbb{Z} \to \mathbb{R} \) be a discrete-time signal with finite energy:
+  \[E = \sum_{n=-\infty}^{\infty} |x[n]|^2 < \infty\]
+  This formalizes the representation of our raw audio data.
+
+  \item \textit{The Window Function:}  
+  To localize the Fourier analysis to specific segments and reduce spectral leakage, a window function is applied \cite{windows-harmonic-analysis}. For a window length \( N \in \mathbb{Z}^+ \) (with \( N \geq 1 \)), we define the Hanning window \( w: \{0, 1, \dots, N-1\} \to \mathbb{R} \) as:
+  \[
+  w(n) = 
+  \begin{cases}
+  0.5 - 0.5\cos\left(\frac{2\pi n}{N-1}\right), & 0 \leq n \leq N-1, \\
+  0, & \text{otherwise}
+  \end{cases}
+  \]
+
+  \item \textit{The Short-Time Fourier Transform (STFT):}  
+  The STFT converts segments of the time-domain signal into the frequency domain, enabling the analysis of evolving spectral content \cite{onset-detection, ZhouRiess}. Given a hop size \( H \in \mathbb{Z}^+ \), each frame of the signal is defined as:
+  \[\{ x[mH+n] : n = 0, 1, \dots, N-1 \}\]
+  where \( m \in \mathbb{Z} \) is the frame index. The Fourier transform of the windowed frame is computed by:
+  \[X(m,k) = \sum_{n=0}^{N-1} x[mH+n]\,w(n)\, e^{-j\frac{2\pi}{N}kn}\]
+  with \( k \in \{0, 1, \dots, N-1\} \) representing the frequency bin index.
+\end{enumerate}
+\newpage{}
+\section*{Appendix B --- Reflection}
 
 \input{../Reflection.tex}
 
