@@ -13,6 +13,7 @@
 \usepackage{cite}
 \usepackage{enumitem}
 \usepackage{array} % Optional: For better column formatting
+\usepackage{float}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{framed}
@@ -352,12 +353,18 @@ on the application:
 \section{The Scope of the Work}
 \subsection{The Current Situation}
 The following activity diagram illustrates the workflow of manual score sheet generation, the process
-which the application intends to improve upon.\\\\
-\includegraphics[width=\textwidth]{SRS-manual-score-process-revised.png}
+which the application intends to improve upon.
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{SRS-manual-score-process-revised.png}
+  \caption{Score sheet generation activity diagram}
+\end{figure}
 \subsection{The Context of the Work}
 The diagram below shows the context in which the development of the application is taking place. It shows
-adjacent systems and their associated inputs and outputs as it relates to the application and it's work. \\\\
-\includegraphics[width=\textwidth]{SRS-contex-diagram-revised.png}
+adjacent systems and their associated inputs and outputs as it relates to the application and it's work.
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{SRS-contex-diagram-revised.png}
+  \caption{Context diagram}
+\end{figure}
 
 \subsection{Work Partitioning}
 The table below summarizes the business events that might be triggered by adjacent organizations
@@ -390,15 +397,20 @@ or application users themselves.\\
 \subsection{Specifying a Business Use Case (BUC)}
 The use case diagram below has been used to specify the details of the BUC 
 associated with BE1.\\
-\includegraphics[width=\textwidth]{BUC-revised.png}
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{BUC-revised.png}
+  \caption{Business use case diagram}
+\end{figure}
 
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
 A first-cut UML class diagram has been used to model the data entities relevant to the scope of the work. This
-abstractly describes the relationship between these entities. For definitions and attributes see section \ref{dataDict} Data Dictionary.\\
-\includegraphics[scale=0.75]{SRS-data-model.png}
-
-\subsection{Data Dictionary} \label{dataDict}
+abstractly describes the relationship between these entities. For definitions and attributes see section 7.2 Data Dictionary. \\
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{SRS-data-model.png}
+  \caption{UML business data model}
+\end{figure}
+\subsection{Data Dictionary}
 \begingroup
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{|>{\raggedright}p{3cm}|>{\raggedright}p{5.5cm}|>{\raggedright\arraybackslash}p{4cm}|}
@@ -445,9 +457,14 @@ abstractly describes the relationship between these entities. For definitions an
 
 \section{The Scope of the Product}
 \subsection{Product Boundary}
-Input: ScoreGen will be designed to take in and process music data which can be converted to a MIDI or musicXML file representation. The audio should not have excessive noise, or other degradation of quality which could impact the ability to clearly distinguish notes. The input will also be intended to be mono or polyphonic with a singular instrument. The input volume should remain consistent and sufficiently loud, and the user microphone should be correctly calibrated to ensure accuracy by avoiding pitch drift.
-\\
-Output: The resulting music file will aim to capture the pitch and length of individual notes or chords, but will not capture accents, dynamics, or tempo markings, as well as other advanced elements. If the system detects that a note cannot be reliably transcribed (due to unclear input), it will leave that note blank on the sheet and prompt the user to review the section manually.
+\textbf{Input}: ScoreGen will be designed to take in and process music data which can be converted to a MIDI or musicXML file representation. The audio should not have excessive noise, or other degradation of quality which could impact the ability to clearly distinguish notes. The input will also be intended to be mono or polyphonic with a singular instrument. The input volume should remain consistent and sufficiently loud, and the user microphone should be correctly calibrated to ensure accuracy by avoiding pitch drift.
+\newline
+\textbf{Output}: The resulting music file will aim to capture the pitch and length of individual notes or chords, but will not capture accents, dynamics, or tempo markings, as well as other advanced elements. If the system detects that a note cannot be reliably transcribed (due to unclear input), it will leave that note blank on the sheet and prompt the user to review the section manually.
+\begin{figure}[H]
+  \includegraphics[width=\textwidth]{SRS-product-boundary.png}
+  \caption{Product boundary diagram}
+\end{figure}
+
 \subsection{Product Use Case}
 \subsubsection*{UC1: Record and Transcribe}
 \textbf{Description:} Musician plays an instrument, and the system transcribes it into sheet music in real-time. \\
@@ -542,7 +559,6 @@ Output: The resulting music file will aim to capture the pitch and length of ind
     \item Musician can pause or stop playback to make corrections.
 \end{itemize}
 \textbf{Postconditions:} Musician reviews the transcription by listening to the played-back notes.
-
 
 \subsection{Individual Product Use Cases (PUC's)}
 \subsubsection*{PUC1: Record Instrument and Transcribe Notes}
