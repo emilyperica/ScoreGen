@@ -24,6 +24,7 @@
 \textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
 \midrule
 2024/09/24 & Mark, Ian, Emily, Jackson & Initial Revision\\
+2025/04/04 & Mark & Development Plan Revision 1 feedback \href{https://github.com/emilyperica/ScoreGen/issues/306}{Issue \#306}\\
 ... & ... & ...\\
 \bottomrule
 \end{tabularx}
@@ -155,13 +156,45 @@ every SFWRENG 4G06A/B lecture to track attendance and team contribution. There a
 opened by the team, each having their own template: 
 \begin{itemize}
   \item Lecture
+  \begin{itemize}
+    \item Date and topic
+    \item Attendance tracker
+    \item Key points discussed
+    \item Action items for team
+  \end{itemize}
   \item Meeting
   \begin{itemize}
     \item General team meetings
+      \begin{itemize}
+        \item Date, time, location
+        \item Attendees
+        \item Agenda items
+        \item Discussion points
+        \item Assigned action items
+      \end{itemize}
     \item Supervisor meetings
+      \begin{itemize}
+        \item Date, time, location
+        \item Progress update
+        \item Technical questions
+        \item Next steps
+      \end{itemize}
     \item TA meetings
+      \begin{itemize}
+        \item Date, time
+        \item Current concerns
+        \item Feedback received
+        \item Required changes
+      \end{itemize}
   \end{itemize}
   \item Peer Review
+  \begin{itemize}
+    \item PR number and description
+    \item Code quality checklist
+    \item Testing verification
+    \item Documentation review
+    \item Suggested changes
+  \end{itemize}
 \end{itemize}
 The use of these templates standardize issue creation and streamlines project progression.
 
@@ -227,6 +260,7 @@ When creating an issue in the Capstone Kanban Board, there are two possible work
   \begin{enumerate}
     \item Issue begins in 'To Do'
     \item One or more appropriate labels are assigned - ‘documentation’, ‘deliverable’, ‘enhancement’, ‘bug’, 'DevOps',and potentially others as the need arises.
+    \item The tags will be used to filter issues on the Kanban board, and help ensure even distribution of workload in a more precise way than number of issues. Labels will also help inform task priority.
     \item If the issue does not have the ‘deliverable’ label AND is not time sensitive, it will be moved to ‘Backlog’.
     \begin{enumerate}
       \item The issue will move out of 'Backlog' and into 'To Do' if the issue becomes time sensitive or the team has the time/resources to take it on.
@@ -238,6 +272,7 @@ When creating an issue in the Capstone Kanban Board, there are two possible work
     \item The issue moves to ‘In Review’ once a PR has been made and approval is requested from the team.
     \item The issue moves to ‘Done’ and can be closed once all associated tasks have been completed, including all related PRs being merged/closed.
   \end{enumerate}
+
 \end{enumerate}
 
 In addition to the above usage of the Kanban board, all course deliverables are documented as milestones in the repository and will have issues assigned as necessary. Each milestone has a due date and a description of the tasks to be completed.
@@ -318,9 +353,9 @@ method was to create an issue for each section of the document, but the granular
 
 The Proof of Concept will be a demonstration of the team’s ability to develop the most crucial aspect of the final product, which is to take in a single note and output the note pitch and length. If successfully performed, it will clearly show that a viable product can be produced given enough time. 
 
-The main risk associated with the success of the project is potential nuance introduced by human performance on instruments. Determining the time signature and differentiating between similar pitches such as \( A\sharp \) and \( B\flat \) could be potentially difficult tasks. It will become necessary to test and benchmark accuracy during audio edge cases. 
+The main risk associated with the success of the project is potential nuance introduced by human performance on instruments. The product will have to adjust its notation based on parameters such as key signature and detected tempo to create most likely reasonable interpretations of music. It will become necessary to test and benchmark accuracy during audio edge cases. 
 
-The Proof of Concept will help dispel concerns by allowing the team to show the product's potential for accurate signal processing.
+The Proof of Concept will help dispel concerns by allowing the team to show the product's potential for accurate signal processing. For the sake of minimum viable product, more complex parameters such as key signautre and tempo will be assumed, however the task of determining note pitch and duration will be completed.
 
 Given the ability to accurately process audio, the completion of the product will be simplified, as the focus can shift towards construction of a user interface and adding features while optimizing performance and accuracy.
 
@@ -341,9 +376,9 @@ Given the ability to accurately process audio, the completion of the product wil
   signal processesing.\\
   \hline
   Sound File Conversion & libsndfile  & A specific library that was researched and will likely be used
-  for sampled sound file format conversion.\\
+  for sampled sound file format conversion. One option is the libsndfile C library.\\
   \hline
-  Code Formatting & Linter(s) &  Specific tools are undetermined at this stage as it is language dependent. 
+  Code Formatting & Linter(s) &  Specific tools are undetermined at this stage as it is language dependent. One potential option is \href{https://clang.llvm.org/extra/clang-tidy/}{clang-tidy}
   To be used with CI workflows to format code.\\
   \hline
   Testing & MATLAB unittest/automation, CMake, Unity Test, etc.  & Specific tools are undetermined, likely a unit testing framework
