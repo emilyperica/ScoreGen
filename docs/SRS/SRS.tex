@@ -66,8 +66,9 @@
 30/01/2025 & 0.2 & \href{https://github.com/emilyperica/ScoreGen/issues/92}{Issue \#92}\\
 30/01/2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue \#128}\\
 03/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/309}{Issue \#309}\\
-04/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/139}{Issue \#139}\\
-04/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/141}{Issue \#141}\\
+04/04/2025 & 1.1 & \href{https://github.com/emilyperica/ScoreGen/issues/139}{Issue \#139}\\
+04/04/2025 & 1.2 & \href{https://github.com/emilyperica/ScoreGen/issues/141}{Issue \#141}\\
+04/04/2025 & 1.3 & \href{https://github.com/emilyperica/ScoreGen/issues/307}{Issue \#307}\\
 \bottomrule
 \end{tabularx}
 
@@ -909,7 +910,7 @@ N/A: This system does not store data and thus will not be susceptible to maleveo
 
 \subsubsection*{CR-CR1 Musical Convention} \label{CR-CR1}
 \textbf{Requirement: }The application will focus on Western music notation, commonly used in the United States and other English-speaking regions. 
-\textbf{Fit Criterion:} The application must accurately represent Western music notation standards, allowing users to create and view sheet music that adheres to these conventions.
+\textbf{Fit Criterion:} The application must accurately represent Western music notation standards ~\cite{music-engraving}, allowing users to create and view sheet music that adheres to these conventions.
 
 \subsubsection*{CR-CR2 Expected music theory level of users} \label{CR-CR2}
 \textbf{Requirement: }It is designed for users with a basic to intermediate understanding of Western music theory, who can read standard sheet music, though advanced expertise is not required.
@@ -919,13 +920,13 @@ N/A: This system does not store data and thus will not be susceptible to maleveo
 \subsection{Legal Requirements}
 
 \subsubsection*{CR-LR1 Copyright issues} \label{CR-LR1}
-\textbf{Requirement: }The app’s legality is primarily concerned with copyright issues surrounding the transcription of copyrighted music. It will generate sheet music based on audio input, and the focus will be on transcription of musical elements, which is generally allowed under copyright law, as it involves interpretation rather than direct reproduction of the original work. Users will be advised to ensure their audio inputs do not violate copyright restrictions.
+\textbf{Requirement: }The app’s legality is primarily concerned with copyright issues surrounding the transcription of copyrighted music ~\cite{copyright-act}. It will generate sheet music based on audio input, and the focus will be on transcription of musical elements, which is generally allowed under copyright law, as it involves interpretation rather than direct reproduction of the original work. Users will be advised to ensure their audio inputs do not violate copyright restrictions.
 \textbf{Fit Criterion:} The application must include a disclaimer regarding copyright laws and provide users with clear instructions on ensuring their audio inputs comply with copyright restrictions.
 
 \subsection{Standards Compliance Requirements}
 
 \subsubsection*{CR-SCR1 Technological Standards} \label{CR-SCR1}
-\textbf{Requirement: }The application will follow established music technology standards, including MusicXML for exporting sheet music. Any third-party libraries used will be reviewed to ensure compliance with their licensing terms.
+\textbf{Requirement: }The application will follow established music technology standards, including MusicXML for exporting sheet music ~\cite{musicxml-interchange}. Any third-party libraries used will be reviewed to ensure compliance with their licensing terms.
 \textbf{Fit Criterion:} The application must successfully export sheet music in MusicXML format without errors, and all third-party libraries must be documented for compliance verification.
 
 
