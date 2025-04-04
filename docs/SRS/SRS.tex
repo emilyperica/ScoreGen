@@ -232,10 +232,8 @@ involved in the Project}
 \hline
 \endhead
 
-\hline
 \endfoot
 
-\hline
 \endlastfoot
 
 Accidental & A symbol used to raise or lower the pitch of a note from its natural state, such as a sharp, flat, or natural. \\ 
@@ -300,7 +298,7 @@ UI & User Interface. \\
 \hline
 WAV & Waveform Audio File Format. \\ 
 \hline
-
+\caption{Glossary of Terms}
 \end{longtable}
 
 \section{Relevant Facts And Assumptions}
@@ -366,6 +364,8 @@ The table below summarizes the business events that might be triggered by adjace
 or application users themselves.\\
 \begingroup
 \renewcommand{\arraystretch}{1.25}
+\begin{table}[h!]
+\centering
 \begin{tabular}{|>{\raggedright}p{3cm}|>{\raggedright}p{4.25cm}|>{\raggedright\arraybackslash}p{6cm}|}
   \hline
   EVENT NAME & INPUT/OUTPUT & SUMMARY OF BUC \\
@@ -383,6 +383,8 @@ or application users themselves.\\
   BE6. Share sheet music. & Digital files (OUT)  & Output the exportable file format (see BE4.).\\
   \hline
 \end{tabular}
+\caption{Business Use Cases and Events}
+\end{table}
 \endgroup
 
 \subsection{Specifying a Business Use Case (BUC)}
@@ -437,6 +439,7 @@ abstractly describes the relationship between these entities. For definitions an
   \hline
   fileType & The format that the exportable output file will use & Attribute/Element \\
   \hline
+  \caption{Data Dictionary: Data Inputs and Outputs}
 \end{longtable}
 \endgroup
 
@@ -1239,102 +1242,102 @@ document. Anticipated changes can be found in the \href{https://github.com/emily
   & \rotatebox{90}{Goal 1  } & \rotatebox{90}{Goal 2  } & \rotatebox{90}{Goal 3  } & \rotatebox{90}{Goal 4  } & \rotatebox{90}{Goal 5  } & \rotatebox{90}{AC1} & \rotatebox{90}{AC2} & \rotatebox{90}{AC3} & \rotatebox{90}{AC4} & \rotatebox{90}{AC5} \\ \hline
   \endhead
   
- % Functional Requirements - Audio Input Handling
-FR-AI1 & x &  &  &  &  &  &  &  &  &  \\ \hline
-FR-AI2 & x &  &  & x &  &  &  &  &  &  \\ \hline
-FR-AI3 & x &  &  & x &  &  &  &  &  &  \\ \hline
-FR-AI4 &  &  &  & x &  &  &  &  &  &  \\ \hline
-% Signal Processing
-FR-SP1 & x &  &  &  &  &  &  &  &  &  \\ \hline
-FR-SP2 & x & x &  &  &  &  &  &  &  &  \\ \hline
-FR-SP3 & x & x &  &  &  &  &  &  &  &  \\ \hline
-FR-SP4 & x & x &  &  &  &  &  &  &  &  \\ \hline
-FR-SP5 & x & x &  &  &  &  &  &  &  &  \\ \hline
-FR-SP6 & x & x &  &  &  &  &  &  &  &  \\ \hline
-% Sheet Music Generation
-FR-SMG1 &  & x & x &  &  &  &  &  &  &  \\ \hline
-FR-SMG2 &  & x & x &  &  &  &  &  &  &  \\ \hline
-FR-SMG3 &  & x &  & x &  &  &  &  &  &  \\ \hline
-% User Interface
-FR-UI1 &  &  &  & x &  &  &  &  &  &  \\ \hline
-FR-UI2 &  &  &  & x &  &  &  &  &  &  \\ \hline
-FR-UI3 &  &  &  & x &  &  &  &  &  &  \\ \hline
-FR-UI4 &  &  &  & x &  &  &  &  &  &  \\ \hline
-% Save and Load
-FR-SL1 &  & x & x & x &  &  &  &  &  &  \\ \hline
-FR-SL2 &  & x & x & x &  &  &  &  &  &  \\ \hline
-
-% Look and Feel Requirements
-LF-A1 &  &  &  & x &  &  &  &  &  &  \\ \hline
-LF-A2 &  &  &  & x &  &  &  &  &  &  \\ \hline
-LF-A3 &  & x &  & x &  &  &  &  &  &  \\ \hline
-LF-S1 &  &  &  & x &  &  &  &  &  &  \\ \hline
-
-% Usability and Humanity Requirements
-UH-EOU1 &  &  &  & x &  &  &  &  &  &  \\ \hline
-UH-PI1  &  &  &  & x &  &  &  &  &  &  \\ \hline
-UH-L1   &  & x & x & x &  &  &  &  &  &  \\ \hline
-UH-UP1  &  & x &  & x &  &  &  &  &  &  \\ \hline
-UH-UP2  &  &  &  & x &  &  &  &  &  &  \\ \hline
-UH-A1   &  &  &  & x &  &  &  &  &  &  \\ \hline
-
-% Performance Requirements
-PR-SL1  & x &  &  & x &  &  &  &  &  &  \\ \hline
-PR-SL2  & x & x & x &  &  &  &  &  &  &  \\ \hline
-PR-SC1  &  &  &  & x &  &  &  &  &  &  \\ \hline
-PR-SC2  & x &  &  & x &  &  &  &  &  &  \\ \hline
-PR-PA1  & x & x &  & x &  &  &  &  &  &  \\ \hline
-PR-PA2  & x & x &  & x &  &  &  &  &  &  \\ \hline
-PR-RFT1 & x &  &  & x &  &  &  &  &  &  \\ \hline
-PR-RFT2 & x & x & x & x &  &  &  &  &  &  \\ \hline
-PR-RFT3 & x & x & x & x &  &  &  &  &  &  \\ \hline
-PR-RFT4 & x &  &  & x &  &  &  &  &  &  \\ \hline
-PR-RFT5 & x & x & x &  &  &  &  &  &  &  \\ \hline
-PR-RFT6 & x &  &  & x &  &  &  &  &  &  \\ \hline
-PR-RFT7 & x & x & x & x &  &  &  &  &  &  \\ \hline
-PR-C1   & x & x & x &  &  &  &  &  &  &  \\ \hline
-PR-C2   & x & x & x & x &  &  &  &  &  &  \\ \hline
-PR-SE1  & x & x & x & x & x &  &  &  &  &  \\ \hline
-PR-SE2  &  &  &  &  & x &  &  &  &  &  \\ \hline
-PR-SE3  & x & x &  &  &  &  &  &  &  &  \\ \hline
-PR-L1   &  &  &  &  & x &  &  &  &  &  \\ \hline
-
-% Operational and Environmental Requirements
-OE-EP1  & x & x &  & x &  &  &  &  &  &  \\ \hline
-OE-EP2  & x & x &  &  &  &  &  &  &  &  \\ \hline
-OE-EP3  &  &  &  & x & x &  &  &  &  &  \\ \hline
-OE-EP4  &  &  &  & x & x &  &  &  &  &  \\ \hline
-OE-WE1  &  &  &  &  & x &  &  &  &  &  \\ \hline
-OE-IA1  & x &  &  &  & x &  &  &  &  &  \\ \hline
-OE-IA2  &  &  & x &  &  &  &  &  &  &  \\ \hline
-OE-IA3  &  &  & x &  &  &  &  &  &  &  \\ \hline
-OE-P1   &  &  &  & x &  &  &  &  &  &  \\ \hline
-OE-P2   &  &  & x & x &  &  &  &  &  &  \\ \hline
-OE-P3   &  &  &  &  & x &  &  &  &  &  \\ \hline
-OE-P4   &  &  &  & x & x &  &  &  &  &  \\ \hline
-OE-R1   &  &  &  &  & x &  &  &  &  &  \\ \hline
-
-% Maintainability and Support Requirements
-MS-M1   &  &  &  &  & x &  &  &  &  &  \\ \hline
-MS-M2   &  &  &  & x & x &  &  &  &  &  \\ \hline
-MS-S1   &  &  &  & x &  &  &  &  &  &  \\ \hline
-MS-S2   & x & x & x & x & x &  &  &  &  &  \\ \hline
-MS-A1   & x & x & x & x & x &  &  &  &  &  \\ \hline
-MS-A2   &  &  &  & x &  &  &  &  &  &  \\ \hline
-
-% Security Requirements
-S-A1    &  &  &  & x & x &  &  &  &  &  \\ \hline
-S-P1    &  &  &  & x & x &  &  &  &  &  \\ \hline
-S-P2    &  &  &  &  & x &  &  &  &  &  \\ \hline
-S-P3    & x &  &  &  &  &  &  &  &  &  \\ \hline
-
-% Cultural Requirements
-CR-CR1  &  & x & x &  &  &  &  &  &  &  \\ \hline
-CR-CR2  & x & x & x & x & x &  &  &  &  &  \\ \hline
-
-% Compliance Requirements
-CR-LR1  & x & x & x &  & x &  &  &  &  &  \\ \hline
-CR-SCR1 &  & x & x &  &  &  &  &  &  &  \\ \hline
+  % Functional Requirements - Audio Input Handling
+  FR-AI1 & x &  &  &  &  &  &  &  &  &  \\ \hline
+  FR-AI2 & x &  &  & x &  &  & x &  &  &  \\ \hline
+  FR-AI3 & x &  &  & x &  &  &  &  &  & x \\ \hline
+  FR-AI4 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  % Signal Processing
+  FR-SP1 & x &  &  &  &  &  &  & x & x &  \\ \hline
+  FR-SP2 & x & x &  &  &  &  & x & x & x &  \\ \hline
+  FR-SP3 & x & x &  &  &  &  & x & x & x &  \\ \hline
+  FR-SP4 & x & x &  &  &  &  &  &  & x & x \\ \hline
+  FR-SP5 & x & x &  &  &  &  &  &  & x &  \\ \hline
+  FR-SP6 & x & x &  &  &  &  &  & x &  &  \\ \hline
+  % Sheet Music Generation
+  FR-SMG1 &  & x & x &  &  &  & x &  &  &  \\ \hline
+  FR-SMG2 &  & x & x &  &  &  & x &  &  &  \\ \hline
+  FR-SMG3 &  & x &  & x &  &  &  &  &  &  \\ \hline
+  % User Interface
+  FR-UI1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  FR-UI2 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  FR-UI3 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  FR-UI4 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  % Save and Load
+  FR-SL1 &  & x & x & x &  &  &  &  &  &  \\ \hline
+  FR-SL2 &  & x & x & x &  &  &  &  &  &  \\ \hline
+  
+  % Look and Feel Requirements
+  LF-A1 &  &  &  & x &  & x &  &  &  &  \\ \hline
+  LF-A2 &  &  &  & x &  & x &  &  &  &  \\ \hline
+  LF-A3 &  & x &  & x &  & x &  &  &  &  \\ \hline
+  LF-S1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  
+  % Usability and Humanity Requirements
+  UH-EOU1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+  UH-PI1  &  &  &  & x &  &  &  &  &  &  \\ \hline
+  UH-L1   &  & x & x & x &  &  &  &  &  &  \\ \hline
+  UH-UP1  &  & x &  & x &  &  &  &  &  &  \\ \hline
+  UH-UP2  &  &  &  & x &  &  &  &  &  &  \\ \hline
+  UH-A1   &  &  &  & x &  &  &  &  &  &  \\ \hline
+  
+  % Performance Requirements
+  PR-SL1  & x &  &  & x &  &  &  &  &  & x \\ \hline
+  PR-SL2  & x & x & x &  &  &  &  &  &  & x \\ \hline
+  PR-SC1  &  &  &  & x &  &  &  &  &  &  \\ \hline
+  PR-SC2  & x &  &  & x &  &  &  &  &  &  \\ \hline
+  PR-PA1  & x & x &  & x &  &  & x &  &  &  \\ \hline
+  PR-PA2  & x & x &  & x &  &  & x &  &  &  \\ \hline
+  PR-RFT1 & x &  &  & x &  &  &  &  &  & x \\ \hline
+  PR-RFT2 & x & x & x & x &  &  &  &  &  & x \\ \hline
+  PR-RFT3 & x & x & x & x &  &  &  &  &  & x \\ \hline
+  PR-RFT4 & x &  &  & x &  &  &  &  &  & x \\ \hline
+  PR-RFT5 & x & x & x &  &  &  &  &  &  & x \\ \hline
+  PR-RFT6 & x &  &  & x &  &  &  &  &  & x \\ \hline
+  PR-RFT7 & x & x & x & x &  &  &  &  &  & x \\ \hline
+  PR-C1   & x & x & x &  &  &  &  &  &  & x \\ \hline
+  PR-C2   & x & x & x & x &  &  &  &  &  & x \\ \hline
+  PR-SE1  & x & x & x & x & x &  &  &  &  & x \\ \hline
+  PR-SE2  &  &  &  &  & x &  &  &  &  &  \\ \hline
+  PR-SE3  & x & x &  &  &  &  &  &  &  & x \\ \hline
+  PR-L1   &  &  &  &  & x &  &  &  &  &  \\ \hline
+  
+  % Operational and Environmental Requirements
+  OE-EP1  & x & x &  & x &  & x &  &  &  &  \\ \hline
+  OE-EP2  & x & x &  &  &  &  &  &  &  &  \\ \hline
+  OE-EP3  &  &  &  & x & x &  &  &  &  &  \\ \hline
+  OE-EP4  &  &  &  & x & x & x &  &  &  &  \\ \hline
+  OE-WE1  &  &  &  &  & x & x &  &  &  &  \\ \hline
+  OE-IA1  & x &  &  &  & x & x &  &  &  &  \\ \hline
+  OE-IA2  &  &  & x &  &  &  &  &  &  &  \\ \hline
+  OE-IA3  &  &  & x &  &  &  &  &  &  &  \\ \hline
+  OE-P1   &  &  &  & x &  &  &  &  &  &  \\ \hline
+  OE-P2   &  &  & x & x &  &  &  &  &  &  \\ \hline
+  OE-P3   &  &  &  &  & x &  &  &  &  &  \\ \hline
+  OE-P4   &  &  &  & x & x &  &  &  &  &  \\ \hline
+  OE-R1   &  &  &  &  & x &  &  &  &  &  \\ \hline
+  
+  % Maintainability and Support Requirements
+  MS-M1   &  &  &  &  & x &  &  &  &  &  \\ \hline
+  MS-M2   &  &  &  & x & x &  &  &  &  &  \\ \hline
+  MS-S1   &  &  &  & x &  &  &  &  &  &  \\ \hline
+  MS-S2   & x & x & x & x & x & x &  &  &  &  \\ \hline
+  MS-A1   & x & x & x & x & x &  &  &  &  &  \\ \hline
+  MS-A2   &  &  &  & x &  &  &  &  &  &  \\ \hline
+  
+  % Security Requirements
+  S-A1    &  &  &  & x & x &  &  &  &  &  \\ \hline
+  S-P1    &  &  &  & x & x &  &  &  &  &  \\ \hline
+  S-P2    &  &  &  &  & x &  &  &  &  &  \\ \hline
+  S-P3    & x &  &  &  &  &  &  &  &  &  \\ \hline
+  
+  % Cultural Requirements
+  CR-CR1  &  & x & x &  &  &  &  &  &  &  \\ \hline
+  CR-CR2  & x & x & x & x & x &  &  &  &  &  \\ \hline
+  
+  % Compliance Requirements
+  CR-LR1  & x & x & x &  & x &  &  &  &  &  \\ \hline
+  CR-SCR1 &  & x & x &  &  &  &  &  &  &  \\ \hline
   
   \caption{Traceability Matrix Mapping Requirements to Goals and Anticipated Changes.}
   \label{Table:map_reqs}
