@@ -12,11 +12,12 @@
 \usepackage{hyperref}
 \usepackage{cite}
 \usepackage{enumitem}
-\usepackage{longtable}
 \usepackage{array} % Optional: For better column formatting
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{framed}
+\usepackage{rotating}
+\usepackage{lscape}
 
 \hypersetup{
     bookmarks=true,         % show bookmarks bar?
@@ -28,6 +29,8 @@
 }
 \usepackage{graphicx}
 \graphicspath{ {./images/} } % relative path
+\usepackage[skip=10pt]{caption}
+\captionsetup[longtable]{skip=10pt}
 
 \newcommand{\lips}{\textit{Insert your content here.}}
 
@@ -48,6 +51,8 @@
 \pagenumbering{roman}
 
 \tableofcontents
+\listoffigures
+\listoftables
 
 ~\newpage
 
@@ -62,6 +67,7 @@
 30/01/2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue \#128}\\
 03/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/309}{Issue \#309}\\
 04/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/139}{Issue \#139}\\
+04/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/141}{Issue \#141}\\
 \bottomrule
 \end{tabularx}
 
@@ -600,7 +606,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \end{description}
 
 
-\section{Functional Requirements}
+\section{Functional Requirements} \label{FRs}
 \subsection{Audio Input Handling}
 \subsubsection*{FR-AI1 Audio Formats} \label{FR-AI1}
 \textbf{Requirement:} The system shall accept audio input from users in various formats (e.g., WAV, MP3, AAC). \\
@@ -1216,6 +1222,124 @@ To ensure sufficient resources for product use, the development team will provid
   \item The user manually identifies the tempo and key to be used in the generated sheet-music
   \item A sheet music editing feature compatible with the musicXML format
 \end{itemize}
+
+\section{Requirements Traceability}
+This section provides a traceability matrix that links the requirements specified in this document to the project goals and anticipated changes that may affect requirements.\\\\
+See Section \ref{FRs} for the full list of functional requirements.\\
+Project goals can be found in the \href{https://github.com/emilyperica/ScoreGen/blob/9c65d271707b13d38bbabc3336cb566b20affe99/docs/ProblemStatementAndGoals/ProblemStatement.pdf}{Problem Statement and Goals} 
+document. Anticipated changes can be found in the \href{https://github.com/emilyperica/ScoreGen/blob/9c65d271707b13d38bbabc3336cb566b20affe99/docs/Design/SoftArchitecture/MG.pdf}{Module Guide} document.\\
+\begin{longtable}{|l|*{5}{c|}*{5}{c|}}
+  \hline
+  \multicolumn{1}{|c|}{} & \multicolumn{5}{c|}{\textbf{Goals}} & \multicolumn{5}{c|}{\textbf{ACs}} \\ \hline
+   & \rotatebox{90}{Goal 1  } & \rotatebox{90}{Goal 2  } & \rotatebox{90}{Goal 3  } & \rotatebox{90}{Goal 4  } & \rotatebox{90}{Goal 5  } & \rotatebox{90}{AC1} & \rotatebox{90}{AC2} & \rotatebox{90}{AC3} & \rotatebox{90}{AC4} & \rotatebox{90}{AC5} \\ \hline
+  \endfirsthead
+  
+  \hline
+  \multicolumn{1}{|c|}{} & \multicolumn{5}{c|}{\textbf{Goals}} & \multicolumn{5}{c|}{\textbf{ACs}} \\ \hline
+  & \rotatebox{90}{Goal 1  } & \rotatebox{90}{Goal 2  } & \rotatebox{90}{Goal 3  } & \rotatebox{90}{Goal 4  } & \rotatebox{90}{Goal 5  } & \rotatebox{90}{AC1} & \rotatebox{90}{AC2} & \rotatebox{90}{AC3} & \rotatebox{90}{AC4} & \rotatebox{90}{AC5} \\ \hline
+  \endhead
+  
+ % Functional Requirements - Audio Input Handling
+FR-AI1 & x &  &  &  &  &  &  &  &  &  \\ \hline
+FR-AI2 & x &  &  & x &  &  &  &  &  &  \\ \hline
+FR-AI3 & x &  &  & x &  &  &  &  &  &  \\ \hline
+FR-AI4 &  &  &  & x &  &  &  &  &  &  \\ \hline
+% Signal Processing
+FR-SP1 & x &  &  &  &  &  &  &  &  &  \\ \hline
+FR-SP2 & x & x &  &  &  &  &  &  &  &  \\ \hline
+FR-SP3 & x & x &  &  &  &  &  &  &  &  \\ \hline
+FR-SP4 & x & x &  &  &  &  &  &  &  &  \\ \hline
+FR-SP5 & x & x &  &  &  &  &  &  &  &  \\ \hline
+FR-SP6 & x & x &  &  &  &  &  &  &  &  \\ \hline
+% Sheet Music Generation
+FR-SMG1 &  & x & x &  &  &  &  &  &  &  \\ \hline
+FR-SMG2 &  & x & x &  &  &  &  &  &  &  \\ \hline
+FR-SMG3 &  & x &  & x &  &  &  &  &  &  \\ \hline
+% User Interface
+FR-UI1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+FR-UI2 &  &  &  & x &  &  &  &  &  &  \\ \hline
+FR-UI3 &  &  &  & x &  &  &  &  &  &  \\ \hline
+FR-UI4 &  &  &  & x &  &  &  &  &  &  \\ \hline
+% Save and Load
+FR-SL1 &  & x & x & x &  &  &  &  &  &  \\ \hline
+FR-SL2 &  & x & x & x &  &  &  &  &  &  \\ \hline
+
+% Look and Feel Requirements
+LF-A1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+LF-A2 &  &  &  & x &  &  &  &  &  &  \\ \hline
+LF-A3 &  & x &  & x &  &  &  &  &  &  \\ \hline
+LF-S1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+
+% Usability and Humanity Requirements
+UH-EOU1 &  &  &  & x &  &  &  &  &  &  \\ \hline
+UH-PI1  &  &  &  & x &  &  &  &  &  &  \\ \hline
+UH-L1   &  & x & x & x &  &  &  &  &  &  \\ \hline
+UH-UP1  &  & x &  & x &  &  &  &  &  &  \\ \hline
+UH-UP2  &  &  &  & x &  &  &  &  &  &  \\ \hline
+UH-A1   &  &  &  & x &  &  &  &  &  &  \\ \hline
+
+% Performance Requirements
+PR-SL1  & x &  &  & x &  &  &  &  &  &  \\ \hline
+PR-SL2  & x & x & x &  &  &  &  &  &  &  \\ \hline
+PR-SC1  &  &  &  & x &  &  &  &  &  &  \\ \hline
+PR-SC2  & x &  &  & x &  &  &  &  &  &  \\ \hline
+PR-PA1  & x & x &  & x &  &  &  &  &  &  \\ \hline
+PR-PA2  & x & x &  & x &  &  &  &  &  &  \\ \hline
+PR-RFT1 & x &  &  & x &  &  &  &  &  &  \\ \hline
+PR-RFT2 & x & x & x & x &  &  &  &  &  &  \\ \hline
+PR-RFT3 & x & x & x & x &  &  &  &  &  &  \\ \hline
+PR-RFT4 & x &  &  & x &  &  &  &  &  &  \\ \hline
+PR-RFT5 & x & x & x &  &  &  &  &  &  &  \\ \hline
+PR-RFT6 & x &  &  & x &  &  &  &  &  &  \\ \hline
+PR-RFT7 & x & x & x & x &  &  &  &  &  &  \\ \hline
+PR-C1   & x & x & x &  &  &  &  &  &  &  \\ \hline
+PR-C2   & x & x & x & x &  &  &  &  &  &  \\ \hline
+PR-SE1  & x & x & x & x & x &  &  &  &  &  \\ \hline
+PR-SE2  &  &  &  &  & x &  &  &  &  &  \\ \hline
+PR-SE3  & x & x &  &  &  &  &  &  &  &  \\ \hline
+PR-L1   &  &  &  &  & x &  &  &  &  &  \\ \hline
+
+% Operational and Environmental Requirements
+OE-EP1  & x & x &  & x &  &  &  &  &  &  \\ \hline
+OE-EP2  & x & x &  &  &  &  &  &  &  &  \\ \hline
+OE-EP3  &  &  &  & x & x &  &  &  &  &  \\ \hline
+OE-EP4  &  &  &  & x & x &  &  &  &  &  \\ \hline
+OE-WE1  &  &  &  &  & x &  &  &  &  &  \\ \hline
+OE-IA1  & x &  &  &  & x &  &  &  &  &  \\ \hline
+OE-IA2  &  &  & x &  &  &  &  &  &  &  \\ \hline
+OE-IA3  &  &  & x &  &  &  &  &  &  &  \\ \hline
+OE-P1   &  &  &  & x &  &  &  &  &  &  \\ \hline
+OE-P2   &  &  & x & x &  &  &  &  &  &  \\ \hline
+OE-P3   &  &  &  &  & x &  &  &  &  &  \\ \hline
+OE-P4   &  &  &  & x & x &  &  &  &  &  \\ \hline
+OE-R1   &  &  &  &  & x &  &  &  &  &  \\ \hline
+
+% Maintainability and Support Requirements
+MS-M1   &  &  &  &  & x &  &  &  &  &  \\ \hline
+MS-M2   &  &  &  & x & x &  &  &  &  &  \\ \hline
+MS-S1   &  &  &  & x &  &  &  &  &  &  \\ \hline
+MS-S2   & x & x & x & x & x &  &  &  &  &  \\ \hline
+MS-A1   & x & x & x & x & x &  &  &  &  &  \\ \hline
+MS-A2   &  &  &  & x &  &  &  &  &  &  \\ \hline
+
+% Security Requirements
+S-A1    &  &  &  & x & x &  &  &  &  &  \\ \hline
+S-P1    &  &  &  & x & x &  &  &  &  &  \\ \hline
+S-P2    &  &  &  &  & x &  &  &  &  &  \\ \hline
+S-P3    & x &  &  &  &  &  &  &  &  &  \\ \hline
+
+% Cultural Requirements
+CR-CR1  &  & x & x &  &  &  &  &  &  &  \\ \hline
+CR-CR2  & x & x & x & x & x &  &  &  &  &  \\ \hline
+
+% Compliance Requirements
+CR-LR1  & x & x & x &  & x &  &  &  &  &  \\ \hline
+CR-SCR1 &  & x & x &  &  &  &  &  &  &  \\ \hline
+  
+  \caption{Traceability Matrix Mapping Requirements to Goals and Anticipated Changes.}
+  \label{Table:map_reqs}
+\end{longtable}
+
 
 \newpage{}
 \bibliographystyle{IEEEtran}
