@@ -61,6 +61,7 @@
 30/01/2025 & 0.2 & \href{https://github.com/emilyperica/ScoreGen/issues/92}{Issue \#92}\\
 30/01/2025 & 0.3 & \href{https://github.com/emilyperica/ScoreGen/issues/128}{Issue \#128}\\
 03/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/309}{Issue \#309}\\
+04/04/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/139}{Issue \#139}\\
 \bottomrule
 \end{tabularx}
 
@@ -141,9 +142,11 @@ Harold Style is a software engineering student at McMaster University with a dee
 he has perfect pitch and thus learns songs by listening to them rather than learn how to read sheet music. However, he recently joined a local rock band called The Beetles who 
 expect him to contribute during their songwriting sessions. He needs a quick way to produce sheet music for his own compositions, as well as learn to read the scores written by 
 his bandmates. As a future software engineer he enjoys learning new technologies that can make his life easier, and he dislikes reading of any sort.
+
 \subsection{Priorities Assigned to Users}
-\textbf{Key users:} Beginner musicians
-\textbf{Secondary users:} Composers.
+\textbf{Key users:} Beginner musicians \\
+\textbf{Secondary users:} Composers
+
 \subsection{User Participation}
 Beginner musicians will have a high level of participation in the creation of system requirements. Their feedback will be especially essential during the early to middle development phases to ensure that the system meets their various needs for simplicity, intuitive design/usage, and music theory assistance.
 Composers will have a moderate level of participation in the creation of system requiremens, slightly less than that of the Beginner Musician group. Their subject matter expertise will be useful in creating relevant requirements to ensure precision of audio transcription and its overall score editing capabilities.
@@ -384,9 +387,10 @@ associated with BE1.\\
 \section{Business Data Model and Data Dictionary}
 \subsection{Business Data Model}
 A first-cut UML class diagram has been used to model the data entities relevant to the scope of the work. This
-abstractly describes the relationship between these entities. For definitions and attributes see section 7.2 Data Dictionary.\\
+abstractly describes the relationship between these entities. For definitions and attributes see section \ref{dataDict} Data Dictionary.\\
 \includegraphics[scale=0.75]{SRS-data-model.png}
-\subsection{Data Dictionary}
+
+\subsection{Data Dictionary} \label{dataDict}
 \begingroup
 \renewcommand{\arraystretch}{1.25}
 \begin{longtable}{|>{\raggedright}p{3cm}|>{\raggedright}p{5.5cm}|>{\raggedright\arraybackslash}p{4cm}|}
@@ -433,10 +437,10 @@ abstractly describes the relationship between these entities. For definitions an
 \section{The Scope of the Product}
 \subsection{Product Boundary}
 Input: ScoreGen will be designed to take in and process music data which can be converted to a MIDI or musicXML file representation. The audio should not have excessive noise, or other degradation of quality which could impact the ability to clearly distinguish notes. The input will also be intended to be mono or polyphonic with a singular instrument. The input volume should remain consistent and sufficiently loud, and the user microphone should be correctly calibrated to ensure accuracy by avoiding pitch drift.
-\\ \\
+\\
 Output: The resulting music file will aim to capture the pitch and length of individual notes or chords, but will not capture accents, dynamics, or tempo markings, as well as other advanced elements. If the system detects that a note cannot be reliably transcribed (due to unclear input), it will leave that note blank on the sheet and prompt the user to review the section manually.
 \subsection{Product Use Case}
-\section*{UC1: Record and Transcribe}
+\subsubsection*{UC1: Record and Transcribe}
 \textbf{Description:} Musician plays an instrument, and the system transcribes it into sheet music in real-time. \\
 \textbf{Actors:} Musician, Desktop App \\
 \textbf{Preconditions:} Musician has a working microphone and is playing a supported instrument. \\
@@ -452,7 +456,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \end{itemize}
 \textbf{Postconditions:} Sheet music is generated and displayed to the user. 
 
-\section*{UC2: Edit Transcription}
+\subsubsection*{UC2: Edit Transcription}
 \textbf{Description:} Musician reviews and edits the generated sheet music if there are missing or incorrect notes. \\
 \textbf{Actors:} Musician, Desktop App \\
 \textbf{Preconditions:} Sheet music has already been generated from a recording. \\
@@ -469,7 +473,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \end{itemize}
 \textbf{Postconditions:} Musician has an edited, correct version of the sheet music.
 
-\section*{UC3: Save and Export}
+\subsubsection*{UC3: Save and Export}
 \textbf{Description:} Save the sheet music in a chosen format (e.g., PDF, MIDI, musicXML). \\
 \textbf{Actors:} Musician, Desktop App \\
 \textbf{Preconditions:} Sheet music is completed and reviewed. \\
@@ -485,7 +489,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \end{itemize}
 \textbf{Postconditions:} The sheet music file is saved in the selected format.
 
-\section*{UC4: Instrument Setup}
+\subsubsection*{UC4: Instrument Setup}
 \textbf{Description:} Select instrument type before recording (e.g., piano, guitar). \\
 \textbf{Actors:} Musician, Desktop App \\
 \textbf{Preconditions:} Desktop app is open, and the user is ready to begin recording. \\
@@ -500,7 +504,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \end{itemize}
 \textbf{Postconditions:} System is ready to accurately transcribe the chosen instrument.
 
-\section*{UC5: Error Warning}
+\subsubsection*{UC5: Error Warning}
 \textbf{Description:} System warns if it cannot hear or recognize a note during the recording process. \\
 \textbf{Actors:} Musician, Desktop App \\
 \textbf{Preconditions:} Musician is actively recording. \\
@@ -515,7 +519,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \end{itemize}
 \textbf{Postconditions:} Musician is informed about missing notes and is directed on how to take corrective action, which may involve editing within the app or using a third-party tool depending on available features.
 
-\section*{UC6: Playback of Transcription}
+\subsubsection*{UC6: Playback of Transcription}
 \textbf{Description:} Musician can play back the recorded notes in the desktop app to review transcription accuracy. \\
 \textbf{Actors:} Musician, Desktop App \\
 \textbf{Preconditions:} Transcription has been generated from a recording. \\
@@ -531,10 +535,8 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 \textbf{Postconditions:} Musician reviews the transcription by listening to the played-back notes.
 
 
-
-
 \subsection{Individual Product Use Cases (PUC's)}
-\subsection*{PUC1: Record Instrument and Transcribe Notes}
+\subsubsection*{PUC1: Record Instrument and Transcribe Notes}
 \begin{description}[style=nextline]
     \item[Description:] The user records a live performance on an instrument using their microphone, and the system transcribes the notes into sheet music.
     \item[Primary Actor:] Musician
@@ -556,7 +558,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
     \end{itemize}
 \end{description}
 
-\subsection*{PUC2: Save and Export Sheet Music}
+\subsubsection*{PUC2: Save and Export Sheet Music}
 \begin{description}[style=nextline]
     \item[Description:] The user saves the transcribed sheet music and exports it in the desired format (PDF, MIDI, musicXML).
     \item[Primary Actor:] Musician
@@ -577,7 +579,7 @@ Output: The resulting music file will aim to capture the pitch and length of ind
     \end{itemize}
 \end{description}
 
-\subsection*{PUC3: Receive Error Warnings for Missing Notes}
+\subsubsection*{PUC3: Receive Error Warnings for Missing Notes}
 \begin{description}[style=nextline]
     \item[Description:] The user is notified if the system cannot detect or accurately transcribe certain notes during recording.
     \item[Primary Actor:] Musician
@@ -600,274 +602,276 @@ Output: The resulting music file will aim to capture the pitch and length of ind
 
 \section{Functional Requirements}
 \subsection{Audio Input Handling}
-\subsubsection*{FR-AI1 Audio Formats}
+\subsubsection*{FR-AI1 Audio Formats} \label{FR-AI1}
 \textbf{Requirement:} The system shall accept audio input from users in various formats (e.g., WAV, MP3, AAC). \\
 \textbf{Fit Criterion:} The system confirms a succesful upload.
-\subsubsection*{FR-AI2 Audio Recording}
+\subsubsection*{FR-AI2 Audio Recording} \label{FR-AI2}
 \textbf{Requirement:} The system shall provide a user interface for recording audio directly through a microphone connected to the user's device. \\
 \textbf{Fit Criterion:} The system displays a confirmation of reception during real-time recording.
-\subsubsection*{FR-AI3 Audio Uploads}
+\subsubsection*{FR-AI3 Audio Uploads} \label{FR-AI3}
 \textbf{Requirement:} The system shall allow users to upload pre-recorded audio files. \\
 \textbf{Fit Criterion:} The system confirms reception of the pre-recorded audio file.
-\subsubsection*{FR-AI4 User Input}
+\subsubsection*{FR-AI4 User Input} \label{FR-AI4}
 \textbf{Requirement:} The user shall give their instrument (i.e., piano or guitar) to the system as input. \\
 \textbf{Fit Criterion:} The interface and concert pitch of the generated sheet music reflect the user's choice.
 
 \subsection{Signal Processing}
-\subsubsection*{FR-SP1 Noise Reduction}
+\subsubsection*{FR-SP1 Noise Reduction} \label{FR-SP1}
 \textbf{Requirement:} The system shall perform noise reduction on the audio input to enhance quality. \\
 \textbf{Fit Criterion:} The system generates identical sheet music for input with no background noise and input with a 10\% increase in background noise.
-\subsubsection*{FR-SP2 Note Identification}
+\subsubsection*{FR-SP2 Note Identification} \label{FR-SP2}
 \textbf{Requirement:} The system shall analyze the audio to identify pitch and rhythm. \\
 \textbf{Fit Criterion:} The generated sheet music visually matches expected notes from a reference audio source and corresponding sheet music.
-\subsubsection*{FR-SP3 Key and Time Signature Identification}
+\subsubsection*{FR-SP3 Key and Time Signature Identification} \label{FR-SP3}
 \textbf{Requirement:}	The system shall analyze the audio to identify the key and time signatures. \\
 \textbf{Fit Criterion:} The system correctly identifies key and time signatures or their equivalencies (e.g. a minor to C major, common time to cut time) from a reference audio source and corresponding sheet music.
-\subsubsection*{FR-SP4 Processing Limitations}
+\subsubsection*{FR-SP4 Processing Limitations} \label{FR-SP4}
 \textbf{Requirement:} The system gracefully handles overly complex audio input (i.e., it is unable to perform accurate signal processing). \\
 \textbf{Fit Criterion:} The system notifies the user that their input cannot be processed.
-\subsubsection*{FR-SP5 Polyphonic Audio}
+\subsubsection*{FR-SP5 Polyphonic Audio} \label{FR-SP5}
 \textbf{Requirement:} The system shall handle polyphonic audio, allowing for multiple notes to be detected simultaneously. \\
 \textbf{Fit Criterion:} The generated sheet music contains chords/simultaneous melody.
-\subsubsection*{FR-SP6 Monophonic Audio}
+\subsubsection*{FR-SP6 Monophonic Audio} \label{FR-SP6}
 \textbf{Requirement:} The system shall handle monophonic audio. \\
 \textbf{Fit Criterion:} The generated sheet music contains single pitch notes.
 
 \subsection{Sheet Music Generation}
-\subsubsection*{FR-SMG1 Notation}
+\subsubsection*{FR-SMG1 Notation} \label{FR-SMG1}
 \textbf{Requirement:} The system shall generate sheet music in standard music notation based on the parsed audio data. \\
 \textbf{Fit Criterion:} The generated sheet music is visually comparable to a reference piece of sheet music.
-\subsubsection*{FR-SMG2 Concert Pitch}
+\subsubsection*{FR-SMG2 Concert Pitch} \label{FR-SMG2}
 \textbf{Requirement:} The system shall generate sheet music in the concert pitch of the instrument played in the audio input. \\
 \textbf{Fit Criterion:} The generated sheet music visually matches expected notes from a reference audio source and corresponding sheet music.
-\subsubsection*{FR-SMG3 Post-Processing Edits}
+\subsubsection*{FR-SMG3 Post-Processing Edits} \label{FR-SMG3}
 \textbf{Requirement:} The system shall allow users to view and edit the generated sheet music within the application. \\
 \textbf{Fit Criterion:} Changes made by the user are reflected in the output files produced during sheet music generation.
 
 \subsection{User Interface}
-\subsubsection*{FR-UI1 System Feedback}
+\subsubsection*{FR-UI1 System Feedback} \label{FR-UI1}
 \textbf{Requirement:} The interface shall display processing feedback during audio input. \\
 \textbf{Fit Criterion:} Feedback from system is displayed to the user within 2 seconds of their input.
-\subsubsection*{FR-UI2 System Documentation}
+\subsubsection*{FR-UI2 System Documentation} \label{FR-UI2}
 \textbf{Requirement:} The system shall provide help documentation and user guides for each feature. \\
 \textbf{Fit Criterion:} At least 90\% of users during user testing find the interface easy to navigate.
-\subsubsection*{FR-UI3 User Feedback}
+\subsubsection*{FR-UI3 User Feedback} \label{FR-UI3}
 \textbf{Requirement:} The system shall provide a feedback mechanism for users to report issues or suggest features. \\
 \textbf{Fit Criterion:} The development team successfully receives user feedback via the feedback mechanism 100\% of the time.
-\subsubsection*{FR-UFI4 Customer Support}
+\subsubsection*{FR-UFI4 Customer Support} \label{FR-UI4}
 \textbf{Requirement:} The system shall include customer support contact information for troubleshooting. \\
 \textbf{Fit Criterion:} At least 90\% of users during user testing report successfull interactions with customer support.
 
 \subsection{Save and Load}
-\subsubsection*{FR-SL1 Save}
+\subsubsection*{FR-SL1 Save} \label{FR-SL1}
 \textbf{Requirement:} The system shall allow users to save their work, including both audio files and generated sheet music. \\
 \textbf{Fit Criterion:} 100\% of the time when the system reports a succesfull save, the user is succesfully able to locate the audio files and generated sheet music.
-\subsubsection*{FR-SL2 Load}
+\subsubsection*{FR-SL2 Load} \label{FR-SL2}
 \textbf{Requirement:} The system shall support loading previously saved audio files and generated sheet music for further editing. \\
 \textbf{Fit Criterion:} The system sucesfully retains user progress such that the user may return to their unfinished work seamlessly.
 
 
 \section{Look and Feel Requirements}
 \subsection{Appearance Requirements}
-\subsubsection*{LF-A1 Discoverability}
+\subsubsection*{LF-A1 Discoverability} \label{LF-A1}
 \textbf{Requirement:} Main functionalities of the application interface must have elements that are easily identifiable.\\
 \textbf{Fit Criterion:} Upon viewing the product for the first time, 75\% of potential 
 users shall be able to locate the interactive element that initiates the score generation process.
-\subsubsection*{LF-A2 Colour Cohesion}
+\subsubsection*{LF-A2 Colour Cohesion} \label{LF-A2}
 \textbf{Requirement:} The application interface must use a consistent color scheme for uniformity.\\
 \textbf{Fit Criterion:} The product shall have color guidelines that specify at least three colors to define a palette 
 (i.e. primary, secondary, and accent colors).
-\subsubsection*{LF-A3 Resolution}
+\subsubsection*{LF-A3 Resolution} \label{LF-A3}
 \textbf{Requirement:} The application must use high definition graphics.\\
 \textbf{Fit Criterion:} The application will only display images that are of a resolution of 720p or higher.
 \subsection{Style Requirements}
-\subsubsection*{LF-S1 Authority and Trust}
+\subsubsection*{LF-S1 Authority and Trust} \label{LF-S1}
 \textbf{Requirement:} The application must appear authoritative and trustworthy, users are more likely to engage
 and remain loyal to an application that is percieved as reliable.\\
 \textbf{Fit Criterion:} After one encounter with the application, 70\% of users will agree 
 that they can trust the application and how it handles input data.
+
+
 \section{Usability and Humanity Requirements}
 \subsection{Ease of Use Requirements}
-\subsubsection*{UH-EOU1 Human Centered Design (HCD)}
+\subsubsection*{UH-EOU1 Human Centered Design (HCD)}  \label{UH-EOU1}
 \textbf{Requirement:} The app interface must adhere to human-centered design principles to be simple and intuitive to use.\\
 \textbf{Fit Criterion:} The user interface must incorporate all four fundamental HCD principles.
 \subsection{Personalization and Internationalization Requirements}
-\subsubsection*{UH-PI1 Language}
+\subsubsection*{UH-PI1 Language} \label{UH-PI1}
 \textbf{Requirement:} The application must provide support for Canadian English (en-CA).\\
 \textbf{Fit Criterion:} All text, labels, and instructions within the application 
 shall be presented in Canadian English, with no grammatical or spelling errors.
 \subsection{Learning Requirements}
-\subsubsection*{UH-L1 Music Theory Familiarity}
+\subsubsection*{UH-L1 Music Theory Familiarity} \label{UH-L1}
 \textbf{Requirement:} The application must be usable by users without a formal music theory background. \\
 \textbf{Fit Criterion:} After having 10 minutes to familiarize themselves with the app, 95\% of users without a 
 formal background will be able to generate a score sheet.
 \subsection{Understandability and Politeness Requirements}
-\subsubsection*{UH-UP1 Icon Identification}
+\subsubsection*{UH-UP1 Icon Identification} \label{UH-UP1}
 \textbf{Requirement:} The app must use symbols and icons that are naturally understandable and/or self-explanatory.\\
 \textbf{Fit Criterion:} Users shall be able to easily identify the function of at least 70\% of interactive elements
 that have unlabeled icons.
-\subsubsection*{UH-UP2 Information Hiding}
+\subsubsection*{UH-UP2 Information Hiding} \label{UH-UP2}
 \textbf{Requirement:} The app must hide audio processing and transcription details from the user.\\
 \textbf{Fit Criterion:} No user-accessible components of the interface or application shall reveal
 implementation-specific or algorithmic solutions used.
 \subsection{Accessibility Requirements}
-\subsubsection*{UH-A1 Web Content Accessibility Guidelines}
+\subsubsection*{UH-A1 Web Content Accessibility Guidelines} \label{UH-A1}
 \textbf{Requirement:} The app must comply with the standardized Web Content Accessibility Guidelines (WCAG)~\cite{WCAG21}.\\
 \textbf{Fit Criterion:} The app must meet or exceed WCAG 2.1 Level AA compliance. This shall be verified through 
 an accessibility audit using automated tools (e.g., WAVE, Axe) and manual reviews, ensuring adherence to guidelines 
 such as text alternatives, text readability, etc.
 \section{Performance Requirements}
 \subsection{Speed and Latency Requirements}
-\subsubsection*{PR-SL1 User Interface Response Time}
+\subsubsection*{PR-SL1 User Interface Response Time} \label{PR-SL1}
 \textbf{Requirement:} The interface between the user and the sheet music generator app shall respond within a reasonable time when processing input or selecting menu options.\\
 \textbf{Fit Criterion:} The product shall respond in less than 2 seconds for 90\% of user interactions. No response shall take longer than 5 seconds.
-\subsubsection*{PR-SL2 File Import and Export Speed}
+\subsubsection*{PR-SL2 File Import and Export Speed} \label{PR-SL2}
 \textbf{Requirement:} The app shall import and export music files within a reasonable time for files up to 100MB in size.\\
 \textbf{Fit Criterion:} For files up to 100MB, the app shall import and export them within a reasonable time frame for their system for more than 95\% of operations.
 
 \subsection{Safety-Critical Requirements}
-\subsubsection*{PR-SC1 Epilepsy Safety}
+\subsubsection*{PR-SC1 Epilepsy Safety} \label{PR-SC1}
 \textbf{Requirement:} The app shall not display rapid flashing lights, animations, or any visual effects that could trigger epileptic seizures in users.\\
 \textbf{Fit Criterion:} The app’s graphical interface must comply with WCAG 2.1 (Web Content Accessibility Guidelines)~\cite{WCAG-Seizures} for flashing content, limiting visual effects to fewer than 3 flashes per second. The interface will be tested with accessibility tools to ensure compliance with these standards.
-\subsubsection*{PR-SC2 Instrument Input Setup}
+\subsubsection*{PR-SC2 Instrument Input Setup} \label{PR-SC2}
 \textbf{Requirement:} The app shall guide users through the correct setup of instrument input to prevent audio misconfiguration, damage to the user/instrument, and damage to the application’s device.\\
 \textbf{Fit Criterion:} The app will include an interactive, step-by-step tutorial for configuring instrument inputs (via external devices or microphones). The setup process should be completed with a 95\% success rate based on user testing, ensuring correct audio input detection on the first attempt.
 
 \subsection{Precision or Accuracy Requirements}
-\subsubsection*{PR-PA1 Pitch Detection Accuracy}
+\subsubsection*{PR-PA1 Pitch Detection Accuracy} \label{PR-PA1}
 \textbf{Requirement:} This app shall correctly detect musical pitch from instruments' input to ensure that all notes are transcribed correctly.\\
 \textbf{Fit Criterion:} The app must maintain this pitch accuracy over all test cases involving diverse instruments and note ranges, with no more than 1\% error. Also must satisfy requirement OE-EP1 for noise tolerance.
-\subsubsection*{PR-PA2 Timing Accuracy}
+\subsubsection*{PR-PA2 Timing Accuracy} \label{PR-PA2}
 \textbf{Requirement:} The app shall accurately capture note durations and rhythms within a reasonable tolerance to ensure correct rhythmic transcription.\\
 \textbf{Fit Criterion:} The app must maintain timing accuracy within the 100ms across all test cases.
 
 \subsection{Robustness or Fault-Tolerance Requirements}
-\subsubsection*{PR-RFT1 Reliability (Time Between Failures)}
+\subsubsection*{PR-RFT1 Reliability (Time Between Failures)} \label{PR-RFT1}
 \textbf{Requirement:} The app shall operate continuously for at least 24 hours between failures or system crashes, ensuring that users experience minimal interruptions during usage.\\
 \textbf{Fit Criterion:} The app must pass reliability testing by operating under typical usage conditions for 24 hours without a failure in at least 95\% of test cases.
-\subsubsection*{PR-RFT2 Availability (Uptime)}
+\subsubsection*{PR-RFT2 Availability (Uptime)} \label{PR-RFT2}
 \textbf{Requirement:} The app shall achieve 99.5\% uptime, ensuring that it is available for use at nearly all times, excluding brief periods for necessary updates or maintenance.\\
 \textbf{Fit Criterion:} The app must demonstrate an average of 99.5\% uptime over a reasonable time.
-\subsubsection*{PR-RFT3 Crash Recovery}
+\subsubsection*{PR-RFT3 Crash Recovery} \label{PR-RFT3}
 \textbf{Requirement:} In an unexpected crash, the app shall automatically save the user’s current session, including any partially transcribed sheet music, and allow the user to recover their work upon restart.\\
 \textbf{Fit Criterion:} During testing, the app must successfully recover user data in 98\% of cases where a crash occurs, with no data loss.
-\subsubsection*{PR-RFT4 Performance Under Load}
+\subsubsection*{PR-RFT4 Performance Under Load} \label{PR-RFT4}
 \textbf{Requirement:} The app shall maintain reliable performance under conditions of high user activity (e.g., processing complex polyphonic inputs or large files) without significant slowdowns or crashes.\\
 \textbf{Fit Criterion:} The app must maintain stable performance, with no more than a 30\% decrease in processing speed, when tested under maximum expected load conditions.
-\subsubsection*{PR-RFT5 Handling Signal Interruptions}
+\subsubsection*{PR-RFT5 Handling Signal Interruptions} \label{PR-RFT5}
 \textbf{Requirement:} The app shall continue to operate and retain the audio signals received up to the point of interruption, even if the instrument input is temporarily lost (e.g., due to cable disconnection or microphone failure).\\
 \textbf{Fit Criterion:} The app must store buffered audio data for up to 2 minutes during signal interruptions and automatically resume transcription once the input is restored, with 0\% data loss in at least 95\% of test cases.
-\subsubsection*{PR-RFT6 Graceful Degradation}
+\subsubsection*{PR-RFT6 Graceful Degradation} \label{PR-RFT6}
 \textbf{Requirement:} In the event of a performance slowdown (e.g., due to excessive input data or limited system resources), the app shall degrade its services gracefully by notifying the user of delays without crashing.\\
 \textbf{Fit Criterion:} During stress testing under heavy load (e.g., multiple instruments or large file sizes), the app must maintain operational status and notify the user of delays or lowered performance within 5 seconds of detection, with no system crashes in 99\% of test cases.
-\subsubsection*{PR-RFT7 Automatic Recovery from Software Glitches}
+\subsubsection*{PR-RFT7 Automatic Recovery from Software Glitches} \label{PR-RFT7}
 \textbf{Requirement:} If the app encounters a minor software error (e.g., unexpected input format or corrupted file), it shall log the error, notify the user, and continue functioning by skipping the problematic section rather than halting it.\\
 \textbf{Fit Criterion:} The app must pass testing by handling minor software errors in at least 90\% of cases without crashing and will log the issue for future debugging.
 
 \subsection{Capacity Requirements}
-\subsubsection*{PR-C1 Audio Input Capacity}
+\subsubsection*{PR-C1 Audio Input Capacity} \label{PR-C1}
 \textbf{Requirement:} The app shall process audio input of up to 90 minutes of continuous recording in a single session without performance degradation.\\
 \textbf{Fit Criterion:} The app must be tested with audio recordings of varying lengths (up to 90 minutes) and successfully process and transcribe the entire duration with no more than a 5\% slowdown in transcription speed or accuracy.
-\subsubsection*{PR-C2 Simultaneous User Sessions}
+\subsubsection*{PR-C2 Simultaneous User Sessions} \label{PR-C2}
 \textbf{Requirement:} The app shall support at least 10 simultaneous user sessions (local or cloud-based) without degradation in performance or delays in processing.\\
 \textbf{Fit Criterion:} During testing with 10 simultaneous active user sessions, the app must maintain performance levels, including stable response times and transcription accuracy, with no noticeable slowdown in 95\% of test cases.
 
 \subsection{Scalability or Extensibility Requirements}
-\subsubsection*{PR-SE1 User Base Growth}
+\subsubsection*{PR-SE1 User Base Growth} \label{PR-SE1}
 \textbf{Requirement:} The app shall be capable of scaling to support an increase in the user base to 1000 users without requiring major architectural changes to support a change from personal to commercial use.\\
 \textbf{Fit Criterion:} The app’s infrastructure must be designed to scale up by a factor of 10 and should undergo stress testing to ensure it can handle 1000 simultaneous user sessions with no significant performance degradation.
-\subsubsection*{PR-SE2 Feature Extensibility}
+\subsubsection*{PR-SE2 Feature Extensibility} \label{PR-SE2}
 \textbf{Requirement:} The app shall be designed with a modular architecture that allows for future feature additions, such as multi-instrument detection or cloud-based collaboration tools, without requiring significant refactoring.\\
 \textbf{Fit Criterion:} The app must pass code reviews and architecture validation to ensure it can integrate additional modules or features within 6 months of the product’s initial release, with minimal impact on core functionalities.
-\subsubsection*{PR-SE3 Processing Power for Complex Music Compositions}
+\subsubsection*{PR-SE3 Processing Power for Complex Music Compositions} \label{PR-SE3}
 \textbf{Requirement:} The app shall be built to be able to scale its processing capabilities to handle future complex compositions involving multiple simultaneous instrument tracks supporting growth for polyphony.\\
 \textbf{Fit Criterion:} During testing, the app must demonstrate the ability to process increasingly complex musical arrangements.
 
 \subsection{Longevity Requirements}
-\subsubsection*{PR-L1 Expected Lifetime}
+\subsubsection*{PR-L1 Expected Lifetime} \label{PR-L1}
 \textbf{Requirement:} The app shall be designed to operate effectively with regular software updates and minor maintenance for a minimum of five years without requiring a major rewrite or overhaul.\\
 \textbf{Fit Criterion:} The app’s development roadmap must include planned updates and feature expansions to maintain functionality and relevance for at least five years after launch.
 
 \section{Operational and Environmental Requirements}
 \subsection{Expected Physical Environment}
-\subsubsection*{OE-EP1 Operating Environment}
+\subsubsection*{OE-EP1 Operating Environment} \label{OE-EP1}
 \textbf{Requirement:} The app shall be used on personal computers or laptops in typical indoor environments, such as home studios, classrooms, or offices. It should perform well under varying levels of ambient noise.\\
 \textbf{Fit Criterion:} The app must be tested in multiple indoor settings and perform well without requiring any environment-specific adjustments.
-\subsubsection*{OE-EP2 Noise and Audio Input Quality}
+\subsubsection*{OE-EP2 Noise and Audio Input Quality} \label{OE-EP2}
 \textbf{Requirement:} The app shall be able to capture clear audio input in environments with moderate ambient noise, such as home studios or cafes, without significant degradation in transcription accuracy.\\
 \textbf{Fit Criterion:} The app must be tested in environments with background noise to ensure that it can still accurately capture and process audio inputs without more than a 5\% drop in accuracy.
-\subsubsection*{OE-EP3 Workspace Flexibility}
+\subsubsection*{OE-EP3 Workspace Flexibility} \label{OE-EP3}
 \textbf{Requirement:} The app shall be usable on laptops with limited screen space, such as 13-inch displays, and must adjust its layout to accommodate various screen resolutions and sizes.\\
 \textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all screen sizes and resolutions.
-\subsubsection*{OE-EP4 Portable Setup Compatibility}
+\subsubsection*{OE-EP4 Portable Setup Compatibility} \label{OE-EP4}
 \textbf{Requirement:} The app shall be compatible with portable setups, such as laptops used in temporary workspaces like cafes or live performance venues, ensuring that it can be used effectively in different environments without special hardware.\\
 \textbf{Fit Criterion:} The app must function smoothly on portable setups with wireless internet and standard laptop hardware, and be tested for usability in transient environments where quick setup and breakdown are required.
 
 \subsection{Wider Environment Requirements}
-\subsubsection*{OE-WE1 General Hardware}
+\subsubsection*{OE-WE1 General Hardware} \label{OE-WE1}
 \textbf{Requirement:} The app shall operate effectively on devices with varying interface specifications.\\
 \textbf{Fit Criterion:} The app must be tested on screens ranging from 13 inches to 27 inches, with functionality and UI usability maintained across all typical screen sizes and resolutions.
 
 \subsection{Requirements for Interfacing with Adjacent Systems}
-\subsubsection*{OE-IA1 Audio Input Devices}
+\subsubsection*{OE-IA1 Audio Input Devices} \label{OE-IA1}
 \textbf{Requirement:} The app shall interface with standard audio input devices, including USB microphones, instrument pickups, and built-in computer microphones.\\
 \textbf{Fit Criterion:} The app must support audio input via devices adhering to USB Audio Class 1.0 and higher, and be tested with common setups (e.g., USB microphones, line-in jacks).\\
-\subsubsection*{OE-IA2 Audio File Import and Export}
+\subsubsection*{OE-IA2 Audio File Import and Export} \label{OE-IA2}
 \textbf{Requirement:} The app shall interface with common audio file formats for both import and export, including WAV and MP3.\\
 \textbf{Fit Criterion:} The app must successfully import and export audio files in WAV (PCM), and MP3 (MPEG-1 Layer III).\\
-\subsubsection*{OE-IA3 Music Notation Software Integration}
+\subsubsection*{OE-IA3 Music Notation Software Integration} \label{OE-IA3}
 \textbf{Requirement:} The app shall export sheet music in formats compatible with popular music notation software, including MusicXML and MIDI files.\\
 \textbf{Fit Criterion:} The app must generate MusicXML and MIDI files compatible with the software.\\
 
 \subsection{Productization Requirements}
-\subsubsection*{OE-P1 Distribution}
+\subsubsection*{OE-P1 Distribution} \label{OE-P1}
 \textbf{Requirement:} The app shall be distributed as a downloadable executable file.\\
 \textbf{Fit Criterion:} The app must be packaged in an installer that can be downloaded from a website or software repository, with no additional dependencies required for installation.
-\subsubsection*{OE-P2 Installation Process}
+\subsubsection*{OE-P2 Installation Process} \label{OE-P2}
 \textbf{Requirement:} The product shall be capable of being installed by an untrained user with minimal technical knowledge, requiring minimal steps from download to full installation.\\
 \textbf{Fit Criterion:} The installation wizard must guide the user through the process, providing automatic configuration options and requiring minimal user input. Instructions must be included within the installer interface.
-\subsubsection*{OE-P3 Size and Compatibility}
+\subsubsection*{OE-P3 Size and Compatibility} \label{OE-P3}
 \textbf{Requirement:} The app’s installation file size shall not exceed 500MB, ensuring that the product can be easily downloaded even with moderate internet connections.\\
 \textbf{Fit Criterion:} The app must be easily installed on a variety of systems.
-\subsubsection*{OE-P4 Post-Installation Configuration}
+\subsubsection*{OE-P4 Post-Installation Configuration} \label{OE-P4}
 \textbf{Requirement:} The product shall configure its default settings upon installation, but allow users to modify these settings (e.g., input source, output format) during or after the installation process.\\
 \textbf{Fit Criterion:} A settings configuration panel must be accessible from the app's user interface, allowing users to adjust settings without needing to edit configuration files manually.
 
 \subsection{Release Requirements}
-\subsubsection*{OE-R1 Initial Release}
+\subsubsection*{OE-R1 Initial Release} \label{OE-R1}
 \textbf{Requirement:} The first stable version of the app shall be released within the timeline of this capstone course after completing the testing and POC phase. This release will include core functionality such as converting instrument signals to sheet music and basic editing capabilities.\\
 \textbf{Fit Criterion:} The initial release must undergo testing and pass all quality assurance checks. Core features must be fully operational, and the product should be ready for general use without major bugs.
 
 
 \section{Maintainability and Support Requirements}
 \subsection{Maintenance Requirements}
-\subsubsection*{MS-M1 Version Releases}
+\subsubsection*{MS-M1 Version Releases} \label{MS-M1}
 \textbf{Requirement:} The system must notify the user of new releases of the system within 1 hour of the release. \\ 
 \textbf{Fit Criterion:} Following a new version release of the system, the next time the user opens the application with an internet connection they will be prompted to install the new release. 
-\subsubsection*{MS-M2 System Crash}
+\subsubsection*{MS-M2 System Crash} \label{MS-M2}
 \textbf{Requirement:} The application must self-boot within 1 minute of an unexpected shutdown of the application. \\ 
 \textbf{Fit Criterion:} A non-user prompted shutdown of the system shall result in the application reopening without losing data from the user’s previous session.
 
 \subsection{Supportability Requirements}
-\subsubsection*{MS-S1 Software Bugs}
+\subsubsection*{MS-S1 Software Bugs} \label{MS-S1}
 \textbf{Requirement:} The system must allow users to report bugs to the development team. \\ 
 \textbf{Fit Criterion:} The development team shall be notified within 1 hour of a user submitting a report via the GUI.
-\subsubsection*{MS-S2 Operating System}
+\subsubsection*{MS-S2 Operating System} \label{MS-S2}
 \textbf{Requirement:} The system must operate on Windows 10 and 11. \\ 
 \textbf{Fit Criterion:} The system shall be compatible with Windows 10 and later version such that it performs all expected functionalities
 
 \subsection{Adaptability Requirements}
-\subsubsection*{MS-A1 Internet Connection}
+\subsubsection*{MS-A1 Internet Connection} \label{MS-A1}
 \textbf{Requirement:} The system must function with or without an internet connection. \\ 
 \textbf{Fit Criterion:} User experience of the system will be consistent during usage on an online device as well as an offline device.
-\subsubsection*{MS-A2 GUI Navigation}
+\subsubsection*{MS-A2 GUI Navigation} \label{MS-A2}
 \textbf{Requirement:} The GUI must be navigable using keyboard shortcuts without requiring a mouse. \\ 
 \textbf{Fit Criterion:} The system shall remain functional and usable when a mouse is not connected to the device running the system.
 
 
 \section{Security Requirements}
 \subsection{Access Requirements}
-\subsubsection*{S-A1 User Authentication}
+\subsubsection*{S-A1 User Authentication} \label{S-A1}
 \textbf{Requirement:} The system must not require a login or password to be accessed. \\ 
 \textbf{Fit Criterion:} The user successfully accesses the system without performing any authentication activities.
 
@@ -875,13 +879,13 @@ such as text alternatives, text readability, etc.
 N/A: This system does not deal with storage of PII, session logs, usage logs, or output files (i.e., generated sheet music). It is the user's responsibility to maintain long-term storage of output files.
 
 \subsection{Privacy Requirements}
-\subsubsection*{S-P1 Data Storage}
+\subsubsection*{S-P1 Data Storage} \label{S-P1}
 \textbf{Requirement:} The system must store user data (i.e., output files) in a local user-chosen location. \\ 
 \textbf{Fit Criterion:} All output files appear in the user-inputted location such that the user has read and write capabilities over the files. 
-\subsubsection*{S-P2 PII}
+\subsubsection*{S-P2 PII} \label{S-P2}
 \textbf{Requirement:} The system must not collect Personal Identifiable Information (PII) from the user. \\ 
 \textbf{Fit Criterion:} The user is never prompted to supply information to the system other than audio input files. 
-\subsubsection*{S-P3 Input Data}
+\subsubsection*{S-P3 Input Data} \label{S-P3}
 \textbf{Requirement:} The system must not store audio data once it has been processed. \\ 
 \textbf{Fit Criterion:} All caches and temporary files are cleared from the system once signal processing is completed.
 
@@ -894,24 +898,24 @@ N/A: This system does not store data and thus will not be susceptible to maleveo
 \section{Cultural Requirements}
 \subsection{Cultural Requirements}
 
-\subsubsection*{CR-CR1 Musical Convention}
+\subsubsection*{CR-CR1 Musical Convention} \label{CR-CR1}
 \textbf{Requirement: }The application will focus on Western music notation, commonly used in the United States and other English-speaking regions. 
 \textbf{Fit Criterion:} The application must accurately represent Western music notation standards, allowing users to create and view sheet music that adheres to these conventions.
 
-\subsubsection*{CR-CR2 Expected music theory level of users}
+\subsubsection*{CR-CR2 Expected music theory level of users} \label{CR-CR2}
 \textbf{Requirement: }It is designed for users with a basic to intermediate understanding of Western music theory, who can read standard sheet music, though advanced expertise is not required.
 \textbf{Fit Criterion:} The user interface and functionality of the application must be intuitive for individuals with basic to intermediate music theory knowledge, providing tutorials or guides for those who may need additional assistance.
 
 \section{Compliance Requirements}
 \subsection{Legal Requirements}
 
-\subsubsection*{CR-LR1 Copyright issues}
+\subsubsection*{CR-LR1 Copyright issues} \label{CR-LR1}
 \textbf{Requirement: }The app’s legality is primarily concerned with copyright issues surrounding the transcription of copyrighted music. It will generate sheet music based on audio input, and the focus will be on transcription of musical elements, which is generally allowed under copyright law, as it involves interpretation rather than direct reproduction of the original work. Users will be advised to ensure their audio inputs do not violate copyright restrictions.
 \textbf{Fit Criterion:} The application must include a disclaimer regarding copyright laws and provide users with clear instructions on ensuring their audio inputs comply with copyright restrictions.
 
 \subsection{Standards Compliance Requirements}
 
-\subsubsection*{CR-SCR1 Technological Standards}
+\subsubsection*{CR-SCR1 Technological Standards} \label{CR-SCR1}
 \textbf{Requirement: }The application will follow established music technology standards, including MusicXML for exporting sheet music. Any third-party libraries used will be reviewed to ensure compliance with their licensing terms.
 \textbf{Fit Criterion:} The application must successfully export sheet music in MusicXML format without errors, and all third-party libraries must be documented for compliance verification.
 
@@ -1093,7 +1097,7 @@ The following table displays the tasks and associated deadlines that make up the
     \hline
       Mar 24/25 & Final Demonstration (Revision 1) \\
     \hline
-      Apr \#\#/25 - TBD & Expo Demonstration \\
+      Apr 8/25 & Expo Demonstration \\
     \hline
       Apr 2/25 & Final Documentation (Revision 1) \\
     \hline
@@ -1108,37 +1112,42 @@ The following table displays the tasks and associated deadlines that make up the
 \textbf{Benefit to user:} This phase will result in an MVP to present to relevant stakeholders, ensuring that the development team remains aware of potential users and their related needs. \\
 \textbf{Required operational date:} Nov 11/24 \\
 \textbf{System components included:} Backend subsytem. \\
-\textbf{Related functional requirements:} FR-AI1, FR-AI3, FR-SP6 \\
-\textbf{Related non-functional requirements:} OE-IA1, OE-IA2, CR-CR1, CR-CR2, CR-SCR1 \\
+\textbf{Related functional requirements:} \hyperref[FR-AI1]{FR-AI1}, \hyperref[FR-AI3]{FR-AI3}, \hyperref[FR-SP6]{FR-SP6} \\
+\textbf{Related non-functional requirements:} \hyperref[OE-IA1]{OE-IA1}, \hyperref[OE-IA2]{OE-IA2}, \hyperref[CR-CR1]{CR-CR1}, \hyperref[CR-CR2]{CR-CR2}, \hyperref[CR-SCR1]{CR-SCR1} \\
 
 \subsubsection*{Phase 2: Backend Development}
 \textbf{Benefit to user:} The core functionality of the system will be developed in this phase. This is projected to occur at the same time as Phase 3.\\
 \textbf{Required operational date:} Jan 15/25 \\
 \textbf{System components included:} Backend subsytem containt the main functionalities of the system, namely signal processing of audio input and generation of output files (i.e., sheet music). 
                                      This phase will also include necessary hardware components for signal processing and testing, such as a keyboard/guitar, microphone, audio interfacer, amplifiers, audio cables, and other audio equipment as necessary.\\
-\textbf{Related functional requirements:} FR-SP1, FR-SP2, FR-SP3, FR-SP5, FR-SMG1, FR-SC1\\
-\textbf{Related non-functional requirements:} PR-SL2, PR-PA1, PR-FRT5, PR-C1, PR-SE3, UE-EP1, OE-EP2, OE-IA3, MS-S2, MS-A1, S-A1, S-P3 \\
+\textbf{Related functional requirements:} \hyperref[FR-SP1]{FR-SP1}, \hyperref[FR-SP2]{FR-SP2}, \hyperref[FR-SP3]{FR-SP3}, \hyperref[FR-SP5]{FR-SP5}, \hyperref[FR-SMG1]{FR-SMG1}, \hyperref[FR-SL1]{FR-SL1}\\
+\textbf{Related non-functional requirements:} \hyperref[PR-SL2]{PR-SL2}, \hyperref[PR-PA1]{PR-PA1}, \hyperref[PR-RFT5]{PR-RFT5}, \hyperref[PR-C1]{PR-C1}, \hyperref[PR-SE3]{PR-SE3}, \hyperref[OE-EP1]{OE-EP1}, 
+\hyperref[OE-EP2]{OE-EP2}, \hyperref[OE-IA3]{OE-IA3}, \hyperref[MS-S2]{MS-S2}, \hyperref[MS-A1]{MS-A1}, \hyperref[S-A1]{S-A1}, \hyperref[S-P3]{S-P3} \\
 
 \subsubsection*{Phase 3: User Interface}
 \textbf{Benefit to user:} This phase will make the system usable by the intended customer, so that technical knowledge is not necessary to operate the system. This is projected to occur at the same time as Phase 2. \\
 \textbf{Required operational date:} Jan 15/25 \\
 \textbf{System components included:} Frontend subsytem. \\
-\textbf{Related functional requirements:} FR-AI2, FR-SP4, FR-UI2, FR-UI3, FR-UI4\\
-\textbf{Related non-functional requirements:} LF-A1, LF-A2, LF-A3, LF-S1, UH-EOH1, UH-PI1, UH-L1, UH-UP1, UH-A1, PR-SC2, OE-EP3, EO-EP4, OE-WE1, MS-A2, S-P2 \\
+\textbf{Related functional requirements:} \hyperref[FR-AI2]{FR-AI2}, \hyperref[FR-SP4]{FR-SP4}, \hyperref[FR-UI2]{FR-UI2}, \hyperref[FR-UI3]{FR-UI3}, \hyperref[FR-UI4]{FR-UI4}\\
+\textbf{Related non-functional requirements:} \hyperref[LF-A1]{LF-A1}, \hyperref[LF-A2]{LF-A2}, \hyperref[LF-A3]{LF-A3}, \hyperref[LF-S1]{LF-S1}, 
+\hyperref[UH-EOU1]{UH-EOU1}, \hyperref[LF-S1]{LF-S1}, \hyperref[UH-PI1]{UH-PI1}, \hyperref[UH-L1]{UH-L1}, \hyperref[UH-UP1]{UH-UP1}, \hyperref[UH-A1]{UH-A1}, 
+\hyperref[PR-SC2]{PR-SC2}, \hyperref[OE-EP3]{OE-EP3}, \hyperref[OE-EP4]{OE-EP4}, \hyperref[OE-WE1]{OE-WE1}, \hyperref[MS-A2]{MS-A2}, \hyperref[S-P2]{S-P2}\\
 
 \subsubsection*{Phase 4: Integration of Subsystems and Deployment}
 \textbf{Benefit to user:} This phase will result in the completion of revision 0, such that all core functionalities are present in the system and all implementation details are abstracted from user view. \\
 \textbf{Required operational date:} Feb 3/25 \\
 \textbf{System components included:} Backend subsystem, frontend subsytem.\\
-\textbf{Related functional requirements:} FR-AI4, FR-UI1, FR-SL2\\
-\textbf{Related non-functional requirements:} UH-OP2, PR-SL1, PR-RFT1, PR-RFT2, PR-RFT3, PR-RFT4, PR-RFT7, PR-C2, PR-L1, OE-P1, OE-P2, OE-P3, OE-P4, MS-M1, MS-S1, S-P1 \\
+\textbf{Related functional requirements:} \hyperref[FR-AI4]{FR-AI4}, \hyperref[FR-UI1]{FR-UI1}, \hyperref[FR-SL2]{FR-SL2}\\
+\textbf{Related non-functional requirements:} \hyperref[UH-UP2]{UH-UP2}, \hyperref[PR-SL1]{PR-SL1}, \hyperref[PR-RFT1]{PR-RFT1}, \hyperref[PR-RFT2]{PR-RFT1}, 
+\hyperref[PR-RFT3]{PR-RFT3}, \hyperref[PR-RFT4]{PR-RFT4}, \hyperref[PR-RFT7]{PR-RFT7}, \hyperref[PR-C2]{PR-C2}, \hyperref[PR-L1]{PR-L1}, \hyperref[OE-P1]{OE-P1}, 
+\hyperref[OE-P2]{OE-P2}, \hyperref[OE-P3]{OE-P3}, \hyperref[OE-P4]{OE-P4}, \hyperref[MS-M1]{MS-M1}, \hyperref[MS-S1]{MS-S1}, \hyperref[S-P1]{S-P1} \\
 
 \subsubsection*{Phase 5: Refinements}
 \textbf{Benefit to user:} This phase will focus on implementing stretch goals and waiting room requirements into the system. \\
 \textbf{Required operational date}: Mar 24/25 \\
 \textbf{System components included:} \\
-\textbf{Related functional requirements:} FR-SMG2, FR-SMG3\\
-\textbf{Related non-functional requirements:} PR-SE1, PR-SE2, OE-R1, MS-M2, CR-LR1 \\
+\textbf{Related functional requirements:} \hyperref[FR-SMG2]{FR-SMG2}, \hyperref[FR-SMG3]{FR-SMG3}\\
+\textbf{Related non-functional requirements:} \hyperref[PR-SE1]{PR-SE1}, \hyperref[PR-SE2]{PR-SE2},\hyperref[OE-R1]{OE-R1}, \hyperref[MS-M2]{MS-M2}, \hyperref[CR-LR1]{CR-LR1} \\
 
 
 \section{Migration to the New Product}
