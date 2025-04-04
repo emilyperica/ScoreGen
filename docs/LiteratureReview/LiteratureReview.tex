@@ -30,7 +30,7 @@ x_{mono}(n) = \frac{x_{left}(n) + x_{right}(n)}{2}
 This preserves the overall amplitude structure while ensuring consistency in pitch detection and onset analysis.
 
 \begin{figure}[h]
-\rotatebox[origin=c]{180}{\includegraphics[width=125mm,scale=0.5]{docs/Research Report/Stereo-To-Mono.jpg}}
+\rotatebox[origin=c]{180}{\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/Stereo-To-Mono.jpg}}
 \caption{Conversion of Stereo Audio to Mono-Audio by averaging channels$^1$}
 \end{figure}
 
@@ -53,9 +53,9 @@ where $\tau$ represents the lag and $N$ is the signal length.
 \begin{figure}[h]
     \centering
     \begin{tabular}{ccc}
-        \includegraphics[width=60mm]{docs/Research Report/autocorrelation.png} & 
+        \includegraphics[width=60mm]{docs/LiteratureReview/images/autocorrelation.png} & 
         $\Longrightarrow$ & 
-        \includegraphics[width=60mm]{docs/Research Report/autocorrelation Peak.png} \\
+        \includegraphics[width=60mm]{docs/LiteratureReview/images/autocorrelation Peak.png} \\
     \end{tabular}
     \caption{Signal peak occurs when offset signal is most similar to original signal$^2$}
     \label{fig:autocorrelation_peak}
@@ -92,7 +92,7 @@ X(t, f) = \int_{-\infty}^{\infty} x(\tau) w(\tau - t) e^{-j 2\pi f \tau} d\tau
 where $w(t)$ is typically a Hanning or Hamming window to reduce spectral leakage.
 
 \begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/Research Report/STFT.png}
+\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/STFT.png}
 \caption{Breakdown of STFT Process used to construct spectrogram$^3$}
 \end{figure}
 
@@ -109,7 +109,7 @@ w(n) = 0.5 - 0.5\cos\left(\frac{2\pi n}{N-1}\right)
 \end{equation}
 
 \begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/Research Report/hanning.png}
+\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/hanning.png}
 \caption{Hanning function used to smooth out signal onsets$^4$}
 \end{figure}
 
@@ -122,7 +122,7 @@ This algorithm was used for determining the key signature of a musical piece bas
 The Krumhansl-Schmuckler algorithm matches pitch distributions in an audio signal to predefined key profiles, computing a correlation score for each possible key. The key with the highest correlation is selected.
 
 \begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/Research Report/C-Cminor-Expected-Key-Profiles.png}
+\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/C-Cminor-Expected-Key-Profiles.png}
 \caption{Expected Relative Note Frequency profiles of C and C-Minor key, used in Krumhansl-Schmukler algorithm to create correlation scores$^5$}
 \end{figure}
 
@@ -152,7 +152,7 @@ where $X(f)$ and $Y(f)$ are the Fourier transforms of $x(t)$ and $y(t)$, and $X^
 \textbf{Could have been used for} improved time alignment of detected note events, reducing timing inaccuracies in sheet music generation.
 
 \begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/Research Report/cross-correlation-example.png}
+\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/cross-correlation-example.png}
 \caption{Diagram highlighting Cross-Correlation functionality. Similar to Auto-correlation but used for different signals, rather than offsets of same signal$^6$}
 \end{figure}
 
@@ -191,7 +191,7 @@ Wavelet denoising involves three main steps:  \\
 \textbf{Could have been used for} denoising input audio, effectively reducing high-frequency noise that could interfere with accurate note onset detection and improving the clarity of secondary notes for transcription.
 
 \begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/Research Report/denoise-filter.png}
+\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/denoise-filter.png}
 \caption{ Signal Denoising via soft wavelet thresholding$^7$}
 \end{figure}
 
@@ -216,7 +216,7 @@ Pitch corresponds to the minimum of $\tilde{d}(\tau)$. This improves over standa
 \textbf{Could have been used to} refine pitch estimation, reducing frequency detection errors and improving note transcription accuracy.
 
 \begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/Research Report/yin-function.png}
+\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/yin-function.png}
 \caption{Difference in signal offsets calculated to determine cumulative mean difference, allowing better handling of noisy inputs or harmonics$^8$}
 \end{figure}
 
