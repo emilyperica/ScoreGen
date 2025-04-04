@@ -25,18 +25,21 @@
 2024/09/24 & Mark, Ian, Emily, Jackson & Initial Revision\\
 2025/03/26 & Ian & Update extras, \href{https://github.com/emilyperica/ScoreGen/issues/300}{Issue \#300}\\
 2025/04/02 & Ian & Change extra to research report, \href{https://github.com/emilyperica/ScoreGen/issues/355}{Issue \#355}\\
+2025/04/03 & Mark & Revision 1 Feedback Addressed, \href{https://github.com/emilyperica/ScoreGen/issues/305}{Issue \#305}\\
 \bottomrule
 \end{tabularx}
 \end{table}
 
 \section{Problem Statement}
+The following sections outline the core problem being addressed, the technical approach, 
+and the target users of our sheet music generation solution.
 
 \subsection{Problem}
 Musicians often improvise or develop complex pieces, but have difficulty sharing, expanding on, or documenting their progress. Manual note-taking is also time-consuming and prone to errors.
 
 \subsection{Inputs and Outputs}
 
-The product aims to take in audio from a singular musical instrument, and after processing the data, output the sheet music representative of the audio provided. The sheet music will contain the notes, note duration, and overall time signature of the piece.
+The product aims to use C++ in a windows environment to take in audio from a singular musical instrument. This can be done live through device microphone/line-in playing, or the user may record ahead of time and upload a .wav file. After processing the data, the application will output a pdf of the sheet music representative of the audio provided. The sheet music will contain the notes, note duration, and overall time signature of the piece. The users of this application are expected to have standard knowledge regarding navigating web apps, but are not required to have any technical or even prior music theory knowledge.
 
 
 \subsection{Stakeholders}
@@ -47,6 +50,11 @@ The product is largely aimed at helping aspiring musicians who either lack the t
 To use this product the user simply has to download the desktop application associated with the product, and a high-quality microphone attachment to their computer
 
 \section{Goals}
+These goals represent the essential features and capabilities required for a successful 
+minimum viable product. Each goal is scoped to be achievable within the project timeline 
+while maintaining sufficient technical complexity.
+
+
 \begin{enumerate}
     \item The resulting product can handle monophonic and polyphonic input from a 
     musical instrument.
@@ -54,18 +62,24 @@ To use this product the user simply has to download the desktop application asso
         \item The core function of the product.
         \item Elements such as note pitch, note length, rhythm, and tempo are essential 
         for creating sheet music.
+        \item Accurate pitch detection within an acceptable margin of error. (Some fraction of a semitone)
+        \item Tempo detection sufficient for musical interpretation.
     \end{itemize}
     \item The resulting product can generate a readable and usable score that reasonably matches the 
-    audio input.
+    audio input. The minimum threshold for accuracy will depend on the tempo, but will be measured in percentage of correct notes.
         \begin{itemize}
             \item These are the minimum qualities such that the score can be played to recreate the 
             original input.
+            \item Accuracy levels that maintain musical integrity at varied tempos.
+            \item Standard music notation compliance (key signatures, time signatures, note spacing).
         \end{itemize}
     \item The resulting product's digitized audio and generated scores are exportable to standard file 
     formats.
     \begin{itemize}
         \item To improve portability and user accessibility.
         \item Maximizes the types of devices a user may use to read their transcriptions.
+        \item Supports industry-standard formats for audio, notation, and visualization.
+        \item Maintains essential metadata for musical interpretation.
     \end{itemize}
     \item The resulting product provides a graphical user interface (GUI) that adheres to 
     human-centred design principles.
@@ -84,17 +98,52 @@ To use this product the user simply has to download the desktop application asso
 
 The ultimate goal is to develop a fast, accurate sheet music generator paired with an intuitive, user-friendly interface that requires minimal effort to learn.
 
-The ultimate goal is to develop a fast, accurate sheet music generator paired with an intuitive, user-friendly interface that requires minimal effort to learn.
-
 \section{Stretch Goals}
+While not essential for project completion, these additional features would significantly 
+enhance the product's value and user experience. They are prioritized based on technical 
+feasibility and potential impact.
+
+
 \begin{enumerate}
     \item Available on different platforms and devices.
+    \begin{itemize}
+        \item Expands user base beyond Windows environment
+        \item Enables cross-platform collaboration
+        \item Increases accessibility and adoption
+    \end{itemize}
+
     \item Allows for real-time transcription to provide user feedback while they are playing an
     instrument.
+    \begin{itemize}
+        \item Provides immediate practice feedback
+        \item Creates interactive learning experience
+        \item Simulates having musical guidance
+    \end{itemize}
+
     \item Detailed and improved transcription by expanding musical context and
     structure identification (elements such as dynamics, expression, modulations, etc.).
+    \begin{itemize}
+        \item Captures artistic nuances of the performance
+        \item Produces more professional-grade sheet music
+        \item Preserves musical interpretation details
+        \item Enhances educational value
+    \end{itemize}
+
     \item Provides optimal instrument fingering tablature for fretted stringed instruments.
+    \begin{itemize}
+        \item Makes music more accessible to beginners
+        \item Aids in proper technique development
+        \item Reduces learning curve for self-taught musicians
+        \item Enhances practice efficiency
+    \end{itemize}
+
     \item The resulting product is available without an internet connection.
+    \begin{itemize}
+        \item Enables usage in any location
+        \item Ensures consistent performance
+        \item Protects user privacy
+        \item Reduces resource dependencies
+    \end{itemize}
 \end{enumerate}
 
 \section{Challenge Level and Extras}
@@ -112,8 +161,6 @@ As a result of the expected challenge level, two extras have been chosen:
 \newpage{}
 
 \section*{Appendix --- Reflection}
-
-\wss{Not required for CAS 741}
 
 \input{../Reflection.tex}
 
