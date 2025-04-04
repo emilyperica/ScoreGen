@@ -58,6 +58,7 @@ urlcolor=cyan       % color of external links
 \midrule
 2025-01-17 & 1.0 & Initial version\\
 2025-03-24 & 1.1 & \href{https://github.com/emilyperica/ScoreGen/issues/208}{Updated contents of module Uses sections}  \\
+2025-04-03 & 1.2 & \href{https://github.com/emilyperica/ScoreGen/issues/312}{Addressed TA feedback} \\
 \bottomrule
 \end{tabularx}
 
@@ -201,44 +202,45 @@ sendToAudioOutput & audioData & None & PlaybackError \\
 
 \subsection{Semantics}  
 
-\subsubsection{State Variables}  
-\begin{itemize}  
-    \item \texttt{microphoneState}  
-    \item \texttt{audioOutputState}  
-\end{itemize}  
+\subsubsection{State Variables}
+\begin{itemize}
+    \item \textbf{microphoneState:} A state variable with domain $\{\texttt{inactive}, \texttt{active}\}$.
+    \item \textbf{audioOutputState:} A state variable with domain $\{\texttt{inactive}, \texttt{active}\}$.
+\end{itemize}
 
-\subsubsection{Environment Variables}  
-\begin{itemize}  
-    \item \texttt{hardwareDriverLibrary}  
-    \item \texttt{deviceConfig}  
-\end{itemize}  
+\subsubsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{hardwareDriverLibrary:} The software library that provides low-level driver interfaces for the audio hardware.
+    \item \textbf{deviceConfig:} A configuration structure containing parameters and settings for the audio devices.
+\end{itemize}
 
-\subsubsection{Assumptions}  
-\begin{itemize}  
-    \item Functional hardware to take in user audio (i.e. microphone) 
-    and play out audio (i.e. speaker, headphones) is available.
-    \item Necessary drivers are installed.  
-\end{itemize}  
+\subsubsection{Assumptions}
+\begin{enumerate}
+    \item The system is equipped with functional audio input hardware (e.g., microphone) and audio output hardware (e.g., speakers or headphones).
+    \item All necessary drivers are installed, properly configured, and accessible via the \texttt{hardwareDriverLibrary}.
+\end{enumerate}
 
-\subsubsection{Access Routine Semantics}  
+\subsubsection{Access Routine Semantics}
 
-\noindent \texttt{initializeMicrophone}():
-\begin{itemize}  
-    \item \textbf{Transition:} Sets \texttt{microphoneState} to "active".  
-    \item \textbf{Exception:} \texttt{InitializationError} if device fails to initialize.  
-\end{itemize}  
+\textbf{\texttt{initializeMicrophone()}}: \\
+\textbf{Precondition:} Audio input hardware is present and accessible through the \texttt{hardwareDriverLibrary}. \\
+\textbf{Transition:} The state variable \texttt{microphoneState} is set to \texttt{"active"}. \\
+\textbf{Postcondition:} Upon successful execution, \texttt{microphoneState} $=$ \texttt{"active"}. \\
+\textbf{Exception:} Raises \texttt{InitializationError} if the audio input device fails to initialize.
 
-\noindent \texttt{sendToAudioOutput(audioData)}:
-\begin{itemize}  
-    \item \textbf{Transition:} Sends \texttt{audioData} to hardware.  
-    \item \textbf{Exception:} \texttt{PlaybackError} if playback fails.  
-\end{itemize}  
+\vspace{2mm}
+\noindent \textbf{\texttt{sendToAudioOutput(audioData)}}: \\
+\textbf{Precondition:} A valid \texttt{audioData} stream is provided, and the audio output hardware is available and operational. \\
+\textbf{Transition:} The provided \texttt{audioData} is transmitted to the audio output device via the \texttt{hardwareDriverLibrary}. \\
+\textbf{Postcondition:} The audio data is played through the audio output device; \texttt{audioOutputState} is updated accordingly if applicable. \\
+\textbf{Exception:} Raises \texttt{PlaybackError} if the transmission or playback of the audio data fails.
 
-\subsubsection{Local Functions}  
-\begin{itemize}  
-    \item \texttt{detectAvailableHardware()}  
-    \item \texttt{configureDeviceSettings(deviceType)}  
-\end{itemize}  
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\texttt{detectAvailableHardware()}}: Scans and returns a list of available audio hardware devices.
+    \item \textbf{\texttt{configureDeviceSettings(deviceType)}}: Retrieves and applies configuration settings specific to the provided \texttt{deviceType}.
+\end{itemize}
+
 
 \section{\hyperref[mUI]{MIS of User Interface Module}} \label{M2}  
 
@@ -272,43 +274,45 @@ triggerPlayback & audioData & None & PlaybackError \\
 \end{center}  
 
 \subsection{Semantics}  
+\subsubsection{State Variables}
+\begin{itemize}
+    \item \textbf{currentScreen:} A state variable representing the active UI screen. Its domain includes possible screen identifiers (e.g., \texttt{"Home"}, \texttt{"record"}, \texttt{"View PDF"}, \texttt{"View MusicXML"}).
+\end{itemize}
 
-\subsubsection{State Variables}  
-\begin{itemize}  
-    \item \texttt{currentScreen}  
-    \item \texttt{userPreferences}  
-\end{itemize}  
+\subsubsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{displayDriver:} The interface module responsible for rendering UI elements on the user's device.
+    \item \textbf{inputDevices:} A collection of hardware devices (e.g., keyboard, mouse) used for user input.
+\end{itemize}
 
-\subsubsection{Environment Variables}  
-\begin{itemize}  
-    \item \texttt{displayDriver}  
-    \item \texttt{inputDevices}  
-\end{itemize}  
+\subsubsection{Assumptions}
+\begin{enumerate}
+    \item User devices support modern UI rendering and interactive functionalities.
+    \item User device is connected to the internet for MusicXML sheet music generation.
+\end{enumerate}
 
-\subsubsection{Assumptions}  
-\begin{itemize}  
-    \item User devices support modern UI rendering.  
-\end{itemize}  
+\subsubsection{Access Routine Semantics}
 
-\subsubsection{Access Routine Semantics}  
+\noindent \textbf{\texttt{displayInterface()}}: \\
+\textbf{Precondition:} The \texttt{displayDriver} must be available and operational. \\
+\textbf{Transition:} The state variable \texttt{currentScreen} is updated to its respective view. \\
+\textbf{Postcondition:} The interface is rendered on the active display screen. \\
+\textbf{Exception:} Throws \texttt{RenderError} if the interface fails to render.
 
-\noindent \texttt{displayUploadInterface}():
-\begin{itemize}  
-    \item \textbf{Transition:} Sets \texttt{currentScreen} to "Upload".  
-    \item \textbf{Exception:} \texttt{RenderError} if rendering fails.  
-\end{itemize}  
+\vspace{2mm}
+\noindent \textbf{\texttt{triggerPlayback(audioData)}}: \\
+\textbf{Precondition:} Valid \texttt{audioData} must be provided, and the required audio output devices should be available. \\
+\textbf{Transition:} Initiates playback of the provided \texttt{audioData}. \\
+\textbf{Postcondition:} The audio data is successfully played via the corresponding output device. \\
+\textbf{Exception:} Throws \texttt{PlaybackError} if audio playback fails.
 
-\noindent \texttt{triggerPlayback(audioData)}:
-\begin{itemize}  
-    \item \textbf{Transition:} Initiates playback of provided \texttt{audioData}.  
-    \item \textbf{Exception:} \texttt{PlaybackError} if audio fails to play.  
-\end{itemize}  
-
-\subsubsection{Local Functions}  
-\begin{itemize}  
-    \item \texttt{validateUserInput()}  
-    \item \texttt{renderScreen(screenType)}  
-\end{itemize}  
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\texttt{processAudio(device, audioData)}}: Sends audio data to the backend from the specified \texttt{device} and returns the processed data.
+    \item \textbf{\texttt{getScore(filePath)}}: Retrieves the score as a MusicXML file from the specified \texttt{filePath} and displays it in an svg format.
+    \item \textbf{\texttt{validateUserInput()}}: Validates input received from the \texttt{inputDevices} and returns a status or error code based on its correctness.
+    \item \textbf{\texttt{renderScreen(screenType)}}: Renders the specified screen, identified by \texttt{screenType}, using the \texttt{displayDriver}.
+\end{itemize}
 
 \section{\hyperref[mSG]{MIS of Score Generation Module}} \label{M3}  
 
@@ -316,7 +320,7 @@ triggerPlayback & audioData & None & PlaybackError \\
 Score Generation Module  
 
 \subsection{Uses}  
-Raw Signal Processing Module (M4): For receiving cleand audio data. \\
+Raw Signal Processing Module (M4): For receiving clean audio data. \\
 Audio Feature Extraction Module (M5): For extracting musical features from audio data. (Note, Tempo, Key Signature) \\
 \subsection{Syntax}  
 
@@ -340,41 +344,43 @@ customizeScoreSettings & settings & None & ValidationError \\
 
 \subsection{Semantics}  
 
-\subsubsection{State Variables}  
-\begin{itemize}  
-    \item \texttt{scoreSettings}  
-\end{itemize}  
+\subsubsection{State Variables}
+\begin{itemize}
+    \item \textbf{scoreSettings:} A list defining parameters for musical score generation. Its domain includes default and user-specified settings (e.g. time signature).
+\end{itemize}
 
-\subsubsection{Environment Variables}  
-\begin{itemize}  
-    \item \texttt{fileSystemAccess}  
-\end{itemize}  
+\subsubsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{fileSystemAccess:} The interface responsible for accessing the file system, enabling the reading and writing of files (including .mxl files).
+\end{itemize}
 
-\subsubsection{Assumptions}  
-\begin{itemize}  
-    \item Input note sequences are formatted correctly.  
-    \item The file system is writable for saving .mxl files.  
-\end{itemize}  
+\subsubsection{Assumptions}
+\begin{enumerate}
+    \item Input note sequences are properly formatted and adhere to the expected musical notation standards.
+    \item The file system has the appropriate write permissions for saving .mxl files.
+\end{enumerate}
 
-\subsubsection{Access Routine Semantics}  
+\subsubsection{Access Routine Semantics}
+\vspace{2mm}
+\noindent \textbf{\texttt{generateMusicXML(noteSequence)}}: \\
+\textbf{Precondition:} A valid \texttt{noteSequence} is provided, and \texttt{fileSystemAccess} is operational. \\
+\textbf{Output:} An .mxl file representing the musical score corresponding to the provided \texttt{noteSequence}. \\
+\textbf{Postcondition:} The generated .musicxml file is successfully stored and accessible via \texttt{fileSystemAccess}. \\
+\textbf{Exception:} Throws \texttt{GenerationError} if the input \texttt{noteSequence} is invalid or if an error occurs during file creation.
 
-\noindent \texttt{generateScore(noteSequence)}:
-\begin{itemize}  
-    \item \textbf{Output:} An mxl file representing the musical score.  
-    \item \textbf{Exception:} \texttt{GenerationError} if input is invalid.  
-\end{itemize}  
+\vspace{2mm}
+\noindent \textbf{\texttt{customizeScoreSettings(settings)}}: \\
+\textbf{Precondition:} The input \texttt{settings} adhere to the expected format for score configuration. \\
+\textbf{Transition:} Updates the state variable \texttt{scoreSettings} with the new configuration values provided by \texttt{settings}. \\
+\textbf{Postcondition:} The \texttt{scoreSettings} reflect the updated parameters. \\
+\textbf{Exception:} Throws \texttt{ValidationError} if the provided \texttt{settings} do not meet the required validation criteria.
 
-\noindent \texttt{customizeScoreSettings(settings)}:
-\begin{itemize}  
-    \item \textbf{Transition:} Updates \texttt{scoreSettings} with new values.  
-    \item \textbf{Exception:} \texttt{ValidationError} if settings are invalid.  
-\end{itemize}  
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\texttt{validateSettings(settings)}}: Checks the provided \texttt{settings} against a defined schema or set of rules, returning a validation status or error details.
+    \item \textbf{\texttt{renderPDF(noteSequence, scoreSettings)}}: Generates a PDF representation of the musical score using the \texttt{noteSequence} and the current \texttt{scoreSettings}; primarily used for previewing or documentation purposes.
+\end{itemize}
 
-\subsubsection{Local Functions}  
-\begin{itemize}  
-    \item \texttt{validateSettings(settings)}  
-    \item \texttt{renderPDF(noteSequence, scoreSettings)}  
-\end{itemize}  
 
 \section{\hyperref[mRSM]{MIS of Raw Signal Processing Module}} \label{M4}  
 
@@ -397,51 +403,45 @@ Hardware-Hiding Module (M1): For accessing microphone and audio output devices.
 \begin{tabular}{|p{4cm}|p{3cm}|p{4cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
-\hline  
-filterSignal & rawAudioData & filteredAudioData & FilterError \\  
-adjustSamplingRate & audioData, rate & resampledAudioData & ResamplingError \\  
+\hline    
+dsp & filePath & noteSequence & GenerationError \\
+preprocess & rawAudioData & filteredAudioData & FilterError \\  
 \hline  
 \end{tabular}  
 \end{center}  
 
 \subsection{Semantics}  
 
-\subsubsection{State Variables}  
-\begin{itemize}  
-    \item \texttt{currentSamplingRate}  
-    \item \texttt{filterParameters}  
-\end{itemize}  
+\subsubsection{State Variables}
+\begin{itemize}
+    \item \textbf{currentSamplingRate:} A numerical variable representing the active sampling rate (in Hz) for audio processing.
+    \item \textbf{filterParameters:} A configuration object defining the parameters for the filtering operation (e.g., cutoff frequencies, filter type).
+    \item \textbf{currentAudioBuffer:} A buffer that temporarily stores audio data during processing, with a defined size and format.
+\end{itemize}
 
-\subsubsection{Environment Variables}  
-\begin{itemize}  
-    \item None  
-\end{itemize}  
+\subsubsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{None.}
+\end{itemize}
 
-\subsubsection{Assumptions}  
-\begin{itemize}  
-    \item Input audio data is in a readable format.  
-\end{itemize}  
+\subsubsection{Assumptions}
+\begin{enumerate}
+    \item The input audio data is provided in a readable and supported format (e.g., WAV).
+\end{enumerate}
 
-\subsubsection{Access Routine Semantics}  
+\subsubsection{Access Routine Semantics}'
+\noindent \textbf{\texttt{preprocess(rawAudioData)}}: \\
+\textbf{Precondition:} A valid \texttt{rawAudioData} is provided and \texttt{filterParameters} have been initialized. \\
+\textbf{Output:} Returns filtered audio data with noise removed. \\
+\textbf{Postcondition:} The output audio data retains the original \texttt{currentSamplingRate} while noise is reduced based on the defined \texttt{filterParameters}. \\
+\textbf{Exception:} Throws \texttt{FilterError} if the filtering process fails due to invalid input or processing errors.
 
-\noindent \texttt{filterSignal(rawAudioData)}:
-\begin{itemize}  
-    \item \textbf{Output:} Filters noise and returns cleaned audio data.  
-    \item \textbf{Exception:} \texttt{FilterError} if filtering fails.  
-\end{itemize}  
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\texttt{computeSpectralFeatures(audioData)}}: Computes and returns spectral features from the provided \texttt{audioData} for further analysis.
+    \item \textbf{\texttt{hanning(audioData)}}: Applies the specified filter parameters to the audio data and returns the filtered output using a hanning window for preprocessing \cite{hanning}.
+\end{itemize}
 
-\noindent \texttt{adjustSamplingRate(audioData, rate)}:
-\begin{itemize}  
-    \item \textbf{Output:} Resamples audioData to the desired rate.  
-    \item \textbf{Exception:} \texttt{ResamplingError} if resampling fails.  
-\end{itemize}  
-
-\subsubsection{Local Functions}  
-\begin{itemize}  
-    \item \texttt{computeSpectralFeatures(audioData)}
-    \item \texttt{applyFilter(rawAudioData, filterParameters)}  
-    \item \texttt{resample(audioData, rate)}  
-\end{itemize}  
 
 \section{\hyperref[mAFE]{MIS of Audio Feature Extraction Module}} \label{M5}  
 
@@ -466,9 +466,8 @@ Score Generation Module (M3): To format extracted features properly \\
 \begin{tabular}{|p{4.5cm}|p{4cm}|p{2.5cm}|p{3.5cm}|}  
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
-\hline  
-extractFeatures & processedAudioData & featureSet & ExtractionError \\  
-configureFeatureSettings & settings & None & ValidationError \\  
+\hline    
+dsp & filePath & featureSet & GenerationError \\
 \hline  
 \end{tabular}  
 \end{center}  
@@ -491,22 +490,19 @@ configureFeatureSettings & settings & None & ValidationError \\
 \end{itemize}  
 
 \subsubsection{Access Routine Semantics}  
-
-\noindent \texttt{extractFeatures(processedAudioData)}:
-\begin{itemize}  
-    \item \textbf{Output:} Extracted features such as pitch, tempo, and dynamics.  
-    \item \textbf{Exception:} \texttt{ExtractionError} if feature extraction fails.  
-\end{itemize}  
-
-\noindent \texttt{configureFeatureSettings(settings)}:
-\begin{itemize}  
-    \item \textbf{Transition:} Updates \texttt{featureSettings} with new values.  
-    \item \textbf{Exception:} \texttt{ValidationError} if settings are invalid.  
-\end{itemize}  
+\noindent \textbf{\texttt{dsp(filePath)}}:\\
+\textbf{Precondition:} Valid \texttt{filePath} is provided, and \texttt{fileSystemAccess} is operational. \\
+\textbf{Output:}  \\ Audio features such as pitch, tempo, and dynamics or all notes played.
+\textbf{Postcondition:} The extracted data is successfully stored and accessible via other functions. \\
+\textbf{Exception:} Throws \texttt{GenerationError} if the input \texttt{noteSequence} is invalid or if an error occurs during signal processing.
 
 \subsubsection{Local Functions}  
 \begin{itemize}  
-    \item \texttt{calculateTempoDynamics(audioData)}  
+    \item \texttt{\texttt{getBPM(audioData)}}: Analyzes the audio data to determine the beats per minute (BPM) and returns the calculated tempo.
+    \item \textbf{\texttt{detectPitch(audioData)}}: Analyzes the audio data to identify the pitch and returns the detected frequency or note name.
+    \item \textbf{\texttt{getKeySignature(noteSequence)}}: Analyzes the note sequence to determine the key signature using the Krumhansl-Schmuckler algorithm \cite{krumhansl-schmuckler}.
+    \item \textbf{\texttt{detectOnsets(audioData)}}: Identifies the onset times of notes in the audio data and returns a list of timestamps.
+    
 \end{itemize}  
 
 \section{\hyperref[mFFC]{MIS of File Format Conversions Module}} \label{M6}  
@@ -531,49 +527,50 @@ Score Generation Module (M3): For saving generated scores as musicXML files. \\
 \hline  
 \textbf{Name} & \textbf{Input} & \textbf{Output} & \textbf{Exceptions} \\  
 \hline  
-importFile & filePath, format & mxl data & ImportError \\  
-exportFile & data, format, filePath & None & ExportError \\  
+importFile & filePath, format & WAV & ImportError \\  
+exportFile & data, format, filePath & musicXML & ExportError \\  
 \hline  
 \end{tabular}  
 \end{center}  
 
 \subsection{Semantics}  
+\subsubsection{State Variables}
+\begin{itemize}
+    \item \textbf{None.}
+\end{itemize}
 
-\subsubsection{State Variables}  
-\begin{itemize}  
-    \item None  
-\end{itemize}  
+\subsubsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{fileSystemAccess:} An interface that facilitates file system operations, including reading from and writing to specified file paths.
+\end{itemize}
 
-\subsubsection{Environment Variables}  
-\begin{itemize}  
-    \item \texttt{fileSystemAccess}  
-\end{itemize}  
+\subsubsection{Assumptions}
+\begin{enumerate}
+    \item The specified file path exists and is accessible for import operations.
+    \item The export destination file path is writable.
+\end{enumerate}
 
-\subsubsection{Assumptions}  
-\begin{itemize}  
-    \item The specified file path exists for import operations.  
-    \item The export destination is writable.  
-\end{itemize}  
+\subsubsection{Access Routine Semantics}
 
-\subsubsection{Access Routine Semantics}  
+\noindent \textbf{\texttt{importFile(filePath, format)}}: \\
+\textbf{Precondition:} The provided \texttt{filePath} exists, and the \texttt{format} is supported for import operations. \\
+\textbf{Output:} Returns the file data extracted from raw audio input contained in the file. \\
+\textbf{Postcondition:} The imported data is correctly formatted as .WAV and available for further processing. \\
+\textbf{Exception:} Throws \texttt{ImportError} if the file does not exist, is inaccessible, or if the specified \texttt{format} is invalid.
 
-\noindent \texttt{importFile(filePath, format)}:
-\begin{itemize}  
-    \item \textbf{Output:} .mxl data extracted from Raw audio input.  
-    \item \textbf{Exception:} \texttt{ImportError} if the file or format is invalid.  
-\end{itemize}  
+\vspace{2mm}
+\noindent \textbf{\texttt{exportFile(data, format, filePath)}}: \\
+\textbf{Precondition:} Valid \texttt{data} is provided, the \texttt{format} is supported for export, and the destination \texttt{filePath} is writable. \\
+\textbf{Output:} Saves the provided \texttt{data} as a musicXML file at the given \texttt{filePath}. \\
+\textbf{Postcondition:} The file at \texttt{filePath} is created or updated with the exported data in the specified format. \\
+\textbf{Exception:} Throws \texttt{ExportError} if writing the file fails due to permission issues or other I/O errors.
 
-\noindent \texttt{exportFile(data, format, filePath)}:
-\begin{itemize}  
-    \item \textbf{Output:} Saves data in the specified format at the given file path.  
-    \item \textbf{Exception:} \texttt{ExportError} if writing fails.  
-\end{itemize}  
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\texttt{convertToRawAudio(fileData, format)}}: Converts the provided \texttt{fileData} from the specified \texttt{format} into raw audio data.
+    \item \textbf{\texttt{writeToFile(data, format, filePath)}}: Writes the provided \texttt{data} in the specified \texttt{format} to the given \texttt{filePath} using the \texttt{fileSystemAccess} interface.
+\end{itemize}
 
-\subsubsection{Local Functions}  
-\begin{itemize}  
-    \item \texttt{convertToRawAudio(fileData, format)}  
-    \item \texttt{writeToFile(data, format, filePath)}  
-\end{itemize}  
 
 \section{\hyperref[mARP]{MIS of Audio Recording and Playback Module}} \label{M7}  
 
@@ -608,49 +605,52 @@ playAudio & audioData & None & PlaybackError \\
 
 \subsection{Semantics}  
 
-\subsubsection{State Variables}  
-\begin{itemize}  
-    \item \texttt{isRecording}  
-    \item \texttt{currentAudioBuffer}  
-\end{itemize}  
+\subsubsection{State Variables}
+\begin{itemize}
+    \item \textbf{isRecording:} A Boolean flag indicating whether audio recording is in progress. Domain: $\{\texttt{false}, \texttt{true}\}$.
+    \item \textbf{currentAudioBuffer:} A buffer that accumulates raw audio data captured during a recording session.
+\end{itemize}
 
-\subsubsection{Environment Variables}  
-\begin{itemize}  
-    \item \texttt{microphoneAccess}  
-    \item \texttt{speakerOutput}  
-\end{itemize}  
+\subsubsection{Environment Variables}
+\begin{itemize}
+    \item \textbf{microphoneAccess:} An interface for accessing and controlling the system's microphone hardware.
+    \item \textbf{speakerOutput:} An interface for managing audio playback through the system's speaker.
+\end{itemize}
 
-\subsubsection{Assumptions}  
-\begin{itemize}  
-    \item Microphone and speaker are functional and accessible.  
-\end{itemize}  
+\subsubsection{Assumptions}
+\begin{enumerate}
+    \item Both the microphone and speaker hardware are functional and accessible via their respective interfaces.
+\end{enumerate}
 
-\subsubsection{Access Routine Semantics}  
+\subsubsection{Access Routine Semantics}
 
-\noindent \texttt{startRecording()}:
-\begin{itemize}  
-    \item \textbf{Transition:} Sets \texttt{isRecording} to true and starts capturing audio from the microphone.  
-    \item \textbf{Exception:} \texttt{RecordingError} if the microphone is unavailable.  
-\end{itemize}  
+\noindent \textbf{\texttt{startRecording()}}: \\
+\textbf{Precondition:} The \texttt{microphoneAccess} interface is operational and no recording is in progress (\texttt{isRecording = false}). \\
+\textbf{Transition:} Sets \texttt{isRecording} to \texttt{true} and initiates audio capture by invoking \texttt{captureMicrophoneInput()}. \\
+\textbf{Postcondition:} Audio data is being accumulated in \texttt{currentAudioBuffer}. \\
+\textbf{Exception:} Throws \texttt{RecordingError} if the microphone is unavailable or fails to start recording.
 
-\noindent \texttt{stopRecording()}:
-\begin{itemize}  
-    \item \textbf{Output:} Captured audio as raw data.  
-    \item \textbf{Transition:} Sets \texttt{isRecording} to false.  
-    \item \textbf{Exception:} \texttt{RecordingError} if no recording is in progress.  
-\end{itemize}  
+\vspace{2mm}
+\noindent \textbf{\texttt{stopRecording()}}: \\
+\textbf{Precondition:} A recording session is active (\texttt{isRecording = true}). \\
+\textbf{Output:} Returns the captured audio data stored in \texttt{currentAudioBuffer} as raw data. \\
+\textbf{Transition:} Sets \texttt{isRecording} to \texttt{false} to terminate the recording session. \\
+\textbf{Postcondition:} The recording session is concluded, and the captured audio data is available for further processing. \\
+\textbf{Exception:} Throws \texttt{RecordingError} if no recording is in progress when invoked.
 
-\noindent \texttt{playAudio(audioData)}:
-\begin{itemize}  
-    \item \textbf{Output:} Plays the specified audio data through the speaker.  
-    \item \textbf{Exception:} \texttt{PlaybackError} if playback fails.  
-\end{itemize}  
+\vspace{2mm}
+\noindent \textbf{\texttt{playAudio(audioData)}}: \\
+\textbf{Precondition:} Valid \texttt{audioData} is provided and the \texttt{speakerOutput} interface is operational. \\
+\textbf{Output:} Plays the provided \texttt{audioData} through the speaker. \\
+\textbf{Postcondition:} Audio playback is successfully initiated via \texttt{sendToSpeaker(audioData)}. \\
+\textbf{Exception:} Throws \texttt{PlaybackError} if the playback process fails due to issues with the speaker or the audio data.
 
-\subsubsection{Local Functions}  
-\begin{itemize}  
-    \item \texttt{captureMicrophoneInput()}  
-    \item \texttt{sendToSpeaker(audioData)}  
-\end{itemize}  
+\subsubsection{Local Functions}
+\begin{itemize}
+    \item \textbf{\texttt{captureMicrophoneInput()}}: Captures audio input from the microphone and stores the data in \texttt{currentAudioBuffer}.
+    \item \textbf{\texttt{sendToSpeaker(audioData)}}: Transmits the provided \texttt{audioData} to the speaker for playback.
+\end{itemize}
+
 
 \newpage
 
