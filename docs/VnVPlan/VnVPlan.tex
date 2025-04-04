@@ -37,6 +37,7 @@
 \midrule
 01/11/2024 & 0 & Initial draft\\
 08/11/2024 & 0 & Include justification for F.R. test cases, improve  F.R. test case terminology\\
+04/03/2025 & 1.0 & \href{https://github.com/emilyperica/ScoreGen/issues/314}{Issue 314}: TA Feedback\\
 \bottomrule
 \end{tabularx}
 
@@ -394,13 +395,14 @@ in section 9 of the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs
 type are grouped similarly, resulting in five subcategories.
 
   \subsubsection{Input Handling}
+  \label{FR-AR}
   \begin{enumerate}
     \item \textbf{Test for Correct Audio File Formats} \\
       \newline
       \textbf{Test ID:} FR-AR1-3-1 \\
       \textbf{Control:} Automatic \\
       \textbf{Initial State:} Application is running and idle, awaiting audio file upload from the user. \\
-      \textbf{Input:} Audio file (e.g., \texttt{.WAV}, \texttt{.MP3}) \\
+      \textbf{Input:} \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{Audio file}(\texttt{.WAV}) \\
       \textbf{Output:} File acceptance without errors, entrance into file processing state. \\
       \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the 
       \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -418,7 +420,7 @@ type are grouped similarly, resulting in five subcategories.
     \textbf{Test ID:} FR-AR1-3-2 \\
     \textbf{Control:} Automatic \\
     \textbf{Initial State:} Application is open and idle, awaiting audio file upload from the user. \\
-    \textbf{Input:} Non-audio file (e.g., \texttt{.PDF}, \texttt{.MP4}, \texttt{.JPEG}, etc.) \\
+    \textbf{Input:} \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.pdf}{Non-audio file} (e.g., \texttt{.PDF}, \texttt{.MP4}, \texttt{.JPEG}, etc.) \\
     \textbf{Output:} Denial of upload attempt with error message. \\
     \textbf{Test Case Derivation:} For validation of functional requirements FR-AR1 and FR-AR3 in section 9.1 of the
     \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -463,7 +465,7 @@ type are grouped similarly, resulting in five subcategories.
     \textbf{Test ID:} FR-AR4 \\
     \textbf{Control:} Automatic \\
     \textbf{Initial State:} Application is running and idle, pre-transcription state awaiting input. \\
-    \textbf{Input:} Sample audio file or user-recorded audio and selected instrument type. \\
+    \textbf{Input:} Sample \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{audio file} or user-recorded audio and selected instrument type. \\
     \textbf{Output:} A generated sheet music file in MusicXML format that aligns with the selected instrument’s key signature 
     and note pitches. \\
     \textbf{Test Case Derivation:} For validation of functional requirement FR-AR4 in section 9.1 of the 
@@ -479,6 +481,7 @@ type are grouped similarly, resulting in five subcategories.
   \end{enumerate}
 
   \subsubsection{Signal Processing and Element Identification}
+  \label{FR-SP}
   \begin{enumerate}
     \item \textbf{Test Effect of Increased Noise in Audio Input} \\
       \newline
@@ -503,7 +506,7 @@ type are grouped similarly, resulting in five subcategories.
       \textbf{Test ID:} FR-SP2 \\
       \textbf{Control:} Manual \\
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
-      \textbf{Input:} Sample audio file or user-recorded audio with a known sheet music equivalent. \\
+      \textbf{Input:} \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{Sample audio file} or user-recorded audio with a known sheet music equivalent. \\
       \textbf{Output:} Sheet music correctly identifying all notes in the input audio. \\
       \textbf{Test Case Derivation:} For validation of functional requirement FR-SP2 in section 9.2 of the 
       \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -522,7 +525,7 @@ type are grouped similarly, resulting in five subcategories.
       \textbf{Test ID:} FR-SP3 \\
       \textbf{Control:} Automatic \\
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
-      \textbf{Input:} Sample or user-recorded audio file that has a known key signature and time signature. \\
+      \textbf{Input:} Sample or user-recorded \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{audio file} that has a known key signature and time signature. \\
       \textbf{Output:} Sheet music that has the same key signature and time signature as the input’s sheet music. \\
       \textbf{Test Case Derivation:} For validation of functional requirement FR-SP3 in section 9.2 of the 
       \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -559,13 +562,14 @@ type are grouped similarly, resulting in five subcategories.
   \end{enumerate}
 
   \subsubsection{Sheet Music Generation}
+  \label{FR-SMG}
   \begin{enumerate}
   \item \textbf{Test General Notation and Layout} \\
     \newline
     \textbf{Test ID:} FR-SMG1 \\
     \textbf{Control:} Automatic with manual inspection \\
     \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
-    \textbf{Input:} Sample or user-recorded audio file with equivalent sheet music available. \\
+    \textbf{Input:} Sample or user-recorded \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{audio file} with equivalent \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.pdf}{sheet music} available. \\
     \textbf{Output:} Sheet music using the same layout and notation as the input. \\
     \textbf{Test Case Derivation:} For validation of functional requirement FR-SMG1 in section 9.3 of the 
     \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -627,13 +631,14 @@ type are grouped similarly, resulting in five subcategories.
     \end{enumerate}
   \end{enumerate}
   \subsubsection{User Interface (UI)}
+  \label{FR-UI}
   \begin{enumerate}
     \item \textbf{Test Application Feedback After Audio File is Uploaded} \\
       \newline
       \textbf{Test ID:} FR-UI1 \\
       \textbf{Control:} Automatic \\
       \textbf{Initial State:} Application is running and idle, awaiting audio input from the user. \\
-      \textbf{Input:} A sample audio file. \\
+      \textbf{Input:} A sample \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{audio file}. \\
       \textbf{Output:} Visual cue(s) on the GUI in 2 seconds or less. \\
       \textbf{Test Case Derivation:} For validation of functional requirement FR-UI1 in section 9.4 of the 
       \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -688,6 +693,7 @@ type are grouped similarly, resulting in five subcategories.
       \end{enumerate}
   \end{enumerate}
   \subsubsection{Save/Load}
+  \label{FR-SL}
   \begin{enumerate}
     \item \textbf{Test Application Save Function} \\
       \newline
@@ -713,7 +719,7 @@ type are grouped similarly, resulting in five subcategories.
       \textbf{Test ID:} FR-SL2 \\
       \textbf{Control:} Manual \\
       \textbf{Initial State:} Application running and idle, waiting for user input to modify and/or view. \\
-      \textbf{Input:} An existing audio file or existing file containing previously generated sheet music. \\
+      \textbf{Input:} An existing \href{https://github.com/emilyperica/ScoreGen/blob/main/test/TestingDatasets/piano-samples/sample-scales/c-major-scale-on-treble-clef.wav}{audio file} or existing file containing previously generated sheet music. \\
       \textbf{Output:} Successful loading of files without errors. \\
       \textbf{Test Case Derivation:} For validation of functional requirement FR-SL2 in section 9.5 of the 
       \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS}. \\
@@ -738,6 +744,7 @@ The following tests are for nonfunctional requirements. There are a few things t
 \end{enumerate}
 
 \subsubsection{Look and Feel Testing}
+\label{LF}
 \begin{enumerate}
     \item \textbf{Test for LF-A1 Discoverability} \\
       \newline
@@ -810,6 +817,7 @@ The following tests are for nonfunctional requirements. There are a few things t
 \end{enumerate}
 
 \subsubsection{Usability and Humanity Testing}
+\label{UH}
 \begin{enumerate}
     \item \textbf{Test for UH-EOU1 Human-Centered Design (HCD)} \\
       \newline
@@ -907,6 +915,7 @@ The following tests are for nonfunctional requirements. There are a few things t
 \end{enumerate}
 
 \subsubsection{Performance Testing}
+\label{PR}
 \begin{enumerate}
     \item \textbf{Test for PR-SL1 User Interface Response Time} \\
       \newline
@@ -1181,6 +1190,7 @@ The following tests are for nonfunctional requirements. There are a few things t
       \end{enumerate}
 \end{enumerate}
 \subsubsection{Operational and Environmental Requirements Testing}
+\label{OE}
 \begin{enumerate}
     \item \textbf{Test for OE-EP1 Operating Environment} \\
       \newline
@@ -1277,12 +1287,12 @@ The following tests are for nonfunctional requirements. There are a few things t
       \textbf{Test ID:} OE-IA2 \\
       \textbf{Type:} Functional, Dynamic \\
       \textbf{Initial State:} The app is running and ready to import and export audio files. \\
-      \textbf{Input/Condition:} Use sample audio files in WAV (PCM) and MP3 (MPEG-1 Layer III) formats for import and export. \\
-      \textbf{Output/Result:} The app should successfully import and export audio files in WAV and MP3 formats. \\
+      \textbf{Input/Condition:} Use sample audio files in WAV format for import and export. \\
+      \textbf{Output/Result:} The app should successfully import and export audio files in WAV format. \\
       \textbf{How Test Will Be Performed:}
       \begin{enumerate}
-          \item Import WAV and MP3 files into the app and verify playback or analysis accuracy.
-          \item Export audio files in WAV and MP3 formats, ensuring they are playable in standard audio players.
+          \item Import WAV file into the app and verify playback or analysis accuracy.
+          \item Export audio files in WAV formats, ensuring they are playable in standard audio players.
           \item Confirm that imported and exported files retain their quality and format specifications.
       \end{enumerate}
 
@@ -1374,6 +1384,7 @@ The following tests are for nonfunctional requirements. There are a few things t
 
 \end{enumerate}
 \subsubsection{Maintainability and Support Requirements Tests}
+\label{MS}
 \begin{enumerate}
     \item \textbf{Test for MS-M1 Version Releases} \\
       \newline
@@ -1460,6 +1471,7 @@ The following tests are for nonfunctional requirements. There are a few things t
       \end{enumerate}
 \end{enumerate}
 \subsubsection{Security Requirement Tests}
+\label{S}
 \begin{enumerate}
     \item \textbf{Test for S-A1 User Authentication} \\
       \newline
@@ -1522,6 +1534,7 @@ The following tests are for nonfunctional requirements. There are a few things t
       \end{enumerate}
 \end{enumerate}
 \subsubsection{Cultural and Compliance Requirements Tests}
+\label{CR}
 \begin{enumerate}
     \item \textbf{Test for CR-CR1 Musical Convention} \\
       \newline
@@ -1610,168 +1623,168 @@ the functional or nonfunctional requirement it is intended to verify and validat
   \hline
   \endlastfoot
 
-  \multirow{3}{3cm}{Section 9.1} & FR-AR1 & FR-AR1-3-1 \newline FR-AR1-3-2 \\
+  \multirow{3}{3cm}{Section 9.1} & FR-AR1 & \hyperref[FR-AR]{FR-AR1-3-1} \newline \hyperref[FR-AR]{FR-AR1-3-2} \\
   \cline{2-3}
-  & FR-AR2 & FR-AR2 \\
+  & FR-AR2 & \hyperref[FR-AR]{FR-AR2} \\
   \cline{2-3}
-  & FR-AR3 & FR-AR1-3-1 \newline FR-AR1-3-2 \\
+  & FR-AR3 & \hyperref[FR-AR]{FR-AR1-3-1} \newline \hyperref[FR-AR]{FR-AR1-3-2} \\
   \hline
-  \multirow{4}{3cm}{Section 9.2} & FR-SP1 & FR-SP1 \\
+  \multirow{4}{3cm}{Section 9.2} & FR-SP1 & \hyperref[FR-SP]{FR-SP1} \\
   \cline{2-3}
-  & FR-SP2 & FR-SP2 \\
+  & FR-SP2 & \hyperref[FR-SP]{FR-SP2} \\
   \cline{2-3}
-  & FR-SP3 & FR-SP3 \\
+  & FR-SP3 & \hyperref[FR-SP]{FR-SP3} \\
   \cline{2-3}
-  & FR-SP4 & FR-SP4 \\
+  & FR-SP4 & \hyperref[FR-SP]{FR-SP4} \\
   \cline{2-3}
-  & FR-SP5 & FR-SP2 \\
+  & FR-SP5 & \hyperref[FR-SP]{FR-SP2} \\
   \hline
-  \multirow{3}{3cm}{Section 9.3} & FR-SMG1 & FR-SMG1 \\
+  \multirow{3}{3cm}{Section 9.3} & FR-SMG1 & \hyperref[FR-SMG]{FR-SMG1} \\
   \cline{2-3}
-  & FR-SMG2 & FR-SMG2 \\
+  & FR-SMG2 & \hyperref[FR-SMG]{FR-SMG2} \\
   \cline{2-3}
-  & FR-SMG3 & FR-SMG3 \\
+  & FR-SMG3 & \hyperref[FR-SMG]{FR-SMG3} \\
   \hline
-  \multirow{3}{3cm}{Section 9.4} & FR-UI1 & FR-UI1 \\
+  \multirow{3}{3cm}{Section 9.4} & FR-UI1 & \hyperref[FR-UI]{FR-UI1} \\
   \cline{2-3}
-  & FR-UI2 & FR-UI2 \\
+  & FR-UI2 & \hyperref[FR-UI]{FR-UI2} \\
   \cline{2-3}
-  & FR-UI3 & FR-UI3 \\
+  & FR-UI3 & \hyperref[FR-UI]{FR-UI3} \\
   \hline
-  \multirow{2}{3cm}{Section 9.5} & FR-SL1 & FR-SL1 \\
+  \multirow{2}{3cm}{Section 9.5} & FR-SL1 & \hyperref[FR-SL]{FR-SL1} \\
   \cline{2-3}
-  & FR-SL2 & FR-SL2 \\
+  & FR-SL2 & \hyperref[FR-SL]{FR-SL2} \\
   \hline
   \multirow{3}{3cm}{Section 10.1} 
-  & LF-A1 & LF-A1 \\
+  & LF-A1 & \hyperref[LF]{LF-A1} \\
   \cline{2-3}
-  & LF-A2 & LF-A2 \\
+  & LF-A2 & \hyperref[LF]{LF-A2} \\
   \cline{2-3}
-  & LF-A3 & LF-A3 \\
+  & LF-A3 & \hyperref[LF]{LF-A3} \\
   \hline
   \multirow{1}{3cm}{Section 10.2} 
-  & LF-S1 & LF-S1 \\
+  & LF-S1 & \hyperref[LF]{LF-S1} \\
   \hline
   \multirow{1}{3cm}{Section 11.1} 
-  & UH-EOU1 & UH-EOU1 \\
+  & UH-EOU1 & \hyperref[UH]{UH-EOU1} \\
   \hline
   \multirow{1}{3cm}{Section 11.2} 
-  & UH-PI1 & UH-PI1 \\
+  & UH-PI1 & \hyperref[UH]{UH-PI1} \\
   \hline
   \multirow{1}{3cm}{Section 11.3} 
-  & UH-L1 & UH-L1 \\
+  & UH-L1 & \hyperref[UH]{UH-L1} \\
   \hline
   \multirow{2}{3cm}{Section 11.4} 
-  & UH-UP1 & UH-UP1 \\
+  & UH-UP1 & \hyperref[UH]{UH-UP1} \\
   \cline{2-3}
-  & UH-UP2 & UH-UP2 \\
+  & UH-UP2 & \hyperref[UH]{UH-UP2} \\
   \hline
   \multirow{1}{3cm}{Section 11.5} 
-  & UH-A1 & UH-A1 \\
+  & UH-A1 & \hyperref[UH]{UH-A1} \\
   \hline
   \multirow{2}{3cm}{Section 12.1} 
-  & PR-SL1 & PR-SL1 \\
+  & PR-SL1 & \hyperref[PR]{PR-SL1} \\
   \cline{2-3}
-  & PR-SL2 & PR-SL2 \\
+  & PR-SL2 & \hyperref[PR]{PR-SL2} \\
   \hline
   \multirow{2}{3cm}{Section 12.2} 
-  & PR-SC1 & PR-SC1 \\
+  & PR-SC1 & \hyperref[PR]{PR-SC1} \\
   \cline{2-3}
-  & PR-SC2 & PR-SC2 \\
+  & PR-SC2 & \hyperref[PR]{PR-SC2} \\
   \hline
   \multirow{2}{3cm}{Section 12.3} 
-  & PR-PA1 & PR-PA1 \\
+  & PR-PA1 & \hyperref[PR]{PR-PA1} \\
   \cline{2-3}
-  & PR-PA2 & PR-PA2 \\
+  & PR-PA2 & \hyperref[PR]{PR-PA2} \\
   \hline
   \multirow{7}{3cm}{Section 12.4} 
-  & PR-RFT1 & PR-RFT1 \\
+  & PR-RFT1 & \hyperref[PR]{PR-RFT1} \\
   \cline{2-3}
-  & PR-RFT2 & PR-RFT2 \\
+  & PR-RFT2 & \hyperref[PR]{PR-RFT2} \\
   \cline{2-3}
-  & PR-RFT3 & PR-RFT3 \\
+  & PR-RFT3 & \hyperref[PR]{PR-RFT3} \\
   \cline{2-3}
-  & PR-RFT3 & PR-RFT3 \\
+  & PR-RFT3 & \hyperref[PR]{PR-RFT3} \\
   \cline{2-3}
-  & PR-RFT3 & PR-RFT3 \\
+  & PR-RFT3 & \hyperref[PR]{PR-RFT3} \\
   \cline{2-3}
-  & PR-RFT3 & PR-RFT3 \\
+  & PR-RFT3 & \hyperref[PR]{PR-RFT3} \\
   \cline{2-3}
-  & PR-RFT3 & PR-RFT3 \\
+  & PR-RFT3 & \hyperref[PR]{PR-RFT3} \\
   \hline
   \multirow{2}{3cm}{Section 12.5} 
-  & PR-C1 & PR-C1 \\
+  & PR-C1 & \hyperref[PR]{PR-C1} \\
   \cline{2-3}
-  & PR-C2 & PR-C2 \\
+  & PR-C2 & \hyperref[PR]{PR-C2} \\
   \hline
   \multirow{3}{3cm}{Section 12.6} 
   & PR-SE1 & Omitted \\
   \cline{2-3}
-  & PR-SE2 & PR-SE2 \\
+  & PR-SE2 & \hyperref[PR]{PR-SE2} \\
   \cline{2-3}
-  & PR-SE3 & PR-SE3 \\
+  & PR-SE3 & \hyperref[PR]{PR-SE3} \\
   \hline
   \multirow{1}{3cm}{Section 12.7} 
-  & PR-L1 & PR-L1 \\
+  & PR-L1 & \hyperref[PR]{PR-L1} \\
   \hline
   \multirow{4}{3cm}{Section 13.1} 
-  & OE-EP1 & OE-EP1 \\
+  & OE-EP1 & \hyperref[OE]{OE-EP1} \\
   \cline{2-3}
-  & OE-EP2 & OE-EP2 \\
+  & OE-EP2 & \hyperref[OE]{OE-EP2} \\
   \cline{2-3}
-  & OE-EP3 & OE-EP3 \\
+  & OE-EP3 & \hyperref[OE]{OE-EP3} \\
   \cline{2-3}
-  & OE-EP4 & OE-EP4 \\
+  & OE-EP4 & \hyperref[OE]{OE-EP4} \\
   \hline
   \multirow{1}{3cm}{Section 13.2} 
-  & OE-WE1 & OE-WE1 \\
+  & OE-WE1 & \hyperref[OE]{OE-WE1} \\
   \hline
   \multirow{3}{3cm}{Section 13.3} 
-  & OE-IA1 & OE-IA1 \\
+  & OE-IA1 & \hyperref[OE]{OE-IA1} \\
   \cline{2-3}
-  & OE-IA2 & OE-IA2 \\
+  & OE-IA2 & \hyperref[OE]{OE-IA2} \\
   \cline{2-3}
-  & OE-IA3 & OE-IA3 \\
+  & OE-IA3 & \hyperref[OE]{OE-IA3} \\
   \hline
   \multirow{4}{3cm}{Section 13.4} 
-  & OE-P1 & OE-P1 \\
+  & OE-P1 & \hyperref[OE]{OE-P1} \\
   \cline{2-3}
-  & OE-P2 & OE-P2 \\
+  & OE-P2 & \hyperref[OE]{OE-P2} \\
   \cline{2-3}
-  & OE-P3 & OE-P3 \\
+  & OE-P3 & \hyperref[OE]{OE-P3} \\
   \cline{2-3}
-  & OE-P4 & OE-P4 \\
+  & OE-P4 & O\hyperref[OE]{E-P4} \\
   \hline
   \multirow{1}{3cm}{Section 13.5} 
-  & OE-R1 & OE-R1 \\
+  & OE-R1 & \hyperref[OE]{OE-R1} \\
   \hline
   \multirow{2}{3cm}{Section 14.1} 
-  & MS-M1 & MS-M1 \\
+  & MS-M1 & \hyperref[MS]{MS-M1} \\
   \cline{2-3}
-  & MS-M2 & MS-M2 \\
+  & MS-M2 & \hyperref[MS]{MS-M2} \\
   \hline
   \multirow{2}{3cm}{Section 14.2} 
-  & MS-S1 & MS-S1 \\
+  & MS-S1 & \hyperref[MS]{MS-S1} \\
   \cline{2-3}
-  & MS-S2 & MS-S2 \\
+  & MS-S2 & \hyperref[MS]{MS-S2} \\
   \hline
   \multirow{2}{3cm}{Section 14.3} 
-  & MS-A1 & MS-A1 \\
+  & MS-A1 & \hyperref[MS]{MS-A1} \\
   \cline{2-3}
-  & MS-A2 & MS-A2 \\
+  & MS-A2 & \hyperref[MS]{MS-A2} \\
   \hline
   \multirow{1}{3cm}{Section 15.1} 
-  & S-A1 & S-A1 \\
+  & S-A1 & \hyperref[S]{S-A1} \\
   \hline
   \multirow{1}{3cm}{Section 15.2} 
   & N/A & N/A \\
   \hline
   \multirow{3}{3cm}{Section 15.3} 
-  & S-P1 & S-P1 \\
+  & S-P1 & \hyperref[S]{S-P1} \\
   \cline{2-3}
-  & S-P2 & S-P2 \\
+  & S-P2 & \hyperref[S]{S-P2} \\
   \cline{2-3}
-  & S-P3 & S-P3 \\
+  & S-P3 & \hyperref[S]{S-P3} \\
   \hline
   \multirow{1}{3cm}{Section 15.4} 
   & N/A & N/A \\
@@ -1780,15 +1793,15 @@ the functional or nonfunctional requirement it is intended to verify and validat
   & N/A & N/A \\
   \hline
   \multirow{2}{3cm}{Section 16.1} 
-  & CR-CR1 & CR-CR1 \\
+  & CR-CR1 & \hyperref[CR]{CR-CR1} \\
   \cline{2-3}
-  & CR-CR1 & CR-CR1 \\
+  & CR-CR1 & \hyperref[CR]{CR-CR1} \\
   \hline
   \multirow{1}{3cm}{Section 17.1} 
-  & CR-LR1 & CR-LR1 \\
+  & CR-LR1 & \hyperref[CR]{CR-LR1} \\
   \hline
   \multirow{1}{3cm}{Section 17.2} 
-  & CR-SCR1 & CR-SCR1 \\
+  & CR-SCR1 & \hyperref[CR]{CR-SCR1} \\
   \hline
 \end{longtable}
 
@@ -1848,7 +1861,6 @@ N/A.
 
 \section{Symbolic Parameters}
 For Revision 0 we do not have any implementation details of the symbolic parameters for the tests, however, this section will be filled out as we progress.
-
 \section{Usability Survey Questions}
 The following usability survey will be provided to user testers alongside 
 this VnV plan and the \href{https://github.com/emilyperica/ScoreGen/blob/main/docs/SRS-Volere/SRS.pdf}{SRS} document.
