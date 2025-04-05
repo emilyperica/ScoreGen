@@ -2,15 +2,37 @@
 \usepackage{amsmath, amssymb}
 \usepackage{graphicx}
 \usepackage{hyperref}
+\usepackage{float}
+\usepackage{tabularx}
 
-\title{Mathematical Techniques in WAV Analysis and Note Detection}
-\author{}
-\date{}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=red,
+    citecolor=green,
+    filecolor=magenta,
+    urlcolor=cyan
+}
+
+\input{../Comments}
+\input{../Common}
 
 \begin{document}
-
+\title{Literature Review of Signal Processing Techniques for Audio-to-Sheet Music Transcription}
+\author{\authname}
+\date{\today}
+	
 \maketitle
+\thispagestyle{empty}
 
+~\newpage
+
+\pagenumbering{roman}
+
+\tableofcontents
+
+~\newpage
+
+\pagenumbering{arabic}
 \section{Introduction}
 This report outlines the mathematical techniques considered, implemented, and utilized in the final version of our WAV analysis project. The project aimed to robustly determine note durations and generate MusicXML, with an ultimate goal of creating PDF sheet music. Our primary approach to pitch detection was autocorrelation, while note onsets were determined using both peak detection in energy and spectral energy differences derived from the Short-Time Fourier Transform (STFT).
 
@@ -29,9 +51,9 @@ x_{mono}(n) = \frac{x_{left}(n) + x_{right}(n)}{2}
 
 This preserves the overall amplitude structure while ensuring consistency in pitch detection and onset analysis.
 
-\begin{figure}[h]
-\rotatebox[origin=c]{180}{\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/Stereo-To-Mono.jpg}}
-\caption{Conversion of Stereo Audio to Mono-Audio by averaging channels$^1$}
+\begin{figure}[H]
+\rotatebox[origin=c]{180}{\includegraphics[width=\textwidth,scale=0.5]{images/Stereo-To-Mono.jpg}}
+\caption{Conversion of Stereo Audio to Mono-Audio by averaging channels \cite{iZotope}.}
 \end{figure}
 
 \newpage
@@ -40,7 +62,7 @@ This preserves the overall amplitude structure while ensuring consistency in pit
 Autocorrelation was used to determine the fundamental frequency of the audio signal by analyzing periodic patterns. This method proved effective for identifying stable pitches but had limitations when dealing with fast note transitions.
 
 \subsubsection{How Autocorrelation Works}
-Autocorrelation is a time-domain signal processing technique used to detect periodicity in a signal. It involves multiplying a signal by a time-shifted version of itself and summing the result over all possible shifts. The resulting function exhibits peaks at integer multiples of the signal's fundamental period, allowing the estimation of the dominant frequency. This method is particularly useful in pitch detection, as musical notes exhibit periodic waveforms.
+Autocorrelation is a time-domain signal processing technique used to detect periodicity in a signal \cite{Rabiner-use}. It involves multiplying a signal by a time-shifted version of itself and summing the result over all possible shifts \cite{Rabiner-use, Rabiner-digital}. The resulting function exhibits peaks at integer multiples of the signal's fundamental period, allowing the estimation of the dominant frequency. This method is particularly useful in pitch detection, as musical notes exhibit periodic waveforms.
 
 Mathematically, the autocorrelation function $R(\tau)$ of a discrete signal $x[n]$ is defined as:
 
@@ -50,14 +72,14 @@ R(\tau) = \sum_{n=0}^{N-1} x[n] x[n+\tau]
 
 where $\tau$ represents the lag and $N$ is the signal length.
 
-\begin{figure}[h]
+\begin{figure}[H]
     \centering
     \begin{tabular}{ccc}
-        \includegraphics[width=60mm]{docs/LiteratureReview/images/autocorrelation.png} & 
+        \includegraphics[width=60mm]{images/autocorrelation.png} & 
         $\Longrightarrow$ & 
-        \includegraphics[width=60mm]{docs/LiteratureReview/images/autocorrelation Peak.png} \\
+        \includegraphics[width=60mm]{images/autocorrelation Peak.png} \\
     \end{tabular}
-    \caption{Signal peak occurs when offset signal is most similar to original signal$^2$}
+    \caption{Signal peak occurs when offset signal is most similar to original signal \cite{visual-autocorr}.}
     \label{fig:autocorrelation_peak}
 \end{figure}
 
@@ -67,7 +89,7 @@ where $\tau$ represents the lag and $N$ is the signal length.
 By tracking changes in energy levels over time, we detected note onsets. Peaks in energy served as markers for the start of new notes, a fundamental aspect of transcription.
 
 \subsubsection{How Peak Detection Works}
-Peak detection involves identifying significant local maxima in a signal. This is commonly done by analyzing the derivative of an energy envelope and applying a threshold-based criterion to filter out minor fluctuations. The energy envelope can be computed using the root mean square (RMS) or the sum of squared amplitudes within a short sliding window.
+Peak detection involves identifying significant local maxima in a signal \cite{ZhouRiess}. This is commonly done by analyzing the derivative of an energy envelope and applying a threshold-based criterion to filter out minor fluctuations. The energy envelope can be computed using the root mean square (RMS) or the sum of squared amplitudes within a short sliding window.
 
 Mathematically, energy $E(n)$ of a signal in a window of length $M$ is given by:
 
@@ -81,7 +103,7 @@ Peak detection then involves identifying points where $E(n)$ surpasses an adapti
 We employed a Short-Time Fourier Transform (STFT) to generate spectrograms and analyze spectral energy changes. Differences in spectral energy were used as an alternative onset detection method, complementing the energy peak detection approach.
 
 \subsubsection{How STFT Works}
-The STFT is a method of analyzing the frequency content of a signal over time by applying the Fourier Transform to short, overlapping segments of the signal. It provides a time-frequency representation, allowing the observation of spectral variations that correspond to note onsets.
+The STFT is a method of analyzing the frequency content of a signal over time by applying the Fourier Transform to short, overlapping segments of the signal \cite{Benetos2009}. It provides a time-frequency representation, allowing the observation of spectral variations that correspond to note onsets \cite{onset-detection}.
 
 Mathematically, the STFT of a signal $x(t)$ with a window function $w(t)$ is defined as:
 
@@ -91,15 +113,15 @@ X(t, f) = \int_{-\infty}^{\infty} x(\tau) w(\tau - t) e^{-j 2\pi f \tau} d\tau
 
 where $w(t)$ is typically a Hanning or Hamming window to reduce spectral leakage.
 
-\begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/STFT.png}
-\caption{Breakdown of STFT Process used to construct spectrogram$^3$}
+\begin{figure}[H]
+\includegraphics[width=\textwidth,scale=0.5]{images/STFT.png}
+\caption{Breakdown of STFT Process used to construct spectrogram \cite{STFT}.}
 \end{figure}
 
 \newpage
 
 \subsection{Hanning Window}
-Both Hanning and Hamming windows were tested as potential smoothing functions for spectral analysis. They were used in different configurations of STFT, though ultimately, the Hanning functino was chosen based on performance.
+Both Hanning \cite{hanning} and Hamming \cite{onset-detection} windows were tested as potential smoothing functions for spectral analysis. They were used in different configurations of STFT, though ultimately, the Hanning functino was chosen based on performance.
 
 \subsubsection{How Windowing Functions Work}
 Window functions taper the edges of a signal segment before applying Fourier analysis, reducing spectral leakage. The Hanning window is defined as:
@@ -108,22 +130,22 @@ Window functions taper the edges of a signal segment before applying Fourier ana
 w(n) = 0.5 - 0.5\cos\left(\frac{2\pi n}{N-1}\right)
 \end{equation}
 
-\begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/hanning.png}
-\caption{Hanning function used to smooth out signal onsets$^4$}
+\begin{figure}[H]
+\includegraphics[width=\textwidth,scale=0.5]{images/hanning.png}
+\caption{Hanning function used to smooth out signal onsets \cite{Siemens}.}
 \end{figure}
 
 \newpage
 
 \subsection{Krumhansl-Schmuckler Key-Finding Algorithm}
-This algorithm was used for determining the key signature of a musical piece based on pitch class profiles 
+This algorithm was used for determining the key signature of a musical piece based on pitch class profiles.
 
 \subsubsection{How the Key-Finding Algorithm Works}
-The Krumhansl-Schmuckler algorithm matches pitch distributions in an audio signal to predefined key profiles, computing a correlation score for each possible key. The key with the highest correlation is selected.
+The Krumhansl-Schmuckler algorithm matches pitch distributions in an audio signal to predefined key profiles, computing a correlation score for each possible key \cite{krumhansl-schmuckler}. The key with the highest correlation is selected.
 
-\begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/C-Cminor-Expected-Key-Profiles.png}
-\caption{Expected Relative Note Frequency profiles of C and C-Minor key, used in Krumhansl-Schmukler algorithm to create correlation scores$^5$}
+\begin{figure}[H]
+\includegraphics[width=\textwidth,scale=0.5]{images/C-Cminor-Expected-Key-Profiles.png}
+\caption{Expected Relative Note Frequency profiles of C and C-Minor key, used in Krumhansl-Schmukler algorithm to create correlation scores \cite{TonalStructure}.}
 \end{figure}
 
 \newpage
@@ -151,9 +173,9 @@ where $X(f)$ and $Y(f)$ are the Fourier transforms of $x(t)$ and $y(t)$, and $X^
 
 \textbf{Could have been used for} improved time alignment of detected note events, reducing timing inaccuracies in sheet music generation.
 
-\begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/cross-correlation-example.png}
-\caption{Diagram highlighting Cross-Correlation functionality. Similar to Auto-correlation but used for different signals, rather than offsets of same signal$^6$}
+\begin{figure}[H]
+\includegraphics[width=\textwidth,scale=0.5]{images/cross-correlation-example.png}
+\caption{Diagram highlighting Cross-Correlation functionality. Similar to Auto-correlation but used for different signals, rather than offsets of same signal \cite{CrossCorrelation}.}
 \end{figure}
 
 \newpage
@@ -190,20 +212,20 @@ Wavelet denoising involves three main steps:  \\
 
 \textbf{Could have been used for} denoising input audio, effectively reducing high-frequency noise that could interfere with accurate note onset detection and improving the clarity of secondary notes for transcription.
 
-\begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/denoise-filter.png}
-\caption{ Signal Denoising via soft wavelet thresholding$^7$}
+\begin{figure}[H]
+\includegraphics[width=\textwidth,scale=0.5]{images/denoise-filter.png}
+\caption{ Signal Denoising via soft wavelet thresholding \cite{Wavelets}.}
 \end{figure}
 
 \newpage
 
 
 
-\subsection{Yin Algorithm for Pitch Detection}
-The Yin algorithm, a robust pitch detection technique, was considered.
+\subsection{YIN Algorithm for Pitch Detection}
+The YIN algorithm \cite{YIN-2002}, a robust pitch detection technique, was considered.
 
 \subsubsection{Mathematical Basis}
-Yin refines autocorrelation by computing a difference function:
+YIN refines autocorrelation by computing a difference function:
 \begin{equation}
 d(\tau) = \sum_{t=1}^{T} (x_t - x_{t+\tau})^2.
 \end{equation}
@@ -215,46 +237,19 @@ Pitch corresponds to the minimum of $\tilde{d}(\tau)$. This improves over standa
 
 \textbf{Could have been used to} refine pitch estimation, reducing frequency detection errors and improving note transcription accuracy.
 
-\begin{figure}[h]
-\includegraphics[width=125mm,scale=0.5]{docs/LiteratureReview/images/yin-function.png}
-\caption{Difference in signal offsets calculated to determine cumulative mean difference, allowing better handling of noisy inputs or harmonics$^8$}
+\begin{figure}[H]
+\includegraphics[width=\textwidth,scale=0.5]{images/yin-function.png}
+\caption{Difference in signal offsets calculated to determine cumulative mean difference, allowing better handling of noisy inputs or harmonics \cite{YIN-intuition}.}
 \end{figure}
 
 \newpage
 
-
 \section{Conclusion}
 This project employed a combination of signal processing techniques to achieve accurate pitch detection and onset analysis. While several methods were considered, the final implementation balanced computational efficiency with accuracy. Future improvements could explore more advanced onset detection mechanisms and integrate additional filtering techniques to refine transcription accuracy.
 
-
 \newpage
-\begin{thebibliography}{9}
-
-\bibitem{iZotope}
-iZotope. (n.d.). \textit{Mono vs. stereo in audio mixing}. Retrieved from \url{https://www.izotope.com/en/learn/mono-vs-stereo.html}
-
-\bibitem{YouTube1}
-YouTube. (n.d.). \textit{YouTube}. Retrieved from \url{https://www.youtube.com/watch?v=uf679Qo-bB4}
-
-\bibitem{STFT}
-Figure 1. (n.d.). \textit{Short-time Fourier transform (STFT) overview}. Retrieved from \url{https://www.researchgate.net/figure/Short-time-Fourier-transform-STFT-overview_fig1_346243843}
-
-\bibitem{Siemens}
-Siemens Digital Industries Software Community. (n.d.). Retrieved from \url{https://community.sw.siemens.com/s/article/Overlap-What-Why-and-How-to-use-it}
-
-\bibitem{TonalStructure}
-Empirical Musicology Review. (n.d.). \textit{Tonal and “Anti-Tonal” Cognitive Structure in Viennese Twelve-Tone Rows}. Retrieved from \url{https://ojs.library.osu.edu/index.php/EMR/article/view/7655/5748}
-
-\bibitem{CrossCorrelation}
-Jball. (2025, February 4). \textit{What is cross-correlation, and how does it advance spectrum analysis?}. Liquid Instruments. Retrieved from \url{https://liquidinstruments.com/blog/cross-correlation-and-spectrum-analysis/}
-
-\bibitem{Wavelets}
-Intro. to Signal Processing. (n.d.). \textit{Wavelets and wavelet denoising}. Retrieved from \url{https://terpconnect.umd.edu/~toh/spectrum/wavelets.html}
-
-\bibitem{YouTube2}
-YouTube. (n.d.-a). \textit{YouTube}. Retrieved from \url{https://www.youtube.com/watch?app=desktop&v=W585xR3bjLM}
-
-\end{thebibliography}
+\bibliographystyle{IEEEtran}
+\bibliography{../../refs/References.bib}
 
 \end{document}
 
