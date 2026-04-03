@@ -21,7 +21,7 @@
     "@electron-forge/plugin-auto-unpack-natives": "^7.7.0",
     "@electron-forge/plugin-fuses": "^7.7.0",
     "@electron/fuses": "^1.8.0",
-    "electron": "^35.0.0"
+    "electron": "^41.1.1"
   },
   "dependencies": {
     "@electron/remote": "^2.1.2",
